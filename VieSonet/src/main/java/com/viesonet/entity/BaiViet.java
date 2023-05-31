@@ -55,13 +55,13 @@ public class BaiViet {
 	NguoiDung nguoiDung;
 	
 	/*1-N*/
-	@OneToMany(mappedBy = "baiVietViPham")
+	@OneToMany(mappedBy = "baiViet")
 	List<BaiVietViPham> baiVietViPham;
 	
-	@OneToMany(mappedBy = "danhSachBinhLuan")
+	@OneToMany(mappedBy = "baiViet")
 	List<DanhSachBinhLuan> danhSachBinhLuan;
 	
-	@OneToMany(mappedBy = "danhSachYeuThich")
+	@OneToMany(mappedBy = "baiViet")
 	List<DanhSachYeuThich> danhSachYeuThich;
 	
 	
