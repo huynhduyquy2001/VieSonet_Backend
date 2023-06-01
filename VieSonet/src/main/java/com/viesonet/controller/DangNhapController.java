@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 @Controller
-public class HomeController {
+public class DangNhapController {
 
 	@GetMapping("/")
 	public String dangNhap() {
