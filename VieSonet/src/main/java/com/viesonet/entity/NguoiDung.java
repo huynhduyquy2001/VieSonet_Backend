@@ -40,6 +40,7 @@ public class NguoiDung {
 	private Boolean gioiTinh;
 	private String anhBia;
 	private Boolean trangThai;
+	private int viPham;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "thoiGianTruyCap")
@@ -71,13 +72,13 @@ public class NguoiDung {
 	@OneToMany(mappedBy = "banBe")
 	List<BanBe> banBe2;
 	
-	@OneToMany(mappedBy = "baiVietViPham")
+	@OneToMany(mappedBy = "nguoiDung")
 	List<BaiVietViPham> baiVietViPham;
 	
-	@OneToMany(mappedBy = "baiViet")
+	@OneToMany(mappedBy = "nguoiDung")
 	List<BaiViet> baiViet;
 	
-	@OneToMany(mappedBy = "baiViet")
+	@OneToMany(mappedBy = "nguoiDung")
 	List<DanhSachBinhLuan> danhSachBinhLuan;
 	
 	

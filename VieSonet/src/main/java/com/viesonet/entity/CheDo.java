@@ -27,7 +27,7 @@ public class CheDo {
 	private String tenCheDo;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "baiViet")
+	@OneToMany(mappedBy = "cheDo")
 	List<BaiViet> baiViet;
 	
 }
