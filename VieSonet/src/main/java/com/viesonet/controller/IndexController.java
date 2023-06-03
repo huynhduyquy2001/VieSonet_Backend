@@ -11,13 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.viesonet.dao.BaiVietDao;
+import com.viesonet.dao.BaiVietDAO;
 
 @Controller
 public class IndexController {
 	
 	@Autowired
-	BaiVietDao baiVietDao;
+	BaiVietDAO baiVietDao;
 	
 @RequestMapping("/")
 public String index(Model m) {
