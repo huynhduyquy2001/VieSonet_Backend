@@ -877,10 +877,10 @@ img:hover {
 }
 
 .tooltip2-text {
-    visibility: hidden;
+    display:none;
     position: absolute;
-    top: 100%;
-    left: 50%;
+    top: -10%;
+    left: 85%;
     transform: translateX(-50%);
     width: 200px;
     padding: 10px;
@@ -888,11 +888,11 @@ img:hover {
     border: 1px solid #ccc;
     border-radius: 4px;
     text-align: center;
-    transition: visibility 0.2s ease-in-out;
+
 }
 
 .tooltip2:hover .tooltip2-text {
-    visibility: visible;
+    display: block;
 }
 
 .tooltip2-text img {
