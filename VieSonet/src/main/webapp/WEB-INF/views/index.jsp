@@ -194,6 +194,8 @@
 				<div>
 					<b class="nhan">BẢNG TIN</b>
 				</div>
+				<c:forEach items="DanhSachBv" var="BaiViet">
+				</c:forEach>
 				<div
 					class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
 					style="margin-bottom: 20px; border-radius: 0;">
@@ -205,7 +207,7 @@
 								<div class="user-profile ">
 									<img src="images/avt.jpg" class="img-thumbnail" alt="">
 									<div>
-										<label for="">Trần Văn Minh Híu</label> <br> <small>30-4-1975_09:18
+										<label for="">${BaiViet.nguoiDung.anhDaiDien}</label> <br> <small>30-4-1975_09:18
 											pm</small>
 									</div>
 								</div>
@@ -216,7 +218,7 @@
 
 											</div>
 											<div class="col-7">
-												<label for="">Trần Văn Minh Híu</label>
+												<label for=""><small>Trần Văn Minh Híu</small></label>
 											</div>
 											<div>
 
