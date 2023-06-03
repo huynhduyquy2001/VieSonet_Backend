@@ -15,16 +15,18 @@ import com.viesonet.dao.BaiVietDAO;
 
 @Controller
 public class IndexController {
-	
+
 	@Autowired
 	BaiVietDAO baiVietDao;
-	
-@RequestMapping("/")
-public String index(Model m) {
-	List<Order> orders = new ArrayList<Order>();
-	orders.add(new Order(Direction.DESC, "ngayDang"));
-	Sort sort = Sort.by(orders);
-	m.addAttribute("listProduct", baiVietDao.findAll(sort));
-	return"index";
-}
+
+	@RequestMapping("/")
+	public String index(Model m) {
+
+		List<Order> orders = new ArrayList<Order>();
+		orders.add(new Order(Direction.DESC, "ngayDang"));
+		Sort sort = Sort.by(orders);
+		m.addAttribute("DanhSachBv", baiVietDao.findAll(sort));
+		System.out.println(baiVietDao.findAll(sort).size());
+		return "index";
+	}
 }

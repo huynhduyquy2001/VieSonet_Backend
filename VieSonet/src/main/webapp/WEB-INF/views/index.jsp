@@ -2,6 +2,7 @@
 	pageEncoding="utf-8"%>
 
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="fr"%>
 <!doctype html>
 <html lang="en">
@@ -42,9 +43,10 @@
 
 <body>
 	<div class="split-background"></div>
-	<img src="images/cayTre.png"
-		style="position: fixed; right: 0; max-height: 90vh; z-index: -2; opacity: 0.8;"
-		alt="">
+	 <div style="position: fixed; right: 0; max-height: 90vh; opacity: 0.1; bottom: 0;">
+            <img src="images/cayTre2.png" class="header animate__animated animate__fadeInUp" style="max-height: 90vh;"
+                alt="">
+        </div>
 	<!-- <img src="images/sunset-reduced.jpg" style="position: fixed; left: 0; max-height: 100vh; z-index: -2; width: 100%; top: 40px; opacity: 0.4; bottom: 0; height: 100%; object-fit: cover;" alt=""> -->
 	<!-- style="box-shadow: 0 1px 2px rgb(0 0 0 / 10%);" -->
 	<header class="header animationTop3">
@@ -130,7 +132,9 @@
 					<div>
 						<b class="nhan">ĐĂNG BÀI</b>
 					</div>
+
 					<div>
+
 						<div class="write-post-container nenTrangChu img-thumbnail"
 							style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
 							<div class="user-profile">
@@ -171,7 +175,6 @@
 											<small>Xem tất cả>></small>
 										</h6>
 									</div>
-
 								</div>
 							</div>
 							<div class="col-6">
@@ -194,86 +197,84 @@
 				<div>
 					<b class="nhan">BẢNG TIN</b>
 				</div>
-				<c:forEach items="DanhSachBv" var="BaiViet">
-				</c:forEach>
-				<div
-					class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
-					style="margin-bottom: 20px; border-radius: 0;">
+				<c:forEach items="${DanhSachBv}" var="BaiViet">
 					<div
-						style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
+						class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
+						style="margin-bottom: 20px; border-radius: 0;">
 						<div
-							style="display: flex; align-items: center; justify-content: space-between;">
-							<div class="tooltip2">
-								<div class="user-profile ">
-									<img src="images/avt.jpg" class="img-thumbnail" alt="">
-									<div>
-										<label for="">${BaiViet.nguoiDung.anhDaiDien}</label> <br> <small>30-4-1975_09:18
-											pm</small>
+							style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
+							<div
+								style="display: flex; align-items: center; justify-content: space-between;">
+								<div class="tooltip2">
+									<div class="user-profile ">
+										<img src="images/${BaiViet.nguoiDung.anhDaiDien}"
+											class="img-thumbnail" alt="">
+										<div>
+											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br> <small>${BaiViet.ngayDang}</small>
+										</div>
+									</div>
+									<span class="tooltip2-text"> <a href="">
+											<div class="row">
+												<div class="col-5">
+													<img src="images/${BaiViet.nguoiDung.anhDaiDien}"
+														class="img-thumbnail" alt="">
+												</div>
+												<div class="col-7" style="padding: 0; margin: 0;">
+													<label for="" style="padding: 0; margin: 0;"> <small>${BaiViet.nguoiDung.hoTen}</small>
+													</label> <small><small> <small>
+																<ul style="line-height: 20px; text-align: left;">
+																	<li><b><i class="fa-light fa-mountain-sun"></i>
+																			Quê quán:</b> ${BaiViet.nguoiDung.diaChi}</li>
+																	<li><i class="fa-regular fa-heart"></i> <b>Mối
+																			quan hệ:</b> ${BaiViet.nguoiDung.moiQuanHe}</li>
+																	<li><b><i class="fa-light fa-user-group"></i>
+																			Danh sách bạn bè:</b> ??</li>
+																</ul>
+														</small>
+													</small></small>
+												</div>
+												<div>
+
+													<center></center>
+												</div>
+											</div>
+									</a>
+									</span>
+								</div>
+								<div>
+									<div class="btn-group">
+										<span class="btn dropdown-toggle" type="button" id="triggerId"
+											data-bs-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false"> </span>
+										<div class="dropdown-menu" aria-labelledby="triggerId">
+											<a class="dropdown-item" href="#">Báo cáo vi phạm</a>
+										</div>
 									</div>
 								</div>
-								<span class="tooltip2-text"> <a href="">
-										<div class="row">
-											<div class="col-5">
-												<img src="images/avt.jpg" class="img-thumbnail" alt="">
-
-											</div>
-											<div class="col-7">
-												<label for=""><small>Trần Văn Minh Híu</small></label>
+							</div>
+							<a href="">
+								<div style="margin-top: 10px;">
+									${BaiViet.moTa}
+									<center>
+										<img class="lazy" data-src="images/caMap.jpg" width="100%"
+											alt=""
+											style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
+									</center>
+									<div class="post-reaction">
+										<div class="activity-icons">
+											<div>
+												<i class="fa-regular fa-thumbs-up"></i> &nbsp; ${BaiViet.luotThich}
 											</div>
 											<div>
-
-												<center>
-													<small> <small>
-															<ul style="line-height: 20px; text-align: left;">
-																<li><b><i class="fa-light fa-mountain-sun"></i>
-																		Quê quán:</b> Đồng Tháp</li>
-																<li><i class="fa-regular fa-heart"></i> <b>Mối
-																		quan hệ:</b> Độc thân</li>
-																<li><b><i class="fa-light fa-user-group"></i>
-																		Danh sách bạn bè:</b> 304</li>
-															</ul>
-													</small>
-													</small>
-												</center>
+												<i class="fa-regular fa-comment"></i>&nbsp; ${BaiViet.luotBinhLuan}
 											</div>
 										</div>
-								</a>
-								</span>
-							</div>
-							<div>
-								<div class="btn-group">
-									<span class="btn dropdown-toggle" type="button" id="triggerId"
-										data-bs-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false"> </span>
-									<div class="dropdown-menu" aria-labelledby="triggerId">
-										<a class="dropdown-item" href="#">Báo cáo vi phạm</a>
 									</div>
 								</div>
-							</div>
+							</a>
 						</div>
-						<a href="">
-							<div style="margin-top: 10px;">
-								Hôm nay gất là dui đó nghen, hãy like cho tui 1 phát lào mấy a
-								zai
-								<center>
-									<img class="lazy" data-src="images/caMap.jpg" width="100%"
-										alt=""
-										style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
-								</center>
-								<div class="post-reaction">
-									<div class="activity-icons">
-										<div>
-											<i class="fa-regular fa-thumbs-up"></i> &nbsp; 120
-										</div>
-										<div>
-											<i class="fa-regular fa-comment"></i>&nbsp; 52
-										</div>
-									</div>
-								</div>
-							</div>
-						</a>
 					</div>
-				</div>
+				</c:forEach>
 			</div>
 			<div class="col-md-5 menuLeft"
 				style="position: fixed; top: 70px; right: 5%;">
@@ -282,8 +283,8 @@
 				</div>
 				<div>
 					<div
-						class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInRight"
-						style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); background-color: white; background-image: url('https://static.showit.co/1600/g7PseL2CSPG9fiMdTX0bNA/63707/3.jpg'); background-size: cover; border-radius: 0;">
+						class="write-post-container  img-thumbnail animate__animated animate__backInRight"
+						style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);   background-size: cover; border-radius: 0;">
 						<div class="user-profile">
 							<img src="images/avt.jpg" alt="">
 							<div>
@@ -430,8 +431,9 @@
         }
 
     </script>
-	<script src="js/lazy.js"></script>
+	<script src="${pageContext.request.contextPath}/lazy.js"></script>
 
 </body>
 
+</html>
 </html>
