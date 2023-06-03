@@ -33,9 +33,6 @@ public class BaiViet {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int maBaiViet;
-	
-	private String sdt;
-	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ngayDang")
 	Date ngayDang = new Date();
@@ -44,6 +41,7 @@ public class BaiViet {
 	private String hinhAnh;
 	private Boolean trangThai;
 	private int luotLike;
+	
 	/*N-1*/
 	@JsonIgnore
 	@ManyToOne

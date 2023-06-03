@@ -49,12 +49,13 @@ public class NguoiDung {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ngayTao")
 	Date ngayGui = new Date();
+	
 	/*N-1*/
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name ="maVaiTro")
+	@JoinColumn(name = "maVaiTro")
 	VaiTro vaiTro;
-
+	
 	
 	/*1-N*/
 	@OneToMany(mappedBy = "nguoiDung")
