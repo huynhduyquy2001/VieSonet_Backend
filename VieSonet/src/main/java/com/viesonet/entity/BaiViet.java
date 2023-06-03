@@ -40,7 +40,7 @@ public class BaiViet {
 	private String moTa;
 	private String hinhAnh;
 	private Boolean trangThai;
-	private int luotLike;
+	private Integer luotLike;
 	
 	/*N-1*/
 	@JsonIgnore
