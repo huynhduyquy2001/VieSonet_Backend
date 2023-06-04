@@ -19,7 +19,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/f737751420.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/style.css">
     <title>Trang cá nhân</title>
     <style>
         #menuTrai {
@@ -368,21 +368,22 @@
                     </div>
                     <b>Bài viết</b>
                     <hr>
+                    <c:forEach items="${BaiVietCaNhan}" var="BaiViet">
                     <div class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
                         style="margin-bottom: 20px;  border-radius: 0;">
                         <div style="padding: 10px; border: 1px solid rgba(210,199,188,1); margin: 0;">
                             <div style=" display: flex; align-items: center; justify-content: space-between; ">
                                 <div class="tooltip2">
                                     <div class="user-profile ">
-                                        <img src="images/avt.jpg" class="img-thumbnail" alt="">
+                                        <img src="images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
                                         <div>
-                                            <label for="">Trần Văn Minh Híu</label> <br>
-                                            <small>30-4-1975_09:18 pm</small>
+                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br> 
+                                            <small>${BaiViet.ngayDang}</small> <br>
                                         </div>
                                     </div>
                                     <span class="tooltip2-text">
                                         <a href="">
-                                            <img src="images/avt.jpg" class="img-thumbnail" alt="">
+                                            <img src="images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
                                             <div>
                                                 <label for="">Trần Văn Minh Híu</label> <br>
                                                 <center>
@@ -395,7 +396,7 @@
                                                                 <li><i class="fa-regular fa-heart"></i> <b>Mối quan
                                                                         hệ:</b>
                                                                     Độc
-                                                                    thân</li>
+                                                                    thân:${BaiViet.nguoiDung.moiQuanHe}</li>
                                                                 <li><b><i class="fa-light fa-user-group"></i> Danh sách
                                                                         bạn
                                                                         bè:</b> 304</li>
@@ -420,24 +421,25 @@
                                 </div>
                             </div>
                             <div style="margin-top: 10px;">
-                                Hôm nay gất là dui đó nghen, hãy like cho tui 1 phát lào mấy a zai
+                                ${BaiViet.moTa}
                                 <center>
                                     <img class="lazy" data-src="images/caMap.jpg" width="100%" alt=""
                                         style="margin-top: 10px;margin-bottom: 10px; border-radius: 6px;">
                                 </center>
                                 <div class="post-reaction">
                                     <div class="activity-icons">
-                                        <div><i class="fa-regular fa-thumbs-up"></i> &nbsp; 120</div>
-                                        <div><i class="fa-regular fa-comment"></i>&nbsp; 52</div>
+                                        <div><i class="fa-regular fa-thumbs-up"></i> &nbsp; ${BaiViet.luotThich}</div>
+                                        <div><i class="fa-regular fa-comment"></i>&nbsp; ${BaiViet.luotBinhLuan}</div>
                                     </div>
-                                </div>	
+                                </div>
                             </div>
                         </div>
                     </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
-    </div>
+    
     <!-- Modal -->
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
         tabindex="-1">
@@ -632,7 +634,7 @@
 
     </script>
 
-    <script src="js/lazy.js"></script>
+    <script src="${pageContext.request.contextPath}/lazy.js"></script>
     <script>
         window.onscroll = function () {
             var fixedDiv = document.getElementById("menuTrai");
