@@ -203,7 +203,7 @@
 
     <!-- Modal Body -->
     <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-    <form method="POST" action="/profile/update" modelAttribute="profile">
+    <form method="POST" action="/nguoidung/update" modelAttribute="nguoiDung">
     <c:forEach items="${nguoiDung}" var="NguoiDung">
     <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
@@ -214,7 +214,7 @@
                         <li><b><i class="fa-regular fa-pen-to-square"></i> Tên tài khoản:</b> 
                         <input class="form-control input-hbh"
                                 style="border-radius: 0; border: none; border-bottom: 1px solid gray; width: 50%; "
-                                type="text" placeholder="Họ tên?" value="${profile.hoTen}"/> 
+                                type="text" placeholder="Họ tên?" value="${NguoiDung.hoTen}"/> 
                         </li>
                         <li><b><i class="fa-light fa-mountain-sun"></i> Quê quán:</b>
                             <input class="form-control input-hbh"

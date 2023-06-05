@@ -84,19 +84,15 @@ public class ProfileController {
 			return "redirect:/";
 		}
 	}
-	public NguoiDung updateThongTinNguoiDung(NguoiDung nguoiDung, String sdt) {
-		NguoiDung existingNguoiDung = nguoiDungDao.findBySdt(sdt);
-		return nguoiDungDao.save(existingNguoiDung);
-	}
 //	@RequestMapping("/profile/update/{sdt}")
 //	public String update(Model m) {
 //		m.addAttribute("nguoiDung", nguoiDungDao.findBySoDienThoai("0939790002"));
 //		nguoiDungDao.saveAndFlush("");
 //		return "redirect:/profile";
 //	}
-	@RequestMapping("/profile/update")
-    public String thaydoiNguoiDung(@ModelAttribute("profile") NguoiDung nguoiDung) {
-        nguoiDungDao.save(nguoiDung);
+	@RequestMapping("/nguoidung/update")
+    public String thaydoiNguoiDung(@ModelAttribute("nguoiDung") NguoiDung nguoiDung) {
+        nguoiDungDao.saveAndFlush(nguoiDung);
         return "redirect:/profile";
     }
 	
