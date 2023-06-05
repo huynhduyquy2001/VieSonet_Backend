@@ -10,4 +10,6 @@ import com.viesonet.entity.BaiViet;
 public interface BaiVietDAO extends JpaRepository<BaiViet, String> {
 	@Query("SELECT bv, COUNT(bv.danhSachBinhLuan) FROM BaiViet bv JOIN bv.danhSachBinhLuan GROUP BY bv")
     List<Object[]> findAllBaiVietWithCommentCount();
+    
+    List<BaiViet> findByNguoiDung(String sdt);
 }
