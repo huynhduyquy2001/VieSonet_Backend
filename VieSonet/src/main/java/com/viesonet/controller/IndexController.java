@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.viesonet.dao.BaiVietDAO;
+
+import com.viesonet.dao.BaiVietDao;
 import com.viesonet.dao.NguoiDungDAO;
 import com.viesonet.dao.BanBeDAO;
 import com.viesonet.dao.DanhSachBinhLuanDAO;
@@ -36,7 +37,7 @@ import com.viesonet.service.SessionService;
 public class IndexController {
 
 	@Autowired
-	BaiVietDAO baiVietDao;
+	BaiVietDao baiVietDao;
 
 	@Autowired
 	NguoiDungDAO nguoiDungDAO;
