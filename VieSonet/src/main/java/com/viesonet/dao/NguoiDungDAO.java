@@ -11,5 +11,6 @@ public interface NguoiDungDAO extends JpaRepository<NguoiDung, String> {
 	@Query("SELECT u FROM NguoiDung u WHERE u.sdt=:sdt")
 	List<NguoiDung> findBySoDienThoai(String sdt);
 	
+	NguoiDung findBySdt(String sdt);
 	
 }

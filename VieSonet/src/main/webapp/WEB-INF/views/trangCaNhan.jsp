@@ -240,7 +240,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button  class="btn btn01" formaction="/profile/update/${NguoiDung.sdt}">Save</button>
+                    <button  class="btn btn01" formaction="/profile/update/${profile.sdt}">Save</button>
                 </div>
             </div>
         </div>
