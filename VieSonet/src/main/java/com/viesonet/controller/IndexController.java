@@ -30,6 +30,7 @@ import com.viesonet.entity.DanhSachBinhLuan;
 import com.viesonet.entity.DanhSachBinhLuanDTO;
 import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.NguoiDung;
+import com.viesonet.service.SessionService;
 
 @Controller
 public class IndexController {
@@ -48,11 +49,17 @@ public class IndexController {
 
 	@Autowired
 	DanhSachKetBanDAO dskbDao;
+	
+	@Autowired
+	SessionService session;
 
 	@RequestMapping("/")
 	public String getBaiVietCuaBanBe(Model m) {
+		
+		String sdt = session.get("sdt");
+		
 		// lấy danh sách bài viết từ danh sáchbanj bè
-		List<BanBe> listBb = banBeDao.findFriendByUserphone("0939790002");
+		List<BanBe> listBb = banBeDao.findFriendByUserphone(sdt);
 		List<String> sdtBanBeList = listBb.stream().map(banBe -> banBe.getBanBe().getSdt())
 				.collect(Collectors.toList());
 
