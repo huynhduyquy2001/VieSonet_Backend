@@ -203,7 +203,7 @@
 
     <!-- Modal Body -->
     <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-    <form:form action="/profile/save" modelAttribute="profile">
+    <form method="POST" action="/profile/update" modelAttribute="profile">
     <c:forEach items="${nguoiDung}" var="NguoiDung">
     <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
@@ -211,42 +211,42 @@
             <div class="modal-content" style="background-color: white;">
                 <div class="modal-body">
                     <ul style="line-height: 30px;">
-                        <li><b><i class="fa-regular fa-pen-to-square"></i> Tên tài khoản:</b> <input
-                                class="form-control input-hbh"
+                        <li><b><i class="fa-regular fa-pen-to-square"></i> Tên tài khoản:</b> 
+                        <input class="form-control input-hbh"
                                 style="border-radius: 0; border: none; border-bottom: 1px solid gray; width: 50%; "
-                                type="text" placeholder="Họ tên?" value="${NguoiDung.hoTen}"> 
+                                type="text" placeholder="Họ tên?" value="${profile.hoTen}"/> 
                         </li>
                         <li><b><i class="fa-light fa-mountain-sun"></i> Quê quán:</b>
                             <input class="form-control input-hbh"
                                 style="border-radius: 0; border: none; border-bottom: 1px solid gray;" type="text"
-                                placeholder="Quê quán?" value="${NguoiDung.diaChi}">
+                                placeholder="Quê quán?" value="${NguoiDung.diaChi}"/>
                         </li>
                         <li><i class="fa-regular fa-heart"></i> <b>Mối quan hệ:</b>
                             <input class="form-control input-hbh"
                                 style="border-radius: 0; border: none; border-bottom: 1px solid gray;" type="text"
-                                placeholder="Mối quan hệ?" value="${NguoiDung.moiQuanHe}">
+                                placeholder="Mối quan hệ?" value="${NguoiDung.moiQuanHe}"/>
                         </li>
                         <li><b><i class="fa-regular fa-envelope"></i> Email:</b>
                             <input class="form-control input-hbh"
                                 style="border-radius: 0; border: none; border-bottom: 1px solid gray;" type="text"
-                                placeholder="Email?" value="${NguoiDung.email}">
+                                placeholder="Email?" value="${NguoiDung.email}"/>
                         </li>
                         <li><b><i class="fa-regular fa-envelope"></i> Giới thiệu:</b>
                             <input class="form-control input-hbh"
                                 style="border-radius: 0; border: none; border-bottom: 1px solid gray;" type="text"
-                                placeholder="Giới thiệu?" value="${NguoiDung.gioiThieu}">
+                                placeholder="Giới thiệu?" value="${NguoiDung.gioiThieu}"/>
                         </li>
                     </ul>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button  class="btn btn01" formaction="/profile/update/${profile.sdt}">Save</button>
+                    <button type="submit" class="btn btn01">Save</button>
                 </div>
             </div>
         </div>
     </div>
     </c:forEach>
-	</form:form>
+	</form>
 
     <!-- Optional: Place to the bottom of scripts -->
     <script>
