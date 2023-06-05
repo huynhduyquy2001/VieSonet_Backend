@@ -43,21 +43,27 @@ public class DangNhapController {
 //		String sdt = paramService.getString("sdt", "");
 		String matKhau = paramService.getString("matKhau", "");
 		boolean remember = paramService.getBoolean("ghiNho", true);
-		NguoiDung nDung = dao.findBySdt(sdt);
-		if (sdt.equals(nDung.getSdt()) && matKhau.equals(nDung.getMatKhau())) {
-			m.addAttribute("message1", "");
-			sessionService.set("sdt", sdt);
-			if (remember) {
-				cookieService.add("user", sdt, 10);
-				cookieService.add("pass", matKhau, 10);
+		try {
+			NguoiDung nDung = dao.findBySdt(sdt);
+			if (sdt.equals(nDung.getSdt()) && matKhau.equals(nDung.getMatKhau())) {
+				m.addAttribute("message1", "");
+				sessionService.set("sdt", sdt);
+				if (remember) {
+					cookieService.add("user", sdt, 10);
+					cookieService.add("pass", matKhau, 10);
+				} else {
+					cookieService.delete("user");
+					cookieService.delete("pass");
+				}
+//				return "index";
 			} else {
-				cookieService.delete("user");
-				cookieService.delete("pass");
+				m.addAttribute("message", "Thông tin đăng nhập không chính xác !");
 			}
-//			return "index";
-		} else {
-			m.addAttribute("message", "Thông tin đăng nhập không chính xác !");
+		} catch (Exception e) {
+			m.addAttribute("message", "Số điện thoại không tồn tại");
 		}
+		
+		
 
 		return "dangNhap";
 	}
