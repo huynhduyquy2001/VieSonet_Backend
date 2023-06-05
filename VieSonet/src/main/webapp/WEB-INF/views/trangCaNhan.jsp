@@ -4,6 +4,7 @@
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="fr"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!doctype html>
 <html lang="en">
 
@@ -139,16 +140,19 @@
                         style="border-radius: 50%;" class="img-thumbnail" alt="">
                 </div>
                 <div class="col-8" style="color: white;">
-                    <h3>Duy Quý</h3>
+                    
+                    <c:forEach items="${nguoiDung}" var="NguoiDung">
+                    <h3>${NguoiDung.hoTen}</h3>
                     <small>
                         <ul style="line-height: 30px;">
-                            <li><b><i class="fa-light fa-mountain-sun"></i> Quê quán:</b> Đồng Tháp</li>
-                            <li><i class="fa-regular fa-heart"></i> <b>Mối quan hệ:</b> Độc thân</li>
-                            <li><b><i class="fa-regular fa-envelope"></i> Email</b>:quyhdpc04119@fpt.edu.vn</li>
-                            <li><b><i class="fa-regular fa-registered"></i> Ngày tham gia:</b> 20-11-1995</li>
-                            <li><b><i class="fa-light fa-user-group"></i> Danh sách bạn bè:</b> 304</li>
+                            <li><b><i class="fa-light fa-mountain-sun"></i> Quê quán:</b> ${NguoiDung.diaChi}</li>
+                            <li><i class="fa-regular fa-heart"></i> <b>Mối quan hệ:</b> ${NguoiDung.moiQuanHe}</li>
+                            <li><b><i class="fa-regular fa-envelope"></i> Email:</b> ${NguoiDung.email}</li>
+                            <li><b><i class="fa-regular fa-registered"></i> Ngày tham gia:</b> ${NguoiDung.ngayGui}</li>
+                            <li><b><i class="fa-light fa-user-group"></i> Danh sách bạn bè:</b> ...</li>
                         </ul>
-                    </small>
+                       </small>
+                    </c:forEach>
                 </div>
             </div>
             <button data-bs-toggle="modal" data-bs-target="#modalId"
@@ -199,6 +203,8 @@
 
     <!-- Modal Body -->
     <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+    <form:form action="/profile/save" modelAttribute="profile">
+    <c:forEach items="${nguoiDung}" var="NguoiDung">
     <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -208,43 +214,39 @@
                         <li><b><i class="fa-regular fa-pen-to-square"></i> Tên tài khoản:</b> <input
                                 class="form-control input-hbh"
                                 style="border-radius: 0; border: none; border-bottom: 1px solid gray; width: 50%; "
-                                type="text" placeholder="Họ tên?">
+                                type="text" placeholder="Họ tên?" value="${NguoiDung.hoTen}"> 
                         </li>
                         <li><b><i class="fa-light fa-mountain-sun"></i> Quê quán:</b>
                             <input class="form-control input-hbh"
                                 style="border-radius: 0; border: none; border-bottom: 1px solid gray;" type="text"
-                                placeholder="Quê quán?">
+                                placeholder="Quê quán?" value="${NguoiDung.diaChi}">
                         </li>
                         <li><i class="fa-regular fa-heart"></i> <b>Mối quan hệ:</b>
                             <input class="form-control input-hbh"
                                 style="border-radius: 0; border: none; border-bottom: 1px solid gray;" type="text"
-                                placeholder="Mối quan hệ?">
+                                placeholder="Mối quan hệ?" value="${NguoiDung.moiQuanHe}">
                         </li>
                         <li><b><i class="fa-regular fa-envelope"></i> Email:</b>
                             <input class="form-control input-hbh"
                                 style="border-radius: 0; border: none; border-bottom: 1px solid gray;" type="text"
-                                placeholder="Email?">
+                                placeholder="Email?" value="${NguoiDung.email}">
                         </li>
-                        <li><b><i class="fa-regular fa-registered"></i> Ngày tham gia:</b>
+                        <li><b><i class="fa-regular fa-envelope"></i> Giới thiệu:</b>
                             <input class="form-control input-hbh"
                                 style="border-radius: 0; border: none; border-bottom: 1px solid gray;" type="text"
-                                placeholder="Ngày tham gia?">
-                        </li>
-                        <li><b><i class="fa-light fa-user-group"></i> Danh sách bạn bè:</b>
-                            <input class="form-control input-hbh"
-                                style="border-radius: 0; border: none; border-bottom: 1px solid gray;" type="text"
-                                placeholder="Danh sách bạn bè?">
+                                placeholder="Giới thiệu?" value="${NguoiDung.gioiThieu}">
                         </li>
                     </ul>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn01">Save</button>
+                    <button  class="btn btn01" formaction="/profile/update/${NguoiDung.sdt}">Save</button>
                 </div>
             </div>
         </div>
     </div>
-
+    </c:forEach>
+	</form:form>
 
     <!-- Optional: Place to the bottom of scripts -->
     <script>
@@ -260,13 +262,15 @@
                         <div class="write-post-container nenTrangChu img-thumbnail"
                             style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
                             <div class="user-profile">
-                                <img src="images/avt.jpg" alt="">
+                            	<c:forEach items="${nguoiDung}" var="NguoiDung">
+                                <img src="images/${BaiViet.nguoiDung.anhDaiDien}" alt="">
                                 <div>
-                                    <label>Huỳnh Duy Quý</label>
+                                    <label>${NguoiDung.hoTen}</label>
                                     <br>
                                     <small>
                                         Công khai <i class="fas fa-caret-down"></i>
                                     </small>
+                                </c:forEach>    
                                 </div>
                             </div>
     
@@ -322,16 +326,14 @@
             </div>
             <div class="col-md-8 offset-md-4">
                 <div style=" box-sizing: border-box; margin: 1%; padding: 3%; margin-top: 10px;">
+                <c:forEach items="${nguoiDung}" var="NguoiDung">
                     <center>
                         <div>
-                            <a href=""><i class="fa-regular fa-pen-to-square"></i></a>
                             <br>
-                            Mơ khách đường xa, khách đường xa, <br>
-                            Áo em trắng quá nhìn không ra... <br>
-                            Ở đây sương khói mờ nhân ảnh, <br>
-                            Ai biết tình ai có đậm đà? <br>
+                            ${NguoiDung.gioiThieu}
                         </div>
                     </center>
+                  </c:forEach>  
                     <div class="baiDang"
                         style=" border-radius: 6px; box-sizing: border-box; margin: 1%; padding: 3%; margin-top: 10px;">
                         Bài đăng:
@@ -373,7 +375,7 @@
                         style="margin-bottom: 20px;  border-radius: 0;">
                         <div style="padding: 10px; border: 1px solid rgba(210,199,188,1); margin: 0;">
                             <div style=" display: flex; align-items: center; justify-content: space-between; ">
-                                <div class="tooltip2">
+                                <div class="tooltip2">	
                                     <div class="user-profile ">
                                         <img src="images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
                                         <div>
@@ -385,21 +387,20 @@
                                         <a href="">
                                             <img src="images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
                                             <div>
-                                                <label for="">Trần Văn Minh Híu</label> <br>
+                                                <label for="">${BaiViet.nguoiDung.hoTen}</label> <br>
                                                 <center>
                                                     <small>
                                                         <small>
                                                             <ul style="line-height: 20px; text-align: left;">
                                                                 <li><b><i class="fa-light fa-mountain-sun"></i> Quê
                                                                         quán:</b>
-                                                                    Đồng Tháp</li>
+                                                                    ${BaiViet.nguoiDung.diaChi}</li>
                                                                 <li><i class="fa-regular fa-heart"></i> <b>Mối quan
                                                                         hệ:</b>
-                                                                    Độc
-                                                                    thân:${BaiViet.nguoiDung.moiQuanHe}</li>
+                                                                    ${BaiViet.nguoiDung.moiQuanHe}</li>
                                                                 <li><b><i class="fa-light fa-user-group"></i> Danh sách
                                                                         bạn
-                                                                        bè:</b> 304</li>
+                                                                        bè:</b> ???</li>
                                                             </ul>
                                                         </small>
                                                     </small>
@@ -441,20 +442,20 @@
         </div>
     
     <!-- Modal -->
+    <c:forEach items="${profile}" var="NguoiDung">
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
         tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="background-color: rgba(246,245,244,1);">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalToggleLabel"><b style="margin-left: 170px;">Đăng bài
-                            viết</b></h5>
+                    <h5 class="modal-title" id="exampleModalToggleLabel"><b style="margin-left: 170px;">Đăng bài viết</b></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="user-profile">
-                        <img src="images/avt.jpg" alt="">
+                        <img src="images/${NguoiDung.anhDaiDien}" alt="">
                         <div>
-                            <p> Alex Carry</p>
+                            <p>${NguoiDung.hoTen}</p>
                             <small>
                                 <div>
                                     <select style="border: none; background-color: transparent;">
@@ -466,6 +467,7 @@
                             </small>
                         </div>
                     </div> <br>
+                    
                     <textarea name="" placeholder="Bạn muốn đăng gì?" id="" cols="30" rows="3" style="    width: 100%;
                  border: 0px;
                  outline: none;
@@ -487,10 +489,14 @@
                     <button style="width: 500px;background-color: #5A4F48; border: none;" class="btn btn-primary"
                         data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Đăng
                         bài</button>
+                        
                 </div>
+                
             </div>
+            
         </div>
     </div>
+    </c:forEach>
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
