@@ -21,9 +21,6 @@ function loadBinhLuan(maBaiViet) {
 				"</form>";
 
 			$("#danhSachBinhLuan .modal-body .trai").append(binhLuanFormHtml);
-
-
-
 			// Hiển thị danh sách bình luận lên modal
 			danhSachBinhLuan.forEach(function(binhLuan) {
 				var binhLuanHtml = "<div class='user-profile' style='border: 1px solid #E1D4C4; box-sizing: border-box; padding: 4px; border-radius: 5px;background-color: white; margin-bottom:5px'>" +
