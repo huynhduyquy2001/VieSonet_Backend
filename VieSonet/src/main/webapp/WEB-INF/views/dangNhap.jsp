@@ -145,31 +145,33 @@ span.psw {
 						alt=""
 						style="position: absolute; right: -50px; bottom: 10px; width: 100px;">
 					<center>
-						<form action="dangNhap" method="post"
+						<form action="/dangnhap" method="post"
 							style="text-align: left; width: 100%;">
 							<div class="row">
 								<center>
 									<h4 class="nhan" style="color: #0D69B3;">
 										<b>ĐĂNG NHẬP</b>
 									</h4>
+									<br>
+									${message }
 									<hr style="width: 30%;">
 								</center>
 
 								<div class="mb-3">
 									<input type="text" class="form-control ip" name="sdt" id=""
-										aria-describedby="helpId" placeholder="Số điện thoại?"
-										required>
+										aria-describedby="helpId" placeholder="Số điện thoại?" pattern="[0-9]{10}"
+										required>																	
 								</div>
 								<div class="mb-3">
 									<input type="text" class="form-control ip" name="matKhau" id=""
-										aria-describedby="helpId" placeholder="Mật khẩu?">
+										aria-describedby="helpId" placeholder="Mật khẩu?" required>									
 								</div>
-								<label><input type="checkbox" name="ghiNho"><small>Ghi
+								<label><input type="checkbox" name="ghiNho" value="false" ><small>Ghi
 										nhớ tài khoản?</small></label>
 							</div>
 							<br>
 							<center>
-								<button class="lgin" type="submit"
+								<button class="lgin"
 									style="background-color: #007ACC;">Đăng nhập</button>
 							</center>
 							<br> <a href="/ASM_Java4/index"> <small>Quên mật

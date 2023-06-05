@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "NguoiDung")
+@Table(name = "nguoiDung")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,7 +40,6 @@ public class NguoiDung {
 	private Boolean gioiTinh;
 	private String anhBia;
 	private Boolean trangThai;
-	private int viPham;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "thoiGianTruyCap")
@@ -81,6 +80,9 @@ public class NguoiDung {
 	
 	@OneToMany(mappedBy = "nguoiDung")
 	List<DanhSachBinhLuan> danhSachBinhLuan;
+
+
+
 	
 	
 	
