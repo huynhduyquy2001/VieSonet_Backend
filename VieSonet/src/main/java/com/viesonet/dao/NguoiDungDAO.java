@@ -9,4 +9,6 @@ import com.viesonet.entity.NguoiDung;
 public interface NguoiDungDAO extends JpaRepository<NguoiDung, String> {
 	@Query("SELECT bv.nguoiDung.hoTen, bv.nguoiDung.anhDaiDien, bv.nguoiDung.sdt FROM BaiViet bv WHERE bv.maBaiViet = :maBaiViet")
 	Object findNguoiDungByMaBaiViet(@Param("maBaiViet") int maBaiViet);
+	NguoiDung findBySdt(String sdt);
+	Boolean existsBySdt(String sdt);
 }
