@@ -38,15 +38,15 @@
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>Trang chủ</title>
 </head>
 
 <body>
-	<div class="split-background"></div>
-	 <div style="position: fixed; right: 0; max-height: 90vh; opacity: 0.1; bottom: 0;">
-            <img src="images/cayTre2.png" class="header animate__animated animate__fadeInUp" style="max-height: 90vh;"
-                alt="">
-        </div>
+	<div
+		style="position: fixed; right: 0; max-height: 90vh; opacity: 0.1; bottom: 0;">
+
+	</div>
 	<!-- <img src="images/sunset-reduced.jpg" style="position: fixed; left: 0; max-height: 100vh; z-index: -2; width: 100%; top: 40px; opacity: 0.4; bottom: 0; height: 100%; object-fit: cover;" alt=""> -->
 	<!-- style="box-shadow: 0 1px 2px rgb(0 0 0 / 10%);" -->
 	<header class="header animationTop3">
@@ -67,14 +67,14 @@
 					<ul class="navbar-nav me-auto mt-2 mt-lg-0">
 						<li class="nav-item"><a class="nav-link active" href="#"
 							aria-current="page"
-							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Trang
+							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Trang
 								chủ <span class="visually-hidden">(current)</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="#"><small
-								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Điều
+								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Điều
 									khoản</small></a></li>
 						<li class="nav-item"><a class="nav-link" href="#"><small
-								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Quản
+								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Quản
 									lí</small></a></li>
 					</ul>
 					<form class="d-flex my-2 my-lg-0">
@@ -128,13 +128,11 @@
 		style="transition: 0.5s; margin-top: 70px;">
 		<div class="row">
 			<div class="col-md-6">
-				<div class="menuRight">
+				<div >
 					<div>
 						<b class="nhan">ĐĂNG BÀI</b>
 					</div>
-
 					<div>
-
 						<div class="write-post-container nenTrangChu img-thumbnail"
 							style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
 							<div class="user-profile">
@@ -145,7 +143,6 @@
 									</small>
 								</div>
 							</div>
-
 							<div class="post-upload-textarea">
 								<textarea data-bs-toggle="modal" href="#exampleModalToggle"
 									name="" placeholder="Bạn muốn đăng gì?" id="" cols="30"
@@ -163,35 +160,7 @@
 
 						</div>
 						<hr>
-						<div class="row">
-							<div class="col-6">
-								<div class="card">
-									<div class="card-header">
-										<h6 class="nhan">Lời mời kết bạn</h6>
-									</div>
-									<div class="card-body">
-										4 <br>
-										<h6>
-											<small>Xem tất cả>></small>
-										</h6>
-									</div>
-								</div>
-							</div>
-							<div class="col-6">
-								<div class="card">
-									<div class="card-header">
-										<h6 class="nhan">Danh sách bạn bè</h6>
-									</div>
-									<div class="card-body">
-										532 <br>
-										<h6>
-											<small>Xem tất cả>></small>
-										</h6>
-									</div>
-
-								</div>
-							</div>
-						</div>
+						
 					</div>
 				</div>
 				<div>
@@ -200,7 +169,7 @@
 				<c:forEach items="${DanhSachBv}" var="BaiViet">
 					<div
 						class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
-						style="margin-bottom: 20px; border-radius: 0;">
+						style="margin-bottom: 20px; border-radius: 0; box-shadow: 0 0 0;">
 						<div
 							style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
 							<div
@@ -210,7 +179,8 @@
 										<img src="images/${BaiViet.nguoiDung.anhDaiDien}"
 											class="img-thumbnail" alt="">
 										<div>
-											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br> <small>${BaiViet.ngayDang}</small>
+											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br>
+											<small style="font-size: 12px; color: #65676b">${BaiViet.ngayDang}</small>
 										</div>
 									</div>
 									<span class="tooltip2-text"> <a href="">
@@ -253,92 +223,110 @@
 								</div>
 							</div>
 							<a href="">
-								<div style="margin-top: 10px;">
+								<div style="margin-top: 10px; color: #847577">
 									${BaiViet.moTa}
 									<center>
-										<img class="lazy" data-src="images/caMap.jpg" width="100%"
-											alt=""
+										<img class="lazy" data-src="images/${BaiViet.hinhAnh}"
+											width="100%" alt=""
 											style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
 									</center>
-									<div class="post-reaction">
-										<div class="activity-icons">
-											<div>
-												<i class="fa-regular fa-thumbs-up"></i> &nbsp; ${BaiViet.luotThich}
-											</div>
-											<div>
-												<i class="fa-regular fa-comment"></i>&nbsp; ${BaiViet.luotBinhLuan}
-											</div>
-										</div>
+							</a>
+							<div class="post-reaction">
+								<div class="activity-icons">
+									<div>
+										<i class="fa-regular fa-thumbs-up"></i> &nbsp;
+										${BaiViet.luotThich}
+									</div>
+									<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
+										<i class="fa-regular fa-comment"></i>&nbsp;
+										${BaiViet.luotBinhLuan}
 									</div>
 								</div>
-							</a>
+							</div>
 						</div>
+
 					</div>
-				</c:forEach>
 			</div>
-			<div class="col-md-5 menuLeft"
-				style="position: fixed; top: 70px; right: 5%;">
-				<div>
-					<b class="nhan">ĐĂNG BÀI</b>
-				</div>
-				<div>
-					<div
-						class="write-post-container  img-thumbnail animate__animated animate__backInRight"
-						style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);   background-size: cover; border-radius: 0;">
-						<div class="user-profile">
-							<img src="images/avt.jpg" alt="">
-							<div>
-								<b class="nhan">Huỳnh Duy Quý</b> <br> <small> Công
-									khai <i class="fas fa-caret-down"></i>
-								</small>
-							</div>
-						</div>
-
-						<div class="post-upload-textarea">
-							<textarea data-bs-toggle="modal" href="#exampleModalToggle"
-								name="" placeholder="Bạn muốn đăng gì?" id="" cols="30" rows="1"></textarea>
-							<div class="add-post-links">
-								<button type="button" class="btn" data-bs-toggle="modal"
-									data-bs-target="#modalId">
-									<a href="#"><i class="fa-regular fa-image"></i> Photo/Video</a>
-								</button>
-							</div>
-						</div>
-					</div>
-					<hr>
-					<div class="row">
-						<div class="col-md-6 animate__animated animate__backInLeft">
-							<div class="card">
-								<div class="card-header">
-									<h6 class="nhan">Lời mời kết bạn</h6>
-								</div>
-								<div class="card-body">
-									4 <br>
-									<h6>
-										<small>Xem tất cả>></small>
-									</h6>
-								</div>
-
-							</div>
-						</div>
-						<div class="col-md-6 animate__animated animate__backInRight">
-							<div class="card">
-								<div class="card-header">
-									<h6 class="nhan">Danh sách bạn bè</h6>
-								</div>
-								<div class="card-body">
-									532 <br>
-									<h6>
-										<small>Xem tất cả>></small>
-									</h6>
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			</c:forEach>
 		</div>
+		<div class="col-md-5 menuLeft"
+			style="position: fixed; top: 70px; right: 5%;">
+			<div class="row animate__animated animate__backInLeft">
+				<div class="row" style="margin-left: 2px">
+				<div class="col-md-6">
+				<div 
+					style="background-color: #f2f2f2; border-radius: 5px; border: 1px solid grey; background: url(images/thoiThiet.webp); background-size: cover; color: #234662; padding: 0; width: 100%; max-height: 188px">
+					<div id="weather-info"
+						style="background-color: rgba(0, 0, 0, 0.4); margin: 0; padding: 10px; color: #F2E5C9;">
+						<h5 style="color: white">Dự báo thời tiết</h5>
+						<ul style="font-size: 13px">
+							<li><b>Thành phố:</b> <span id="city"></span></li>
+							<li><b>Nhiệt độ:</b> <span id="temperature"></span> °C</li>
+							<li><b>Mô tả:</b> <span id="description"></span></li>
+							<li><b>Độ ẩm:</b> <span id="humidity"></span>%</li>
+							<li><b>Tốc độ gió:</b> <span id="wind-speed"></span> m/s</li>
+						</ul>
+
+					</div>
+				</div>
+				<hr>
+				<div>
+				<div>
+                        <div class="user-profile">
+                            <img src="images/avt.jpg" class="img-thumbnail" alt="">
+                            <div>
+                                <label for="">Trần Văn Minh Híu</label>
+                                <small style="display: flex;">
+                                    <a class="dropdown-item" href="#"
+                                        style="background-color: rgba(234,229,224,0.8);border-color: rgba(90,79,72,1); font-size: small;">
+                                        <center>Đồng ý</center>
+                                    </a>
+                                    <a class="dropdown-item" href="#"
+                                        style="background-color: #A89386; color: white; font-size: small;">
+                                        <center>Xóa</center>
+                                    </a>
+                                </small>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="btn-group">
+                                <div class="dropdown-menu" aria-labelledby="triggerId" style="padding: 0;">
+                                    <a class="dropdown-item" href="#"
+                                        style="background-color: rgba(234,229,224,0.8);border-color: rgba(90,79,72,1);">
+                                        <center>Đồng ý</center>
+                                    </a>
+                                    <a class="dropdown-item" href="#" style="background-color: #A89386; color: white;">
+                                        <center>Xóa</center>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+				</div>
+				
+				<div class="col-md-6">
+					<label class="nhan" style="box-sizing: border-box; padding-left: 10px">Danh sách bạn bè(113)</label>
+					<br> <br>
+                        <div
+                            style=" display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                            <div class="user-profile">
+                                <img src="images/avt.jpg" class="img-thumbnail" alt="" style="border-radius: 50%;">
+                                <div>
+                                    <label for="">Huỳnh Tuấn Vỹ</label> <br>
+                                    <small style="font-size: 12px">Hoạt động: 1 phút trước</small>
+                                </div>
+                            </div>
+                            <div>
+                                <a href="#"><i class="fas fa-ellipsis-v"></i></a>
+                            </div>
+                        </div>
+				</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
 	</div>
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModalToggle" aria-hidden="true"
@@ -394,10 +382,29 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal hiện danh sách bình luận -->
+	<div class="modal fade" id="danhSachBinhLuan" tabindex="-1" role="dialog"
+                        aria-labelledby="modalTitleId" aria-hidden="true">
+                        <div class="modal-dialog modal-sm modal-fullscreen" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div data-bs-dismiss="modal" style="cursor: pointer;">X</div>
+                                        <div class="col-md-6 trai order-sm-2 col-xs-12 order-1">
+                                            
+                                        </div>
+                                        <div class="col-md-6 phai order-sm-1 col-xs-12">
+                                            
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
 	<!-- load ảnh -->
-
-
-
 	<script>
         let img = document.getElementById('img');
         let input = document.getElementById('inputGroupFile01');
@@ -406,7 +413,6 @@
                 img.src = URL.createObjectURL(input.files[0]);
         } 
     </script>
-	<script src="main.js"></script>
 
 	<script>
         function toggleDarkMode() {
@@ -431,8 +437,10 @@
         }
 
     </script>
-	<script src="${pageContext.request.contextPath}/lazy.js"></script>
 
+	<script src="${pageContext.request.contextPath}/loadComments.js"></script>
+	<script src="${pageContext.request.contextPath}/lazy.js"></script>
+	<script src="${pageContext.request.contextPath}/thoiTiet.js"></script>
 </body>
 
 </html>
