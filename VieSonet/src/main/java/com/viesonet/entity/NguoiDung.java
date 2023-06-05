@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "NguoiDung")
+@Table(name = "nguoiDung")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -82,6 +82,9 @@ public class NguoiDung {
 	
 	@OneToMany(mappedBy = "nguoiDung")
 	List<DanhSachBinhLuan> danhSachBinhLuan;
+
+
+
 	
 	
 	

@@ -6,17 +6,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import com.viesonet.entity.BaiViet;
-import com.viesonet.entity.NguoiDung;
 
-public interface BaiVietDAO extends JpaRepository<BaiViet, String> {
-	@Query("SELECT bv, COUNT(bv.danhSachBinhLuan) FROM BaiViet bv JOIN bv.danhSachBinhLuan GROUP BY bv")
-    List<Object[]> findAllBaiVietWithCommentCount();
-    
-    @Query("SELECT bv FROM BaiViet bv WHERE bv.sdt = :sdt")
-    List<BaiViet> findBySdt(@Param("sdt") String sdt, Sort sort);
-    
-    
+public interface BaiVietDAO extends JpaRepository<BaiViet, Integer> {
+	
+	List<BaiViet> findByNguoiDungSdtIn(List<String> sdtList, Sort sort);
+	 @Query("SELECT bv FROM BaiViet bv WHERE bv.sdt = :sdt")
+	  List<BaiViet> findBySdt(@Param("sdt") String sdt, Sort sort);
+	@Query("SELECT bv.moTa, bv.hinhAnh, bv.ngayDang, bv.luotThich, bv.luotBinhLuan,  bv.nguoiDung.hoTen, bv.nguoiDung.anhDaiDien, bv.nguoiDung.sdt FROM BaiViet bv WHERE bv.maBaiViet = :maBaiViet")
+	Object findBaiVietByMaBaiViet(@Param("maBaiViet") int maBaiViet);
+
+
 }
