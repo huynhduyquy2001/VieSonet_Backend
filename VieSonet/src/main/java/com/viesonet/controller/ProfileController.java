@@ -1,6 +1,7 @@
 package com.viesonet.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.viesonet.dao.BaiVietDao;
 import com.viesonet.dao.BanBeDAO;
+import com.viesonet.dao.CheDoDAO;
 import com.viesonet.dao.DanhSachBinhLuanDAO;
 import com.viesonet.dao.DanhSachKetBanDAO;
 import com.viesonet.dao.NguoiDungDAO;
@@ -30,6 +32,7 @@ import com.viesonet.entity.BanBe;
 import com.viesonet.entity.BinhLuanResponse;
 import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.NguoiDung;
+import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
 
 import jakarta.servlet.http.Cookie;
@@ -56,8 +59,13 @@ public class ProfileController {
 	DanhSachKetBanDAO dskbDao;
 	
 	@Autowired
+	CheDoDAO cheDoDao;
+	
+	@Autowired
 	SessionService session;
 	
+	@Autowired
+	ParamService param;
 //	String sdt = "0939790002";
 //	NguoiDung nguoiDung = null;
 	@RequestMapping("/profile")
@@ -119,15 +127,6 @@ public class ProfileController {
 		return "trangCaNhan";
 	}
 	
-	@ResponseBody
-	@GetMapping("/binhluan-profile/{maBaiViet}")
-	public BinhLuanResponse xemBinhLuanCaNhan(@PathVariable int maBaiViet) {
-
-		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
-		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet);
-
-		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
-	}
 	
 	@RequestMapping("/nguoidung/update/{sdt}")
     public String thaydoiNguoiDung(@ModelAttribute("sdt") NguoiDung nguoiDung) {
@@ -144,14 +143,14 @@ public class ProfileController {
 			baiDang.setHinhAnh(photofile.getOriginalFilename());
 		}
 		String sdt = session.get("sdt");
-		int cheDo = paramService.getInt("cheDo", 1);
-		baiDang.setMoTa(paramService.getString("moTaBaiDang", ""));
+		int cheDo = param.getInt("cheDo", 1);
+		baiDang.setMoTa(param.getString("moTaBaiDang", ""));
 		baiDang.setNgayDang(new Date());
 		baiDang.setLuotThich(0);
 		baiDang.setLuotBinhLuan(0);
 		baiDang.setTrangThai(true);
 		baiDang.setCheDo(cheDoDao.getById(cheDo));
-		baiDang.setNguoiDung(nguoiDungDAO.getById(sdt));
+		baiDang.setNguoiDung(nguoiDungDao.getById(sdt));
 		baiVietDao.saveAndFlush(baiDang);
 		return "redirect:/";
 		
