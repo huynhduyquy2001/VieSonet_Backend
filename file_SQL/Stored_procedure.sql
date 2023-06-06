@@ -85,32 +85,21 @@ EXEC sp_ThongKeSoLuongDangKyTheoThang  @nam = 2023 -->Truyền tham số để x
 
 --3.Thống kê bài viết có số lượt thích cao nhất theo ngày tháng năm-- 
 --Lệnh tạo
-CREATE PROCEDURE sp_ThongKeSoLuotThichCaoNhat
-    @month DATE
-AS
-BEGIN
-    SELECT TOP 10 
-        BaiViet.hinhAnh AS HinhAnh,
-        BaiViet.maBaiViet AS MaBaiViet,
-        nguoiDung.hoTen AS NguoiDang,
-        BaiViet.moTa AS MoTa,
-        COUNT(DanhSachYeuThich.maBaiViet) AS LuotThich
-    FROM 
-        DanhSachYeuThich
-        JOIN BaiViet ON DanhSachYeuThich.maBaiViet = BaiViet.maBaiViet
-        JOIN nguoiDung ON BaiViet.sdt = nguoiDung.sdt
-    WHERE 
-        DanhSachYeuThich.ngayYeuThich BETWEEN DATEFROMPARTS(YEAR(@month), MONTH(@month), 1) AND EOMONTH(@month)
-    GROUP BY 
-        BaiViet.hinhAnh,
-        BaiViet.maBaiViet,
-        nguoiDung.hoTen,
-        BaiViet.moTa
-    ORDER BY 
-        LuotThich DESC;
-END
-EXEC sp_ThongKeSoLuotThichCaoNhat '2023-05-22'
 
-
-SELECT DISTINCT YEAR(ngayTao) as 'Nam' FROM nguoiDung order by YEAR(ngayToCao) DESC;
-
+CREATE PROC sp_ThongKeSoLuotThichCaoNhat(@month date)
+as begin
+select top 10 BaiViet.hinhAnh HinhAnh,
+       BaiViet.maBaiViet MaBaiViet,
+	   nguoiDung.hoTen NguoiDang,
+	   BaiViet.moTa MoTa,
+	   COUNT(DanhSachYeuThich.maBaiViet) LuotThich
+from DanhSachYeuThich, BaiViet, nguoiDung
+where DanhSachYeuThich.maBaiViet=BaiViet.maBaiViet and BaiViet.sdt = nguoiDung.sdt
+and DanhSachYeuThich.ngayYeuThich = @month --> Điều kiện
+group by BaiViet.hinhAnh, BaiViet.maBaiViet, nguoiDung.hoTen, BaiViet.moTa
+order by LuotThich DESC
+end
+--Lệnh chạy chương trình xem kết quả
+EXEC sp_ThongKeSoLuotThichCaoNhat '2023-05-25' -->Truyền tham số để xét điều kiện
+--Lệnh xóa proc
+DROP PROC sp_ThongKeSoLuotThichCaoNhat 
