@@ -83,6 +83,19 @@ public class ThongKeController {
 			    String thongKeJson2 = objectMapper.writeValueAsString(thongKeDangKy);
 			    m.addAttribute("thongKeJson2", thongKeJson2);
 			    
+			    String thongKe4 = "EXEC sp_ThongKeSoLuotThichCaoNhat @month=?";
+				List<Map<String, Object>> rows4 = jdbcTemplate.queryForList(thongKe4, new Object[]{LocalDate.now()});
+				List<ThongKeLuotThich> thongKeLuotThich = new ArrayList<>();
+			      for (Map<String, Object> row : rows4) {
+			          ThongKeLuotThich tk4 = new ThongKeLuotThich();
+			          tk4.setHinhAnh(String.valueOf(row.get("HinhAnh")));
+			          tk4.setMaBaiViet(Integer.parseInt(String.valueOf(row.get("MaBaiViet"))));
+			          tk4.setNguoiDang(String.valueOf(row.get("NguoiDang")));
+			          tk4.setMoTa(String.valueOf(row.get("MoTa")));
+			          tk4.setLuotThich(Integer.parseInt(String.valueOf(row.get("LuotThich"))));
+			          thongKeLuotThich.add(tk4);
+			      }    
+			     m.addAttribute("tkLuotThich", thongKeLuotThich);
 		return "thongKe";
 	}
 	
@@ -143,5 +156,31 @@ public class ThongKeController {
 		    String thongKeJson2 = objectMapper.writeValueAsString(thongKeDangKy);
 		    
 		    return thongKeJson2;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getThongKe3")
+	public String thongKe3(@RequestParam String Date) throws JsonProcessingException {
+		    String date;
+		    if(Date.equals("")) {
+		    	date = String.valueOf(LocalDate.now());
+		    }else {
+		    	date = Date;
+		    }
+		 	String thongKe4 = "EXEC sp_ThongKeSoLuotThichCaoNhat @month=?";
+			List<Map<String, Object>> rows4 = jdbcTemplate.queryForList(thongKe4, new Object[]{date});
+			List<ThongKeLuotThich> thongKeLuotThich = new ArrayList<>();
+		      for (Map<String, Object> row : rows4) {
+		          ThongKeLuotThich tk4 = new ThongKeLuotThich();
+		          tk4.setHinhAnh(String.valueOf(row.get("HinhAnh")));
+		          tk4.setMaBaiViet(Integer.parseInt(String.valueOf(row.get("MaBaiViet"))));
+		          tk4.setNguoiDang(String.valueOf(row.get("NguoiDang")));
+		          tk4.setMoTa(String.valueOf(row.get("MoTa")));
+		          tk4.setLuotThich(Integer.parseInt(String.valueOf(row.get("LuotThich"))));
+		          thongKeLuotThich.add(tk4);
+		      }    
+		      ObjectMapper objectMapper = new ObjectMapper();
+			    String thongKeJson3 = objectMapper.writeValueAsString(thongKeLuotThich);
+		return thongKeJson3;
 	}
 }

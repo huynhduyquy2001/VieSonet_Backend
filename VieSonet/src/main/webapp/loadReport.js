@@ -21,7 +21,11 @@ function thongKe1() {
 			for (var i = 0; i < dsBaoCao.length; i++) {
 				soLuotBaoCao.push(dsBaoCao[i].soLuotBaoCao)
 			}
-
+			//xóa biểu đồ có trước đó
+			let bieuDo = document.getElementById("visitors-chart");
+			bieuDo.innerHTML = "";
+			//tạo biểu đồ mới
+			bieuDo.innerHTML += "<canvas id='visitors-chart' ></canvas>"
 			//Vẽ biểu đồ
 			// Lấy thẻ canvas và lưu vào biến myChart
 			var myChart = document.getElementById('visitors-chart').getContext('2d');
@@ -36,6 +40,7 @@ function thongKe1() {
 				data: {
 					labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
 					datasets: [{
+					
 						type: 'line',
 						//thông số đường line 1
 						data: soBaiVietViPham,
@@ -84,8 +89,8 @@ function thongKe1() {
 							},
 							ticks: $.extend({
 								beginAtZero: true,
-								// thông số max của chart
-								suggestedMax: 30
+								max: 20,
+    				            stepSize: 5
 							}, ticksStyle)
 						}],
 						xAxes: [{
@@ -124,7 +129,10 @@ function thongKe2() {
 			for (var i = 0; i < dsDangKy.length; i++) {
 				slDangKy.push(dsDangKy[i].soLuotDangKy)
 			}
-
+			let bieuDo = document.getElementById("bieuDo2");
+			bieuDo.innerHTML = "";
+			
+			bieuDo.innerHTML += "<canvas id='myChart' height='150'></canvas>";
 			//Vẽ biểu đồ
 			var ctx = document.getElementById('myChart').getContext('2d');
 			var chartData = {
@@ -141,21 +149,68 @@ function thongKe2() {
 					}
 				]
 			};
-			var chartOptions = {
-				responsive: true,
-				scales: {
-					yAxes: [{
-						ticks: {
-							beginAtZero: true
-						}
-					}]
-				}
-			};
 			// tạo biểu đồ
 			var myChart = new Chart(ctx, {
 				type: 'bar',
 				data: chartData,
-				options: chartOptions
+				options: {
+					legend: {
+						display: false, // ẩn nút click
+					},
+					scales: {
+    				            yAxes: [{
+    				            	ticks: {
+    				                    beginAtZero: true,
+    				                 	max: 20,
+    				                    stepSize: 5
+    				                  }
+    				            }]
+    				          }
+				},
+			});
+		},
+		error: function(xhr, status, error) {
+			// Xử lý lỗi nếu có
+			console.log(error);
+		}
+	});
+}
+
+function thongKe3() {
+	var inputDate = document.getElementById("date");
+	var Date = inputDate.value;
+
+	$.ajax({
+		url: "/getThongKe3",
+		type: "POST",
+		data: {
+			Date: Date
+		},
+		dataType: "json",
+		success: function(data) {
+			let myDiv = document.getElementById("tableLoad");
+			myDiv.innerHTML = "";
+			data.forEach(function(item) {
+				var table = " <tr>"
+					+ "<td class='text-center'>"
+					+ "<img alt='" + item.hinhAnh + "' class='table-avatar' src='/images/" + item.hinhAnh + "'"
+					+ "width='65%' style='border-radius: 6px;'>"
+					+ "</td>"
+					+ "<td style='padding-top: 25px;'>"
+					+ "" + item.maBaiViet
+					+ "</td>"
+					+ "<td style='padding-top: 25px;'>"
+					+ "" + item.nguoiDang
+					+ "</td>"
+					+ "<td style='padding-top: 25px;'>"
+					+ "" + item.moTa
+					+ "</td>"
+					+ "<td style='padding-top: 25px;' class='text-center'>"
+					+ "" + item.luotThich
+					+ "</td>"
+					+ "</tr>";
+
+				myDiv.innerHTML += table;
 			});
 		},
 		error: function(xhr, status, error) {

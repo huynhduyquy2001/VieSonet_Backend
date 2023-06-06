@@ -238,7 +238,7 @@
                          </div>
                             <div class="card-body">
                             	<br>
-                                <div class="position-relative mb-4">
+                                <div class="position-relative mb-4" id="bieuDo1">
                                     <canvas id="visitors-chart" ></canvas>
                                 </div>
                                 <div class="d-flex flex-row justify-content-end">
@@ -269,7 +269,7 @@
                          </div>   		
                          </div> 
                             <div class="card-body">
-                                <div class="position-relative mb-4">
+                                <div class="position-relative mb-4" id="bieuDo2">
                                     <canvas id="myChart" height="150"></canvas>
                                 </div>
                             </div>
@@ -280,8 +280,8 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="input-group mt-2">
-                                <input type="date" class="form-control">
-                                <button type="button" class="btn btn-info">Lọc</button>
+                                <input type="date" id="date" name="date" class="form-control">
+                                <button type="button" onclick="thongKe3()" class="btn btn-info">Lọc</button>
                             </div>
                             <hr width="450px">
                         </div>
@@ -300,40 +300,35 @@
                                                 <th style="width: 15%">
                                                     Người đăng
                                                 </th>
-                                                <th style="width: 20%;">
+                                                <th style="width: 30%;">
                                                     Mô tả
                                                 </th>
-                                                <th class="text-center" style="width: 15%">#</th>
+                                                <th style="width: 10%"> 
+                                                    Lượt thích
+                                                </th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
+                                        <tbody id="tableLoad">
+                                            <c:forEach var="tk" items="${tkLuotThich}">
+                                            	 <tr>
                                                 <td class="text-center">
-                                                    <img alt="Avatar" class="table-avatar" src="images/avt.jpg"
+                                                    <img alt="${tk.hinhAnh}" class="table-avatar" src="/images/${tk.hinhAnh}"
                                                         width="65%" style="border-radius: 6px;">
                                                 </td>
                                                 <td style="padding-top: 25px;">
-                                                    1101N
+                                                    ${tk.maBaiViet}
                                                 </td>
                                                 <td style="padding-top: 25px;">
-                                                    Nam
+                                                    ${tk.nguoiDang}
                                                 </td>
-                                                <td style="padding-top: 25px; ">
-                                                    nhanvien123@gmail.com
+                                                <td style="padding-top: 25px;">
+                                                    ${tk.moTa}
                                                 </td>
-                                                <td class="text-center"
-                                                    style="padding-top: 25px;">
-                                                    <div class="dropdown">
-                                                        <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                                          <i style="width: 30px; height: 20px;" class="fas fa-ellipsis-v"></i>
-                                                        </a>
-                                                      
-                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                            <li><a class="dropdown-item btn btn-danger" href="#"><i class="fa-light fa-memo-circle-info"></i> Chi tiết</a></li>
-                                                        </ul>
-                                                      </div>
+                                                <td style="padding-top: 25px;" class="text-center">
+                                                    ${tk.luotThich}
                                                 </td>
                                             </tr>
+                                            </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
@@ -375,6 +370,7 @@
         				data: {
                             labels: ["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"],
                             datasets: [{
+                            	 
                                 type: 'line',
                                 //thông số đường line 1
                                 data: data1,
@@ -423,8 +419,8 @@
                                     },
                                     ticks: $.extend({
                                         beginAtZero: true,
-                                        // thông số max của chart
-                                        suggestedMax: 30
+                                        max: 20,
+    				                    stepSize: 5
                                     }, ticksStyle)
                                 }],
                                 xAxes: [{
@@ -446,35 +442,39 @@
             }
             var ctx = document.getElementById('myChart').getContext('2d');
             var chartData = {
-                    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-                    datasets: [
-                        {
-                            label: 'Số lượt đăng ký',
-                            backgroundColor: 'rgba(255,99,132,0.2)',
-                            borderColor: 'rgba(255,99,132,1)',
-                            borderWidth: 1,
-                            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-                            hoverBorderColor: 'rgba(255,99,132,1)',
-                            data: data3
-                        }
-                    ]
-                };
-            var chartOptions = {
-                    responsive: true,
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero:true
-                            }
-                        }]
-                    }
-                };
-         // tạo biểu đồ
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: chartData,
-                options: chartOptions
-            });
+    				labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+    				datasets: [
+    					{
+    					
+    						backgroundColor: 'rgba(255,99,132,0.2)',
+    						borderColor: 'rgba(255,99,132,1)',
+    						borderWidth: 1,
+    						hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+    						hoverBorderColor: 'rgba(255,99,132,1)',
+    						data: data3
+    					}
+    				]
+    			};
+    			// tạo biểu đồ
+    			var myChart2 = new Chart(ctx, {
+    				type: 'bar',
+    				data: chartData,
+    				options: {
+    				    legend: {
+    				            display: false, // ẩn nút click
+    				        },
+    				        scales: {
+    				            yAxes: [{
+    				            	ticks: {
+    				                    beginAtZero: true,
+    				                 	max: 20,
+    				                    stepSize: 5
+    				                  }
+    				            }]
+    				          }
+    				  },
+    			});
+
         })
     </script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/loadReport.js"></script>
