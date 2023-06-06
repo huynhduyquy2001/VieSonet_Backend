@@ -60,6 +60,6 @@ public class DangNhapController {
 			return "dangNhap";
 		}
 
-		return "redirect:/index";
+		return "redirect:/";
 	}
 }

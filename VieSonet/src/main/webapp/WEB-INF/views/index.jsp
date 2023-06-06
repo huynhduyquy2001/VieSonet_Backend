@@ -132,7 +132,8 @@
 						<b class="nhan">ĐĂNG BÀI</b>
 					</div>
 					<div>
-						<div class="write-post-container nenTrangChu img-thumbnail"
+						<div
+							class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
 							style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
 							<div class="user-profile">
 								<img src="images/avt.jpg" alt="">
@@ -153,13 +154,9 @@
 											Photo/Video</a>
 									</button>
 								</div>
-
-
 							</div>
-
 						</div>
 						<hr>
-
 					</div>
 				</div>
 				<div>
@@ -248,9 +245,9 @@
 			</div>
 			</c:forEach>
 		</div>
-		<div class="col-md-5 menuLeft"
+		<div class="col-md-5 menuLeft animate__animated animate__backInRight"
 			style="position: fixed; top: 70px; right: 5%;">
-			<div class="row animate__animated animate__backInLeft">
+			<div class="row ">
 				<div class="row" style="margin-left: 2px">
 					<div class="col-md-6">
 						<div
@@ -349,44 +346,50 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-					<div class="user-profile">
-						<img src="images/avt.jpg" alt="">
-						<div>
-							<p>Alex Carry</p>
-							<small>
-								<div>
-									<select style="border: none; background-color: transparent;">
-										<option selected>Công khai</option>
-										<option value="">Bạn bè</option>
-										<option value="">Chỉ mình tôi</option>
-									</select>
-								</div>
-							</small>
+				<form action="/index/dangbai" method="post"
+					 enctype="multipart/form-data">
+					<div class="modal-body">
+						<div class="user-profile">
+							<img src="images/avt.jpg" alt="">
+							<div>
+								<label>Alex Carry
+									</p> <small style="font-size: 12px">
+										<div>
+											<select name="cheDo"
+												style="border: none; background-color: transparent;">
+												<option selected value="1">Công khai</option>
+												<option value="2">Bạn bè</option>
+												<option value="3">Chỉ mình tôi</option>
+											</select>
+										</div>
+								</small>
+							</div>
 						</div>
-					</div>
-					<br>
-					<textarea name="" placeholder="Bạn muốn đăng gì?" id="" cols="30"
-						rows="3"
-						style="width: 100%; border: 0px; outline: none; border-bottom: 1px solid #ccc; background: transparent; resize: none;"></textarea>
-					<br>
-					<center>
-						<img id="img" src="" width="45%"
-							style="border-radius: 10px; border: 1px solid rgb(184, 182, 182)">
-					</center>
-				</div>
-				<div class="modal-footer">
-					<div class="input-group mb-3">
-						<label class="input-group-text" for="inputGroupFile01"> <i
-							class="fa-regular fa-image"></i>Photo/Video
-						</label> <input type="file" class="form-control" id="inputGroupFile01">
-					</div>
+						<br>
+						<textarea name="moTaBaiDang" placeholder="Bạn muốn đăng gì?" id=""
+							cols="30" rows="3"
+							style="width: 100%; border: 0px; outline: none; border-bottom: 1px solid #ccc; background: transparent; resize: none;"></textarea>
 
-					<button
-						style="width: 500px; background-color: #5A4F48; border: none;"
-						class="btn btn-primary" data-bs-target="#exampleModalToggle2"
-						data-bs-toggle="modal" data-bs-dismiss="modal">Đăng bài</button>
-				</div>
+						<br>
+						<center>
+							<img id="img" src="" width="45%"
+								style="border-radius: 10px; border: 1px solid rgb(184, 182, 182)">
+						</center>
+					</div>
+					<div class="modal-footer">
+						<div class="input-group mb-3">
+							<label class="input-group-text" for="inputGroupFile01"> <i
+								class="fa-regular fa-image"></i>Photo/Video
+							</label> <input type="file" class="form-control" name="photo_file"
+								id="inputGroupFile01">
+						</div>
+
+						<button
+							style="width: 500px; background-color: #5A4F48; border: none;"
+							class="btn btn-primary" data-bs-target="#exampleModalToggle2"
+							data-bs-toggle="modal" data-bs-dismiss="modal">Đăng bài</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
