@@ -58,9 +58,10 @@ public class DangNhapController {
 			return "redirect:/profile";
 		} else {
 			m.addAttribute("message", "Thông tin đăng nhập không chính xác !");
+			return "dangNhap";
 		}
 
-		return "dangNhap";
+		return "redirect:/";
 	}
 
 }

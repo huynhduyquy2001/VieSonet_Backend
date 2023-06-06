@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.viesonet.entity.BaiViet;
 
-public interface BaiVietDAO extends JpaRepository<BaiViet, Integer> {
+public interface BaiVietDao extends JpaRepository<BaiViet, Integer> {
 	
 	List<BaiViet> findByNguoiDungSdtIn(List<String> sdtList, Sort sort);
 	 @Query("SELECT bv FROM BaiViet bv WHERE bv.sdt = :sdt")
