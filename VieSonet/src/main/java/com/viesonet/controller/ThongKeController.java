@@ -21,21 +21,74 @@ public class ThongKeController {
     private JdbcTemplate jdbcTemplate;
 	
 	@RequestMapping("/thongKe")
-	public String thongKe(Model m) {
-		String layNam = "EXEC sp_CacNamHienCo";
+	public String thongKe(Model m) throws JsonProcessingException {
+		String layNam = "SELECT DISTINCT YEAR(ngayToCao) as 'Nam' FROM BaiVietViPham order by YEAR(ngayToCao) DESC";
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(layNam, new Object[]{});
-		List<ListYear> NamHienCo = new ArrayList<>();
+		List<Object> NamHienCo = new ArrayList<>();
 	      for (Map<String, Object> row : rows) {
 	          ListYear ls = new ListYear();
 	          ls.setNam(String.valueOf(row.get("Nam")));
 	          NamHienCo.add(ls);
 	      }
 	    m.addAttribute("NamHienCo", NamHienCo);
+	    
+	    String thongKe1 = "EXEC sp_ThongKeBaiVietViPhamTheoThang @Nam=?";
+		List<Map<String, Object>> rows1 = jdbcTemplate.queryForList(thongKe1, new Object[]{LocalDate.now().getYear()});
+		List<Object> dsBaiVietViPham = new ArrayList<>();
+	      for (Map<String, Object> row : rows1) {
+	          ThongKeViPham tk = new ThongKeViPham();
+	          tk.setThang(Integer.parseInt(String.valueOf(row.get("Thang"))));
+	          tk.setSoBaiVietViPham(Integer.parseInt(String.valueOf(row.get("SoBaiVietViPham"))));
+	          dsBaiVietViPham.add(tk);
+	      }
+	      ObjectMapper objectMapper = new ObjectMapper();
+	    // Chuyển đổi danh sách thành chuỗi JSON và gửi nó đến JSP
+	    String thongKeJson = objectMapper.writeValueAsString(dsBaiVietViPham);
+	    m.addAttribute("thongKeJson", thongKeJson);
+	    
+	    String thongKe2 = "EXEC sp_ThongKeSoLuotBaoCaoTheoThang @Nam=?";
+		List<Map<String, Object>> rows2 = jdbcTemplate.queryForList(thongKe2, new Object[]{LocalDate.now().getYear()});
+		List<Object> dsSoLuotBaoCao = new ArrayList<>();
+	      for (Map<String, Object> row : rows2) {
+	          ThongKeSoLuotBaoCao tk1 = new ThongKeSoLuotBaoCao();
+	          tk1.setThang(Integer.parseInt(String.valueOf(row.get("Thang"))));
+	          tk1.setSoLuotBaoCao(Integer.parseInt(String.valueOf(row.get("SoLuotBaoCao"))));
+	          dsSoLuotBaoCao.add(tk1);
+	      }
+	   // Chuyển đổi danh sách thành chuỗi JSON và gửi nó đến JSP
+		    String thongKeJson1 = objectMapper.writeValueAsString(dsSoLuotBaoCao);
+		    m.addAttribute("thongKeJson1", thongKeJson1);
+	      
+		  
+		    String layNam1 = "SELECT DISTINCT YEAR(ngayTao) as 'Nam' FROM nguoiDung order by YEAR(ngayTao) DESC";
+			List<Map<String, Object>> row1 = jdbcTemplate.queryForList(layNam1, new Object[]{});
+			List<Object> NamHienCo1 = new ArrayList<>();
+		      for (Map<String, Object> row : row1) {
+		          ListYear ls = new ListYear();
+		          ls.setNam(String.valueOf(row.get("Nam")));
+		          NamHienCo1.add(ls);
+		      }
+		    m.addAttribute("NamHienCo1", NamHienCo1);
+		    
+		    String thongKe3 = "EXEC sp_ThongKeSoLuongDangKyTheoThang @Nam=?";
+			List<Map<String, Object>> rows3 = jdbcTemplate.queryForList(thongKe3, new Object[]{LocalDate.now().getYear()});
+			List<Object> thongKeDangKy = new ArrayList<>();
+		      for (Map<String, Object> row : rows3) {
+		          ThongKeDangKy tk3 = new ThongKeDangKy();
+		          tk3.setThang(Integer.parseInt(String.valueOf(row.get("Thang"))));
+		          tk3.setSoLuotDangKy(Integer.parseInt(String.valueOf(row.get("SoLuongDangKy"))));
+		          thongKeDangKy.add(tk3);
+		      }
+		   // Chuyển đổi danh sách thành chuỗi JSON và gửi nó đến JSP
+			    String thongKeJson2 = objectMapper.writeValueAsString(thongKeDangKy);
+			    m.addAttribute("thongKeJson2", thongKeJson2);
+			    
 		return "thongKe";
 	}
 	
+	@ResponseBody
 	@RequestMapping("/getThongKe")
-	public String getThongKe(@RequestParam String Nam, Model m) {
+	public ThongKeResponse ThongKe1(@RequestParam String Nam, Model m) throws JsonProcessingException {
 		int nam1;
 		if(Nam.equals("0")) {
 			nam1 = LocalDate.now().getYear();
@@ -45,18 +98,50 @@ public class ThongKeController {
 		
 		String thongKe1 = "EXEC sp_ThongKeBaiVietViPhamTheoThang @Nam=?";
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(thongKe1, new Object[]{nam1});
-		List<ThongKeViPham> list = new ArrayList<>();
+		List<Object> dsBaiVietViPham = new ArrayList<>();
 	      for (Map<String, Object> row : rows) {
 	          ThongKeViPham tk = new ThongKeViPham();
 	          tk.setThang(Integer.parseInt(String.valueOf(row.get("Thang"))));
 	          tk.setSoBaiVietViPham(Integer.parseInt(String.valueOf(row.get("SoBaiVietViPham"))));
-	          list.add(tk);
+	          dsBaiVietViPham.add(tk);
 	      }
-	      m.addAttribute("tk", list);
-//	   // Chuyển đổi danh sách thành chuỗi JSON và gửi nó đến JSP
-//	        ObjectMapper objectMapper = new ObjectMapper();
-//	        String thongKeJson = objectMapper.writeValueAsString(list);
-//	        
-		    return "thongKe";
+	        
+	        String thongKe2 = "EXEC sp_ThongKeSoLuotBaoCaoTheoThang @Nam=?";
+			List<Map<String, Object>> rows1 = jdbcTemplate.queryForList(thongKe2, new Object[]{nam1});
+			List<Object> dsSoLuotBaoCao = new ArrayList<>();
+		      for (Map<String, Object> row : rows1) {
+		          ThongKeSoLuotBaoCao tk1 = new ThongKeSoLuotBaoCao();
+		          tk1.setThang(Integer.parseInt(String.valueOf(row.get("Thang"))));
+		          tk1.setSoLuotBaoCao(Integer.parseInt(String.valueOf(row.get("SoLuotBaoCao"))));
+		          dsSoLuotBaoCao.add(tk1);
+		      }
+		   
+		    return new ThongKeResponse(dsBaiVietViPham, dsSoLuotBaoCao);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getThongKe2")
+	public String ThongKe2(@RequestParam String Nam, Model m) throws JsonProcessingException {
+		int nam1;
+		if(Nam.equals("0")) {
+			nam1 = LocalDate.now().getYear();
+		}else {
+			nam1 = Integer.parseInt(Nam);
+		}
+		
+		String thongKe3 = "EXEC sp_ThongKeSoLuongDangKyTheoThang @Nam=?";
+		List<Map<String, Object>> rows3 = jdbcTemplate.queryForList(thongKe3, new Object[]{nam1});
+		List<Object> thongKeDangKy = new ArrayList<>();
+	      for (Map<String, Object> row : rows3) {
+	          ThongKeDangKy tk3 = new ThongKeDangKy();
+	          tk3.setThang(Integer.parseInt(String.valueOf(row.get("Thang"))));
+	          tk3.setSoLuotDangKy(Integer.parseInt(String.valueOf(row.get("SoLuongDangKy"))));
+	          thongKeDangKy.add(tk3);
+	      }
+	   // Chuyển đổi danh sách thành chuỗi JSON và gửi nó đến JSP
+	      	ObjectMapper objectMapper = new ObjectMapper();
+		    String thongKeJson2 = objectMapper.writeValueAsString(thongKeDangKy);
+		    
+		    return thongKeJson2;
 	}
 }

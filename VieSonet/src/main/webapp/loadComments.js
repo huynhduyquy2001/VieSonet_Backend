@@ -1,4 +1,4 @@
-function loadBinhLuan(maBaiViet) {
+ function loadBinhLuan(maBaiViet) {
 	$.ajax({
 		url: "/binhluan/" + maBaiViet,
 		type: "GET",

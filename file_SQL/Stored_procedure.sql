@@ -111,12 +111,6 @@ BEGIN
 END
 EXEC sp_ThongKeSoLuotThichCaoNhat '2023-05-22'
 
-CREATE proc sp_CacNamHienCo
-as
-begin
-SELECT DISTINCT YEAR(ngayToCao) Nam
 
-FROM BaiVietViPham;
-end
+SELECT DISTINCT YEAR(ngayTao) as 'Nam' FROM nguoiDung order by YEAR(ngayToCao) DESC;
 
-exec sp_CacNamHienCo

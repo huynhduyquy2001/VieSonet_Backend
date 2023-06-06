@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="fr" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="fr"%>
 <!doctype html> 
 <html lang="en">
 <head>
@@ -194,7 +194,7 @@
                         </li>
                         
                         <li style="margin-bottom: 20px;" class="ql-link">
-                            <a href="#" class="nav-link" style="border-radius: 0;">
+                            <a href="/thongKe" class="nav-link" style="border-radius: 0;">
                                 <i class="fa-solid fa-chart-column"></i> &nbsp;&nbsp;
                                 <small><label for="">Thống kê</label></small>
                             </a>
@@ -225,19 +225,16 @@
                         aria-labelledby="pills-home-tab" tabindex="0">
                         <!-- Chart line -->
                         <div class="card"> <br>
-                        div class="col-8"> 
-                         <div class="input-group">
-                         &nbsp&nbsp&nbsp
-                         		<form action="/getThongKe" method="POST">
-                         			<select class="form-control" name="Nam">
+                        <div class="col-4" style="padding-left: 20px"> 
+                         		<form class="input-group">
+                         			<select class="form-control" name="Nam" id="Nam">
                             			<option value="0" selected="selected">Chọn năm</option>
                             			<c:forEach var="n" items="${NamHienCo}">
                             				<option value="${n.nam}">${n.nam}</option>
                             			</c:forEach>
                             	</select>
-                            	<button class="btn btn-primary">Xem</button>
-                         		</form>
-                         </div>   		
+                            	<button onclick="thongKe1()" type="button" class="btn btn-primary">Xem</button>
+                         		</form>		
                          </div>
                             <div class="card-body">
                             	<br>
@@ -264,11 +261,11 @@
                          &nbsp&nbsp&nbsp
                          		<select class="form-control" id="chonNam">
                             			<option value="0" selected="selected">Chọn năm</option>
-                            			<c:forEach var="n" items="${NamHienCo}">
+                            			<c:forEach var="n" items="${NamHienCo1}">
                             				<option value="${n.nam}">${n.nam}</option>
                             			</c:forEach>
                             	</select>
-                            	<button onclick="" class="btn btn-primary">Xem</button>
+                            	<button onclick="thongKe2()" type="button" class="btn btn-primary">Xem</button>
                          </div>   		
                          </div> 
                             <div class="card-body">
@@ -349,141 +346,141 @@
     </div>
     </div>
     <!-- Chart -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <script>
-        //1
+        //Biểu đồ 1
         $(function () {
-            'use strict'
+        	var dsBaiVietViPham = ${thongKeJson};
+        	var dsSoLuotBaoCao = ${thongKeJson1};
+        	var data1= [];
+        	var data2 = [];
+        	for(var i = 0; i<dsBaiVietViPham.length; i++){
+        		data1.push(dsBaiVietViPham[i].soBaiVietViPham) 
+        		
+        	}
+        	for(var i = 0; i<dsSoLuotBaoCao.length; i++){
+        		data2.push(dsSoLuotBaoCao[i].soLuotBaoCao) 
+        		
+        	}
+        	//Vẽ biểu đồ
+        			// Lấy thẻ canvas và lưu vào biến myChart
+        			var myChart1 = document.getElementById('visitors-chart').getContext('2d');
 
-            var ticksStyle = {
-                fontColor: '#495057',
-                fontStyle: 'bold'
-            }
-            
-            var mode = 'index'
-            var intersect = true
-            var $visitorsChart = $('#visitors-chart')
-
-            var data = []
-            var thongKe = ${tk}
-            for(var i = 0; i < thongKe.length; i++){
-            	data = thongKe[i].thang;
-            }
-            var visitorsChart = new Chart($visitorsChart, {
-                data: {
-                    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-                    datasets: [{
-                        type: 'line',
-                        //thông số đường line 1
-                        data: data,
-                        backgroundColor: 'transparent',
-                        borderColor: '#3B998B',
-                        pointBorderColor: '#3B998B',
-                        pointBackgroundColor: '#3B998B',
-                        fill: false
-                        // pointHoverBackgroundColor: '#007bff',
-                        // pointHoverBorderColor    : '#007bff'
-                    },
-                    {
-                        type: 'line',
-                        //thông số đường line 2
-                        data: [1, 21, 13, 35, 51, 8, 20, 14, 16, 32, 21, 12],
-                        backgroundColor: 'tansparent',
-                        borderColor: '#E53F31',
-                        pointBorderColor: '#E53F31',
-                        pointBackgroundColor: '#E53F31',
-                        fill: false
-                        // pointHoverBackgroundColor: '#ced4da',
-                        // pointHoverBorderColor    : '#ced4da'
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    tooltips: {
-                        mode: mode,
-                        intersect: intersect
-                    },
-                    hover: {
-                        mode: mode,
-                        intersect: intersect
-                    },
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                        yAxes: [{
-                            // display: false,
-                            gridLines: {
-                                display: true,
-                                lineWidth: '4px',
-                                color: 'rgba(0, 0, 0, .2)',
-                                zeroLineColor: 'transparent'
+        			// Tạo biểu đồ đường
+        			var ticksStyle = {
+                        fontColor: '#495057',
+                        fontStyle: 'bold'
+                    }
+                    
+        			var chart1 = new Chart(myChart1, {
+        				data: {
+                            labels: ["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"],
+                            datasets: [{
+                                type: 'line',
+                                //thông số đường line 1
+                                data: data1,
+                                backgroundColor: 'transparent',
+                                borderColor: '#3B998B',
+                                pointBorderColor: '#3B998B',
+                                pointBackgroundColor: '#3B998B',
+                                fill: false
+                                // pointHoverBackgroundColor: '#007bff',
+                                // pointHoverBorderColor    : '#007bff'
                             },
-                            ticks: $.extend({
-                                beginAtZero: true,
-                                // thông số max của chart
-                                suggestedMax: 60
-                            }, ticksStyle)
-                        }],
-                        xAxes: [{
-                            display: true,
-                            gridLines: {
+                            {
+                                type: 'line',
+                                //thông số đường line 2
+                                data: data2,
+                                backgroundColor: 'transparent',
+                                borderColor: '#FF5733',
+                                pointBorderColor: '#FF5733',
+                                pointBackgroundColor: '#FF5733',
+                                fill: false
+                                // pointHoverBackgroundColor: '#ced4da',
+                                // pointHoverBorderColor    : '#ced4da'
+                            }]
+                        },
+                        options: {
+                            maintainAspectRatio: false,
+                            tooltips: {
+                                mode: 'index',
+                                intersect: true
+                            },
+                            hover: {
+                                mode: 'index',
+                                intersect: true
+                            },
+                            legend: {
                                 display: false
                             },
-                            ticks: ticksStyle
+                            scales: {
+                                yAxes: [{
+                                    // display: false,
+                                    gridLines: {
+                                        display: true,
+                                        lineWidth: '4px',
+                                        color: 'rgba(0, 0, 0, .2)',
+                                        zeroLineColor: 'transparent'
+                                    },
+                                    ticks: $.extend({
+                                        beginAtZero: true,
+                                        // thông số max của chart
+                                        suggestedMax: 30
+                                    }, ticksStyle)
+                                }],
+                                xAxes: [{
+                                    display: true,
+                                    gridLines: {
+                                        display: false
+                                    },
+                                    ticks: ticksStyle
+                                }]
+                            }
+                        }
+        			});
+
+            //Biểu đồ 2
+            var dsDangKy = ${thongKeJson2};
+            var data3 = []
+            for(var i = 0; i < dsDangKy.length;i++){
+            	data3.push(dsDangKy[i].soLuotDangKy)
+            }
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var chartData = {
+                    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                    datasets: [
+                        {
+                            label: 'Số lượt đăng ký',
+                            backgroundColor: 'rgba(255,99,132,0.2)',
+                            borderColor: 'rgba(255,99,132,1)',
+                            borderWidth: 1,
+                            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                            hoverBorderColor: 'rgba(255,99,132,1)',
+                            data: data3
+                        }
+                    ]
+                };
+            var chartOptions = {
+                    responsive: true,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
                         }]
                     }
-                }
-            })
-
-            //2
-            const ctx = document.getElementById('myChart').getContext('2d');
-            const myChart = new Chart(ctx, {
+                };
+         // tạo biểu đồ
+            var myChart = new Chart(ctx, {
                 type: 'bar',
-                data: {
-                    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-                    datasets: [{
-                        label: '#',
-                        data: [12, 19, 3,12, 19, 2,12, 19, 3,12, 19, 3],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                        ],
-                        borderColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                        ],
-                        borderWidth: 3
-                    }]
-                },
+                data: chartData,
+                options: chartOptions
             });
         })
-
-
-
     </script>
-    <!-- load ảnh -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/loadReport.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    
     <script>
         var header = document.querySelector('header');
         var lastScrollTop = 0;
