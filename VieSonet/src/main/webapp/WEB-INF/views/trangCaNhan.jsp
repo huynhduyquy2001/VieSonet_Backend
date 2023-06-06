@@ -149,7 +149,7 @@
                             <li><i class="fa-regular fa-heart"></i> <b>Mối quan hệ:</b> ${NguoiDung.moiQuanHe}</li>
                             <li><b><i class="fa-regular fa-envelope"></i> Email:</b> ${NguoiDung.email}</li>
                             <li><b><i class="fa-regular fa-registered"></i> Ngày tham gia:</b> ${NguoiDung.ngayGui}</li>
-                            <li><b><i class="fa-light fa-user-group"></i> Danh sách bạn bè:</b> ...</li>
+                            <li><b><i class="fa-light fa-user-group"></i> Danh sách bạn bè:</b> ${SlBanbe}</li>
                         </ul>
                        </small>
                     </c:forEach>

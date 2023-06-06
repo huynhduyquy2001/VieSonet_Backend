@@ -194,7 +194,7 @@
 																	<li><i class="fa-regular fa-heart"></i> <b>Mối
 																			quan hệ:</b> ${BaiViet.nguoiDung.moiQuanHe}</li>
 																	<li><b><i class="fa-light fa-user-group"></i>
-																			Danh sách bạn bè:</b> ??</li>
+																			Danh sách bạn bè:</b> ${dsBb}</li>
 																</ul>
 														</small>
 													</small></small>

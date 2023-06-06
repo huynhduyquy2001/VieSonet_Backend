@@ -30,6 +30,7 @@ import com.viesonet.entity.BanBe;
 import com.viesonet.entity.BinhLuanResponse;
 import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.NguoiDung;
+import com.viesonet.service.SessionService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,6 +54,9 @@ public class ProfileController {
 
 	@Autowired
 	DanhSachKetBanDAO dskbDao;
+	
+	@Autowired
+	SessionService session;
 	
 //	String sdt = "0939790002";
 //	NguoiDung nguoiDung = null;
@@ -114,12 +118,6 @@ public class ProfileController {
 		// Nếu không, chuyển hướng về trang chủ
 		return "trangCaNhan";
 	}
-//	@RequestMapping("/profile/update/{sdt}")
-//	public String update(Model m) {
-//		m.addAttribute("nguoiDung", nguoiDungDao.findBySoDienThoai("0939790002"));
-//		nguoiDungDao.saveAndFlush("");
-//		return "redirect:/profile";
-//	}
 	
 	@ResponseBody
 	@GetMapping("/binhluan-profile/{maBaiViet}")
