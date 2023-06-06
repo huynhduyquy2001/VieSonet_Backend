@@ -2,6 +2,7 @@
 	pageEncoding="utf-8"%>
 
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="fr"%>
 <!doctype html>
 <html lang="en">
@@ -37,14 +38,15 @@
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>Trang chủ</title>
 </head>
 
 <body>
-	<div class="split-background"></div>
-	<img src="images/cayTre.png"
-		style="position: fixed; right: 0; max-height: 90vh; z-index: -2; opacity: 0.8;"
-		alt="">
+	<div
+		style="position: fixed; right: 0; max-height: 90vh; opacity: 0.1; bottom: 0;">
+
+	</div>
 	<!-- <img src="images/sunset-reduced.jpg" style="position: fixed; left: 0; max-height: 100vh; z-index: -2; width: 100%; top: 40px; opacity: 0.4; bottom: 0; height: 100%; object-fit: cover;" alt=""> -->
 	<!-- style="box-shadow: 0 1px 2px rgb(0 0 0 / 10%);" -->
 	<header class="header animationTop3">
@@ -65,14 +67,14 @@
 					<ul class="navbar-nav me-auto mt-2 mt-lg-0">
 						<li class="nav-item"><a class="nav-link active" href="#"
 							aria-current="page"
-							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Trang
+							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Trang
 								chủ <span class="visually-hidden">(current)</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="#"><small
-								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Điều
+								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Điều
 									khoản</small></a></li>
 						<li class="nav-item"><a class="nav-link" href="#"><small
-								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Quản
+								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Quản
 									lí</small></a></li>
 					</ul>
 					<form class="d-flex my-2 my-lg-0">
@@ -121,27 +123,26 @@
 			</div>
 		</nav>
 	</header>
-
 	<div class="container" id="container"
 		style="transition: 0.5s; margin-top: 70px;">
 		<div class="row">
 			<div class="col-md-6">
-				<div class="menuRight">
+				<div>
 					<div>
 						<b class="nhan">ĐĂNG BÀI</b>
 					</div>
 					<div>
-						<div class="write-post-container nenTrangChu img-thumbnail"
+						<div
+							class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
 							style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
 							<div class="user-profile">
 								<img src="images/avt.jpg" alt="">
 								<div>
-									<label for="">Huỳnh Duy Quý</label> <br>s <small>
+									<label for="">Huỳnh Duy Quý</label> <br> <small>
 										Công khai <i class="fas fa-caret-down"></i>
 									</small>
 								</div>
 							</div>
-
 							<div class="post-upload-textarea">
 								<textarea data-bs-toggle="modal" href="#exampleModalToggle"
 									name="" placeholder="Bạn muốn đăng gì?" id="" cols="30"
@@ -153,191 +154,184 @@
 											Photo/Video</a>
 									</button>
 								</div>
-
-
 							</div>
-
 						</div>
 						<hr>
-						<div class="row">
-							<div class="col-6">
-								<div class="card">
-									<div class="card-header">
-										<h6 class="nhan">Lời mời kết bạn</h6>
-									</div>
-									<div class="card-body">
-										4 <br>
-										<h6>
-											<small>Xem tất cả>></small>
-										</h6>
-									</div>
-
-								</div>
-							</div>
-							<div class="col-6">
-								<div class="card">
-									<div class="card-header">
-										<h6 class="nhan">Danh sách bạn bè</h6>
-									</div>
-									<div class="card-body">
-										532 <br>
-										<h6>
-											<small>Xem tất cả>></small>
-										</h6>
-									</div>
-
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 				<div>
 					<b class="nhan">BẢNG TIN</b>
 				</div>
-				<c:forEach items="DanhSachBv" var="BaiViet">
-				</c:forEach>
-				<div
-					class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
-					style="margin-bottom: 20px; border-radius: 0;">
+				<c:forEach items="${DanhSachBv}" var="BaiViet">
 					<div
-						style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
+						class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
+						style="margin-bottom: 20px; border-radius: 0; box-shadow: 0 0 0;">
 						<div
-							style="display: flex; align-items: center; justify-content: space-between;">
-							<div class="tooltip2">
-								<div class="user-profile ">
-									<img src="images/avt.jpg" class="img-thumbnail" alt="">
+							style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
+							<div
+								style="display: flex; align-items: center; justify-content: space-between;">
+								<div class="tooltip2">
+									<div class="user-profile ">
+										<img src="images/${BaiViet.nguoiDung.anhDaiDien}"
+											class="img-thumbnail" alt="">
+										<div>
+											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br>
+											<small style="font-size: 12px; color: #65676b">${BaiViet.ngayDang}</small>
+										</div>
+									</div>
+									<span class="tooltip2-text"> <a href="">
+											<div class="row">
+												<div class="col-5">
+													<img src="images/${BaiViet.nguoiDung.anhDaiDien}"
+														class="img-thumbnail" alt="">
+												</div>
+												<div class="col-7" style="padding: 0; margin: 0;">
+													<label for="" style="padding: 0; margin: 0;"> <small>${BaiViet.nguoiDung.hoTen}</small>
+													</label> <small><small> <small>
+																<ul style="line-height: 20px; text-align: left;">
+																	<li><b><i class="fa-light fa-mountain-sun"></i>
+																			Quê quán:</b> ${BaiViet.nguoiDung.diaChi}</li>
+																	<li><i class="fa-regular fa-heart"></i> <b>Mối
+																			quan hệ:</b> ${BaiViet.nguoiDung.moiQuanHe}</li>
+																	<li><b><i class="fa-light fa-user-group"></i>
+																			Danh sách bạn bè:</b> ??</li>
+																</ul>
+														</small>
+													</small></small>
+												</div>
+												<div>
+
+													<center></center>
+												</div>
+											</div>
+									</a>
+									</span>
+								</div>
+								<div>
+									<div class="btn-group">
+										<span class="btn dropdown-toggle" type="button" id="triggerId"
+											data-bs-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false"> </span>
+										<div class="dropdown-menu" aria-labelledby="triggerId">
+											<a class="dropdown-item" href="#">Báo cáo vi phạm</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<a href="">
+								<div style="margin-top: 10px; color: #847577">
+									${BaiViet.moTa}
+									<center>
+										<img class="lazy" data-src="images/${BaiViet.hinhAnh}"
+											width="100%" alt=""
+											style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
+									</center>
+							</a>
+							<div class="post-reaction">
+								<div class="activity-icons">
 									<div>
-										<label for="">${BaiViet.nguoiDung.anhDaiDien}</label> <br> <small>30-4-1975_09:18
-											pm</small>
+										<i class="fa-regular fa-thumbs-up"></i> &nbsp;
+										${BaiViet.luotThich}
 									</div>
-								</div>
-								<span class="tooltip2-text"> <a href="">
-										<div class="row">
-											<div class="col-5">
-												<img src="images/avt.jpg" class="img-thumbnail" alt="">
-
-											</div>
-											<div class="col-7">
-												<label for=""><small>Trần Văn Minh Híu</small></label>
-											</div>
-											<div>
-
-												<center>
-													<small> <small>
-															<ul style="line-height: 20px; text-align: left;">
-																<li><b><i class="fa-light fa-mountain-sun"></i>
-																		Quê quán:</b> Đồng Tháp</li>
-																<li><i class="fa-regular fa-heart"></i> <b>Mối
-																		quan hệ:</b> Độc thân</li>
-																<li><b><i class="fa-light fa-user-group"></i>
-																		Danh sách bạn bè:</b> 304</li>
-															</ul>
-													</small>
-													</small>
-												</center>
-											</div>
-										</div>
-								</a>
-								</span>
-							</div>
-							<div>
-								<div class="btn-group">
-									<span class="btn dropdown-toggle" type="button" id="triggerId"
-										data-bs-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false"> </span>
-									<div class="dropdown-menu" aria-labelledby="triggerId">
-										<a class="dropdown-item" href="#">Báo cáo vi phạm</a>
+									<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
+										<i class="fa-regular fa-comment"></i>&nbsp;
+										${BaiViet.luotBinhLuan}
 									</div>
 								</div>
 							</div>
 						</div>
-						<a href="">
-							<div style="margin-top: 10px;">
-								Hôm nay gất là dui đó nghen, hãy like cho tui 1 phát lào mấy a
-								zai
-								<center>
-									<img class="lazy" data-src="images/caMap.jpg" width="100%"
-										alt=""
-										style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
-								</center>
-								<div class="post-reaction">
-									<div class="activity-icons">
-										<div>
-											<i class="fa-regular fa-thumbs-up"></i> &nbsp; 120
-										</div>
-										<div>
-											<i class="fa-regular fa-comment"></i>&nbsp; 52
-										</div>
-									</div>
-								</div>
-							</div>
-						</a>
+
 					</div>
-				</div>
 			</div>
-			<div class="col-md-5 menuLeft"
-				style="position: fixed; top: 70px; right: 5%;">
-				<div>
-					<b class="nhan">ĐĂNG BÀI</b>
-				</div>
-				<div>
-					<div
-						class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInRight"
-						style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); background-color: white; background-image: url('https://static.showit.co/1600/g7PseL2CSPG9fiMdTX0bNA/63707/3.jpg'); background-size: cover; border-radius: 0;">
-						<div class="user-profile">
-							<img src="images/avt.jpg" alt="">
-							<div>
-								<b class="nhan">Huỳnh Duy Quý</b> <br> <small> Công
-									khai <i class="fas fa-caret-down"></i>
-								</small>
-							</div>
-						</div>
-
-						<div class="post-upload-textarea">
-							<textarea data-bs-toggle="modal" href="#exampleModalToggle"
-								name="" placeholder="Bạn muốn đăng gì?" id="" cols="30" rows="1"></textarea>
-							<div class="add-post-links">
-								<button type="button" class="btn" data-bs-toggle="modal"
-									data-bs-target="#modalId">
-									<a href="#"><i class="fa-regular fa-image"></i> Photo/Video</a>
-								</button>
-							</div>
-						</div>
-					</div>
-					<hr>
-					<div class="row">
-						<div class="col-md-6 animate__animated animate__backInLeft">
-							<div class="card">
-								<div class="card-header">
-									<h6 class="nhan">Lời mời kết bạn</h6>
-								</div>
-								<div class="card-body">
-									4 <br>
-									<h6>
-										<small>Xem tất cả>></small>
-									</h6>
-								</div>
-
-							</div>
-						</div>
-						<div class="col-md-6 animate__animated animate__backInRight">
-							<div class="card">
-								<div class="card-header">
-									<h6 class="nhan">Danh sách bạn bè</h6>
-								</div>
-								<div class="card-body">
-									532 <br>
-									<h6>
-										<small>Xem tất cả>></small>
-									</h6>
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			</c:forEach>
 		</div>
+		<div class="col-md-5 menuLeft animate__animated animate__backInRight"
+			style="position: fixed; top: 70px; right: 5%;">
+			<div class="row ">
+				<div class="row" style="margin-left: 2px">
+					<div class="col-md-6">
+						<div
+							style="background-color: #f2f2f2; border-radius: 5px; border: 1px solid grey; background: url(images/thoiThiet.webp); background-size: cover; color: #234662; padding: 0; width: 100%; max-height: 188px">
+							<div id="weather-info"
+								style="background-color: rgba(0, 0, 0, 0.4); margin: 0; padding: 10px; color: #F2E5C9;">
+								<h5 style="color: white">Dự báo thời tiết</h5>
+								<ul style="font-size: 13px">
+									<li><b>Thành phố:</b> <span id="city"></span></li>
+									<li><b>Nhiệt độ:</b> <span id="temperature"></span> °C</li>
+									<li><b>Mô tả:</b> <span id="description"></span></li>
+									<li><b>Độ ẩm:</b> <span id="humidity"></span>%</li>
+									<li><b>Tốc độ gió:</b> <span id="wind-speed"></span> m/s</li>
+								</ul>
+
+							</div>
+						</div>
+
+						<div>
+							<label class="nhan">Lời mời kết bạn(${SlKb})</label>
+							<c:forEach items="${topKetBan}" var="topKb">
+								<div>
+									<div class="user-profile">
+										<img src="images/${topKb.nguoiLa.anhDaiDien}"
+											class="img-thumbnail" alt="">
+										<div>
+											<label class="nhan"
+												style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiLa.hoTen}</label>
+											<small style="display: flex;"> <a
+												class="dropdown-item" href="#"
+												style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1); font-size: small;">
+													<center>Đồng ý</center>
+											</a> <a class="dropdown-item" href="#"
+												style="background-color: #A89386; color: white; font-size: small;">
+													<center>Xóa</center>
+											</a>
+											</small>
+										</div>
+									</div>
+									<div>
+										<div class="btn-group">
+											<div class="dropdown-menu" aria-labelledby="triggerId"
+												style="padding: 0;">
+												<a class="dropdown-item" href="#"
+													style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1);">
+													<center>Đồng ý</center>
+												</a> <a class="dropdown-item" href="#"
+													style="background-color: #A89386; color: white;">
+													<center>Xóa</center>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<label class="nhan"
+							style="box-sizing: border-box; padding-left: 10px">Danh
+							sách bạn bè(${SlBanbe})</label> <br> <br>
+						<c:forEach items="${topBanbe}" var="top">
+							<div
+								style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+								<div class="user-profile">
+									<img src="images/${top.banBe.anhDaiDien}" class="img-thumbnail"
+										alt="" style="border-radius: 50%;">
+									<div>
+										<label for="">${top.banBe.hoTen}</label> <br> <small
+											style="font-size: 12px">Hoạt động: 1 phút trước</small>
+									</div>
+								</div>
+								<div>
+									<a href="#"><i class="fas fa-ellipsis-v"></i></a>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
 	</div>
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModalToggle" aria-hidden="true"
@@ -352,51 +346,72 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-					<div class="user-profile">
-						<img src="images/avt.jpg" alt="">
-						<div>
-							<p>Alex Carry</p>
-							<small>
-								<div>
-									<select style="border: none; background-color: transparent;">
-										<option selected>Công khai</option>
-										<option value="">Bạn bè</option>
-										<option value="">Chỉ mình tôi</option>
-									</select>
-								</div>
-							</small>
+				<form action="/index/dangbai" method="post"
+					 enctype="multipart/form-data">
+					<div class="modal-body">
+						<div class="user-profile">
+							<img src="images/avt.jpg" alt="">
+							<div>
+								<label>Alex Carry
+									</p> <small style="font-size: 12px">
+										<div>
+											<select name="cheDo"
+												style="border: none; background-color: transparent;">
+												<option selected value="1">Công khai</option>
+												<option value="2">Bạn bè</option>
+												<option value="3">Chỉ mình tôi</option>
+											</select>
+										</div>
+								</small>
+							</div>
 						</div>
-					</div>
-					<br>
-					<textarea name="" placeholder="Bạn muốn đăng gì?" id="" cols="30"
-						rows="3"
-						style="width: 100%; border: 0px; outline: none; border-bottom: 1px solid #ccc; background: transparent; resize: none;"></textarea>
-					<br>
-					<center>
-						<img id="img" src="" width="45%"
-							style="border-radius: 10px; border: 1px solid rgb(184, 182, 182)">
-					</center>
-				</div>
-				<div class="modal-footer">
-					<div class="input-group mb-3">
-						<label class="input-group-text" for="inputGroupFile01"> <i
-							class="fa-regular fa-image"></i>Photo/Video
-						</label> <input type="file" class="form-control" id="inputGroupFile01">
-					</div>
+						<br>
+						<textarea name="moTaBaiDang" placeholder="Bạn muốn đăng gì?" id=""
+							cols="30" rows="3"
+							style="width: 100%; border: 0px; outline: none; border-bottom: 1px solid #ccc; background: transparent; resize: none;"></textarea>
 
-					<button
-						style="width: 500px; background-color: #5A4F48; border: none;"
-						class="btn btn-primary" data-bs-target="#exampleModalToggle2"
-						data-bs-toggle="modal" data-bs-dismiss="modal">Đăng bài</button>
+						<br>
+						<center>
+							<img id="img" src="" width="45%"
+								style="border-radius: 10px; border: 1px solid rgb(184, 182, 182)">
+						</center>
+					</div>
+					<div class="modal-footer">
+						<div class="input-group mb-3">
+							<label class="input-group-text" for="inputGroupFile01"> <i
+								class="fa-regular fa-image"></i>Photo/Video
+							</label> <input type="file" class="form-control" name="photo_file"
+								id="inputGroupFile01">
+						</div>
+
+						<button
+							style="width: 500px; background-color: #5A4F48; border: none;"
+							class="btn btn-primary" data-bs-target="#exampleModalToggle2"
+							data-bs-toggle="modal" data-bs-dismiss="modal">Đăng bài</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal hiện danh sách bình luận -->
+	<div class="modal fade" id="danhSachBinhLuan" tabindex="-1"
+		role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-fullscreen" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row">
+						<div data-bs-dismiss="modal" style="cursor: pointer;">X</div>
+						<div class="col-md-6 trai order-sm-2 col-xs-12 order-1"></div>
+						<div class="col-md-6 phai order-sm-1 col-xs-12"></div>
+
+					</div>
 				</div>
+
 			</div>
 		</div>
 	</div>
 	<!-- load ảnh -->
-
-
-
 	<script>
         let img = document.getElementById('img');
         let input = document.getElementById('inputGroupFile01');
@@ -405,7 +420,6 @@
                 img.src = URL.createObjectURL(input.files[0]);
         } 
     </script>
-	<script src="main.js"></script>
 
 	<script>
         function toggleDarkMode() {
@@ -430,8 +444,11 @@
         }
 
     </script>
-	<script src="js/lazy.js"></script>
 
+	<script src="${pageContext.request.contextPath}/loadComments.js"></script>
+	<script src="${pageContext.request.contextPath}/lazy.js"></script>
+	<script src="${pageContext.request.contextPath}/thoiTiet.js"></script>
 </body>
 
+</html>
 </html>

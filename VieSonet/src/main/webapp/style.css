@@ -1,14 +1,12 @@
-@charset "utf-8";
 body {
-    color: #62646a;
+    color: black;
     font: 400 16px/24px Macan, Helvetica Neue, Helvetica, Arial, sans-serif;
+    
     /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 } */
 }
 
-.modal-content {
-    background-color: rgba(246, 245, 244, 1);
-}
+
 
 header {
 
@@ -368,7 +366,7 @@ header.hidden {
 }
 
 a:hover {
-    color: #A89386;
+    color: #5A4F48;
 }
 
 a {
@@ -455,6 +453,7 @@ ul {
 
 .nav-link {
     color: #A89386;
+    transition: 0.5s ease-in-out;
 }
 
 .nav-link:focus {
@@ -482,10 +481,11 @@ th {
 }
 
 .nav-link:hover {
-    color: #F27323;
-    background-color: #F0F2F5;
-    border-bottom: 1px solid #F27323;
-    transform: translateX(-5px);
+    color: black;
+    cursor: pointer;
+    border-bottom: 1px solid black;
+    transform: translateY(-5px);
+
 }
 
 .nav-link {
@@ -606,7 +606,8 @@ a {
     width: 65px;
     border-radius: 50%;
     margin-right: 15px;
-
+	height: 65px;
+    object-fit: cover;
 }
 
 .user-profile p {
@@ -743,14 +744,14 @@ a {
 input[type=text]:focus,
 input[type=password]:focus,
 input[type=email]:focus {
-    transform: translateX(-15px);
+    transform: translateY(-5px);
 }
 
 .dropdown-item:focus,
 .dropdown-item:hover {
     border: 1px solid #413026;
     background-color: transparent;
-    transform: translateX(-3px);
+    transform: translateY(-3px);
 }
 
 .dropdown-item {
@@ -786,7 +787,8 @@ input[type=email]:focus {
     background-color: transparent;
     border: none;
 }
-.btnBorder:focus{
+
+.btnBorder:focus {
     border-bottom: 1px solid gray;
 }
 
@@ -796,7 +798,7 @@ img:hover {
 
 .nhan {
     color: #222;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: monospace, 'Courier New', Courier;
     letter-spacing: 0.05em;
 }
 
@@ -835,6 +837,9 @@ img:hover {
 
 .card:hover {
     transform: translateX(-10px);
+}
+label:hover{
+    cursor: pointer;
 }
 
 .card-body {
@@ -882,12 +887,12 @@ img:hover {
     top: -10%;
     left: 85%;
     transform: translateX(-50%);
-    width: 200px;
+    min-width: 250px;
     padding: 10px;
-    background-color: #f1f1f1;
+    background-color: white;
     border: 1px solid #ccc;
     border-radius: 4px;
-    text-align: center;
+    text-align: left;
 
 }
 
@@ -904,12 +909,109 @@ img:hover {
 .tooltip2-caption {
     font-size: 14px;
 }
+
 .lazy {
-    opacity: 0; /* Ẩn hình ảnh ban đầu */
+    opacity: 0;
+    /* Ẩn hình ảnh ban đầu */
     transition: opacity 0.3s ease;
+}
+
+.lazy.loaded {
+    opacity: 1;
+    /* Hiển thị hình ảnh khi đã tải xong */
+}
+
+.ip[type=text],
+.ip[type=password],
+.ip[type=email] {
+    width: 100%;
+    padding: 8px 20px;
+    margin: 8px 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+    background: transparent;
+    border-radius: 0;
+    transition: 0.5s;
+    padding-left: 0;
+}
+
+.ip:focus {
+    border-bottom: 1px solid #3B998B;
+    box-shadow: none;
+}
+
+.lgin {
+    background-color: #8D8D8D;
+    color: white;
+    padding: 2px;
+    border: none;
+    cursor: pointer;
+    width: 40%;
+    transition: 0.3s;
+    border-radius: 3px;
+}
+
+.lgin:hover {
+    background: #A59565;
+}
+
+.cancelbtn {
+    width: auto;
+    padding: 7px 18px;
+    background-color: #A59565;
+    border: none;
+    color: white;
+    transform: skewX(-20deg);
+}
+
+span.psw {
+    float: right;
+
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+
+    .cancelbtn {
+        width: 100%;
+    }
+}
+
+.form-check-input:checked {
+    background-color: #3B998B;
+    border-color: #3B998B;
+}
+
+.wrapper {
+    height: 100vh;
+    /*This part is important for centering*/
+    display: grid;
+    place-items: center;
   }
   
-  .lazy.loaded {
-    opacity: 1; /* Hiển thị hình ảnh khi đã tải xong */
+  .typing-demo {
+    width: 29ch;
+    animation: typing 5s steps(22), blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
   }
   
+  @keyframes typing {
+    from {
+      width: 0
+    }
+  }
+      
+  @keyframes blink {
+    50% {
+      border-color: transparent
+    }
+  }
