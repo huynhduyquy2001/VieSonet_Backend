@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.viesonet.dao.BaiVietDAO;
+import com.viesonet.dao.BaiVietDao;
 import com.viesonet.dao.BanBeDAO;
 import com.viesonet.dao.DanhSachBinhLuanDAO;
 import com.viesonet.dao.DanhSachKetBanDAO;
@@ -41,7 +43,7 @@ public class ProfileController {
 	NguoiDungDAO nguoiDungDao;
 
 	@Autowired
-	BaiVietDAO baiVietDao;
+	BaiVietDao baiVietDao;
 
 	@Autowired
 	BanBeDAO banBeDao;
@@ -135,7 +137,7 @@ public class ProfileController {
         return "redirect:/profile";
     }
 	
-	@PostMapping("index/dangbai")
+	@PostMapping("nguoidung/update")
 	public String dangBai( @RequestParam("photo_file") MultipartFile photofile, Model m) {
 		BaiViet baiDang = new BaiViet();
 		if (photofile.isEmpty())

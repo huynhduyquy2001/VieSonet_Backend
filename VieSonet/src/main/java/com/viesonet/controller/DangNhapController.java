@@ -60,8 +60,7 @@ public class DangNhapController {
 			m.addAttribute("message", "Thông tin đăng nhập không chính xác !");
 			return "dangNhap";
 		}
-
-		return "redirect:/";
 	}
-
 }
+
+
