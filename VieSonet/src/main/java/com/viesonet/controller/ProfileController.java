@@ -20,9 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.viesonet.dao.BaiVietDAO;
 import com.viesonet.dao.BanBeDAO;
+import com.viesonet.dao.DanhSachBinhLuanDAO;
+import com.viesonet.dao.DanhSachKetBanDAO;
 import com.viesonet.dao.NguoiDungDAO;
 import com.viesonet.entity.BaiViet;
 import com.viesonet.entity.BanBe;
+import com.viesonet.entity.BinhLuanResponse;
+import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.NguoiDung;
 
 import jakarta.servlet.http.Cookie;
@@ -41,12 +45,25 @@ public class ProfileController {
 	@Autowired
 	BanBeDAO banBeDao;
 	
+	@Autowired
+	DanhSachBinhLuanDAO dsblDao;
+
+	@Autowired
+	DanhSachKetBanDAO dskbDao;
+	
+	String sdt = "0939790002";
+	NguoiDung nguoiDung = null;
 	@RequestMapping("/profile")
 	public String index(Model m, HttpServletRequest request, HttpServletResponse response) {
+		List<BanBe> listBb = banBeDao.findFriendByUserphone("0939790002");
+		List<String> sdtBanBeList = listBb.stream().map(banBe -> banBe.getBanBe().getSdt())
+				.collect(Collectors.toList());
 		HttpSession session = request.getSession();
 		Cookie[] cookies = request.getCookies();
-		String sdt = "0939790002";
-		NguoiDung nguoiDung = null;
+		
+		
+//		String sdt = "0939790002";
+//		NguoiDung nguoiDung = null;
 		
 //		List<Category> list = dao.findAll();
 //		m.addAttribute("list", list);
@@ -72,10 +89,26 @@ public class ProfileController {
 			List<Order> orders = new ArrayList<Order>();
 			orders.add(new Order(Direction.DESC, "ngayDang"));
 			Sort sort = Sort.by(orders);
-//			m.addAttribute("BaiVietCaNhan", baiVietDao.findAll(sort));
 		//Load bài viết cá nhân
 			m.addAttribute("BaiVietCaNhan", baiVietDao.findBySdt(sdt, sort));
 			m.addAttribute("nguoiDung", nguoiDungDao.findBySoDienThoai(sdt));
+			
+			List<BanBe> topBanBe = new ArrayList<>();
+			for (int i = 0; i < Math.min(5, listBb.size()); i++) {
+				topBanBe.add(listBb.get(i));
+			}
+			m.addAttribute("topBanbe", topBanBe);
+			// Số lượng bạn bè
+			m.addAttribute("SlBanbe", listBb.size());
+			// danh sách kết bạn
+			List<DanhSachKetBan> danhSachKetBan = dskbDao.findDsBySdt("0939790002");
+			m.addAttribute("SlKb", danhSachKetBan.size());
+			List<DanhSachKetBan> topKetBan = new ArrayList<>();
+			for (int i = 0; i < Math.min(3, danhSachKetBan.size()); i++) {
+				topKetBan.add(danhSachKetBan.get(i));
+			}
+			m.addAttribute("topKetBan", topKetBan);
+			System.out.println(topKetBan.size());
 			return "trangCaNhan";
 		}
 
@@ -90,8 +123,19 @@ public class ProfileController {
 //		nguoiDungDao.saveAndFlush("");
 //		return "redirect:/profile";
 //	}
-	@RequestMapping("/nguoidung/update")
-    public String thaydoiNguoiDung(@ModelAttribute("nguoiDung") NguoiDung nguoiDung) {
+	
+	@ResponseBody
+	@GetMapping("/binhluan-profile/{maBaiViet}")
+	public BinhLuanResponse xemBinhLuanCaNhan(@PathVariable int maBaiViet) {
+
+		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
+		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet);
+
+		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
+	}
+	
+	@RequestMapping("/nguoidung/update/{sdt}")
+    public String thaydoiNguoiDung(@ModelAttribute("sdt") NguoiDung nguoiDung) {
         nguoiDungDao.saveAndFlush(nguoiDung);
         return "redirect:/profile";
     }

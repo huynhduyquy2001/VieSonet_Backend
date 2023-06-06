@@ -289,37 +289,43 @@
                         </div>
                         <hr>
                         <div style="display: flex; justify-content: space-between;">
-                            Lời mời kết bạn(12) &nbsp; <small><small style="color: #F27323;">Xem tất cả>></small></small>
+                            Lời mời kết bạn(${SlKb}) &nbsp; <small><small style="color: #F27323;">Xem tất cả>></small></small>
                         </div>
-                        <div>
-                            <div class="user-profile">
-                                <img src="images/avt.jpg" class="img-thumbnail" alt="">
-                                <div>
-                                    <label> Trần Văn Minh Híu</label>
-                                    <small style="display: flex;">
-                                        <a class="dropdown-item" href="#"
-                                            style="background-color: rgba(234,229,224,0.8);border-color: rgba(90,79,72,1);">
-                                            <center>Đồng ý</center>
-                                        </a>
-                                        <a class="dropdown-item" href="#" style="background-color: #A89386; color: white;">
-                                            <center>Xóa</center>
-                                        </a>
-                                    </small>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="btn-group">
-                                    <div class="dropdown-menu" aria-labelledby="triggerId" style="padding: 0;">
-                                        <a class="dropdown-item" href="#"
-                                            style="background-color: rgba(234,229,224,0.8);border-color: rgba(90,79,72,1);">
-                                            <center>Đồng ý</center>
-                                        </a>
-                                        <a class="dropdown-item" href="#" style="background-color: #A89386; color: white;">
-                                            <center>Xóa</center>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                        <c:forEach items="${topKetBan}" var="topKb">
+								<div>
+									<div class="user-profile">
+										<img src="images/${topKb.nguoiLa.anhDaiDien}"
+											class="img-thumbnail" alt="">
+										<div>
+											<label class="nhan"
+												style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiLa.hoTen}</label>
+											<small style="display: flex;"> <a
+												class="dropdown-item" href="#"
+												style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1); font-size: small;">
+													<center>Đồng ý</center>
+											</a> <a class="dropdown-item" href="#"
+												style="background-color: #A89386; color: white; font-size: small;">
+													<center>Xóa</center>
+											</a>
+											</small>
+										</div>
+									</div>
+									<div>
+										<div class="btn-group">
+											<div class="dropdown-menu" aria-labelledby="triggerId"
+												style="padding: 0;">
+												<a class="dropdown-item" href="#"
+													style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1);">
+													<center>Đồng ý</center>
+												</a> <a class="dropdown-item" href="#"
+													style="background-color: #A89386; color: white;">
+													<center>Xóa</center>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
                         </div>
                     </div>
                 </div>
@@ -424,22 +430,27 @@
                             <div style="margin-top: 10px;">
                                 ${BaiViet.moTa}
                                 <center>
-                                    <img class="lazy" data-src="images/caMap.jpg" width="100%" alt=""
+                                    <img class="lazy" data-src="images/${BaiViet.hinhAnh}" width="100%" alt=""
                                         style="margin-top: 10px;margin-bottom: 10px; border-radius: 6px;">
                                 </center>
-                                <div class="post-reaction">
-                                    <div class="activity-icons">
-                                        <div><i class="fa-regular fa-thumbs-up"></i> &nbsp; ${BaiViet.luotThich}</div>
-                                        <div><i class="fa-regular fa-comment"></i>&nbsp; ${BaiViet.luotBinhLuan}</div>
-                                    </div>
-                                </div>
+                               <div class="post-reaction">
+								<div class="activity-icons">
+									<div>
+										<i class="fa-regular fa-thumbs-up"></i> &nbsp;
+										${BaiViet.luotThich}
+									</div>
+									<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
+										<i class="fa-regular fa-comment"></i>&nbsp;
+										${BaiViet.luotBinhLuan}
+									</div>
+								</div>
+							</div>
                             </div>
                         </div>
                     </div>
                     </c:forEach>
                 </div>
-            </div>
-        </div>
+            
     
     <!-- Modal -->
     <c:forEach items="${profile}" var="NguoiDung">
@@ -498,83 +509,23 @@
     </div>
     </c:forEach>
     <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    &nbsp;&nbsp;
-                    <a class="navbar-brand" href="#"
-                        style="color: #F27323;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-weight: bolder;">VIE_SONET</a>
-                    <div class="row">
-                        <div class="col-4 post-upload-textarea">
-                            <div style=" display: flex; align-items: center; justify-content: space-between;">
-                                <div class="user-profile">
-                                    <img src="images/avt.jpg" class="img-thumbnail" alt="">
-                                    <div>
-                                        <p style="color: #5A4F48;"> Trần Văn Minh Híu</p>
-                                        <small>August 13 1999, 09.18 pm</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <a href="#"><i class="fas fa-ellipsis-v"></i></a>
-                                </div>
-                            </div><br>
-                            <textarea name="" id="" cols="30" readonly
-                                placeholder="">Thấy tui có đẹp trai chưa nè?</textarea>
-                            <div class="post-reaction" style="margin-bottom: 5px;">
-                                <div class="activity-icons">
-                                    <div><img src="images/like-blue.png" alt="">120</div>
-                                    <div><img src="images/comments.png" alt="">52</div>
-                                    <div><img src="images/share.png" alt="">35</div>
-                                </div>
-                            </div>
-                            <div style="overflow-y: hidden;overflow-y: scroll; height: 54vh; padding-right: 5px;">
-                                <div class="user-profile">
-                                    <img src="images/avt.jpg" style="width: 35px;">
-                                    <div style="margin-top: 40px;  width: 400px; height: 80px; border-radius: 10px;">
-                                        &nbsp; <b style="color: #5A4F48;">Lý Hiếu</b>
-                                        <textarea name="" id="" cols="50" rows="2" placeholder="" readonly
-                                            style="padding-left: 10px;color: #626262;">Mới cắt tóc à. Sao không rủ t đi?</textarea>
-                                    </div>
-                                </div>
-                                <div class="user-profile">
-                                    <img src="images/avt.jpg" style="width: 35px;">
-                                    <div style="margin-top: 40px; width: 400px; height: 80px; border-radius: 10px;">
-                                        &nbsp; <b>Lê Trung</b>
-                                        <textarea name="" id="" cols="50" rows="2" placeholder="Mới đi cắt tóc à"
-                                            readonly style="padding-left: 10px;">T đẹp hơn m đây này</textarea>
-                                    </div>
-                                </div>
-                                <div class="user-profile">
-                                    <img src="images/avt.jpg" style="width: 35px;">
-                                    <div style="margin-top: 40px;  width: 400px; height: 80px; border-radius: 10px;">
-                                        &nbsp; <b>Minh Quý</b>
-                                        <textarea name="" id="" cols="50" rows="2" placeholder=""
-                                            style="padding-left: 10px;">A trai chụp ảnh photoshop quá đi:))</textarea>
-                                    </div>
-                                </div>
-                                <div class="user-profile">
-                                    <img src="images/avt.jpg" style="width: 35px;">
-                                    <div style="margin-top: 40px; width: 400px; height: 80px; border-radius: 10px;">
-                                        &nbsp; <b>Lê Trung Hiếu</b>
-                                        <textarea name="" id="" cols="50" rows="2" placeholder="Mới đi cắt tóc à"
-                                            style="padding-left: 10px;">Xin info cái máy ảnh</textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-8 text-center" style="position: relative;">
-                            <img src="images/caMap.jpg" class="img-thumbnail nenTrang"
-                                style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);"
-                                width="55%" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Modal hiện danh sách bình luận -->
+	<div class="modal fade" id="danhSachBinhLuan" tabindex="-1"
+		role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-fullscreen" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row">
+						<div data-bs-dismiss="modal" style="cursor: pointer;">X</div>
+						<div class="col-md-6 trai order-sm-2 col-xs-12 order-1"></div>
+						<div class="col-md-6 phai order-sm-1 col-xs-12"></div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
     <!-- load ảnh -->
     <script>
         let img = document.getElementById('img');
@@ -656,6 +607,9 @@
         };
 
     </script>
+    <script src="${pageContext.request.contextPath}/loadComments.js"></script>
+	<script src="${pageContext.request.contextPath}/lazy.js"></script>
+	<script src="${pageContext.request.contextPath}/thoiTiet.js"></script>
 </body>
 
 </html>

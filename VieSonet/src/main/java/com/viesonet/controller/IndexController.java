@@ -92,11 +92,5 @@ public class IndexController {
 		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
 	}
 
-//	@ResponseBody
-//	@GetMapping("/binhluan/{maBaiViet}")
-//    public List<DanhSachBinhLuanDTO> xemBinhLuan(@PathVariable int maBaiViet) {
-//		List<DanhSachBinhLuanDTO> danhSachBinhLuan = dsblDao.findByBaiVietMaBaiViet(maBaiViet);
-//		return danhSachBinhLuan;
-//    }
 
 }
