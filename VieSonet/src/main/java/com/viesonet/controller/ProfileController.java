@@ -33,6 +33,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 
 @Controller
 public class ProfileController {
@@ -51,8 +52,8 @@ public class ProfileController {
 	@Autowired
 	DanhSachKetBanDAO dskbDao;
 	
-	String sdt = "0939790002";
-	NguoiDung nguoiDung = null;
+//	String sdt = "0939790002";
+//	NguoiDung nguoiDung = null;
 	@RequestMapping("/profile")
 	public String index(Model m, HttpServletRequest request, HttpServletResponse response) {
 		List<BanBe> listBb = banBeDao.findFriendByUserphone("0939790002");
@@ -60,31 +61,27 @@ public class ProfileController {
 				.collect(Collectors.toList());
 		HttpSession session = request.getSession();
 		Cookie[] cookies = request.getCookies();
-		
-		
-//		String sdt = "0939790002";
-//		NguoiDung nguoiDung = null;
-		
-//		List<Category> list = dao.findAll();
+		String sdt = "0939790002";
+		NguoiDung nguoiDung = null;
 //		m.addAttribute("list", list);
 //        // Kiểm tra có session chưa
-//        if (session.getAttribute("sdt") != null) {
-//            sdt = (String) session.getAttribute("sdt");
-//            nguoiDung = nguoiDungRepository.findBySoDienThoai(sdt);
-//        } 
+        if (session.getAttribute("sdt") != null) {
+            sdt = (String) session.getAttribute("sdt");
+            nguoiDung = nguoiDungDao.findBySdt(sdt);
+        } 
 //        // Nếu không có, kiểm tra cookie
-//        else if (cookies != null) {
-//            for (Cookie cookie : cookies) {
-//                if (cookie.getName().equals("sdt")) {
-//                    soDienThoai = cookie.getValue();
-//                    nguoiDung = nguoiDungDao.findBySoDienThoai(sdt);
-//                    session.setAttribute("sdt", sdt);
-//                    break;
-//                }
-//            }
-//        }
+        else if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("sdt")) {
+                    sdt = cookie.getValue();
+                    nguoiDung = nguoiDungDao.findBySdt(sdt);
+                    session.setAttribute("sdt", sdt);
+                    break;
+                }
+            }
+        }
 		//Nào có đăng nhập thì đổi
-		if (nguoiDung == null) {
+		if (nguoiDung != null) {
 		//Sắp xếp giảm dần theo ngày đăng
 			List<Order> orders = new ArrayList<Order>();
 			orders.add(new Order(Direction.DESC, "ngayDang"));
@@ -101,7 +98,7 @@ public class ProfileController {
 			// Số lượng bạn bè
 			m.addAttribute("SlBanbe", listBb.size());
 			// danh sách kết bạn
-			List<DanhSachKetBan> danhSachKetBan = dskbDao.findDsBySdt("0939790002");
+			List<DanhSachKetBan> danhSachKetBan = dskbDao.findDsBySdt(sdt);
 			m.addAttribute("SlKb", danhSachKetBan.size());
 			List<DanhSachKetBan> topKetBan = new ArrayList<>();
 			for (int i = 0; i < Math.min(3, danhSachKetBan.size()); i++) {
@@ -109,13 +106,11 @@ public class ProfileController {
 			}
 			m.addAttribute("topKetBan", topKetBan);
 			System.out.println(topKetBan.size());
-			return "trangCaNhan";
+			
 		}
 
 		// Nếu không, chuyển hướng về trang chủ
-		else {
-			return "redirect:/";
-		}
+		return "trangCaNhan";
 	}
 //	@RequestMapping("/profile/update/{sdt}")
 //	public String update(Model m) {
@@ -140,4 +135,9 @@ public class ProfileController {
         return "redirect:/profile";
     }
 	
+//	@PostMapping("/capnhatnguoidung")
+//	public String capNhatNguoiDung(@ModelAttribute("nguoiDung") NguoiDung nguoiDung, Model model) {
+//		
+//		
+//	}
 }
