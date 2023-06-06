@@ -135,6 +135,28 @@ public class ProfileController {
         return "redirect:/profile";
     }
 	
+	@PostMapping("index/dangbai")
+	public String dangBai( @RequestParam("photo_file") MultipartFile photofile, Model m) {
+		BaiViet baiDang = new BaiViet();
+		if (photofile.isEmpty())
+			baiDang.setHinhAnh("");
+		else {
+			baiDang.setHinhAnh(photofile.getOriginalFilename());
+		}
+		String sdt = session.get("sdt");
+		int cheDo = paramService.getInt("cheDo", 1);
+		baiDang.setMoTa(paramService.getString("moTaBaiDang", ""));
+		baiDang.setNgayDang(new Date());
+		baiDang.setLuotThich(0);
+		baiDang.setLuotBinhLuan(0);
+		baiDang.setTrangThai(true);
+		baiDang.setCheDo(cheDoDao.getById(cheDo));
+		baiDang.setNguoiDung(nguoiDungDAO.getById(sdt));
+		baiVietDao.saveAndFlush(baiDang);
+		return "redirect:/";
+		
+	}
+	
 //	@PostMapping("/capnhatnguoidung")
 //	public String capNhatNguoiDung(@ModelAttribute("nguoiDung") NguoiDung nguoiDung, Model model) {
 //		
