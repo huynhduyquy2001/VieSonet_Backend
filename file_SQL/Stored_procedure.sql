@@ -110,3 +110,13 @@ BEGIN
         LuotThich DESC;
 END
 EXEC sp_ThongKeSoLuotThichCaoNhat '2023-05-22'
+
+CREATE proc sp_CacNamHienCo
+as
+begin
+SELECT DISTINCT YEAR(ngayToCao) Nam
+
+FROM BaiVietViPham;
+end
+
+exec sp_CacNamHienCo
