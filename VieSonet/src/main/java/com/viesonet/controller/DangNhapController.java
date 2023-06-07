@@ -39,10 +39,10 @@ public class DangNhapController {
 	}
 
 	@PostMapping("/dangnhap")
-	public String dangNhap2(@RequestParam(name = "sdt", required = false) String sdt, Model m) {
-//		String sdt = paramService.getString("sdt", "");
+	public String dangNhap2( Model m) {
+		String sdt = paramService.getString("sdt", "");
 		String matKhau = paramService.getString("matKhau", "");
-		boolean remember = paramService.getBoolean("ghiNho", true);
+		boolean remember = paramService.getBoolean("ghiNho", false);
 		try {
 			NguoiDung nDung = dao.findBySdt(sdt);
 			if (sdt.equals(nDung.getSdt()) && matKhau.equals(nDung.getMatKhau())) {
@@ -55,15 +55,13 @@ public class DangNhapController {
 					cookieService.delete("user");
 					cookieService.delete("pass");
 				}
-//				return "index";
+				return "redirect:/doimatkhau";
 			} else {
 				m.addAttribute("message", "Thông tin đăng nhập không chính xác !");
 			}
 		} catch (Exception e) {
 			m.addAttribute("message", "Số điện thoại không tồn tại");
 		}
-		
-		
 
 		return "dangNhap";
 	}

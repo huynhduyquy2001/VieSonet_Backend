@@ -153,21 +153,21 @@ span.psw {
 									<h4 class="nhan" style="color: #0D69B3;">
 										<b>ĐĂNG NHẬP</b>
 									</h4>
-									<br>
+									
 									${message }
 									<hr style="width: 30%;">
 								</center>
 
 								<div class="mb-3">
-									<input type="text" class="form-control ip" name="sdt" id=""
+									<input type="text" class="form-control ip" name="sdt" id="" value="${user }"
 										aria-describedby="helpId" placeholder="Số điện thoại?" pattern="[0-9]{10}"
 										required>																	
 								</div>
 								<div class="mb-3">
-									<input type="text" class="form-control ip" name="matKhau" id=""
+									<input type="text" class="form-control ip" name="matKhau" id="" value="${pass }"
 										aria-describedby="helpId" placeholder="Mật khẩu?" required>									
 								</div>
-								<label><input type="checkbox" name="ghiNho" value="false" ><small>Ghi
+								<label><input type="checkbox" name="ghiNho" value="true" ><small>Ghi
 										nhớ tài khoản?</small></label>
 							</div>
 							<br>
