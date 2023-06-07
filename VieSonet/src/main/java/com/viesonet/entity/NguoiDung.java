@@ -34,13 +34,19 @@ public class NguoiDung {
 	private String email;
 	private String matKhau;
 	private String diaChi;
-	private String tinhYeu;
+	private String moiQuanHe;
 	private String gioiThieu;
 	private String anhDaiDien;
 	private Boolean gioiTinh;
 	private String anhBia;
 	private Boolean trangThai;
+	private Integer luotViPham;
+	private Integer soLuongBanBe;
 
+	@Temporal(TemporalType.DATE)
+	@Column(name = "ngaySinh")
+	Date ngaySinh = new Date();
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "thoiGianTruyCap")
 	Date thoiGianTruyCap = new Date();

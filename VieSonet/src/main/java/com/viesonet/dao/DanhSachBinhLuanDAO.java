@@ -1,9 +1,18 @@
 package com.viesonet.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.viesonet.entity.DanhSachBinhLuan;
+import com.viesonet.entity.DanhSachBinhLuanDTO;
 
-public interface DanhSachBinhLuanDAO extends JpaRepository<DanhSachBinhLuan, String> {
-
+public interface DanhSachBinhLuanDAO extends JpaRepository<DanhSachBinhLuan, Integer> {
+	@Query("SELECT new com.viesonet.entity.DanhSachBinhLuanDTO(ds.chiTiet, ds.ngayBinhLuan, ds.nguoiDung.hoTen, ds.nguoiDung.anhDaiDien) FROM DanhSachBinhLuan ds WHERE ds.baiViet.maBaiViet = :maBaiViet")
+	List<DanhSachBinhLuanDTO> findByBaiVietMaBaiViet(@Param("maBaiViet") int maBaiViet);
+	
+	@Query("SELECT ds.nguoiDung.hoTen,ds.nguoiDung.anhDaiDien, ds.chiTiet, ds.ngayBinhLuan FROM DanhSachBinhLuan ds WHERE ds.baiViet.maBaiViet = :maBaiViet")
+	List<Object> findBinhLuanByMaBaiViet(@Param("maBaiViet") int maBaiViet);
 }

@@ -31,6 +31,14 @@ public class DanhSachBinhLuan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int maBinhLuan;
+	private String chiTiet;
+
+	public DanhSachBinhLuan(String chiTiet, NguoiDung nguoiDung, Date ngayBinhLuan) {
+		super();
+		this.chiTiet = chiTiet;
+		this.nguoiDung = nguoiDung;
+		this.ngayBinhLuan = ngayBinhLuan;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "sdt")
