@@ -73,7 +73,7 @@
 						<li class="nav-item"><a class="nav-link" href="#"><small
 								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Điều
 									khoản</small></a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><small
+						<li class="nav-item"><a class="nav-link" href="/quanLyNguoiDung"><small
 								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Quản
 									lí</small></a></li>
 					</ul>
@@ -114,8 +114,8 @@
 										</label>
 									</div>
 								</div>
-								<a class="dropdown-item" href="#"><small>Đăng nhập</small></a> <a
-									class="dropdown-item" href="#"><small>Đăng ký</small></a>
+								<a class="dropdown-item" href="/dangnhap"><small>Đăng nhập</small></a> <a
+									class="dropdown-item" href="/dangnhap"><small>Đăng ký</small></a>
 							</div></li>
 
 					</ul>

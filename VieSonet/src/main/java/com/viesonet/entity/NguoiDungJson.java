@@ -26,7 +26,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class NguoiDung {
+public class NguoiDungJson {
 	
 	@Id
 	private String sdt;
@@ -56,6 +56,7 @@ public class NguoiDung {
 	Date ngayTao = new Date();
 	
 	/*N-1*/
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "maVaiTro")
 	VaiTro vaiTro;
@@ -63,27 +64,35 @@ public class NguoiDung {
 	
 	/*1-N*/
 	@OneToMany(mappedBy = "nguoiDung")
+	@JsonIgnore
 	List<DanhSachYeuThich> danhSachYeuThich;
 	
 	@OneToMany(mappedBy = "nguoiDung")
+	@JsonIgnore
 	List<DanhSachKetBan> danhSachKetBan1;
 	
 	@OneToMany(mappedBy = "nguoiLa")
+	@JsonIgnore
 	List<DanhSachKetBan> danhSachKetBan2;
 	
 	@OneToMany(mappedBy = "nguoiDung")
+	@JsonIgnore
 	List<BanBe> banBe1;
 	
 	@OneToMany(mappedBy = "banBe")
+	@JsonIgnore
 	List<BanBe> banBe2;
 	
 	@OneToMany(mappedBy = "nguoiDung")
+	@JsonIgnore
 	List<BaiVietViPham> baiVietViPham;
 	
 	@OneToMany(mappedBy = "nguoiDung")
+	@JsonIgnore
 	List<BaiViet> baiViet;
 	
 	@OneToMany(mappedBy = "nguoiDung")
+	@JsonIgnore
 	List<DanhSachBinhLuan> danhSachBinhLuan;
 
 

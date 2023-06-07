@@ -55,16 +55,13 @@ public class DangNhapController {
 					cookieService.delete("user");
 					cookieService.delete("pass");
 				}
-//				return "index";
+				return "redirect:/";
 			} else {
 				m.addAttribute("message", "Thông tin đăng nhập không chính xác !");
 			}
 		} catch (Exception e) {
 			m.addAttribute("message", "Số điện thoại không tồn tại");
 		}
-		
-		
-
 		return "dangNhap";
 	}
 }
