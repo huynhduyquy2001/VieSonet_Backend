@@ -82,7 +82,6 @@ public class NguoiDung {
 	List<DanhSachBinhLuan> danhSachBinhLuan;
 
 
-
 	
 	
 	
