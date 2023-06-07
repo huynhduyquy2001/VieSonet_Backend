@@ -40,6 +40,20 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>Trang chủ</title>
+<style type="text/css">
+.dropdown-item {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.red-heart {
+	color: red; /* Màu đỏ cho trái tim đã thích */
+}
+
+.gray-heart {
+	color: gray; /* Màu xám cho trái tim chưa thích */
+}
+</style>
 </head>
 
 <body>
@@ -165,9 +179,8 @@
 				<c:forEach items="${DanhSachBv}" var="BaiViet">
 					<div
 						class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
-						style="margin-bottom: 20px; border-radius: 0; box-shadow: 0 0 0;">
-						<div
-							style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
+						style="margin-bottom: 20px; border-radius: 0; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
+						<div style="padding: 10px; margin: 0;">
 							<div
 								style="display: flex; align-items: center; justify-content: space-between;">
 								<div class="tooltip2">
@@ -176,7 +189,9 @@
 											class="img-thumbnail" alt="">
 										<div>
 											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br>
-											<small style="font-size: 12px; color: #65676b">${BaiViet.ngayDang}</small>
+											<small style="font-size: 12px; color: #65676b"> <fmt:formatDate
+													value="${BaiViet.ngayDang}" pattern="dd-MM-yyyy HH:mm" />
+											</small>
 										</div>
 									</div>
 									<span class="tooltip2-text"> <a href="">
@@ -200,7 +215,6 @@
 													</small></small>
 												</div>
 												<div>
-
 													<center></center>
 												</div>
 											</div>
@@ -218,120 +232,127 @@
 									</div>
 								</div>
 							</div>
-							<a href="">
-								<div style="margin-top: 10px; color: #847577">
+							<div style="margin-top: 10px; color: #847577">
+								<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
 									${BaiViet.moTa}
 									<center>
 										<img class="lazy" data-src="images/${BaiViet.hinhAnh}"
 											width="100%" alt=""
 											style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
 									</center>
-							</a>
-							<div class="post-reaction">
-								<div class="activity-icons">
-									<div>
-										<i class="fa-regular fa-thumbs-up"></i> &nbsp;
-										${BaiViet.luotThich}
-									</div>
-									<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
-										<i class="fa-regular fa-comment"></i>&nbsp;
-										${BaiViet.luotBinhLuan}
+								</div>
+
+								<div class="post-reaction">
+									<div class="activity-icons">
+
+										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
+											class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
+											<i class="fa-duotone fa-heart"></i> &nbsp;
+											${BaiViet.luotThich}
+										</div>
+
+
+										<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
+											<i class="fa-regular fa-comment"></i>&nbsp;
+											${BaiViet.luotBinhLuan}
+										</div>
 									</div>
 								</div>
 							</div>
+
 						</div>
-
 					</div>
+				</c:forEach>
 			</div>
-			</c:forEach>
-		</div>
-		<div class="col-md-5 menuLeft animate__animated animate__backInRight"
-			style="position: fixed; top: 70px; right: 5%;">
-			<div class="row ">
-				<div class="row" style="margin-left: 2px">
-					<div class="col-md-6">
-						<div
-							style="background-color: #f2f2f2; border-radius: 5px; border: 1px solid grey; background: url(images/thoiThiet.webp); background-size: cover; color: #234662; padding: 0; width: 100%; max-height: 188px">
-							<div id="weather-info"
-								style="background-color: rgba(0, 0, 0, 0.4); margin: 0; padding: 10px; color: #F2E5C9;">
-								<h5 style="color: white">Dự báo thời tiết</h5>
-								<ul style="font-size: 13px">
-									<li><b>Thành phố:</b> <span id="city"></span></li>
-									<li><b>Nhiệt độ:</b> <span id="temperature"></span> °C</li>
-									<li><b>Mô tả:</b> <span id="description"></span></li>
-									<li><b>Độ ẩm:</b> <span id="humidity"></span>%</li>
-									<li><b>Tốc độ gió:</b> <span id="wind-speed"></span> m/s</li>
-								</ul>
+			<div class="col-md-5 menuLeft animate__animated animate__backInRight"
+				style="position: fixed; top: 70px; right: 5%;">
+				<div class="row ">
+					<div class="row" style="margin-left: 2px">
+						<div class="col-md-6">
+							<div
+								style="background-color: #f2f2f2; border-radius: 5px; border: 1px solid grey; background: url(images/thoiThiet.webp); background-size: cover; color: #234662; padding: 0; width: 100%; max-height: 188px">
+								<div id="weather-info"
+									style="background-color: rgba(0, 0, 0, 0.4); margin: 0; padding: 10px; color: #F2E5C9;">
+									<h5 style="color: white">Dự báo thời tiết</h5>
+									<ul style="font-size: 13px">
+										<li><b>Thành phố:</b> <span id="city"></span></li>
+										<li><b>Nhiệt độ:</b> <span id="temperature"></span> °C</li>
+										<li><b>Mô tả:</b> <span id="description"></span></li>
+										<li><b>Độ ẩm:</b> <span id="humidity"></span>%</li>
+										<li><b>Tốc độ gió:</b> <span id="wind-speed"></span> m/s</li>
+									</ul>
 
+								</div>
+							</div>
+
+							<div>
+								<label class="nhan">Lời mời kết bạn(${SlKb})</label>
+								<c:forEach items="${topKetBan}" var="topKb">
+									<div>
+										<div class="user-profile">
+											<img src="images/${topKb.nguoiLa.anhDaiDien}"
+												class="img-thumbnail" alt="">
+											<div>
+												<label class="nhan"
+													style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiLa.hoTen}</label>
+												<small style="display: flex;"> <a
+													class="dropdown-item" href="index/dongy/${topKb.maLoiMoi}"
+													style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1); font-size: small;">
+														<center>Đồng ý</center>
+												</a> <a class="dropdown-item" href="#"
+													style="background-color: #A89386; color: white; font-size: small;">
+														<center>Xóa</center>
+												</a>
+												</small>
+											</div>
+										</div>
+										<div>
+											<div class="btn-group">
+												<div class="dropdown-menu" aria-labelledby="triggerId"
+													style="padding: 0;">
+													<a class="dropdown-item"
+														href="index/dongy/${topKb.maLoiMoi}"
+														style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1);">
+														<center>Đồng ý</center>
+													</a> <a class="dropdown-item"
+														href="index/tuchoi/${topKb.maLoiMoi}"
+														style="background-color: #A89386; color: white;">
+														<center>Xóa</center>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</c:forEach>
 							</div>
 						</div>
 
-						<div>
-							<label class="nhan">Lời mời kết bạn(${SlKb})</label>
-							<c:forEach items="${topKetBan}" var="topKb">
-								<div>
+						<div class="col-md-6">
+							<label class="nhan"
+								style="box-sizing: border-box; padding-left: 10px">Danh
+								sách bạn bè(${SlBanbe})</label> <br> <br>
+							<c:forEach items="${topBanbe}" var="top">
+								<div
+									style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
 									<div class="user-profile">
-										<img src="images/${topKb.nguoiLa.anhDaiDien}"
-											class="img-thumbnail" alt="">
+										<img src="images/${top.banBe.anhDaiDien}"
+											class="img-thumbnail" alt="" style="border-radius: 50%;">
 										<div>
-											<label class="nhan"
-												style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiLa.hoTen}</label>
-											<small style="display: flex;"> <a
-												class="dropdown-item" href="#"
-												style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1); font-size: small;">
-													<center>Đồng ý</center>
-											</a> <a class="dropdown-item" href="#"
-												style="background-color: #A89386; color: white; font-size: small;">
-													<center>Xóa</center>
-											</a>
-											</small>
+											<label for="">${top.banBe.hoTen}</label> <br> <small
+												style="font-size: 12px">Hoạt động: 1 phút trước</small>
 										</div>
 									</div>
 									<div>
-										<div class="btn-group">
-											<div class="dropdown-menu" aria-labelledby="triggerId"
-												style="padding: 0;">
-												<a class="dropdown-item" href="#"
-													style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1);">
-													<center>Đồng ý</center>
-												</a> <a class="dropdown-item" href="#"
-													style="background-color: #A89386; color: white;">
-													<center>Xóa</center>
-												</a>
-											</div>
-										</div>
+										<a href="#"><i class="fas fa-ellipsis-v"></i></a>
 									</div>
 								</div>
 							</c:forEach>
 						</div>
 					</div>
-
-					<div class="col-md-6">
-						<label class="nhan"
-							style="box-sizing: border-box; padding-left: 10px">Danh
-							sách bạn bè(${SlBanbe})</label> <br> <br>
-						<c:forEach items="${topBanbe}" var="top">
-							<div
-								style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-								<div class="user-profile">
-									<img src="images/${top.banBe.anhDaiDien}" class="img-thumbnail"
-										alt="" style="border-radius: 50%;">
-									<div>
-										<label for="">${top.banBe.hoTen}</label> <br> <small
-											style="font-size: 12px">Hoạt động: 1 phút trước</small>
-									</div>
-								</div>
-								<div>
-									<a href="#"><i class="fas fa-ellipsis-v"></i></a>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
 				</div>
-			</div>
 
+			</div>
 		</div>
-	</div>
 	</div>
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModalToggle" aria-hidden="true"
@@ -346,8 +367,8 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<form action="/index/dangbai" method="post"
-					 enctype="multipart/form-data">
+				<form id="postForm" action="/index/dangbai" method="post"
+					enctype="multipart/form-data">
 					<div class="modal-body">
 						<div class="user-profile">
 							<img src="images/avt.jpg" alt="">
@@ -403,7 +424,10 @@
 					<div class="row">
 						<div data-bs-dismiss="modal" style="cursor: pointer;">X</div>
 						<div class="col-md-6 trai order-sm-2 col-xs-12 order-1"></div>
-						<div class="col-md-6 phai order-sm-1 col-xs-12"></div>
+						<div class="col-md-6 phai order-sm-1 col-xs-12">
+						
+							
+						</div>
 
 					</div>
 				</div>
@@ -448,6 +472,7 @@
 	<script src="${pageContext.request.contextPath}/loadComments.js"></script>
 	<script src="${pageContext.request.contextPath}/lazy.js"></script>
 	<script src="${pageContext.request.contextPath}/thoiTiet.js"></script>
+
 </body>
 
 </html>
