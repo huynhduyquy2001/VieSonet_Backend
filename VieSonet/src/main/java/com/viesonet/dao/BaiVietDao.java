@@ -16,7 +16,5 @@ public interface BaiVietDao extends JpaRepository<BaiViet, Integer> {
 	@Query("SELECT  bv.moTa, bv.hinhAnh, bv.ngayDang, bv.luotThich, bv.luotBinhLuan,  bv.nguoiDung.hoTen, bv.nguoiDung.anhDaiDien, bv.nguoiDung.sdt, bv.maBaiViet FROM BaiViet bv WHERE bv.maBaiViet = :maBaiViet")
 	Object findBaiVietByMaBaiViet(@Param("maBaiViet") int maBaiViet);
 
-	 @Query("SELECT bv FROM BaiViet bv WHERE bv.sdt = :sdt")
-	  List<BaiViet> findBySdt(@Param("sdt") String sdt, Sort sort);
 
 }

@@ -85,7 +85,14 @@ public class ProfileController {
 		Cookie[] cookies = request.getCookies();
 		String sdt = null;
 		NguoiDung nguoiDung = null;
+<<<<<<< HEAD
         // Kiểm tra có session chưa
+=======
+		List<BanBe> listBb = banBeDao.findFriendByUserphone(sdt);
+		List<String> sdtBanBeList = listBb.stream().map(banBe -> banBe.getBanBe().getSdt())
+				.collect(Collectors.toList());
+//        // Kiểm tra có session chưa
+>>>>>>> parent of 0c9f949 (change7)
         if (session.getAttribute("sdt") != null) {
             sdt = (String) session.getAttribute("sdt");
             nguoiDung = nguoiDungDao.findBySdt(sdt);
@@ -179,7 +186,7 @@ public class ProfileController {
 	    }
 	    return "redirect:/profile";
 	}
-
+	
 	//Chỉnh sửa ảnh bìa
 	@PostMapping("/profile/background")
 	public String chinhSuaAB(Model m, @RequestParam("photo_file2") MultipartFile photofile) {
@@ -252,6 +259,7 @@ public class ProfileController {
 	
 	@PostMapping("/profile/thembinhluan/{maBaiViet}")
 	@ResponseBody
+<<<<<<< HEAD
 	public String themBinhLuan(@PathVariable int maBaiViet, @RequestParam("binhLuanCuaToi") String binhLuan) {
 	    // Xử lý logic thêm bình luận
 	    String sdt = session.get("sdt");
@@ -262,6 +270,13 @@ public class ProfileController {
 	    entity.setNguoiDung(nguoiDungDao.getById(sdt));
 	    dsblDao.saveAndFlush(entity);
 	    return "ok";
+=======
+	@GetMapping("/profile/binhluan/{maBaiViet}")
+	public BinhLuanResponse xemBinhLuanCN(@PathVariable int maBaiViet) {
+		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
+		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet);
+		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
+>>>>>>> parent of 0c9f949 (change7)
 	}
 	
 	@GetMapping("profile/thich/{maBaiViet}")
