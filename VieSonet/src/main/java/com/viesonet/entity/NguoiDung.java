@@ -57,12 +57,6 @@ public class NguoiDung {
 	@Column(name = "ngayTao")
 	Date ngayTao = new Date();
 	
-//	@DateTimeFormat(pattern = "dd-MM-yyyy")
-//	private Date ngaySinh;
-	@Temporal(TemporalType.DATE)
-	@Column(name = "ngaySinh")
-	Date ngaySinh = new Date();
-	
 	/*N-1*/
 	@JsonIgnore
 	@ManyToOne

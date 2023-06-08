@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.viesonet.dao.BaiVietDao;
+import com.viesonet.dao.BaiVietDAO;
 import com.viesonet.dao.BanBeDAO;
 import com.viesonet.dao.CheDoDAO;
 import com.viesonet.dao.DanhSachBinhLuanDAO;
@@ -49,7 +49,7 @@ public class ProfileController {
 	NguoiDungDAO nguoiDungDao;
 
 	@Autowired
-	BaiVietDao baiVietDao;
+	BaiVietDAO baiVietDao;
 
 	@Autowired
 	BanBeDAO banBeDao;
@@ -75,6 +75,7 @@ public class ProfileController {
 		Cookie[] cookies = request.getCookies();
 		String sdt = "0939790002";
 		NguoiDung nguoiDung = null;
+		
 		List<BanBe> listBb = banBeDao.findFriendByUserphone(sdt);
 		List<String> sdtBanBeList = listBb.stream().map(banBe -> banBe.getBanBe().getSdt())
 				.collect(Collectors.toList());
@@ -161,7 +162,7 @@ public class ProfileController {
 	    }
 	    return "redirect:/profile";
 	}
-	
+
 	//Chỉnh sửa ảnh bìa
 	@PostMapping("/profile/background")
 	public String chinhSuaAB(Model m, @RequestParam("photo_file2") MultipartFile photofile) {
@@ -194,8 +195,11 @@ public class ProfileController {
 	@ResponseBody
 	@GetMapping("/profile/binhluan/{maBaiViet}")
 	public BinhLuanResponse xemBinhLuanCN(@PathVariable int maBaiViet) {
+		List<Order> orders = new ArrayList<Order>();
+		orders.add(new Order(Direction.DESC, "ngayDang"));
+		Sort sort = Sort.by(orders);
 		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
-		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet);
+		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet, sort);
 		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
 	}
 }
