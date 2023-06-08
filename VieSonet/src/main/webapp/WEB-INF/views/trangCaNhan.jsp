@@ -333,8 +333,8 @@
                         <c:forEach items="${topKetBan}" var="topKb">
 								<div>
 									<div class="user-profile">
-										<img src="images/${topKb.nguoiLa.anhDaiDien}"
-											class="img-thumbnail" alt="">
+										<a href="#"><img src="images/${topKb.nguoiLa.anhDaiDien}"
+											class="img-thumbnail" alt=""></a>
 										<div>
 											<label class="nhan"
 												style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiLa.hoTen}</label>
