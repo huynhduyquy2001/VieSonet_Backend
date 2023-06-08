@@ -227,7 +227,7 @@
 											data-bs-toggle="dropdown" aria-haspopup="true"
 											aria-expanded="false"> </span>
 										<div class="dropdown-menu" aria-labelledby="triggerId">
-											<a class="dropdown-item" href="#">Báo cáo vi phạm</a>
+											<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalBaoCao" onclick="toCao(${BaiViet.maBaiViet})">Báo cáo vi phạm</a>
 										</div>
 									</div>
 								</div>
@@ -281,10 +281,8 @@
 										<li><b>Độ ẩm:</b> <span id="humidity"></span>%</li>
 										<li><b>Tốc độ gió:</b> <span id="wind-speed"></span> m/s</li>
 									</ul>
-
 								</div>
 							</div>
-
 							<div>
 								<label class="nhan">Lời mời kết bạn(${SlKb})</label>
 								<c:forEach items="${topKetBan}" var="topKb">
@@ -435,6 +433,33 @@
 			</div>
 		</div>
 	</div>
+	<!-- Modal báo cáo -->
+  <div class="modal fade" id="modalBaoCao" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitleId">Nội dung tố cáo</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" onclick="BaoCaoViPham(${maBaiViet})">
+          <select name="chiTietViPham" id="" class="form-control">
+            <option value="">Ngôn từ gây thù ghét</option>
+            <option value="">Nội dung bạo lực và phản cảm</option>
+            <option value="">Ảnh khỏa thân người lớn và hoạt động tình dục</option>
+            <option value="">Gạ gẫm tình dục</option>
+            <option value="">Bạo lực và khích nộ</option>
+            <option value="">Cá nhân và tổ chức nguy hiểm</option>
+            <option value="">Cấu kết gây hại và cổ xúy tội ác</option>
+            <option value="">Hàng hóa và dịch vụ bị hạn chế</option>
+            <option value="">Gian lận và lừa đảo</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          
+        </div>
+      </div>
+    </div>
+  </div>
 	<!-- load ảnh -->
 	<script>
         let img = document.getElementById('img');

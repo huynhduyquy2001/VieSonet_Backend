@@ -31,6 +31,7 @@ import com.viesonet.dao.DanhSachBinhLuanDAO;
 import com.viesonet.dao.DanhSachKetBanDAO;
 import com.viesonet.dao.DanhSachYeuThichDAO;
 import com.viesonet.entity.BaiViet;
+import com.viesonet.entity.BaiVietViPham;
 import com.viesonet.entity.BanBe;
 import com.viesonet.entity.BinhLuanResponse;
 import com.viesonet.entity.DanhSachBinhLuan;
@@ -210,5 +211,12 @@ public class IndexController {
 	    return "ok";
 	}
 
+	@PostMapping("/index/baocaovipham/{maBaiViet}")
+	public void baoCaoBaiViet(@PathVariable int maBaiViet, @RequestParam("chiTietViPham") String chiTietViPham) {
+		BaiVietViPham baiViet = new BaiVietViPham();
+		baiViet.setBaiViet(baiVietDao.getById(maBaiViet));
+		baiViet.setNgayToCao(new Date());
+		baiViet.setChiTiet(chiTietViPham);
+	}
 	
 }

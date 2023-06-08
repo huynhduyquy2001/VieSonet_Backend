@@ -177,10 +177,29 @@ function themBinhLuan(maBaiViet) {
 }
 
 
+function toCao(maBaiViet) {
+    $("#modalBaoCao .modal-footer").empty();
 
+    var closeModal = document.createElement("button");
+    closeModal.type = "button";
+    closeModal.className = "btn btn-secondary";
+    closeModal.innerHTML = "Đóng";
+    closeModal.setAttribute("data-bs-dismiss", "modal");
 
+    var baoCaoModal = document.createElement("button");
+    baoCaoModal.type = "button";
+    baoCaoModal.className = "btn btn-primary";
+    baoCaoModal.innerHTML = "Báo cáo";
+    baoCaoModal.onclick = function() {
+        BaoCaoViPham(maBaiViet);
+        $("#modalBaoCao").modal("hide");
+    };
 
+    var modalFooter = document.querySelector("#modalBaoCao .modal-footer");
+    modalFooter.appendChild(closeModal);
+    modalFooter.appendChild(baoCaoModal);
+}
 
-
-
-
+function baoCaoViPham(maBaiViet){
+	
+}

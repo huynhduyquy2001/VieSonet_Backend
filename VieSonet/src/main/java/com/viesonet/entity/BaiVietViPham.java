@@ -30,6 +30,7 @@ public class BaiVietViPham {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int maToCao;
+	private String chiTiet;
 	
 	@ManyToOne
 	@JoinColumn(name = "sdt")
@@ -38,6 +39,10 @@ public class BaiVietViPham {
 	@ManyToOne
 	@JoinColumn(name = "maBaiViet")
 	BaiViet baiViet;
+	
+	@ManyToOne
+	@JoinColumn(name = "maLoai")
+	LoaiViPham loaiViPham;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ngayToCao")
