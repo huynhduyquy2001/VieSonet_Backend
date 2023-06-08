@@ -53,10 +53,9 @@ public class NguoiDung {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ngayTao")
-	Date ngayGui = new Date();
+	Date ngayTao = new Date();
 	
 	/*N-1*/
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "maVaiTro")
 	VaiTro vaiTro;

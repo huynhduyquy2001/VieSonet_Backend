@@ -166,20 +166,15 @@ function themBinhLuan(maBaiViet) {
 		type: "POST",
 		data: { binhLuanCuaToi: binhLuan },
 		success: function(response) {
-
 			loadBinhLuan(maBaiViet);
-
 		},
 		error: function(xhr, status, error) {
 			console.error("Lỗi khi thêm bình luận: ", error);
 		}
 	});
 }
-
-
 function toCao(maBaiViet) {
     $("#modalBaoCao .modal-footer").empty();
-
     var closeModal = document.createElement("button");
     closeModal.type = "button";
     closeModal.className = "btn btn-secondary";
@@ -190,16 +185,35 @@ function toCao(maBaiViet) {
     baoCaoModal.type = "button";
     baoCaoModal.className = "btn btn-primary";
     baoCaoModal.innerHTML = "Báo cáo";
-    baoCaoModal.onclick = function() {
-        BaoCaoViPham(maBaiViet);
+    baoCaoModal.addEventListener("click", function() {
+        baoCaoViPham(maBaiViet);
         $("#modalBaoCao").modal("hide");
-    };
+    });
 
     var modalFooter = document.querySelector("#modalBaoCao .modal-footer");
     modalFooter.appendChild(closeModal);
     modalFooter.appendChild(baoCaoModal);
 }
 
-function baoCaoViPham(maBaiViet){
-	
+function baoCaoViPham(maBaiViet) {
+    var loaiViPham = $("#viPham").val(); // Lấy giá trị của select box
+
+    $.ajax({
+        url: "/index/baocaovipham/" + maBaiViet,
+        type: "POST",
+        data: { loaiViPham: loaiViPham }, // Truyền giá trị của select box
+        success: function(response) {
+            // Xử lý logic sau khi gọi thành công
+            console.log(response); // In response ra console để kiểm tra
+        },
+        error: function(xhr, status, error) {
+            console.log(error); // In error ra console để debug
+            // Xử lý logic khi gọi gặp lỗi
+        }
+    });
 }
+
+
+
+
+

@@ -227,7 +227,9 @@
 											data-bs-toggle="dropdown" aria-haspopup="true"
 											aria-expanded="false"> </span>
 										<div class="dropdown-menu" aria-labelledby="triggerId">
-											<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalBaoCao" onclick="toCao(${BaiViet.maBaiViet})">Báo cáo vi phạm</a>
+											<a class="dropdown-item" data-bs-toggle="modal"
+												data-bs-target="#modalBaoCao"
+												onclick="toCao(${BaiViet.maBaiViet})">Báo cáo vi phạm</a>
 										</div>
 									</div>
 								</div>
@@ -422,10 +424,7 @@
 					<div class="row">
 						<div data-bs-dismiss="modal" style="cursor: pointer;">X</div>
 						<div class="col-md-6 trai order-sm-2 col-xs-12 order-1"></div>
-						<div class="col-md-6 phai order-sm-1 col-xs-12">
-						
-							
-						</div>
+						<div class="col-md-6 phai order-sm-1 col-xs-12"></div>
 
 					</div>
 				</div>
@@ -434,32 +433,30 @@
 		</div>
 	</div>
 	<!-- Modal báo cáo -->
-  <div class="modal fade" id="modalBaoCao" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalTitleId">Nội dung tố cáo</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" onclick="BaoCaoViPham(${maBaiViet})">
-          <select name="chiTietViPham" id="" class="form-control">
-            <option value="">Ngôn từ gây thù ghét</option>
-            <option value="">Nội dung bạo lực và phản cảm</option>
-            <option value="">Ảnh khỏa thân người lớn và hoạt động tình dục</option>
-            <option value="">Gạ gẫm tình dục</option>
-            <option value="">Bạo lực và khích nộ</option>
-            <option value="">Cá nhân và tổ chức nguy hiểm</option>
-            <option value="">Cấu kết gây hại và cổ xúy tội ác</option>
-            <option value="">Hàng hóa và dịch vụ bị hạn chế</option>
-            <option value="">Gian lận và lừa đảo</option>
-          </select>
-        </div>
-        <div class="modal-footer">
-          
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="modal fade" id="modalBaoCao" tabindex="-1" role="dialog"
+		aria-labelledby="modalTitleId" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalTitleId">Nội dung tố cáo</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<select name="loaiViPham" id="viPham" class="form-control">
+						<c:forEach var="viPham" items="${danhSachViPham}">
+							<option value="${viPham.maLoai}">${viPham.chiTiet}</option>
+						</c:forEach>
+					</select>
+
+				</div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+				<button type="button" class="btn btn-primary">Báo cáo</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- load ảnh -->
 	<script>
         let img = document.getElementById('img');

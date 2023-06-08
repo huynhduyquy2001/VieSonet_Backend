@@ -19,17 +19,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.viesonet.dao.BaiVietDao;
+import com.viesonet.dao.BaiVietViPhamDAO;
 import com.viesonet.dao.NguoiDungDAO;
 import com.viesonet.dao.BanBeDAO;
 import com.viesonet.dao.CheDoDAO;
 import com.viesonet.dao.DanhSachBinhLuanDAO;
 import com.viesonet.dao.DanhSachKetBanDAO;
 import com.viesonet.dao.DanhSachYeuThichDAO;
+import com.viesonet.dao.LoaiViPhamDAO;
 import com.viesonet.entity.BaiViet;
 import com.viesonet.entity.BaiVietViPham;
 import com.viesonet.entity.BanBe;
@@ -37,6 +40,7 @@ import com.viesonet.entity.BinhLuanResponse;
 import com.viesonet.entity.DanhSachBinhLuan;
 import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.DanhSachYeuThich;
+import com.viesonet.entity.LoaiViPham;
 import com.viesonet.entity.NguoiDung;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
@@ -57,7 +61,7 @@ public class IndexController {
 
 	@Autowired
 	DanhSachKetBanDAO dskbDao;
-	
+
 	@Autowired
 	DanhSachYeuThichDAO dsytDao;
 
@@ -69,6 +73,12 @@ public class IndexController {
 
 	@Autowired
 	ParamService paramService;
+
+	@Autowired
+	BaiVietViPhamDAO bvvpDao;
+
+	@Autowired
+	LoaiViPhamDAO loaiViPhamDao;
 
 	// lấy thông tin người dùng
 
@@ -86,20 +96,18 @@ public class IndexController {
 		Sort sort = Sort.by(orders);
 		List<BaiViet> dsBaiViet = baiVietDao.findByNguoiDungSdtIn(sdtBanBeList, Sort.by(Direction.DESC, "ngayDang"));
 		m.addAttribute("DanhSachBv", dsBaiViet);
-		
-		//Lấy danh sách bài viết đã thích
-		
+
+		// Lấy danh sách bài viết đã thích
+
 		Set<Integer> maBaiVietDaThich = new HashSet<>();
 		List<DanhSachYeuThich> dsyt = dsytDao.findBySdt(sdt);
 		for (DanhSachYeuThich ds : dsyt) {
-		    int maBaiViet = ds.getBaiViet().getMaBaiViet();
-		    maBaiVietDaThich.add(maBaiViet);
-		    System.out.println(maBaiViet);
+			int maBaiViet = ds.getBaiViet().getMaBaiViet();
+			maBaiVietDaThich.add(maBaiViet);
+			System.out.println(maBaiViet);
 		}
 		m.addAttribute("maBaiVietDaThich", maBaiVietDaThich);
-		
 
-		
 		// lấy một vài bạn bè từ danh sách bạn bè
 		List<BanBe> topBanBe = new ArrayList<>();
 		for (int i = 0; i < Math.min(5, listBb.size()); i++) {
@@ -117,6 +125,10 @@ public class IndexController {
 		}
 		m.addAttribute("topKetBan", topKetBan);
 		System.out.println(topKetBan.size());
+
+		// danh sách điều khoản vi phạm
+		List<LoaiViPham> danhSachViPham = loaiViPhamDao.findAll();
+		m.addAttribute("danhSachViPham", danhSachViPham);
 		return "index";
 	}
 
@@ -124,7 +136,8 @@ public class IndexController {
 	@GetMapping("/binhluan/{maBaiViet}")
 	public BinhLuanResponse xemBinhLuan(@PathVariable int maBaiViet) {
 		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
-		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet, Sort.by(Direction.DESC, "ngayBinhLuan"));
+		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet,
+				Sort.by(Direction.DESC, "ngayBinhLuan"));
 		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
 	}
 
@@ -159,6 +172,7 @@ public class IndexController {
 		}
 		return "Bài viết đã được đăng thành công!";
 	}
+
 	@GetMapping("index/dongy/{maLoiMoi}")
 	public String dongYKetBan(@PathVariable int maLoiMoi) {
 		String sdt = session.get("sdt");
@@ -173,50 +187,55 @@ public class IndexController {
 		dskbDao.deleteById(maLoiMoi);
 		return "redirect:/index";
 	}
+
 	@GetMapping("index/tuchoi/{maLoiMoi}")
 	public String tuChoiKetBan(@PathVariable int maLoiMoi) {
 		dskbDao.deleteById(maLoiMoi);
 		return "redirect:/index";
 	}
-	
+
 	@GetMapping("index/thich/{maBaiViet}")
 	public void thichBaiViet(@PathVariable int maBaiViet) {
 		String sdt = session.get("sdt");
 		DanhSachYeuThich baiVietYeuThich = dsytDao.findByKey(sdt, maBaiViet);
-		if(baiVietYeuThich == null) {
+		if (baiVietYeuThich == null) {
 			baiVietYeuThich = new DanhSachYeuThich();
 			baiVietYeuThich.setNgayYeuThich(new Date());
 			baiVietYeuThich.setBaiViet(baiVietDao.getById(maBaiViet));
 			baiVietYeuThich.setNguoiDung(nguoiDungDAO.getById(sdt));
 			dsytDao.saveAndFlush(baiVietYeuThich);
-		}else {
+		} else {
 			baiVietYeuThich.setNgayYeuThich(new Date());
 			baiVietYeuThich.setBaiViet(baiVietDao.getById(maBaiViet));
 			baiVietYeuThich.setNguoiDung(nguoiDungDAO.getById(sdt));
 			dsytDao.delete(baiVietYeuThich);
 		}
 	}
-	
+
 	@PostMapping("/index/thembinhluan/{maBaiViet}")
 	@ResponseBody
 	public String themBinhLuan(@PathVariable int maBaiViet, @RequestParam("binhLuanCuaToi") String binhLuan) {
-	    // Xử lý logic thêm bình luận
-	    String sdt = session.get("sdt");
-	    DanhSachBinhLuan entity = new DanhSachBinhLuan();
-	    entity.setBaiViet(baiVietDao.getById(maBaiViet));
-	    entity.setChiTiet(binhLuan);
-	    entity.setNgayBinhLuan(new Date());
-	    entity.setNguoiDung(nguoiDungDAO.getById(sdt));
-	    dsblDao.saveAndFlush(entity);
-	    return "ok";
+		// Xử lý logic thêm bình luận
+		String sdt = session.get("sdt");
+		DanhSachBinhLuan entity = new DanhSachBinhLuan();
+		entity.setBaiViet(baiVietDao.getById(maBaiViet));
+		entity.setChiTiet(binhLuan);
+		entity.setNgayBinhLuan(new Date());
+		entity.setNguoiDung(nguoiDungDAO.getById(sdt));
+		dsblDao.saveAndFlush(entity);
+		return "ok";
 	}
-
+	@ResponseBody
 	@PostMapping("/index/baocaovipham/{maBaiViet}")
-	public void baoCaoBaiViet(@PathVariable int maBaiViet, @RequestParam("chiTietViPham") String chiTietViPham) {
+	public String baoCaoBaiViet(@PathVariable int maBaiViet, @RequestParam("loaiViPham") int loaiViPham) {
+		
+		String sdt = session.get("sdt");
 		BaiVietViPham baiViet = new BaiVietViPham();
 		baiViet.setBaiViet(baiVietDao.getById(maBaiViet));
 		baiViet.setNgayToCao(new Date());
-		baiViet.setChiTiet(chiTietViPham);
+		baiViet.setLoaiViPham(loaiViPhamDao.getById(loaiViPham));
+		baiViet.setNguoiDung(nguoiDungDAO.getById(sdt));
+		bvvpDao.saveAndFlush(baiViet);
+		return "success";
 	}
-	
 }

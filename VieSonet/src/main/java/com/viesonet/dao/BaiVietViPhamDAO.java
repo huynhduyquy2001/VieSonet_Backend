@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.viesonet.entity.BaiVietViPham;
 
-public interface BaiVietViPhamDAO extends JpaRepository<BaiVietViPham, String> {
+public interface BaiVietViPhamDAO extends JpaRepository<BaiVietViPham, Integer> {
 	
 }
