@@ -55,7 +55,7 @@ public class DangNhapController {
 				cookieService.delete("pass");
 			}
 			//Nhớ sửa lại thành trang chủ
-			return "redirect:/profile";
+			return "redirect:/";
 		} else {
 			m.addAttribute("message", "Thông tin đăng nhập không chính xác !");
 			return "dangNhap";

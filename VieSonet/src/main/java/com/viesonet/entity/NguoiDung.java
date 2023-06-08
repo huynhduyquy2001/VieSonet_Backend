@@ -3,6 +3,8 @@ package com.viesonet.entity;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -49,7 +51,13 @@ public class NguoiDung {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ngayTao")
-	Date ngayGui = new Date();
+	Date ngayTao = new Date();
+	
+//	@DateTimeFormat(pattern = "dd-MM-yyyy")
+//	private Date ngaySinh;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "ngaySinh")
+	Date ngaySinh = new Date();
 	
 	/*N-1*/
 	@JsonIgnore

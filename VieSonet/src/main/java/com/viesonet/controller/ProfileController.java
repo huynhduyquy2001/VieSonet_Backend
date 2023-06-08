@@ -1,5 +1,7 @@
 package com.viesonet.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,18 +68,16 @@ public class ProfileController {
 	
 	@Autowired
 	ParamService param;
-//	String sdt = "0939790002";
-//	NguoiDung nguoiDung = null;
+	
 	@RequestMapping("/profile")
 	public String index(Model m, HttpServletRequest request, HttpServletResponse response) {
-		List<BanBe> listBb = banBeDao.findFriendByUserphone("0939790002");
-		List<String> sdtBanBeList = listBb.stream().map(banBe -> banBe.getBanBe().getSdt())
-				.collect(Collectors.toList());
 		HttpSession session = request.getSession();
 		Cookie[] cookies = request.getCookies();
 		String sdt = "0939790002";
 		NguoiDung nguoiDung = null;
-//		m.addAttribute("list", list);
+		List<BanBe> listBb = banBeDao.findFriendByUserphone(sdt);
+		List<String> sdtBanBeList = listBb.stream().map(banBe -> banBe.getBanBe().getSdt())
+				.collect(Collectors.toList());
 //        // Kiểm tra có session chưa
         if (session.getAttribute("sdt") != null) {
             sdt = (String) session.getAttribute("sdt");
@@ -127,14 +127,8 @@ public class ProfileController {
 		return "trangCaNhan";
 	}
 	
-	
-	@RequestMapping("/nguoidung/update/{sdt}")
-    public String thaydoiNguoiDung(@ModelAttribute("sdt") NguoiDung nguoiDung) {
-        nguoiDungDao.saveAndFlush(nguoiDung);
-        return "redirect:/profile";
-    }
-	
-	@PostMapping("nguoidung/update")
+	//Đăng bài viết
+	@PostMapping("/profile/dangbai")
 	public String dangBai( @RequestParam("photo_file") MultipartFile photofile, Model m) {
 		BaiViet baiDang = new BaiViet();
 		if (photofile.isEmpty())
@@ -144,6 +138,7 @@ public class ProfileController {
 		}
 		String sdt = session.get("sdt");
 		int cheDo = param.getInt("cheDo", 1);
+		//Lấy thông tin từ input
 		baiDang.setMoTa(param.getString("moTaBaiDang", ""));
 		baiDang.setNgayDang(new Date());
 		baiDang.setLuotThich(0);
@@ -152,13 +147,55 @@ public class ProfileController {
 		baiDang.setCheDo(cheDoDao.getById(cheDo));
 		baiDang.setNguoiDung(nguoiDungDao.getById(sdt));
 		baiVietDao.saveAndFlush(baiDang);
-		return "redirect:/";
+		return "redirect:/profile";
+	}
+	
+	//Chỉnh sửa ảnh đại diện
+	@PostMapping("/profile/avatar")
+	public String chinhSuaADD(Model m, @RequestParam("photo_file") MultipartFile photofile) {
+	    String sdt = session.get("sdt");
+	    NguoiDung add = nguoiDungDao.findBySdt(sdt);
+	    if (!photofile.isEmpty()) {
+	            add.setAnhDaiDien(photofile.getOriginalFilename());
+	            nguoiDungDao.saveAndFlush(add);
+	    }
+	    return "redirect:/profile";
+	}
+	
+	//Chỉnh sửa ảnh bìa
+	@PostMapping("/profile/background")
+	public String chinhSuaAB(Model m, @RequestParam("photo_file2") MultipartFile photofile) {
+	    String sdt = session.get("sdt");
+	    NguoiDung add = nguoiDungDao.findBySdt(sdt);
+	    if (!photofile.isEmpty()) {
+	            add.setAnhBia(photofile.getOriginalFilename());
+	            nguoiDungDao.saveAndFlush(add);
+	        
+	    }
+	    return "redirect:/profile";
+	}
+	
+	//Cập nhật thông tin người dùng
+	@PostMapping("/profile/update")
+	public String chinhSuaTT(Model m,@ModelAttribute("nguoiDung") NguoiDung nguoiDung) {
+		NguoiDung thongTin = new NguoiDung();
+		String sdt = session.get("sdt");
+		NguoiDung nguoiDungHienTai = nguoiDungDao.findBySdt(sdt);
+		nguoiDungHienTai.setHoTen(nguoiDung.getHoTen());
+	    nguoiDungHienTai.setEmail(nguoiDung.getEmail());
+	    nguoiDungHienTai.setDiaChi(nguoiDung.getDiaChi());
+	    nguoiDungHienTai.setGioiThieu(nguoiDung.getGioiThieu());
+	    nguoiDungHienTai.setDiaChi(nguoiDung.getDiaChi());
+		nguoiDungDao.saveAndFlush(nguoiDungHienTai);
+		return "redirect:/profile";
 		
 	}
 	
-//	@PostMapping("/capnhatnguoidung")
-//	public String capNhatNguoiDung(@ModelAttribute("nguoiDung") NguoiDung nguoiDung, Model model) {
-//		
-//		
-//	}
+	@ResponseBody
+	@GetMapping("/profile/binhluan/{maBaiViet}")
+	public BinhLuanResponse xemBinhLuanCN(@PathVariable int maBaiViet) {
+		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
+		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet);
+		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
+	}
 }

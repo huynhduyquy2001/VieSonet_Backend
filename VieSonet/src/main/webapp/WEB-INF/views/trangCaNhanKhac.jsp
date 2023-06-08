@@ -150,7 +150,7 @@
                             <li><b><i class="fa-light fa-mountain-sun"></i> Quê quán:</b> ${nguoiDung.diaChi}</li>
                             <li><i class="fa-regular fa-heart"></i> <b>Mối quan hệ:</b> ${nguoiDung.moiQuanHe}</li>
                             <li><b><i class="fa-regular fa-envelope"></i> Email:</b> ${nguoiDung.email}</li>
-                            <li><b><i class="fa-regular fa-registered"></i> Ngày tham gia:</b> ${nguoiDung.ngayTao}</li>
+                            <li><b><i class="fa-regular fa-registered"></i> Ngày tham gia:</b> ${nguoiDung.ngayGui}</li>
                             <li><b><i class="fa-light fa-user-group"></i> Danh sách bạn bè:</b> ${SlBanbe}</li>
                         </ul>
                        </small>
@@ -423,27 +423,27 @@
                             <div style=" display: flex; align-items: center; justify-content: space-between; ">
                                 <div class="tooltip2">	
                                     <div class="user-profile ">
-                                        <img src="images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
+                                        <img src="images/${BaiViet.anhDaiDien}" class="img-thumbnail" alt="">
                                         <div>
-                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br> 
+                                            <label class="nhan">${BaiViet.hoTen}</label> <br> 
                                             <small>${BaiViet.ngayDang}</small> <br>
                                         </div>
                                     </div>
                                     <span class="tooltip2-text">
                                         <a href="">
-                                            <img src="images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
+                                            <img src="images/${BaiViet.anhDaiDien}" class="img-thumbnail" alt="">
                                             <div>
-                                                <label for="">${BaiViet.nguoiDung.hoTen}</label> <br>
+                                                <label for="">${BaiViet.hoTen}</label> <br>
                                                 <center>
                                                     <small>
                                                         <small>
                                                             <ul style="line-height: 20px; text-align: left;">
                                                                 <li><b><i class="fa-light fa-mountain-sun"></i> Quê
                                                                         quán:</b>
-                                                                    ${BaiViet.nguoiDung.diaChi}</li>
+                                                                    ${BaiViet.diaChi}</li>
                                                                 <li><i class="fa-regular fa-heart"></i> <b>Mối quan
                                                                         hệ:</b>
-                                                                    ${BaiViet.nguoiDung.moiQuanHe}</li>
+                                                                    ${BaiViet.moiQuanHe}</li>
                                                                 <li><b><i class="fa-light fa-user-group"></i> Danh sách
                                                                         bạn
                                                                         bè:</b> ${SlBanbe}</li>
