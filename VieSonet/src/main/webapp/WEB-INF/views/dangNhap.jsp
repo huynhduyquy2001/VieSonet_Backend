@@ -21,7 +21,8 @@
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/style.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/style.css">
 <title>Đăng nhập</title>
 <style>
 .ip[type=text], .ip[type=password], .ip[type=email] {
@@ -130,7 +131,8 @@ span.psw {
 		<div class="container" id="loginForm"
 			style="width: 60%; min-width: 350px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
 			<div class="row" style="padding: 0; border-radius: 10px;">
-				<div class="col-md-4  col-sm-12 animationTop2 delay-02 img-thumbnail"
+				<div
+					class="col-md-4  col-sm-12 animationTop2 delay-02 img-thumbnail"
 					style="padding: 3%; border-radius: 10px; position: relative; background-color: white; box-shadow: 15px 15px 5px rgba(0, 0, 0, 0.1);">
 					<img
 						src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
@@ -145,32 +147,33 @@ span.psw {
 						alt=""
 						style="position: absolute; right: -50px; bottom: 10px; width: 100px;">
 					<center>
-						<form action="dangNhap" method="post"
+						<form action="/dangnhap" method="post"
 							style="text-align: left; width: 100%;">
 							<div class="row">
 								<center>
 									<h4 class="nhan" style="color: #0D69B3;">
 										<b>ĐĂNG NHẬP</b>
 									</h4>
+									<br> ${message }
 									<hr style="width: 30%;">
 								</center>
 
 								<div class="mb-3">
 									<input type="text" class="form-control ip" name="sdt" id=""
 										aria-describedby="helpId" placeholder="Số điện thoại?"
-										required>
+										pattern="[0-9]{10}" required>
 								</div>
 								<div class="mb-3">
 									<input type="text" class="form-control ip" name="matKhau" id=""
-										aria-describedby="helpId" placeholder="Mật khẩu?">
+										aria-describedby="helpId" placeholder="Mật khẩu?" required>
 								</div>
-								<label><input type="checkbox" name="ghiNho"><small>Ghi
-										nhớ tài khoản?</small></label>
+								<label><input type="checkbox" name="ghiNho"
+									value="false"><small>Ghi nhớ tài khoản?</small></label>
 							</div>
 							<br>
 							<center>
-								<button class="lgin" type="submit"
-									style="background-color: #007ACC;">Đăng nhập</button>
+								<button class="lgin" style="background-color: #007ACC;">Đăng
+									nhập</button>
 							</center>
 							<br> <a href="/ASM_Java4/index"> <small>Quên mật
 									khẩu?</small>

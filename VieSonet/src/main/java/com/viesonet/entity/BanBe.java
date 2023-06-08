@@ -36,7 +36,8 @@ public class BanBe {
 	@ManyToOne
 	@JoinColumn(name = "sdtBb")
 	NguoiDung banBe;
-	
+	@Column(name = "sdtBb", insertable=false, updatable=false) 
+	private String sdtBb;
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ngayKb")
 	Date ngayKb = new Date();

@@ -9,22 +9,31 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.viesonet.dao.BaiVietDAO;
+import com.viesonet.dao.BaiVietDao;
+import com.viesonet.service.SessionService;
 
 @Controller
 public class IndexController {
-	
+
 	@Autowired
-	BaiVietDAO baiVietDao;
-	
-@RequestMapping("/")
-public String index(Model m) {
-	List<Order> orders = new ArrayList<Order>();
-	orders.add(new Order(Direction.DESC, "ngayDang"));
-	Sort sort = Sort.by(orders);
-	m.addAttribute("listProduct", baiVietDao.findAll(sort));
-	return"index";
-}
+	BaiVietDao baiVietDao;
+
+	 @Autowired
+	 SessionService SS;
+	 
+	@RequestMapping("/")
+	public String index(Model m) {
+		List<Order> orders = new ArrayList<Order>();
+		orders.add(new Order(Direction.DESC, "ngayDang"));
+		Sort sort = Sort.by(orders);
+		m.addAttribute("listProduct", baiVietDao.findAll(sort));
+		return "index";
+	}
+	@GetMapping("/timKiem")
+	public String method1() {
+		return "TimKiem";
+	}
 }

@@ -75,11 +75,11 @@
 								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Quản
 									lí</small></a></li>
 					</ul>
-					<form class="d-flex my-2 my-lg-0">
-						<input class="form-control me-sm-2 input-hbh"
+					<form class="d-flex my-2 my-lg-0" action="/tim-kiem">
+						<input 	class="form-control me-sm-2 input-hbh" name="hoTen"
 							style="border-radius: 0; border: none; border-bottom: 1px solid gray; transform: skew(0); background-color: transparent;"
 							type="text" placeholder="Search">
-						<button class="btn btn-outline-success my-2 my-sm-0" hidden
+						<button class="btn btn-outline-success my-2 my-sm-0" 
 							type="submit">Search</button>
 					</form>
 
