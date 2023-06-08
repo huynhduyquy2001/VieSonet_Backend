@@ -9,19 +9,55 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/f737751420.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/style.css">
+<!-- Bootstrap CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/f737751420.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Inline+One&family=Bangers&family=Chakra+Petch:ital,wght@0,400;1,300;1,400;1,700&family=Grenze&family=Patrick+Hand&family=Playfair+Display+SC&family=Road+Rage&display=swap"
+	rel="stylesheet">
+
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Inline+One&family=Bangers&family=Chakra+Petch:ital,wght@0,400;1,300;1,400;1,700&family=Grenze&family=Patrick+Hand&family=Roboto&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+</head>
     <title>Trang cá nhân</title>
+    <style type="text/css">
+.dropdown-item {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.red-heart {
+	color: red; /* Màu đỏ cho trái tim đã thích */
+}
+
+.gray-heart {
+	color: gray; /* Màu xám cho trái tim chưa thích */
+}</style>
     <style>
         #menuTrai {
             position: absolute;
@@ -255,11 +291,6 @@
                                 style="border-radius: 0; border: none; border-bottom: 1px solid gray;" type="text"
                                 placeholder="Quê quán?" value="${nguoiDung.diaChi}" name="diaChi"/>
                         </li>
-                        <li><b><i class="fa-regular fa-envelope"></i> Ngày sinh:</b>
-                            <input class="form-control input-hbh"
-                                style="border-radius: 0; border: none; border-bottom: 1px solid gray;" type="date"
-                                placeholder="Giới thiệu?" value="${nguoiDung.ngaySinh}" name="ngaySinh"/>
-                        </li>
                         <li><i class="fa-regular fa-heart"></i> <b>Mối quan hệ:</b>
                             <input class="form-control input-hbh"
                                 style="border-radius: 0; border: none; border-bottom: 1px solid gray;" type="text"
@@ -426,14 +457,14 @@
                                         <img src="images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
                                         <div>
                                             <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br> 
-                                            <small>${BaiViet.ngayDang}</small> <br>
+                                            <small>${BaiViet.ngayDang} </small> <br>
                                         </div>
                                     </div>
                                     <span class="tooltip2-text">
                                         <a href="">
                                             <img src="images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
                                             <div>
-                                                <label for="">${BaiViet.nguoiDung.hoTen}</label> <br>
+                                                <label for="">${BaiViet.nguoiDung.hoTen}  </label> <br>
                                                 <center>
                                                     <small>
                                                         <small>
@@ -462,28 +493,37 @@
 
                                         </span>
                                         <div class="dropdown-menu" aria-labelledby="triggerId">
-                                            <a class="dropdown-item" href="#">Báo cáo vi phạm</a>
+                                            <button data-bs-toggle="modal" href="#exampleModalToggle123"
+                style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px;"><small>
+                    Đổi ảnh bìa</small></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div style="margin-top: 10px;">
-                                ${BaiViet.moTa}
-                                <center>
-                                    <img class="lazy" data-src="images/${BaiViet.hinhAnh}" width="100%" alt=""
-                                        style="margin-top: 10px;margin-bottom: 10px; border-radius: 6px;">
-                                </center>
+                           <div style="margin-top: 10px; color: #847577">
+								<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
+									${BaiViet.moTa}
+									<center>
+										<img class="lazy" data-src="images/${BaiViet.hinhAnh}"
+											width="100%" alt=""
+											style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
+									</center>
+								</div>
                                <div class="post-reaction">
 								<div class="activity-icons">
-									<div>
-										<i class="fa-regular fa-thumbs-up"></i> &nbsp;
-										${BaiViet.luotThich}
+
+										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
+											class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
+											<i class="fa-duotone fa-heart"></i> &nbsp;
+											${BaiViet.luotThich}
+										</div>
+
+
+										<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
+											<i class="fa-regular fa-comment"></i>&nbsp;
+											${BaiViet.luotBinhLuan}
+										</div>
 									</div>
-									<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
-										<i class="fa-regular fa-comment"></i>&nbsp;
-										${BaiViet.luotBinhLuan}
-									</div>
-								</div>
 							</div>
                             </div>
                         </div>
@@ -492,7 +532,7 @@
                 </div>
             
     
-    <!-- Modal -->
+    <!-- Modal đăng bài --> 
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true"
 		aria-labelledby="exampleModalToggleLabel" tabindex="-1">
 		<div class="modal-dialog modal-dialog-centered">
@@ -526,6 +566,69 @@
 							</div>
 						</div>
 						</c:forEach>
+						<br>
+						<textarea name="moTaBaiDang" placeholder="Bạn muốn đăng gì?" id=""
+							cols="30" rows="3"
+							style="width: 100%; border: 0px; outline: none; border-bottom: 1px solid #ccc; background: transparent; resize: none;"></textarea>
+
+						<br>
+						<center>
+							<img id="img" src="" width="45%"
+								style="border-radius: 10px; border: 1px solid rgb(184, 182, 182)">
+						</center>
+					</div>
+					<div class="modal-footer">
+						<div class="input-group mb-3">
+							<label class="input-group-text" for="inputGroupFile01"> <i
+								class="fa-regular fa-image"></i>Photo/Video
+							</label> <input type="file" class="form-control" name="photo_file"
+								id="inputGroupFile01">
+						</div>
+
+						<button
+							style="width: 500px; background-color: #5A4F48; border: none;"
+							class="btn btn-primary" data-bs-target="#exampleModalToggle2"
+							data-bs-toggle="modal" data-bs-dismiss="modal">Đăng bài</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+   <!-- Modal chỉnh sửa bài viết -->
+    <div class="modal fade" id="exampleModalToggle123" aria-hidden="true"
+		aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content"
+				style="background-color: rgba(246, 245, 244, 1);">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalToggleLabel">
+						<b style="margin-left: 170px;">Chỉnh sửa bài viết</b>
+					</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<form action="/baiviet/dangbai" method="post"
+					 enctype="multipart/form-data">
+					<div class="modal-body">
+				
+						<div class="user-profile">
+							<img src="images/${NguoiDung.hoTen}" alt="">
+							<div>
+								<label>${NguoiDung.hoTen}
+									</p> <small style="font-size: 12px">
+										<div>
+											<select name="cheDo"
+												style="border: none; background-color: transparent;">
+												<option selected value="1">Công khai</option>
+												<option value="2">Bạn bè</option>
+												<option value="3">Chỉ mình tôi</option>
+											</select>
+										</div>
+								</small>
+							</div>
+						</div>
+						
 						<br>
 						<textarea name="moTaBaiDang" placeholder="Bạn muốn đăng gì?" id=""
 							cols="30" rows="3"
@@ -654,7 +757,7 @@
         };
 
     </script>
-    <script src="${pageContext.request.contextPath}/loadComments.js"></script>
+    <script src="${pageContext.request.contextPath}/loadCommentsProfile.js"></script>
 	<script src="${pageContext.request.contextPath}/lazy.js"></script>
 	<script src="${pageContext.request.contextPath}/thoiTiet.js"></script>
 </body>

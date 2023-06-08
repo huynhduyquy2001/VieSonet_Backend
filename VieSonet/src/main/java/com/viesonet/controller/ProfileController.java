@@ -2,7 +2,10 @@ package com.viesonet.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -23,16 +26,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.viesonet.dao.BaiVietDAO;
+import com.viesonet.dao.BaiVietDao;
 import com.viesonet.dao.BanBeDAO;
 import com.viesonet.dao.CheDoDAO;
 import com.viesonet.dao.DanhSachBinhLuanDAO;
 import com.viesonet.dao.DanhSachKetBanDAO;
+import com.viesonet.dao.DanhSachYeuThichDAO;
 import com.viesonet.dao.NguoiDungDAO;
 import com.viesonet.entity.BaiViet;
 import com.viesonet.entity.BanBe;
 import com.viesonet.entity.BinhLuanResponse;
+import com.viesonet.entity.DanhSachBinhLuan;
 import com.viesonet.entity.DanhSachKetBan;
+import com.viesonet.entity.DanhSachYeuThich;
 import com.viesonet.entity.NguoiDung;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
@@ -49,7 +55,7 @@ public class ProfileController {
 	NguoiDungDAO nguoiDungDao;
 
 	@Autowired
-	BaiVietDAO baiVietDao;
+	BaiVietDao baiVietDao;
 
 	@Autowired
 	BanBeDAO banBeDao;
@@ -61,6 +67,9 @@ public class ProfileController {
 	DanhSachKetBanDAO dskbDao;
 	
 	@Autowired
+	DanhSachYeuThichDAO dsytDao;
+	
+	@Autowired
 	CheDoDAO cheDoDao;
 	
 	@Autowired
@@ -68,23 +77,20 @@ public class ProfileController {
 	
 	@Autowired
 	ParamService param;
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 	
 	@RequestMapping("/profile")
 	public String index(Model m, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		Cookie[] cookies = request.getCookies();
-		String sdt = "0939790002";
+		String sdt = null;
 		NguoiDung nguoiDung = null;
-		
-		List<BanBe> listBb = banBeDao.findFriendByUserphone(sdt);
-		List<String> sdtBanBeList = listBb.stream().map(banBe -> banBe.getBanBe().getSdt())
-				.collect(Collectors.toList());
-//        // Kiểm tra có session chưa
+        // Kiểm tra có session chưa
         if (session.getAttribute("sdt") != null) {
             sdt = (String) session.getAttribute("sdt");
             nguoiDung = nguoiDungDao.findBySdt(sdt);
         } 
-//        // Nếu không có, kiểm tra cookie
+        // Nếu không có, kiểm tra cookie
         else if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("sdt")) {
@@ -95,6 +101,9 @@ public class ProfileController {
                 }
             }
         }
+        List<BanBe> listBb = banBeDao.findFriendByUserphone(sdt);
+		List<String> sdtBanBeList = listBb.stream().map(banBe -> banBe.getBanBe().getSdt())
+				.collect(Collectors.toList());
 		//Nào có đăng nhập thì đổi
 		if (nguoiDung != null) {
 		//Sắp xếp giảm dần theo ngày đăng
@@ -139,6 +148,9 @@ public class ProfileController {
 		}
 		String sdt = session.get("sdt");
 		int cheDo = param.getInt("cheDo", 1);
+		// Lấy ngày và giờ hiện tại
+		Calendar cal = Calendar.getInstance();
+		Date ngayGioDang = cal.getTime();
 		//Lấy thông tin từ input
 		baiDang.setMoTa(param.getString("moTaBaiDang", ""));
 		baiDang.setNgayDang(new Date());
@@ -147,9 +159,14 @@ public class ProfileController {
 		baiDang.setTrangThai(true);
 		baiDang.setCheDo(cheDoDao.getById(cheDo));
 		baiDang.setNguoiDung(nguoiDungDao.getById(sdt));
-		baiVietDao.saveAndFlush(baiDang);
+		if (baiDang.getMoTa().equals("") && baiDang.getHinhAnh().equals("")) {
+
+		} else {
+			baiVietDao.saveAndFlush(baiDang);
+		}
 		return "redirect:/profile";
 	}
+	
 	
 	//Chỉnh sửa ảnh đại diện
 	@PostMapping("/profile/avatar")
@@ -181,25 +198,88 @@ public class ProfileController {
 	public String chinhSuaTT(Model m,@ModelAttribute("nguoiDung") NguoiDung nguoiDung) {
 		NguoiDung thongTin = new NguoiDung();
 		String sdt = session.get("sdt");
+
 		NguoiDung nguoiDungHienTai = nguoiDungDao.findBySdt(sdt);
 		nguoiDungHienTai.setHoTen(nguoiDung.getHoTen());
 	    nguoiDungHienTai.setEmail(nguoiDung.getEmail());
 	    nguoiDungHienTai.setDiaChi(nguoiDung.getDiaChi());
 	    nguoiDungHienTai.setGioiThieu(nguoiDung.getGioiThieu());
-	    nguoiDungHienTai.setDiaChi(nguoiDung.getDiaChi());
 		nguoiDungDao.saveAndFlush(nguoiDungHienTai);
 		return "redirect:/profile";
 		
 	}
 	
+	//Cập nhật thông tin bài viết
+		@PostMapping("/baiviet/update/{maBaiViet}")
+		public String chinhSuaBV(Model m,@RequestParam("photo_file")MultipartFile photofile, NguoiDung nguoiDung) {
+			NguoiDung thongTin = new NguoiDung();
+			BaiViet baiDang = new BaiViet();
+			String sdt = session.get("sdt");
+
+			NguoiDung nguoiDungHienTai = nguoiDungDao.findBySdt(sdt);
+			nguoiDungHienTai.setHoTen(nguoiDung.getHoTen());
+		    nguoiDungHienTai.setEmail(nguoiDung.getEmail());
+		    nguoiDungHienTai.setDiaChi(nguoiDung.getDiaChi());
+		    nguoiDungHienTai.setGioiThieu(nguoiDung.getGioiThieu());
+			nguoiDungDao.saveAndFlush(nguoiDungHienTai);
+			
+			
+			if (photofile.isEmpty())
+				baiDang.setHinhAnh("");
+			else {
+				baiDang.setHinhAnh(photofile.getOriginalFilename());
+			}
+			int cheDo = param.getInt("cheDo", 1);
+			// Lấy ngày và giờ hiện tại
+			Calendar cal = Calendar.getInstance();
+			Date ngayGioDang = cal.getTime();
+			//Lấy thông tin từ input
+			baiDang.setMoTa(param.getString("moTaBaiDang", ""));
+			baiDang.setNgayDang(new Date());
+			baiDang.setLuotThich(0);
+			baiDang.setLuotBinhLuan(0);
+			baiDang.setTrangThai(true);
+			baiDang.setCheDo(cheDoDao.getById(cheDo));
+			baiDang.setNguoiDung(nguoiDungDao.getById(sdt));
+			if (baiDang.getMoTa().equals("") && baiDang.getHinhAnh().equals("")) {
+
+			} else {
+				baiVietDao.saveAndFlush(baiDang);
+			}
+			return "redirect:/profile";
+			
+		}
+	
+	@PostMapping("/profile/thembinhluan/{maBaiViet}")
 	@ResponseBody
-	@GetMapping("/profile/binhluan/{maBaiViet}")
-	public BinhLuanResponse xemBinhLuanCN(@PathVariable int maBaiViet) {
-		List<Order> orders = new ArrayList<Order>();
-		orders.add(new Order(Direction.DESC, "ngayDang"));
-		Sort sort = Sort.by(orders);
-		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
-		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet, sort);
-		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
+	public String themBinhLuan(@PathVariable int maBaiViet, @RequestParam("binhLuanCuaToi") String binhLuan) {
+	    // Xử lý logic thêm bình luận
+	    String sdt = session.get("sdt");
+	    DanhSachBinhLuan entity = new DanhSachBinhLuan();
+	    entity.setBaiViet(baiVietDao.getById(maBaiViet));
+	    entity.setChiTiet(binhLuan);
+	    entity.setNgayBinhLuan(new Date());
+	    entity.setNguoiDung(nguoiDungDao.getById(sdt));
+	    dsblDao.saveAndFlush(entity);
+	    return "ok";
 	}
+	
+	@GetMapping("profile/thich/{maBaiViet}")
+	public void thichBaiViet(@PathVariable int maBaiViet) {
+		String sdt = session.get("sdt");
+		DanhSachYeuThich baiVietYeuThich = dsytDao.findByKey(sdt, maBaiViet);
+		if(baiVietYeuThich == null) {
+			baiVietYeuThich = new DanhSachYeuThich();
+			baiVietYeuThich.setNgayYeuThich(new Date());
+			baiVietYeuThich.setBaiViet(baiVietDao.getById(maBaiViet));
+			baiVietYeuThich.setNguoiDung(nguoiDungDao.getById(sdt));
+			dsytDao.saveAndFlush(baiVietYeuThich);
+		}else {
+			baiVietYeuThich.setNgayYeuThich(new Date());
+			baiVietYeuThich.setBaiViet(baiVietDao.getById(maBaiViet));
+			baiVietYeuThich.setNguoiDung(nguoiDungDao.getById(sdt));
+			dsytDao.delete(baiVietYeuThich);
+		}
+	}
+	
 }
