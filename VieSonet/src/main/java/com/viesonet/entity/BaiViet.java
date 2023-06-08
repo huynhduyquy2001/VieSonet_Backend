@@ -33,7 +33,7 @@ public class BaiViet {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int maBaiViet;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ngayDang")
 	Date ngayDang = new Date();
 	

@@ -40,5 +40,5 @@ public class DanhSachYeuThich {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ngayYeuThich")
-	Date ngayGui = new Date();
+	Date ngayYeuThich = new Date();
 }

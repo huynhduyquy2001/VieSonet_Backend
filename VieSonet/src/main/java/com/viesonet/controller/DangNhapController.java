@@ -54,13 +54,12 @@ public class DangNhapController {
 				cookieService.delete("user");
 				cookieService.delete("pass");
 			}
-			//Nhớ sửa lại thành trang chủ
-			return "redirect:/";
+//			return "index";
 		} else {
 			m.addAttribute("message", "Thông tin đăng nhập không chính xác !");
 			return "dangNhap";
 		}
+
+		return "redirect:/index";
 	}
 }
-
-
