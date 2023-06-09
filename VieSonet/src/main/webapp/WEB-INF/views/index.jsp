@@ -107,7 +107,7 @@
 								style="overflow: hidden; max-height: 60vh; overflow-y: scroll; left: -100px">
 								<c:forEach items="${thongBao}" var="item">
 									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
-									
+
 										<div class="user-profile"
 											style="width: 250px; padding-left: 3%;">
 											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
@@ -116,10 +116,10 @@
 												<small style="font-size: 11px">${item.ngayThongBao}</small>
 											</div>
 										</div>
-									
-								</a>
+
+									</a>
 								</c:forEach>
-								
+
 							</div></li>
 
 						<li class="nav-item dropdown"><a
@@ -354,22 +354,42 @@
 							<label class="nhan"
 								style="box-sizing: border-box; padding-left: 10px">Danh
 								sách bạn bè(${SlBanbe})</label> <br> <br>
-							<c:forEach items="${topBanbe}" var="top">
-								<div
-									style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-									<div class="user-profile">
-										<img src="images/${top.banBe.anhDaiDien}"
-											class="img-thumbnail" alt="" style="border-radius: 50%;">
+
+							<c:forEach items="${topBanbe}" var="banBe">
+								<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
+									<div
+										style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+										<div class="user-profile">
+											<img src="images/${banBe.nguoiDung.anhDaiDien}"
+												class="img-thumbnail" alt="" style="border-radius: 50%;">
+											<div>
+												<label for="">${banBe.nguoiDung.hoTen}</label> <br> <small
+													style="font-size: 12px">Hoạt động: 1 phút trước</small>
+											</div>
+										</div>
 										<div>
-											<label for="">${top.banBe.hoTen}</label> <br> <small
-												style="font-size: 12px">Hoạt động: 1 phút trước</small>
+											<a href="#"><i class="fas fa-ellipsis-v"></i></a>
 										</div>
 									</div>
-									<div>
-										<a href="#"><i class="fas fa-ellipsis-v"></i></a>
+								</c:if>
+								<c:if test="${banBe.banBe.sdt != sessionScope.sdt}">
+									<div
+										style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+										<div class="user-profile">
+											<img src="images/${banBe.banBe.anhDaiDien}"
+												class="img-thumbnail" alt="" style="border-radius: 50%;">
+											<div>
+												<label for="">${banBe.banBe.hoTen}</label> <br> <small
+													style="font-size: 12px">Hoạt động: 1 phút trước</small>
+											</div>
+										</div>
+										<div>
+											<a href="#"><i class="fas fa-ellipsis-v"></i></a>
+										</div>
 									</div>
-								</div>
+								</c:if>
 							</c:forEach>
+
 						</div>
 					</div>
 				</div>
