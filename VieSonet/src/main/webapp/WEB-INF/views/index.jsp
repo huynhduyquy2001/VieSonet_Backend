@@ -101,7 +101,7 @@
 
 					<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
 						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="#" id="dropdownId"
+							class="nav-link dropdown-toggle" href="/profile" id="dropdownId"
 							data-bs-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"><small><img
 									src="images/avt.jpg" width="30px" style="border-radius: 50%;"

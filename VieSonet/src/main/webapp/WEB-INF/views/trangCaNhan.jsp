@@ -92,7 +92,7 @@
     <header class="header animate__animated animate__fadeInUp">
         <nav class="navbar navbar-expand-sm navbar-light" style="border: none;padding-top: 0; padding-bottom: 0;">
             <div class="container">
-                <a class="navbar-brand nhan" href="#" style="color: #5A4F48; font-weight: bolder; font-family: 'robo';">
+                <a class="navbar-brand nhan" href="/index" style="color: #5A4F48; font-weight: bolder; font-family: 'robo';">
                     <img src="images/chimLac.png" height="30px" alt=""> VIE_SONET</a>
                 <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
@@ -102,7 +102,7 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <ul class="navbar-nav me-auto mt-2 mt-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#" aria-current="page" style=" white-space: nowrap;
+                            <a class="nav-link active" href="/index" aria-current="page" style=" white-space: nowrap;
                             overflow: hidden; 
                             text-overflow: ellipsis;font-family: 'Roboto', sans-serif;letter-spacing: 0.1em;">Trang chủ
                                 <span class="visually-hidden">(current)</span></a>
@@ -129,16 +129,16 @@
 
                     <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false"><small><img src="images/avt.jpg" width="30px"
+                            <a class="nav-link dropdown-toggle" href="/profile" id="dropdownId" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"><small><img src="images/${nguoiDung.anhDaiDien}" width="30px"
                                         style="border-radius: 50%;" alt=""></small></a>
                             <div class="dropdown-menu" aria-labelledby="dropdownId"
                                 style="width: 350px; padding-left: 3px;">
                                 <div class="profile-darkButton">
                                     <div class="user-profile">
-                                        <img src="images/avt.jpg" alt="">
+                                         <img src="images/${nguoiDung.anhDaiDien}" alt="">
                                         <div>
-                                            <p> Alex Carry</p>
+                                            <p> ${nguoiDung.hoTen}</p>
                                             <small>Xem trang cá nhân của bạn</small>
                                         </div>
                                     </div>
@@ -154,7 +154,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <a class="dropdown-item" href="#"><small>Đăng nhập</small></a>
+                                <a class="dropdown-item" href="/dangnhap"><small>Đăng nhập</small></a>
                                 <a class="dropdown-item" href="#"><small>Đăng ký</small></a>
                             </div>
                         </li>
@@ -167,7 +167,6 @@
     <div class="row" style="margin-top: 10px; position: relative;">
         <div class="video-overlay">
         </div>
-        <c:forEach items="${nguoiDung}" var="nguoiDung">
         <img src="images/${nguoiDung.anhBia}" alt="" class="img-thumbnail"
             style="max-height: 300px ; width: 100%; object-fit: cover; overflow: hidden; z-index: -10; ">
         <div class="col-md-5 " style=" position: absolute; transform: translateY(-50%); top: 50%; left: 20px;">
@@ -192,7 +191,6 @@
                        </small>
                 </div>
             </div>
-            </c:forEach>
             <button data-bs-toggle="modal" data-bs-target="#modalId"
                 style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;"><small
                     style=" white-space: nowrap;
@@ -274,7 +272,6 @@
     <!-- Modal Body -->
     <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
     <form method="POST" action="/profile/update" modelAttribute="nguoiDung">
-    <c:forEach items="${nguoiDung}" var="nguoiDung">
     <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -315,7 +312,6 @@
             </div>
         </div>
     </div>
-    </c:forEach>
 	</form>
 
     <!-- Optional: Place to the bottom of scripts -->
@@ -332,15 +328,15 @@
                         <div class="write-post-container nenTrangChu img-thumbnail"
                             style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
                             <div class="user-profile">
-                            	<c:forEach items="${nguoiDung}" var="NguoiDung">
-                                <img src="images/${BaiViet.nguoiDung.anhDaiDien}" alt="">
+                            	
+                                <img src="images/${nguoiDung.anhDaiDien}" alt="">
                                 <div>
-                                    <label>${NguoiDung.hoTen}</label>
+                                    <label>${nguoiDung.hoTen}</label>
                                     <br>
                                     <small>
                                         Công khai <i class="fas fa-caret-down"></i>
                                     </small>
-                                </c:forEach>    
+                                    
                                 </div>
                             </div>
     
@@ -402,11 +398,10 @@
             </div>
             <div class="col-md-8 offset-md-4">
                 <div style=" box-sizing: border-box; margin: 1%; padding: 3%; margin-top: 10px;">
-                <c:forEach items="${nguoiDung}" var="NguoiDung">
                     <center>
                         <div>
                             <br>
-                            ${NguoiDung.gioiThieu}
+                            ${nguoiDung.gioiThieu}
                         </div>
                     </center>
                    
@@ -440,7 +435,7 @@
                             </div>
 
                         </div>
-					</c:forEach> 
+					
 
                         
                         </div>
@@ -492,10 +487,10 @@
                                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                                         </span>
-                                        <div class="dropdown-menu" aria-labelledby="triggerId">
+                                        <div class="dropdown-menu btn-cap-nhat-bai-viet" aria-labelledby="triggerId">
                                             <button data-bs-toggle="modal" href="#exampleModalToggle123"
-                style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px;"><small>
-                    Đổi ảnh bìa</small></button>
+                style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background:transparent"><small>
+                    Chỉnh sửa bài viết</small></button>
                                         </div>
                                     </div>
                                 </div>
@@ -511,7 +506,7 @@
 								</div>
                                <div class="post-reaction">
 								<div class="activity-icons">
-
+										<input type="hidden" name="maBaiViet" value="${baiViet.maBaiViet}" data-id="${baiViet.maBaiViet}">
 										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
 											class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
 											<i class="fa-duotone fa-heart"></i> &nbsp;
@@ -548,7 +543,7 @@
 				<form action="/profile/dangbai" method="post"
 					 enctype="multipart/form-data">
 					<div class="modal-body">
-					<c:forEach items="${nguoiDung}" var="NguoiDung">
+					
 						<div class="user-profile">
 							<img src="images/${NguoiDung.hoTen}" alt="">
 							<div>
@@ -565,7 +560,7 @@
 								</small>
 							</div>
 						</div>
-						</c:forEach>
+						
 						<br>
 						<textarea name="moTaBaiDang" placeholder="Bạn muốn đăng gì?" id=""
 							cols="30" rows="3"
@@ -608,14 +603,14 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
-				<form action="/baiviet/dangbai" method="post"
+				<form action="/baiviet/update/${BaiViet.maBaiViet}" method="post"
 					 enctype="multipart/form-data">
 					<div class="modal-body">
-				
+					
 						<div class="user-profile">
-							<img src="images/${NguoiDung.hoTen}" alt="">
+							<img src="images/${nguoiDung.anhDaiDien}" alt="">
 							<div>
-								<label>${NguoiDung.hoTen}
+								<label>${nguoiDung.hoTen}
 									</p> <small style="font-size: 12px">
 										<div>
 											<select name="cheDo"
@@ -630,10 +625,10 @@
 						</div>
 						
 						<br>
-						<textarea name="moTaBaiDang" placeholder="Bạn muốn đăng gì?" id=""
-							cols="30" rows="3"
-							style="width: 100%; border: 0px; outline: none; border-bottom: 1px solid #ccc; background: transparent; resize: none;"></textarea>
-
+						<textarea  name="moTaBaiDang" placeholder="Bạn muốn đăng gì?" id=""
+							cols="30" rows="3" 
+							style="width: 100%; border: 0px; outline: none; border-bottom: 1px solid #ccc; background: transparent; resize: none;">
+							</textarea>
 						<br>
 						<center>
 							<img id="img" src="" width="45%"
@@ -757,6 +752,31 @@
         };
 
     </script>
+	<script type="text/javascript">
+	function viewBaiViet(maBaiViet) {
+		  // Gửi yêu cầu AJAX để lấy thông tin bài viết với mã bài viết cho trước
+		  $.ajax({
+		    url: "/profile/baiviet/" + maBaiViet,
+		    method: "GET",
+		    success: function(data) {
+		      // Hiển thị thông tin bài viết trên modal
+		      $('#exampleModalToggle123').modal('toggle');
+		      $("#exampleModalToggle123 .modal-title").text(data.tieuDe);
+		      $("#exampleModalToggle123 #tenNguoiDang").text(data.tenNguoiDang);
+		      $("#exampleModalToggle123 #thoiGianDang").text(data.thoiGianDang);
+		      $("#exampleModalToggle123 #noiDung").text(data.noiDung);
+		      if (data.hinhAnh != null && data.hinhAnh != "") {
+		        $("#exampleModalToggle123 #imagePreview").attr("src", "/images/" + data.hinhAnh);
+		      } else {
+		        $("#exampleModalToggle123 #imagePreview").hide();
+		      }
+		    },
+		    error: function(jqXHR, textStatus, errorThrown) {
+		      alert("Lỗi: không thể lấy thông tin bài viết");
+		    }
+		  });
+		}
+	</script>
     <script src="${pageContext.request.contextPath}/loadCommentsProfile.js"></script>
 	<script src="${pageContext.request.contextPath}/lazy.js"></script>
 	<script src="${pageContext.request.contextPath}/thoiTiet.js"></script>

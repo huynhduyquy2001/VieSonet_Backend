@@ -85,14 +85,7 @@ public class ProfileController {
 		Cookie[] cookies = request.getCookies();
 		String sdt = null;
 		NguoiDung nguoiDung = null;
-<<<<<<< HEAD
-        // Kiểm tra có session chưa
-=======
-		List<BanBe> listBb = banBeDao.findFriendByUserphone(sdt);
-		List<String> sdtBanBeList = listBb.stream().map(banBe -> banBe.getBanBe().getSdt())
-				.collect(Collectors.toList());
-//        // Kiểm tra có session chưa
->>>>>>> parent of 0c9f949 (change7)
+       // Kiểm tra có session chưa
         if (session.getAttribute("sdt") != null) {
             sdt = (String) session.getAttribute("sdt");
             nguoiDung = nguoiDungDao.findBySdt(sdt);
@@ -136,7 +129,7 @@ public class ProfileController {
 				topKetBan.add(danhSachKetBan.get(i));
 			}
 			m.addAttribute("topKetBan", topKetBan);
-			System.out.println(topKetBan.size());
+//			System.out.println(topKetBan.size());
 			
 		}
 
@@ -218,36 +211,25 @@ public class ProfileController {
 	
 	//Cập nhật thông tin bài viết
 		@PostMapping("/baiviet/update/{maBaiViet}")
-		public String chinhSuaBV(Model m,@RequestParam("photo_file")MultipartFile photofile, NguoiDung nguoiDung) {
-			NguoiDung thongTin = new NguoiDung();
-			BaiViet baiDang = new BaiViet();
+		@ResponseBody
+		public String chinhSuaBV(Model m,@RequestParam("photo_file") MultipartFile photofile,@RequestParam("moTaBaiDang") String moTaBaiDang,@PathVariable int maBaiViet) {
 			String sdt = session.get("sdt");
-
-			NguoiDung nguoiDungHienTai = nguoiDungDao.findBySdt(sdt);
-			nguoiDungHienTai.setHoTen(nguoiDung.getHoTen());
-		    nguoiDungHienTai.setEmail(nguoiDung.getEmail());
-		    nguoiDungHienTai.setDiaChi(nguoiDung.getDiaChi());
-		    nguoiDungHienTai.setGioiThieu(nguoiDung.getGioiThieu());
-			nguoiDungDao.saveAndFlush(nguoiDungHienTai);
+			BaiViet baiDang = baiVietDao.getById(maBaiViet);
+			// Lấy ngày và giờ hiện tại
+			Calendar cal = Calendar.getInstance();
+			Date ngayGioDang = cal.getTime();
+			//Lấy thông tin từ input
 			
-			
+			System.out.println("Ma BV: "+baiDang.getMaBaiViet());
+			int cheDo = param.getInt("cheDo", 1);
+			baiDang.setMoTa(moTaBaiDang);
+			baiDang.setCheDo(cheDoDao.getById(cheDo));
+			baiDang.setNguoiDung(nguoiDungDao.getById(sdt));
 			if (photofile.isEmpty())
 				baiDang.setHinhAnh("");
 			else {
 				baiDang.setHinhAnh(photofile.getOriginalFilename());
 			}
-			int cheDo = param.getInt("cheDo", 1);
-			// Lấy ngày và giờ hiện tại
-			Calendar cal = Calendar.getInstance();
-			Date ngayGioDang = cal.getTime();
-			//Lấy thông tin từ input
-			baiDang.setMoTa(param.getString("moTaBaiDang", ""));
-			baiDang.setNgayDang(new Date());
-			baiDang.setLuotThich(0);
-			baiDang.setLuotBinhLuan(0);
-			baiDang.setTrangThai(true);
-			baiDang.setCheDo(cheDoDao.getById(cheDo));
-			baiDang.setNguoiDung(nguoiDungDao.getById(sdt));
 			if (baiDang.getMoTa().equals("") && baiDang.getHinhAnh().equals("")) {
 
 			} else {
@@ -256,10 +238,16 @@ public class ProfileController {
 			return "redirect:/profile";
 			
 		}
+		
+		@PostMapping("/profile/baiviet/{maBaiViet}")
+		@ResponseBody
+		public BaiViet getBaiVietByMaBaiViet(@PathVariable int maBaiViet) {
+		    BaiViet baiViet = baiVietDao.getById(maBaiViet);
+		    return baiViet;
+		}
 	
 	@PostMapping("/profile/thembinhluan/{maBaiViet}")
 	@ResponseBody
-<<<<<<< HEAD
 	public String themBinhLuan(@PathVariable int maBaiViet, @RequestParam("binhLuanCuaToi") String binhLuan) {
 	    // Xử lý logic thêm bình luận
 	    String sdt = session.get("sdt");
@@ -270,16 +258,18 @@ public class ProfileController {
 	    entity.setNguoiDung(nguoiDungDao.getById(sdt));
 	    dsblDao.saveAndFlush(entity);
 	    return "ok";
-=======
+	}
+	
 	@GetMapping("/profile/binhluan/{maBaiViet}")
+	@ResponseBody
 	public BinhLuanResponse xemBinhLuanCN(@PathVariable int maBaiViet) {
 		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
-		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet);
+		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet, Sort.by(Direction.DESC, "ngayBinhLuan"));
 		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
->>>>>>> parent of 0c9f949 (change7)
 	}
 	
 	@GetMapping("profile/thich/{maBaiViet}")
+	@ResponseBody
 	public void thichBaiViet(@PathVariable int maBaiViet) {
 		String sdt = session.get("sdt");
 		DanhSachYeuThich baiVietYeuThich = dsytDao.findByKey(sdt, maBaiViet);

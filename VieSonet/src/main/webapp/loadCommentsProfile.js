@@ -1,6 +1,6 @@
 function loadBinhLuan(maBaiViet) {
 	$.ajax({
-		url: "/thembinhluan/" + maBaiViet,
+		url: "/profile/binhluan/" + maBaiViet,
 		type: "GET",
 		success: function(data) {
 			// Xử lý dữ liệu trả về từ server

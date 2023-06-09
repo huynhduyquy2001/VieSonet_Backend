@@ -23,11 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-<<<<<<< HEAD
 
-=======
 import com.viesonet.dao.BaiVietDao;
->>>>>>> parent of 0c9f949 (change7)
 import com.viesonet.dao.NguoiDungDAO;
 import com.viesonet.dao.BaiVietDao;
 import com.viesonet.dao.BanBeDAO;
