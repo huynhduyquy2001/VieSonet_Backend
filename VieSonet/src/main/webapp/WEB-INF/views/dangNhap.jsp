@@ -85,6 +85,9 @@ span.psw {
 
 <body>
 	<div class="split-background"></div>
+	<div  style="position: fixed; right: 0; max-height: 90vh; opacity: 0.15; bottom: 0; z-index: -100;">
+            <img src="images/cayTre2.png" class="header animate__animated animate__fadeInUp" style="max-height: 90vh;"  alt="">
+        </div>
 	<header class="header animationTop3">
 		<nav class="navbar navbar-expand-sm navbar-light"
 			style="border: none; padding-top: 0; padding-bottom: 0;">
@@ -164,7 +167,7 @@ span.psw {
 										required>																	
 								</div>
 								<div class="mb-3">
-									<input type="text" class="form-control ip" name="matKhau" id="" value="${pass }"
+									<input type="password" class="form-control ip" name="matKhau" id="" value="${pass }"
 										aria-describedby="helpId" placeholder="Mật khẩu?" required>									
 								</div>
 								<label><input type="checkbox" name="ghiNho" value="true" ><small>Ghi
