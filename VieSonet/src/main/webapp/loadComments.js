@@ -120,9 +120,22 @@ function thichBaiViet(maBaiViet, element) {
 	if (isLiked) {
 		element.classList.remove('red-heart');
 		element.classList.add('gray-heart');
+		// Giảm số lượt thích
+		var likeCountElement = element.querySelector('.like-count');
+		if (likeCountElement) {
+			var likeCount = parseInt(likeCountElement.textContent);
+			likeCountElement.textContent = likeCount - 1;
+		}
+		
 	} else {
 		element.classList.remove('gray-heart');
 		element.classList.add('red-heart');
+		// Tăng số lượt thích
+		var likeCountElement = element.querySelector('.like-count');
+		if (likeCountElement) {
+			var likeCount = parseInt(likeCountElement.textContent);
+			likeCountElement.textContent = likeCount + 1;
+		}
 	}
 
 	// Tạo một đối tượng XMLHttpRequest
@@ -139,11 +152,7 @@ function thichBaiViet(maBaiViet, element) {
 
 			// Cập nhật trạng thái nút thích
 
-			// Cập nhật số lượt thích
-			var likeCountElement = element.querySelector('.like-count');
-			if (likeCountElement) {
-				likeCountElement.textContent = response.luotThich;
-			}
+
 		} else {
 			console.error('Lỗi ' + xhr.status + ': ' + xhr.statusText);
 			// Xử lý lỗi (nếu có)
@@ -174,43 +183,43 @@ function themBinhLuan(maBaiViet) {
 	});
 }
 function toCao(maBaiViet) {
-    $("#modalBaoCao .modal-footer").empty();
-    var closeModal = document.createElement("button");
-    closeModal.type = "button";
-    closeModal.className = "btn btn-secondary";
-    closeModal.innerHTML = "Đóng";
-    closeModal.setAttribute("data-bs-dismiss", "modal");
+	$("#modalBaoCao .modal-footer").empty();
+	var closeModal = document.createElement("button");
+	closeModal.type = "button";
+	closeModal.className = "btn btn-secondary";
+	closeModal.innerHTML = "Đóng";
+	closeModal.setAttribute("data-bs-dismiss", "modal");
 
-    var baoCaoModal = document.createElement("button");
-    baoCaoModal.type = "button";
-    baoCaoModal.className = "btn btn-primary";
-    baoCaoModal.innerHTML = "Báo cáo";
-    baoCaoModal.addEventListener("click", function() {
-        baoCaoViPham(maBaiViet);
-        $("#modalBaoCao").modal("hide");
-    });
+	var baoCaoModal = document.createElement("button");
+	baoCaoModal.type = "button";
+	baoCaoModal.className = "btn btn-primary";
+	baoCaoModal.innerHTML = "Báo cáo";
+	baoCaoModal.addEventListener("click", function() {
+		baoCaoViPham(maBaiViet);
+		$("#modalBaoCao").modal("hide");
+	});
 
-    var modalFooter = document.querySelector("#modalBaoCao .modal-footer");
-    modalFooter.appendChild(closeModal);
-    modalFooter.appendChild(baoCaoModal);
+	var modalFooter = document.querySelector("#modalBaoCao .modal-footer");
+	modalFooter.appendChild(closeModal);
+	modalFooter.appendChild(baoCaoModal);
 }
 
 function baoCaoViPham(maBaiViet) {
-    var loaiViPham = $("#viPham").val(); // Lấy giá trị của select box
+	var loaiViPham = $("#viPham").val(); // Lấy giá trị của select box
 
-    $.ajax({
-        url: "/index/baocaovipham/" + maBaiViet,
-        type: "POST",
-        data: { loaiViPham: loaiViPham }, // Truyền giá trị của select box
-        success: function(response) {
-            // Xử lý logic sau khi gọi thành công
-            console.log(response); // In response ra console để kiểm tra
-        },
-        error: function(xhr, status, error) {
-            console.log(error); // In error ra console để debug
-            // Xử lý logic khi gọi gặp lỗi
-        }
-    });
+	$.ajax({
+		url: "/index/baocaovipham/" + maBaiViet,
+		type: "POST",
+		data: { loaiViPham: loaiViPham }, // Truyền giá trị của select box
+		success: function(response) {
+			// Xử lý logic sau khi gọi thành công
+			console.log(response); // In response ra console để kiểm tra
+		},
+		error: function(xhr, status, error) {
+			console.log(error); // In error ra console để debug
+			// Xử lý logic khi gọi gặp lỗi
+		}
+	});
 }
 
 

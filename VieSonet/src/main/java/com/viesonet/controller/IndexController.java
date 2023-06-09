@@ -82,7 +82,7 @@ public class IndexController {
 
 	// lấy thông tin người dùng
 
-	@RequestMapping("/index")
+	@RequestMapping("/")
 	public String getBaiVietCuaBanBe(Model m) {
 		String sdt = session.get("sdt");
 		NguoiDung taiKhoan = nguoiDungDAO.getById(sdt);
@@ -228,7 +228,6 @@ public class IndexController {
 	@ResponseBody
 	@PostMapping("/index/baocaovipham/{maBaiViet}")
 	public String baoCaoBaiViet(@PathVariable int maBaiViet, @RequestParam("loaiViPham") int loaiViPham) {
-		
 		String sdt = session.get("sdt");
 		BaiVietViPham baiViet = new BaiVietViPham();
 		baiViet.setBaiViet(baiVietDao.getById(maBaiViet));

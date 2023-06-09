@@ -55,7 +55,6 @@
 }
 </style>
 </head>
-
 <body>
 	<div
 		style="position: fixed; right: 0; max-height: 90vh; opacity: 0.1; bottom: 0;">
@@ -205,7 +204,7 @@
 													</label> <small><small> <small>
 																<ul style="line-height: 20px; text-align: left;">
 																	<li><b><i class="fa-light fa-mountain-sun"></i>
-																			Quê quán:</b> ${BaiViet.nguoiDung.diaChi}</li>
+																			Sống tại:</b> ${BaiViet.nguoiDung.diaChi}</li>
 																	<li><i class="fa-regular fa-heart"></i> <b>Mối
 																			quan hệ:</b> ${BaiViet.nguoiDung.moiQuanHe}</li>
 																	<li><b><i class="fa-light fa-user-group"></i>
@@ -250,7 +249,7 @@
 										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
 											class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
 											<i class="fa-duotone fa-heart"></i> &nbsp;
-											${BaiViet.luotThich}
+											<span class="like-count">${BaiViet.luotThich}</span>
 										</div>
 
 
