@@ -85,7 +85,8 @@ public class NguoiDung {
 	
 	@OneToMany(mappedBy = "nguoiDung")
 	List<DanhSachBinhLuan> danhSachBinhLuan;
-
+	@OneToMany(mappedBy = "nguoiDung")
+	List<ThongBao> thongBao;
 
 
 	

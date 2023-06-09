@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.viesonet.dao.BaiVietDao;
 import com.viesonet.dao.BaiVietViPhamDAO;
 import com.viesonet.dao.NguoiDungDAO;
+import com.viesonet.dao.ThongBaoDAO;
 import com.viesonet.dao.BanBeDAO;
 import com.viesonet.dao.CheDoDAO;
 import com.viesonet.dao.DanhSachBinhLuanDAO;
@@ -42,6 +43,7 @@ import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.DanhSachYeuThich;
 import com.viesonet.entity.LoaiViPham;
 import com.viesonet.entity.NguoiDung;
+import com.viesonet.entity.ThongBao;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
 
@@ -79,6 +81,9 @@ public class IndexController {
 
 	@Autowired
 	LoaiViPhamDAO loaiViPhamDao;
+	
+	@Autowired
+	ThongBaoDAO thongBaoDao;
 
 	// lấy thông tin người dùng
 
@@ -86,6 +91,7 @@ public class IndexController {
 	public String getBaiVietCuaBanBe(Model m) {
 		String sdt = session.get("sdt");
 		NguoiDung taiKhoan = nguoiDungDAO.getById(sdt);
+		m.addAttribute("taiKhoan", taiKhoan);
 		// lấy danh sách bài viết từ danh sách bạn bè
 		List<BanBe> listBb = banBeDao.findFriendByUserphone(sdt);
 		List<String> sdtBanBeList = listBb.stream().map(banBe -> banBe.getBanBe().getSdt())
@@ -129,9 +135,15 @@ public class IndexController {
 		// danh sách điều khoản vi phạm
 		List<LoaiViPham> danhSachViPham = loaiViPhamDao.findAll();
 		m.addAttribute("danhSachViPham", danhSachViPham);
+		
+		//lấy danh sách thông báo
+		List<ThongBao> thongBao = thongBaoDao.findByUser(sdt, Sort.by(Direction.DESC,"ngayThongBao"));
+		m.addAttribute("thongBao", thongBao);
+		m.addAttribute("thongBaoChuaXem", thongBaoDao.demThongBaoChuaXem(sdt));
+		
 		return "index";
 	}
-
+	
 	@ResponseBody
 	@GetMapping("/binhluan/{maBaiViet}")
 	public BinhLuanResponse xemBinhLuan(@PathVariable int maBaiViet) {
@@ -144,6 +156,8 @@ public class IndexController {
 	@PostMapping("index/dangbai")
 	@ResponseBody
 	public String dangBai(@RequestParam("photo_file") MultipartFile photofile) {
+		
+		//đăng bài viết
 		BaiViet baiDang = new BaiViet();
 		if (photofile.isEmpty()) {
 			baiDang.setHinhAnh("");
@@ -170,30 +184,47 @@ public class IndexController {
 		} else {
 			baiVietDao.saveAndFlush(baiDang);
 		}
+		//gửi thông báo đến người dùng
+		List<BanBe> listBb = banBeDao.findFriendByUserphone(sdt);
+		for(int i = 0; i<listBb.size(); i++) {
+			ThongBao thongBao = new ThongBao();
+			thongBao.setBaiViet(baiDang);
+			thongBao.setNgayThongBao(timestamp);
+			thongBao.setNguoiDung(nguoiDungDAO.getById(listBb.get(i).getBanBe().getSdt()));
+			thongBao.setNoiDung(nguoiDungDAO.getById(sdt).getHoTen()+" đã đăng bài viết mới.");
+			thongBao.setTrangThai(false);
+			thongBaoDao.saveAndFlush(thongBao);
+		}
 		return "Bài viết đã được đăng thành công!";
 	}
-
 	@GetMapping("index/dongy/{maLoiMoi}")
 	public String dongYKetBan(@PathVariable int maLoiMoi) {
+		//thêm người ta vào danh sách bạn bè
 		String sdt = session.get("sdt");
 		NguoiDung nguoiDung = nguoiDungDAO.getById(sdt);
 		DanhSachKetBan ds = dskbDao.getById(maLoiMoi);
 		NguoiDung nguoiLa = ds.getNguoiLa();
+		
 		BanBe banBe = new BanBe();
 		banBe.setNguoiDung(nguoiDung);
 		banBe.setBanBe(nguoiLa);
 		banBe.setNgayKb(new Date());
 		banBeDao.saveAndFlush(banBe);
+		
+		//thêm mình vào danh sách bạn bè của ng ta
+		BanBe banBee = new BanBe();
+		banBee.setNguoiDung(nguoiLa);
+		banBee.setBanBe(nguoiDung);
+		banBee.setNgayKb(new Date());
+		banBeDao.saveAndFlush(banBee);
 		dskbDao.deleteById(maLoiMoi);
-		return "redirect:/index";
+		return "redirect:/";
 	}
-
 	@GetMapping("index/tuchoi/{maLoiMoi}")
 	public String tuChoiKetBan(@PathVariable int maLoiMoi) {
 		dskbDao.deleteById(maLoiMoi);
 		return "redirect:/index";
 	}
-
 	@GetMapping("index/thich/{maBaiViet}")
 	public void thichBaiViet(@PathVariable int maBaiViet) {
 		String sdt = session.get("sdt");

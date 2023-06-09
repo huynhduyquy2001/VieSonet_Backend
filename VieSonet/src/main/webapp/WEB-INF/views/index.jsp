@@ -93,22 +93,46 @@
 					<form class="d-flex my-2 my-lg-0">
 						<input class="form-control me-sm-2 input-hbh"
 							style="border-radius: 0; border: none; border-bottom: 1px solid gray; transform: skew(0); background-color: transparent;"
-							type="text" placeholder="Search">
+							type="text" placeholder="Tìm kiếm...">
 						<button class="btn btn-outline-success my-2 my-sm-0" hidden
-							type="submit">Search</button>
+							type="submit">Tìm kiếm...</button>
 					</form>
 
 					<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
 						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+							href="#" role="button" aria-haspopup="true" aria-expanded="false"><i
+								class="fa-regular fa-bell"></i> (${thongBaoChuaXem})</a>
+							<div class="dropdown-menu"
+								style="overflow: hidden; max-height: 60vh; overflow-y: scroll; left: -100px">
+								<c:forEach items="${thongBao}" var="item">
+									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
+									
+										<div class="user-profile"
+											style="width: 250px; padding-left: 3%;">
+											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
+											<div>
+												<p style="font-size: 13px">${item.noiDung}</p>
+												<small style="font-size: 11px">${item.ngayThongBao}</small>
+											</div>
+										</div>
+									
+								</a>
+								</c:forEach>
+								
+							</div></li>
+
+						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#" id="dropdownId"
 							data-bs-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"><small><img
-									src="images/avt.jpg" width="30px" style="border-radius: 50%;"
-									alt=""></small></a>
+									src="images/${taiKhoan.anhDaiDien}" width="30px"
+									style="border-radius: 50%;" alt=""></small></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownId"
 								style="width: 350px; padding-left: 3px;">
 								<div class="profile-darkButton">
-									<div class="user-profile">
+									<div class="user-profile"
+										style="width: 250px; padding-left: 3%;">
 										<img src="images/avt.jpg" alt="">
 										<div>
 											<p>Alex Carry</p>
@@ -149,9 +173,9 @@
 							class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
 							style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
 							<div class="user-profile">
-								<img src="images/avt.jpg" alt="">
+								<img src="images/${taiKhoan.anhDaiDien}" alt="">
 								<div>
-									<label for="">Huỳnh Duy Quý</label> <br> <small>
+									<label for="">${taiKhoan.hoTen}</label> <br> <small>
 										Công khai <i class="fas fa-caret-down"></i>
 									</small>
 								</div>
@@ -248,8 +272,8 @@
 
 										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
 											class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
-											<i class="fa-duotone fa-heart"></i> &nbsp;
-											<span class="like-count">${BaiViet.luotThich}</span>
+											<i class="fa-duotone fa-heart"></i> &nbsp; <span
+												class="like-count">${BaiViet.luotThich}</span>
 										</div>
 
 
@@ -450,8 +474,9 @@
 
 				</div>
 				<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-				<button type="button" class="btn btn-primary">Báo cáo</button>
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Đóng</button>
+					<button type="button" class="btn btn-primary">Báo cáo</button>
 				</div>
 			</div>
 		</div>

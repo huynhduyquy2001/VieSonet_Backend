@@ -63,5 +63,8 @@ public class BaiViet {
 	@OneToMany(mappedBy = "baiViet")
 	List<DanhSachYeuThich> danhSachYeuThich;
 	
+	@OneToMany(mappedBy = "baiViet")
+	List<ThongBao> thongBao;
+	
 	
 }
