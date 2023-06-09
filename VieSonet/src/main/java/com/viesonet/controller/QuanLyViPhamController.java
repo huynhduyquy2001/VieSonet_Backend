@@ -31,12 +31,18 @@ public class QuanLyViPhamController {
 	@ResponseBody
 	@RequestMapping("/quanlyvipham/them/{maLoai}")
 	public String them(@RequestParam("maViPham") String maViPhamStr, @RequestParam("chiTiet") String chiTiet) {
-	    int maViPham = Integer.parseInt(maViPhamStr);
+	   
+	    int maViPham;
+	    try {
+	        maViPham = Integer.parseInt(maViPhamStr);
+	    } catch (NumberFormatException e) {
+	        return "Mã vi phạm phải là một số nguyên";
+	    }
 	    
 	    LoaiViPham lViPham = new LoaiViPham();
 	    if (maViPham <= 0) {
 	        return "Mã vi phạm không được bé hơn bằng 0";
-	    } else if (chiTiet.equals("")) {
+	    } else if (chiTiet == null || chiTiet.trim().isEmpty()) {
 	        return "Không được bỏ trống loại vi phạm";
 	    } else {
 	        if (!dao.existsByMaLoai(maViPham)) {
@@ -49,6 +55,8 @@ public class QuanLyViPhamController {
 	        }
 	    }
 	}
+
+
 
 	@ResponseBody
 	@RequestMapping("/quanlyvipham/xoa/{maLoai}")
