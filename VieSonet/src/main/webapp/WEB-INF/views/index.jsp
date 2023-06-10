@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="fr"%>
@@ -447,7 +447,6 @@
 							</label> <input type="file" class="form-control" name="photo_file"
 								id="inputGroupFile01">
 						</div>
-
 						<button
 							style="width: 500px; background-color: #5A4F48; border: none;"
 							class="btn btn-primary" data-bs-target="#exampleModalToggle2"

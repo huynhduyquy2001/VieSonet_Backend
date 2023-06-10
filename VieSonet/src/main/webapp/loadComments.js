@@ -126,7 +126,6 @@ function thichBaiViet(maBaiViet, element) {
 			var likeCount = parseInt(likeCountElement.textContent);
 			likeCountElement.textContent = likeCount - 1;
 		}
-		
 	} else {
 		element.classList.remove('gray-heart');
 		element.classList.add('red-heart');

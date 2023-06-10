@@ -149,7 +149,6 @@ public class IndexController {
 
 		return "index";
 	}
-
 	@ResponseBody
 	@GetMapping("/binhluan/{maBaiViet}")
 	public BinhLuanResponse xemBinhLuan(@PathVariable int maBaiViet) {
@@ -162,7 +161,6 @@ public class IndexController {
 	@PostMapping("index/dangbai")
 	@ResponseBody
 	public String dangBai(@RequestParam("photo_file") MultipartFile photofile) {
-
 		// đăng bài viết
 		BaiViet baiDang = new BaiViet();
 		if (photofile.isEmpty()) {
