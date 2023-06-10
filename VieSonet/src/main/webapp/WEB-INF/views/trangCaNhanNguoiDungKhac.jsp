@@ -176,7 +176,7 @@
                     <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="/images/${nguoiDung.anhDaiDien}" width="87%"
                         style="border-radius: 50%;" class="img-thumbnail" alt="">
                 </div>
-                <div class="col-8" style="color: white;">
+                <div class="col-7" style="color: white;">
                     
                     
                     <h3>${nguoiDung.hoTen}</h3>
@@ -189,7 +189,21 @@
                             <li><b><i class="fa-light fa-user-group"></i> Danh sách bạn bè:</b> ${SlBanbe}</li>
                         </ul>
                        </small>
-                       
+                       <c:if test="${checker==true}">
+                       <button 
+		                style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;"><small
+		                style=" white-space: nowrap;
+		               	overflow: hidden; text-overflow: ellipsis;">
+                    	Bạn bè ✓</small></button>
+			        
+			    </c:if>
+			    <c:if test="${checker==false}">
+			        <button 
+		                style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;"><small
+		                style=" white-space: nowrap;
+		               	overflow: hidden; text-overflow: ellipsis;">
+                    	Thêm bạn bè +</small></button>
+			    </c:if>
                 </div>
                 
             </div>

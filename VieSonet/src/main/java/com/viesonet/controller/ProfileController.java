@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -305,6 +306,20 @@ public class ProfileController {
 			m.addAttribute("nguoiDung", nguoiDungDao.findBySoDienThoai(sdtLa));
 			m.addAttribute("nguoiDungHienTai", nguoiDungDao.findBySoDienThoai(sdtHt));
 			m.addAttribute("BaiVietCaNhan", baiVietDao.findBySdt(sdtLa, sort));
+			List<BanBe> list = banBeDao.findFriends(sdtLa);
+//			m.addAttribute("list", list);
+			boolean checker = false;
+			for (BanBe banBe : list) {
+			    if ((banBe.getNguoiDung().getSdt().equals(sdtHt) && banBe.getBanBe().getSdt().equals(sdtLa)) || 
+			    	(banBe.getNguoiDung().getSdt().equals(sdtLa) && banBe.getBanBe().getSdt().equals(sdtHt))	) {
+			        // Nếu tìm thấy số điện thoại trùng, đánh dấu là có
+			        checker = true;
+			        // Dừng vòng lặp
+			        break;
+			    }
+			}
+			m.addAttribute("checker", checker);
+			
 			// Số lượng bạn bè
 			m.addAttribute("SlBanbe", listBb.size());
 			return "trangCaNhanNguoiDungKhac";

@@ -7,8 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.viesonet.entity.BanBe;
 import com.viesonet.entity.DanhSachKetBan;
+import com.viesonet.entity.NguoiDung;
 
 public interface DanhSachKetBanDAO extends JpaRepository<DanhSachKetBan, Integer> {
 	@Query("select kb from DanhSachKetBan kb where kb.nguoiDung.sdt =?1")
 	List<DanhSachKetBan> findDsBySdt(String soDienThoai);
+	DanhSachKetBan findByNguoiDungAndNguoiLa(NguoiDung nguoiDung, NguoiDung nguoiLa);
 }
