@@ -90,8 +90,8 @@
 								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Quản
 									lí</small></a></li>
 					</ul>
-					<form class="d-flex my-2 my-lg-0">
-						<input class="form-control me-sm-2 input-hbh"
+					<form class="d-flex my-2 my-lg-0" action="/tim-kiem">
+						<input 	class="form-control me-sm-2 input-hbh" name="timKiem"
 							style="border-radius: 0; border: none; border-bottom: 1px solid gray; transform: skew(0); background-color: transparent;"
 							type="text" placeholder="Tìm kiếm...">
 						<button class="btn btn-outline-success my-2 my-sm-0" hidden

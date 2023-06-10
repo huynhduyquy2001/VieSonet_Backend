@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<!doctype html>
+<html lang="en">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -17,22 +17,11 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-	integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-	integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-	crossorigin="anonymous"></script>
-<!-- Bootstrap CSS end -->
 <script src="https://kit.fontawesome.com/f737751420.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/style.css">
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/style.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/style.css">
 <title>Đăng nhập</title>
 <style>
 .ip[type=text], .ip[type=password], .ip[type=email] {
@@ -54,7 +43,7 @@
 }
 
 .lgin {
-	background-color: #0D69B3;
+	background-color: #8D8D8D;
 	color: white;
 	padding: 2px;
 	border: none;
@@ -91,14 +80,9 @@ span.psw {
 		width: 100%;
 	}
 }
-
-@media screen and (max-width: 768px) {
-	.anhDangNhap {
-		display: none;
-	}
-}
 </style>
 </head>
+
 <body>
 	<div class="split-background"></div>
 	<header class="header animationTop3">
@@ -135,7 +119,6 @@ span.psw {
 
 			</div>
 		</nav>
-		<!-- Header nè -->
 	</header>
 	<div>
 		<img class="animate__animated animate__rotateInDownLeft"
@@ -147,8 +130,7 @@ span.psw {
 		<div class="container" id="loginForm"
 			style="width: 60%; min-width: 350px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
 			<div class="row" style="padding: 0; border-radius: 10px;">
-				<div
-					class="col-md-4  col-sm-12 animationTop2 delay-02 img-thumbnail"
+				<div class="col-md-4  col-sm-12 animationTop2 delay-02 img-thumbnail"
 					style="padding: 3%; border-radius: 10px; position: relative; background-color: white; box-shadow: 15px 15px 5px rgba(0, 0, 0, 0.1);">
 					<img
 						src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
@@ -163,33 +145,32 @@ span.psw {
 						alt=""
 						style="position: absolute; right: -50px; bottom: 10px; width: 100px;">
 					<center>
-						<form action="/dangnhap" method="post"
+						<form action="dangNhap" method="post"
 							style="text-align: left; width: 100%;">
 							<div class="row">
 								<center>
 									<h4 class="nhan" style="color: #0D69B3;">
 										<b>ĐĂNG NHẬP</b>
 									</h4>
-									${message }
 									<hr style="width: 30%;">
 								</center>
 
 								<div class="mb-3">
 									<input type="text" class="form-control ip" name="sdt" id=""
 										aria-describedby="helpId" placeholder="Số điện thoại?"
-										pattern="[0-9]{10}" required>
+										required>
 								</div>
 								<div class="mb-3">
 									<input type="text" class="form-control ip" name="matKhau" id=""
-										aria-describedby="helpId" placeholder="Mật khẩu?" required>
+										aria-describedby="helpId" placeholder="Mật khẩu?">
 								</div>
-								<label><input type="checkbox" name="ghiNho"
-									value="false"><small>Ghi nhớ tài khoản?</small></label>
+								<label><input type="checkbox" name="ghiNho"><small>Ghi
+										nhớ tài khoản?</small></label>
 							</div>
 							<br>
 							<center>
-								<button class="lgin" style="background-color: #007ACC;">Đăng
-									nhập</button>
+								<button class="lgin" type="submit"
+									style="background-color: #007ACC;">Đăng nhập</button>
 							</center>
 							<br> <a href="/ASM_Java4/index"> <small>Quên mật
 									khẩu?</small>
@@ -279,4 +260,5 @@ span.psw {
 		});
 	</script>
 </body>
+
 </html>

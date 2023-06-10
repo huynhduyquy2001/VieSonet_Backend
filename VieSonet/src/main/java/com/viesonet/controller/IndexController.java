@@ -129,7 +129,7 @@ public class IndexController {
 		// Số lượng bạn bè
 		m.addAttribute("SlBanbe", listBb.size());
 		// danh sách kết bạn
-		List<DanhSachKetBan> danhSachKetBan = dskbDao.findDsBySdt("0939790002");
+		List<DanhSachKetBan> danhSachKetBan = dskbDao.findDsBySdt(sdt);
 		m.addAttribute("SlKb", danhSachKetBan.size());
 		List<DanhSachKetBan> topKetBan = new ArrayList<>();
 		for (int i = 0; i < Math.min(3, danhSachKetBan.size()); i++) {
@@ -281,4 +281,5 @@ public class IndexController {
 		bvvpDao.saveAndFlush(baiViet);
 		return "success";
 	}
+	
 }
