@@ -99,8 +99,12 @@ span.psw {
 }
 </style>
 </head>
+
 <body>
 	<div class="split-background"></div>
+	<div  style="position: fixed; right: 0; max-height: 90vh; opacity: 0.15; bottom: 0; z-index: -100;">
+            <img src="images/cayTre2.png" class="header animate__animated animate__fadeInUp" style="max-height: 90vh;"  alt="">
+        </div>
 	<header class="header animationTop3">
 		<nav class="navbar navbar-expand-sm navbar-light"
 			style="border: none; padding-top: 0; padding-bottom: 0;">
@@ -170,21 +174,22 @@ span.psw {
 									<h4 class="nhan" style="color: #0D69B3;">
 										<b>ĐĂNG NHẬP</b>
 									</h4>
+									
 									${message }
 									<hr style="width: 30%;">
 								</center>
 
 								<div class="mb-3">
-									<input type="text" class="form-control ip" name="sdt" id=""
-										aria-describedby="helpId" placeholder="Số điện thoại?"
-										pattern="[0-9]{10}" required>
+									<input type="text" class="form-control ip" name="sdt" id="" value="${user }"
+										aria-describedby="helpId" placeholder="Số điện thoại?" pattern="[0-9]{10}"
+										required>																	
 								</div>
 								<div class="mb-3">
-									<input type="text" class="form-control ip" name="matKhau" id=""
-										aria-describedby="helpId" placeholder="Mật khẩu?" required>
+									<input type="password" class="form-control ip" name="matKhau" id="" value="${pass }"
+										aria-describedby="helpId" placeholder="Mật khẩu?" required>									
 								</div>
-								<label><input type="checkbox" name="ghiNho"
-									value="false"><small>Ghi nhớ tài khoản?</small></label>
+								<label><input type="checkbox" name="ghiNho" value="true" ><small>Ghi
+										nhớ tài khoản?</small></label>
 							</div>
 							<br>
 							<center>
@@ -279,4 +284,5 @@ span.psw {
 		});
 	</script>
 </body>
+
 </html>

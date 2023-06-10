@@ -44,6 +44,10 @@ public class NguoiDung {
 	private Integer soLuongBanBe;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "ngaySinh")
+	Date ngaySinh = new Date();
+	
+	@Temporal(TemporalType.DATE)
 	@Column(name = "thoiGianTruyCap")
 	Date thoiGianTruyCap = new Date();
 	
@@ -87,7 +91,6 @@ public class NguoiDung {
 	List<DanhSachBinhLuan> danhSachBinhLuan;
 	@OneToMany(mappedBy = "nguoiDung")
 	List<ThongBao> thongBao;
-
 
 	
 	
