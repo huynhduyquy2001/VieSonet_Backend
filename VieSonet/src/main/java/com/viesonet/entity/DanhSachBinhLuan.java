@@ -48,7 +48,7 @@ public class DanhSachBinhLuan {
 	@JoinColumn(name = "maBaiViet")
 	BaiViet baiViet;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ngayBinhLuan")
 	Date ngayBinhLuan = new Date();
 }

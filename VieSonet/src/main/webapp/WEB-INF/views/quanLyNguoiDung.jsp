@@ -117,36 +117,29 @@
         </nav>
     </header>
     <div class="container" style="margin-top: 60px;">
-
         <div class="row">
-            <div class="col-md-3 img-thumbnail nenTrangChu menuQuanLi animate__animated animate__backInLeft"
-                style="border-radius: 0; padding: 8px;">
-                <div
-                    style="min-height: 80vh; position: relative; padding: 7px; padding-top: 50px; border: 1px solid rgba(210,199,188,1);">
+             <div class="col-md-3 img-thumbnail nenTrangChu menuQuanLi animate__animated animate__backInLeft" style="border-radius: 0; padding: 8px;">
+                <div style="min-height: 80vh; position: relative; padding: 7px; padding-top: 50px; border: 1px solid rgba(210,199,188,1);">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li style="margin-bottom: 20px;" class="ql-link">
                             <a href="#" class="nav-link" style=" border-radius: 0;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-person-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                </svg> &nbsp;&nbsp;
+                                <i class="fa-solid fa-triangle-exclamation"></i>&nbsp;&nbsp;
+                                <small><label>Quản lý vi phạm</label></small>
+                            </a>
+                        </li>
+                        <li style="margin-bottom: 20px;" class="ql-link">
+                            <a href="/quanLyNguoiDung" class="nav-link" style=" border-radius: 0;">
+                                <i class="fa-solid fa-users"></i>&nbsp;&nbsp;
                                 <small><label>Quản lý người dùng</label></small>
                             </a>
                         </li>
                         <li style="margin-bottom: 20px;" class="ql-link">
-                            <a href="#" class="nav-link" style=" border-radius: 0;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-card-checklist" viewBox="0 0 16 16">
-                                    <path
-                                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                    <path
-                                        d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z" />
-                                </svg> &nbsp;&nbsp;
+                            <a href="/quanLyBaiViet" class="nav-link" style=" border-radius: 0;">
+                                <i class="fa-sharp fa-regular fa-list-dropdown"></i>&nbsp;&nbsp;
                                 <small><label>Quản lý bài viết</label></small>
                             </a>
                         </li>
-
+                        
                         <li style="margin-bottom: 20px;" class="ql-link">
                             <a href="/thongKe" class="nav-link" style="border-radius: 0;">
                                 <i class="fa-solid fa-chart-column"></i> &nbsp;&nbsp;
@@ -192,36 +185,36 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <input type="text" class="form-control ip" name="sdt" id="" value="${thongTin.sdt}"
+                                        <input disabled="disabled" type="text" class="form-control ip" name="sdt" id="" value="${thongTin.sdt}"
                                             aria-describedby="helpId" placeholder="Số điện thoại?" required>
                                     </div>
                                     <div class="mb-3">
-                                        <input type="text" class="form-control ip" name="sdt" id="" value="${thongTin.hoTen}"
+                                        <input disabled="disabled" type="text" class="form-control ip" name="sdt" id="" value="${thongTin.hoTen}"
                                             aria-describedby="helpId" placeholder="Họ tên?" required>
                                     </div>
                                     <div class="mb-3">
-                                        <input type="text" class="form-control ip" name="sdt" id="" value="${thongTin.email}"
+                                        <input disabled="disabled" type="text" class="form-control ip" name="sdt" id="" value="${thongTin.email}"
                                             aria-describedby="helpId" placeholder="Email?" required>
                                     </div>
                                     <div class=" mt-1">
                                         <label>Vai trò:</label>
                                         &nbsp; &nbsp;
                                         <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" ${thongTin.vaiTro.maVaiTro == 1 ? 'checked' : ''} 
+                                            name="gridRadios" disabled="disabled">
+                                            <small>Người dùng</small>
+                                        </label>
+                                        &nbsp;
+                                        <label class="form-check-label">
                                             <input class="form-check-input" type="radio" name="gridRadios"
-                                                id="gridRadios1" ${thongTin.vaiTro.maVaiTro == 2 ? 'checked' : ''}>
+                                                id="gridRadios1" ${thongTin.vaiTro.maVaiTro == 2 ? 'checked' : ''} disabled="disabled">
                                             <small> Nhân viên</small>
                                         </label>
                                         &nbsp;
                                         <label class="form-check-label">
                                             <input class="form-check-input" type="radio" ${thongTin.vaiTro.maVaiTro == 3 ? 'checked' : ''}
-                                             name="gridRadios">
+                                             name="gridRadios" disabled="disabled">
                                             <small>Quản lý</small>
-                                        </label>
-                                        &nbsp;
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" ${thongTin.vaiTro.maVaiTro == 1 ? 'checked' : ''} 
-                                            name="gridRadios">
-                                            <small>Người dùng</small>
                                         </label>
                                     </div>
                                     <br>
@@ -239,34 +232,46 @@
                                         </label>
                                     </div>
                                     <br>
-                                    <div class=" mt-1">
+                                    <div class=" mt-1" id="trangThai">
                                         <label>Trạng thái:</label>
                                         &nbsp; &nbsp;
                                         <label class="form-check-label">
-                                            <input class="form-check-input" ${thongTin.trangThai?'Checked':'' } type="radio" name="trangThai" checked>
+                                            <input class="form-check-input" ${thongTin.trangThai?'Checked':'' } type="radio" name="trangThai" disabled="disabled">
                                             <small> Hoạt động</small>
                                         </label>
                                         &nbsp;
                                         <label class="form-check-label">
-                                            <input class="form-check-input" ${thongTin.trangThai?'':'Checked' } type="radio" name="trangThai">
-                                            <small>Không hoạt động</small>
+                                            <input class="form-check-input" ${thongTin.trangThai?'':'Checked' } type="radio" name="trangThai" disabled="disabled">
+                                            <small> Không hoạt động</small>
                                         </label>
                                     </div>
                                     <div class="mt-5">
-                                        <a data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Khóa tài khoản này" href="#" class="btn me-4" 
+                                        <c:if test="${thongTin.trangThai == true}">
+                                        	<a data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Khóa tài khoản này" href="/khoaTaiKhoan/${thongTin.sdt}" class="btn me-4" 
                                         style="background: rgba(234,229,224,1); width: 60px;">
-                                        <i class="fa-solid fa-user-lock"></i> </a>
+                                        <i class="fa-solid fa-user-slash"></i> </a>
+                                        </c:if>
     
+                                        <c:if test="${thongTin.trangThai == false}">
                                         <a data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Mở khóa tài khoản này" href="#" class="btn me-4" 
+                                        title="Mở khóa tài khoản này" href="/moKhoaTaiKhoan/${thongTin.sdt}" class="btn me-4" 
                                         style="background: rgba(234,229,224,1); width: 60px;">
-                                        <i class="fa-solid fa-user-unlock"></i></a>
+                                        <i class="fa-solid fa-user-check"></i></a>
+                                        </c:if>
     
-                                        <a data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Cập nhật vai trò" href="#" class="btn " 
-                                        style="background: rgba(234,229,224,1); width: 60px;">
-                                        <i class="fa-solid fa-user-pen"></i> </a>
+                                        <c:if test="${not empty thongTin}">
+                                        	<a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Cập nhật vai trò" class="btn" 
+                                                        style="background: rgba(234,229,224,1); width: 60px;">
+                                                            <i class="fa-solid fa-user-pen"></i>
+                                        					</a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                       		 <li><a class="dropdown-item btn btn-danger" href="/doiVaiTro/1/${thongTin.sdt}"><i class="fa-solid fa-user-hair"></i> Người dùng</a></li>
+                                             <li><a class="dropdown-item btn btn-danger" href="/doiVaiTro/2/${thongTin.sdt}"><i class="fa-solid fa-user-helmet-safety"></i> Nhân viên</a></li>
+                                             <li><a class="dropdown-item btn btn-danger" href="/doiVaiTro/3/${thongTin.sdt}"><i class="fa-solid fa-user-tie"></i> Quản lý</a></li>
+                                        </ul>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
@@ -274,11 +279,19 @@
                     </div>
                     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
                         tabindex="0">
+                        <div class="col-11 mt-3 mb-3">
+                            <div class="input-group">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="form-check-label me-2 mt-1">Tìm kiếm: </label>
+                                <input type="search" name="" id="timKiem" class="form-control" placeholder="Nhập tên hoặc số điện thoại..." style="border-radius: 15px 0px 0px 15px;">
+                                <button onclick="timKiem()" class="btn btn-primary">Tìm</button>
+                            </div>
+                        </div>
                         <div class="table-responsive" style="overflow-y: hidden;overflow-y: scroll; height: 73vh;">
                             <table class="table table-responsive">
                                 <thead>
                                     <tr>
-                                        <th style="width: 13%;">Hình ảnh</th>
+                                        <th style="width: 10%;">Hình ảnh</th>
                                         <th scope="col">Họ tên</th>
                                         <th scope="col">Giới tính</th>
                                         <th scope="col">SDT</th>
@@ -292,7 +305,7 @@
                                     <c:forEach var="ds" items="${dsNguoiDung}">
                                     <tr>
                                         <td scope="row"><img class="img-thumbnail" style="border-radius: 16px;"
-                                                src="${pageContext.request.contextPath}/images/${ds.anhDaiDien}" width="50%" alt="${ds.anhDaiDien}"></td>
+                                                src="${pageContext.request.contextPath}/images/${ds.anhDaiDien}" width="80%" alt="${ds.anhDaiDien}"></td>
                                         <td style="white-space: nowrap; 
                                         overflow: hidden;
                                         text-overflow: ellipsis;
@@ -302,7 +315,7 @@
                                             </span></td>
                                         <td class="anNoiDung" style="max-width: 150px;"><small>${ds.gioiTinh?'Nam':'Nữ'}</small> </td>
                                         <td class="anNoiDung" style=" max-width: 250px;">
-                                            <small>${ds.sdt }</small>
+                                            <small id="sdt">${ds.sdt }</small>
                                         </td>
                                         <td class="anNoiDung" style=" max-width: 250px;">
                                             <small>${ds.email }</small>
@@ -311,13 +324,15 @@
                                             <small>${ds.luotViPham }</small>
                                         </td>
                                         <td class="anNoiDung" style=" max-width: 250px;">
-                                            <small>${ds.trangThai?'Hoạt động':'Đã thôi việc'}</small>
+                                            <small>${ds.trangThai?'Hoạt động':'Không hoạt động'}</small>
                                         </td>
                                         <td>
-                                            <a onclick="goViPham(${ds.sdt})" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            <c:if test="${ds.luotViPham != 0}">
+                                            	<a onclick="goViPham(${ds.sdt})" data-bs-toggle="tooltip" data-bs-placement="top"
                                                 title="Gỡ bỏ vi phạm" href="#" class="me-3">
                                                 <i class="fa-solid fa-file-import"></i>
                                             </a>
+                                            </c:if>
                                             <a data-bs-toggle="tooltip" data-bs-placement="top"
                                                 title="Chỉnh sửa" href="/chinhSua/${ds.sdt}">
                                                 <i class="fa-solid fa-pen-to-square"></i>

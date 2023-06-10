@@ -16,6 +16,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.viesonet.dao.NDDAOJson;
 import com.viesonet.dao.NguoiDungDAO;
+import com.viesonet.entity.NguoiDung;
 import com.viesonet.entity.NguoiDungJson;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
@@ -63,5 +64,57 @@ public class QuanLyNguoiDungController {
 		m.addAttribute("thongTin", ndDAO.findBySdt(sdt));
 		m.addAttribute("dsNguoiDung", daoND.findDSNguoiDungKhacNguoiDungHienTai(userHienTai));
 		return "quanLyNguoiDung";
+	}
+	
+	@Transactional
+	@RequestMapping("/khoaTaiKhoan/{sdt}")
+	public String khoaTaiKhoan(@PathVariable String sdt, Model m){
+		String userHienTai = sessionService.get("sdt");
+		daoND.khoaTaiKhoan(sdt);
+		m.addAttribute("thongTin", ndDAO.findBySdt(sdt));
+		m.addAttribute("dsNguoiDung", daoND.findDSNguoiDungKhacNguoiDungHienTai(userHienTai));
+		return "quanLyNguoiDung";
+	}
+	
+	@Transactional
+	@RequestMapping("/moKhoaTaiKhoan/{sdt}")
+	public String moTaiKhoan(@PathVariable String sdt, Model m){
+		String userHienTai = sessionService.get("sdt");
+		daoND.moTaiKhoan(sdt);
+		m.addAttribute("thongTin", ndDAO.findBySdt(sdt));
+		m.addAttribute("dsNguoiDung", daoND.findDSNguoiDungKhacNguoiDungHienTai(userHienTai));
+		return "quanLyNguoiDung";
+	}
+	
+	@Transactional
+	@RequestMapping("/doiVaiTro/{vaiTro}/{sdt}")
+	public String moTaiKhoan(@PathVariable String vaiTro, @PathVariable String sdt, Model m) {
+		String userHienTai = sessionService.get("sdt");
+		daoND.doiVaitro(vaiTro, sdt);
+		m.addAttribute("thongTin", ndDAO.findBySdt(sdt));
+		m.addAttribute("dsNguoiDung", daoND.findDSNguoiDungKhacNguoiDungHienTai(userHienTai));
+		return "quanLyNguoiDung";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/timKiemDanhSachSDT/{sdt}")
+	public NguoiDungJson timKiemSdt(@PathVariable String sdt, Model m) throws JsonProcessingException {
+		NguoiDungJson nd = daoND.findBySdt(sdt);
+		return nd;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/timKiemDanhSachTen/{tuKhoa}")
+	public List<NguoiDungJson> timKiemTen(@PathVariable String tuKhoa, Model m){
+		List<NguoiDungJson> nd1 = daoND.findByHoTen(tuKhoa);
+		return nd1;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/timKiemAll")
+	public List<NguoiDungJson> timKiemAll(){
+		String userHienTai = sessionService.get("sdt");
+		List<NguoiDungJson> nd1 = daoND.findDSNguoiDungKhacNguoiDungHienTai(userHienTai);
+		return nd1;
 	}
 }

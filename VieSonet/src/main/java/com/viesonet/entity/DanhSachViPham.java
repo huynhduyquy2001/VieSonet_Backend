@@ -1,6 +1,5 @@
 package com.viesonet.entity;
 
-import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,13 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class PostWithComment {
-	int MaBaiViet;
-	String tenNguoiDung;
-	String anhDaiDien;
-	Date ngayDang;
-	String moTa;
-	String hinhAnh;
-	int luotLike;
-	int luotBinhLuan;
+public class DanhSachViPham {
+	private int maBaiViet;
+	 private String ngayDang;
+	 private String hoTen;
 }

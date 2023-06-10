@@ -61,43 +61,4 @@ public class NguoiDungJson {
 	@JoinColumn(name = "maVaiTro")
 	VaiTro vaiTro;
 	
-	
-	/*1-N*/
-	@OneToMany(mappedBy = "nguoiDung")
-	@JsonIgnore
-	List<DanhSachYeuThich> danhSachYeuThich;
-	
-	@OneToMany(mappedBy = "nguoiDung")
-	@JsonIgnore
-	List<DanhSachKetBan> danhSachKetBan1;
-	
-	@OneToMany(mappedBy = "nguoiLa")
-	@JsonIgnore
-	List<DanhSachKetBan> danhSachKetBan2;
-	
-	@OneToMany(mappedBy = "nguoiDung")
-	@JsonIgnore
-	List<BanBe> banBe1;
-	
-	@OneToMany(mappedBy = "banBe")
-	@JsonIgnore
-	List<BanBe> banBe2;
-	
-	@OneToMany(mappedBy = "nguoiDung")
-	@JsonIgnore
-	List<BaiVietViPham> baiVietViPham;
-	
-	@OneToMany(mappedBy = "nguoiDung")
-	@JsonIgnore
-	List<BaiViet> baiViet;
-	
-	@OneToMany(mappedBy = "nguoiDung")
-	@JsonIgnore
-	List<DanhSachBinhLuan> danhSachBinhLuan;
-
-
-
-	
-	
-	
 }

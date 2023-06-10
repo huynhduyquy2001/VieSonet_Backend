@@ -16,8 +16,7 @@ public interface NguoiDungDAO extends JpaRepository<NguoiDung, String> {
 	Object findNguoiDungByMaBaiViet(@Param("maBaiViet") int maBaiViet);
 	
 	
-	
+	NguoiDung findByHoTen(String hoTen);
 	NguoiDung findBySdt(String sdt);
-	
 	Boolean existsBySdt(String sdt);
 }

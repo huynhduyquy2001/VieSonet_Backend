@@ -1,6 +1,9 @@
 package com.viesonet.entity;
 
 import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,13 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class PostWithComment {
-	int MaBaiViet;
-	String tenNguoiDung;
-	String anhDaiDien;
-	Date ngayDang;
-	String moTa;
-	String hinhAnh;
-	int luotLike;
-	int luotBinhLuan;
+public class DanhSachBaiVietBiToCao {
+	private int maBaiViet;
+	private int soLuong;
 }
