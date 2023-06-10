@@ -84,10 +84,6 @@
                 display: none;
             }
         }
-        .btn-transparent {
-    background-color: transparent;
-    border: 0;
-}
     </style>
 </head>
 
@@ -97,7 +93,7 @@
         <nav class="navbar navbar-expand-sm navbar-light" style="border: none;padding-top: 0; padding-bottom: 0;">
             <div class="container">
                 <a class="navbar-brand nhan" href="/index" style="color: #5A4F48; font-weight: bolder; font-family: 'robo';">
-                    <img src="images/chimLac.png" height="30px" alt=""> VIE_SONET</a>
+                    <img src="/images/chimLac.png" height="30px" alt=""> VIE_SONET</a>
                 <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -134,15 +130,15 @@
                     <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="/profile" id="dropdownId" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false"><small><img src="images/${nguoiDung.anhDaiDien}" width="30px"
+                                aria-haspopup="true" aria-expanded="false"><small><img src="/images/${nguoiDungHienTai.anhDaiDien}" width="30px"
                                         style="border-radius: 50%;" alt=""></small></a>
                             <div class="dropdown-menu" aria-labelledby="dropdownId"
                                 style="width: 350px; padding-left: 3px;">
                                 <div class="profile-darkButton">
                                     <div class="user-profile">
-                                         <img src="images/${nguoiDung.anhDaiDien}" alt="">
+                                         <a href="/profile"><img src="/images/${nguoiDungHienTai.anhDaiDien}" alt=""></a>
                                         <div>
-                                            <p> ${nguoiDung.hoTen}</p>
+                                            <p> ${nguoiDungHienTai.hoTen}</p>
                                             <small>Xem trang cá nhân của bạn</small>
                                         </div>
                                     </div>
@@ -171,16 +167,16 @@
     <div class="row" style="margin-top: 10px; position: relative;">
         <div class="video-overlay">
         </div>
-        <img src="images/${nguoiDung.anhBia}" alt="" class="img-thumbnail"
-            style="max-height: 300px ; width: 100%; object-fit: cover; overflow: hidden; z-index: -10; ">
+        <img src="/images/${nguoiDung.anhBia}" alt="" class="img-thumbnail"
+            style="max-height: 300px; width: 100%; object-fit: cover; overflow: hidden; z-index: -10; ">
         <div class="col-md-5 " style=" position: absolute; transform: translateY(-50%); top: 50%; left: 20px;">
             <div class="row">
             
                 <div class="col-4">
-                    <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="images/${nguoiDung.anhDaiDien}" width="100%"
+                    <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="/images/${nguoiDung.anhDaiDien}" width="87%"
                         style="border-radius: 50%;" class="img-thumbnail" alt="">
                 </div>
-                <div class="col-4" style="color: white;">
+                <div class="col-8" style="color: white;">
                     
                     
                     <h3>${nguoiDung.hoTen}</h3>
@@ -195,27 +191,12 @@
                        </small>
                        
                 </div>
-                <div class="col-1">
-                <!-- Dropdown nè -->
-                       <div class="dropdown">
-						    <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-      						<i class="fa fa-cog text-white"></i> <b style="color: white;">Chỉnh sửa</b> 
-						    </button>
-						    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton"">
-                       <button data-bs-toggle="modal" data-bs-target="#modalId"
-                		style="border: 1px solid white;	 border-radius: 6px; margin-bottom: 5px; background-color: white;">
-                		<small>Đổi TT cá nhân</small></button> <hr>  
-            			<button data-bs-toggle="modal" href="#exampleModalToggle1"
-                		style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: white;">
-                		<small>Đổi ảnh đại diện</small></button><hr>
-            			<button data-bs-toggle="modal" href="#exampleModalToggle12"
-                		style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: white;">
-                		<small>Đổi ảnh bìa</small></button>
-                    </ul>
-                    </div>
-                </div>
                 
             </div>
+          
+            
+            
+            
             
         </div>
     </div>
@@ -234,7 +215,7 @@
                     <center><img id="img1" src="" width="45%" style="border-radius: 10px;">
                     </center> <br>
                     <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupFile011"><img src="images/${pageContext.request.contextPath}" style="width: 20px;
+                        <label class="input-group-text" for="inputGroupFile011"><img src="/images/${pageContext.request.contextPath}" style="width: 20px;
                      margin-right: 13px;">Photo/Video</label>
                         <input type="file" class="form-control" id="inputGroupFile011" name="photo_file">
                     </div>
@@ -264,7 +245,7 @@
                     <center><img id="img1" src="" width="45%" style="border-radius: 10px;">
                     </center> <br>
                     <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupFile011"><img src="images/${pageContext.request.contextPath}" style="width: 20px;
+                        <label class="input-group-text" for="inputGroupFile011"><img src="/images/${pageContext.request.contextPath}" style="width: 20px;
                      margin-right: 13px;">Photo/Video</label>
                         <input type="file" class="form-control" id="inputGroupFile011" name="photo_file2">
                     </div>
@@ -340,7 +321,7 @@
                             style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
                             <div class="user-profile">
                             	
-                                <img src="images/${nguoiDung.anhDaiDien}" alt="">
+                                <img src="/images/${nguoiDung.anhDaiDien}" alt="">
                                 <div>
                                     <label>${nguoiDung.hoTen}</label>
                                     <br>
@@ -371,7 +352,7 @@
                         <c:forEach items="${topKetBan}" var="topKb">
 								<div>
 									<div class="user-profile">
-										<a href="/nguoiDung/${topKb.nguoiLa.sdt}"><img src="images/${topKb.nguoiLa.anhDaiDien}"
+										<a href="${topKb.nguoiLa.sdt}"><img src="/images/${topKb.nguoiLa.anhDaiDien}"
 											class="img-thumbnail" alt=""></a>
 										<div>
 											<label class="nhan"
@@ -423,7 +404,7 @@
                             style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
                             
                             <div class="user-profile">
-                                <img src="images/${NguoiDung.anhDaiDien}" alt="">
+                                <img src="/images/${NguoiDung.anhDaiDien}" alt="">
                                 <div>
                                     <label>${NguoiDung.hoTen}</label>
                                     <br>
@@ -460,7 +441,7 @@
                             <div style=" display: flex; align-items: center; justify-content: space-between; ">
                                 <div class="tooltip2">	
                                     <div class="user-profile ">
-                                        <img src="images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
+                                        <img src="/images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
                                         <div>
                                             <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br> 
                                             <small>${BaiViet.ngayDang} </small> <br>
@@ -468,7 +449,7 @@
                                     </div>
                                     <span class="tooltip2-text">
                                         <a href="">
-                                            <img src="images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
+                                            <img src="/images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
                                             <div>
                                                 <label for="">${BaiViet.nguoiDung.hoTen}  </label> <br>
                                                 <center>
@@ -513,7 +494,7 @@
 								<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
 									${BaiViet.moTa}
 									<center>
-										<img class="lazy" data-src="images/${BaiViet.hinhAnh}"
+										<img class="lazy" data-src="/images/${BaiViet.hinhAnh}"
 											width="100%" alt=""
 											style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
 									</center>
@@ -559,7 +540,7 @@
 					<div class="modal-body">
 					
 						<div class="user-profile">
-							<img src="images/${NguoiDung.hoTen}" alt="">
+							<img src="/images/${NguoiDung.hoTen}" alt="">
 							<div>
 								<label>${NguoiDung.hoTen}
 									</p> <small style="font-size: 12px">

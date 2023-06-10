@@ -77,6 +77,7 @@ public class IndexController {
 	public String getBaiVietCuaBanBe(Model m) {
 		String sdt = session.get("sdt");
 		NguoiDung taiKhoan = nguoiDungDAO.getById(sdt);
+		
 		// lấy danh sách bài viết từ danh sách bạn bè
 		List<BanBe> listBb = banBeDao.findFriendByUserphone(sdt);
 		List<String> sdtBanBeList = listBb.stream().map(banBe -> banBe.getBanBe().getSdt())
@@ -212,5 +213,13 @@ public class IndexController {
 	    return "ok";
 	}
 
+	@GetMapping("/profile/nguoiDung/{sdtLa}")
+	public String xemTrangCaNhanNguoiKhac(Model m, @PathVariable String sdtLa) {
+		String sdt = session.get("sdt");
+		NguoiDung nguoiDung = new NguoiDung();
+		m.addAttribute("message","SDT là"+sdtLa);
+		
+		return "trangCaNhanNguoiDungKhac";
+	}
 	
 }
