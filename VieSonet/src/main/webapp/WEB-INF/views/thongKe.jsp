@@ -67,7 +67,7 @@
                                     khoản</small></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><small style=" white-space: nowrap;
+                            <a class="nav-link" href="/quanLyNguoiDung"><small style=" white-space: nowrap;
                                 overflow: hidden; 
                                 text-overflow: ellipsis;font-family: 'Roboto', sans-serif;letter-spacing: 0.1em; ">Quản
                                     lí</small></a>
@@ -118,77 +118,24 @@
     </header>
     <div class="container" style="margin-top: 50px;">
         <div class="row" style="margin: 0; padding: 0;">
-            <div class="dropdown menuDropdown">
-                <button class="btn  dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <b class="nhan">Quản lí</b>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId">
-                    <a class="dropdown-item" href="#"><a href="#" class="nav-link" style=" border-radius: 0;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                viewBox="0 0 16 16">
-                                <path
-                                    d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-                            </svg> &nbsp;&nbsp;
-                            <small><label class="">Quản lý nhân viên</label></small>
-                        </a></a>
-                    <a href="#" class="nav-link" style=" border-radius: 0;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-person-fill" viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                        </svg> &nbsp;&nbsp;
-                        <small><label>Quản lý người dùng</label></small>
-                    </a>
-                    <a href="#" class="nav-link" style=" border-radius: 0;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-card-checklist" viewBox="0 0 16 16">
-                            <path
-                                d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                            <path
-                                d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z" />
-                        </svg> &nbsp;&nbsp;
-                        <small><label>Quản lý bài viết</label></small>
-                    </a>
-                    <a href="#" class="nav-link" style="border-radius: 0;">
-                        <i class="fa-solid fa-chart-column"></i> &nbsp;&nbsp;
-                        <small><label for="">Thống kê</label></small>
-                    </a>
-
-                </div>
-            </div>
             <div class="col-md-3 img-thumbnail nenTrangChu menuQuanLi animate__animated animate__backInLeft" style="border-radius: 0; padding: 8px;">
-                <div
-                    style="min-height: 80vh; position: relative; padding: 7px; padding-top: 50px; border: 1px solid rgba(210,199,188,1);">
+                <div style="min-height: 80vh; position: relative; padding: 7px; padding-top: 50px; border: 1px solid rgba(210,199,188,1);">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li style="margin-bottom: 20px;" class="ql-link">
                             <a href="#" class="nav-link" style=" border-radius: 0;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    viewBox="0 0 16 16">
-                                    <path
-                                        d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-                                </svg> &nbsp;&nbsp;
-                                <small><label>Quản lý nhân viên</label></small>
+                                <i class="fa-solid fa-triangle-exclamation"></i>&nbsp;&nbsp;
+                                <small><label>Quản lý vi phạm</label></small>
                             </a>
                         </li>
                         <li style="margin-bottom: 20px;" class="ql-link">
-                            <a href="#" class="nav-link" style=" border-radius: 0;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-person-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                </svg> &nbsp;&nbsp;
+                            <a href="/quanLyNguoiDung" class="nav-link" style=" border-radius: 0;">
+                                <i class="fa-solid fa-users"></i>&nbsp;&nbsp;
                                 <small><label>Quản lý người dùng</label></small>
                             </a>
                         </li>
                         <li style="margin-bottom: 20px;" class="ql-link">
-                            <a href="#" class="nav-link" style=" border-radius: 0;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-card-checklist" viewBox="0 0 16 16">
-                                    <path
-                                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                    <path
-                                        d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z" />
-                                </svg> &nbsp;&nbsp;
+                            <a href="/quanLyBaiViet" class="nav-link" style=" border-radius: 0;">
+                                <i class="fa-sharp fa-regular fa-list-dropdown"></i>&nbsp;&nbsp;
                                 <small><label>Quản lý bài viết</label></small>
                             </a>
                         </li>

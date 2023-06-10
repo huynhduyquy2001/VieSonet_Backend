@@ -1,24 +1,19 @@
 package com.viesonet.entity;
 
 import java.util.Date;
-import java.util.Optional;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -26,33 +21,44 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "BaiVietViPham", uniqueConstraints = { @UniqueConstraint(columnNames = { "sdt", "maBaiViet" }) })
-
+@Table(name = "nguoiDung")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class BaiVietViPham {
+public class NguoiDungJson {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int maToCao;
-	@Column(name = "trangThai")
+	private String sdt;
+	private String hoTen;
+	private String email;
+	private String matKhau;
+	private String diaChi;
+	private String moiQuanHe;
+	private String gioiThieu;
+	private String anhDaiDien;
+	private Boolean gioiTinh;
+	private String anhBia;
 	private Boolean trangThai;
-	
-	@ManyToOne
-	@JoinColumn(name = "sdt")
-	NguoiDung nguoiDung;
-	
-	@ManyToOne
-	@JoinColumn(name = "maBaiViet")
-	BaiViet baiViet;
-	
-	@ManyToOne
-	@JoinColumn(name = "maLoai")
-	LoaiViPham loaiViPham;
+	private Integer luotViPham;
+	private Integer soLuongBanBe;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "ngaySinh")
+	Date ngaySinh = new Date();
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "ngayToCao")
-	Date ngayToCao = new Date();
-
+	@Column(name = "thoiGianTruyCap")
+	Date thoiGianTruyCap = new Date();
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "ngayTao")
+	Date ngayTao = new Date();
+	
+	/*N-1*/
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "maVaiTro")
+	VaiTro vaiTro;
+	
 }

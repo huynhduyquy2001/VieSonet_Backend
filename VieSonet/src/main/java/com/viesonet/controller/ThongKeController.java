@@ -180,7 +180,7 @@ public class ThongKeController {
 		          thongKeLuotThich.add(tk4);
 		      }    
 		      ObjectMapper objectMapper = new ObjectMapper();
-			    String thongKeJson3 = objectMapper.writeValueAsString(thongKeLuotThich);
+			  String thongKeJson3 = objectMapper.writeValueAsString(thongKeLuotThich);
 		return thongKeJson3;
 	}
 }
