@@ -20,6 +20,9 @@ public interface NguoiDungDAO extends JpaRepository<NguoiDung, String> {
 	
 	@Query("SELECT obj FROM NguoiDung obj WHERE obj.hoTen LIKE %:hoTen%")
 	List<NguoiDung> findByhoTenContaining(@Param("hoTen") String hoTen);
+	
+	@Query("SELECT obj.hoTen, obj.anhDaiDien FROM NguoiDung obj WHERE obj.hoTen LIKE %:hoTen%")
+	List<Object> timNguoiDung(@Param("hoTen") String hoTen);
 
 
 	@Query("SELECT DISTINCT nd FROM NguoiDung nd JOIN BanBe bb ON bb.sdt = nd.sdt WHERE nd.sdt NOT IN (SELECT bb2.sdtBb FROM BanBe bb2 WHERE bb2.sdt = :sdt)")

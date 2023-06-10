@@ -71,16 +71,15 @@ public class TimKiemController {
 //
 //		return "TimKiem";
 //	}
-	
-	@PostMapping("/timKiemTheoTen")
-	public String timKiemTheoTen( Model m, @RequestParam("tuKhoaCuaToi" )String tuKhoa) {
-	    List<NguoiDung> danhSach = nguoiDungDao.findByhoTenContaining(tuKhoa);
-	    m.addAttribute("danhSachTimKiem", danhSach);
-	    return "TimKiem";
+	@ResponseBody
+	@GetMapping("/timKiemTheoTen")
+	public List<Object> timKiemTheoTen( Model m, @RequestParam("tuKhoaCuaToi" )String tuKhoa) {
+	    List<Object> danhSach = nguoiDungDao.timNguoiDung(tuKhoa);
+	   // m.addAttribute("danhSachTimKiem", danhSach);
+	    return danhSach;
 	}
 	@GetMapping("/timKiem")
 	public String timKiem() {
-	    
 	    return "TimKiem";
 	}
 

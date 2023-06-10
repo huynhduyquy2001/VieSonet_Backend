@@ -222,20 +222,6 @@ function baoCaoViPham(maBaiViet) {
 	});
 }
 
-function timKiem() {
-    var tuKhoa = "quý";
-    $.ajax({
-        url: "/timKiem",
-        method: "GET",
-        data: { tuKhoaCuaToi: tuKhoa },
-        success: function (data) {
-            alert(data);
-        },
-        error: function (xhr, status, error) {
-            console.log(error); // Thông báo lỗi nếu có
-        }
-    });
-}
 
 
 

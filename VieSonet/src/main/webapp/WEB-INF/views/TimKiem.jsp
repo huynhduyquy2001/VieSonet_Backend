@@ -73,8 +73,8 @@
 					</ul>
 					<form class="d-flex my-2 my-lg-0"
 						onsubmit="displayText(); return false;">
-						<input class="form-control me-sm-2 input-hbh"
-							name="sdt1" id="name"
+						<input class="form-control me-sm-2 input-hbh" name="sdt1"
+							id="name"
 							style="border-radius: 0; border: none; border-bottom: 1px solid gray; transform: skew(0); background-color: transparent;"
 							type="text" placeholder="Search">
 						<button class="btn btn-outline-success my-2 my-sm-0"
@@ -173,13 +173,15 @@
 				style="margin-left: 10px; background-color: white; opacity: 0.9; border-radius: 0; padding: 8px;">
 				<div class="mb-3">
 					<label for="" class="form-label">Tìm kiếm </label>
-						<form action="/timKiemTheoTen" method="post">
+					<form id="timKiemForm">
 						<div class="input-group">
-							<input type="text" class="form-control" name="tuKhoaCuaToi" id="tuKhoa"
-								value="${sdt1}" placeholder="Tìm kiếm...">
-							<button class="btn btn-primary" type="submit" style="background-color: #A89386; border: none">Tìm kiếm</button>
+							<input type="text" class="form-control" name="tuKhoaCuaToi"
+								id="tuKhoaCuaToi" value="${sdt1}" placeholder="Tìm kiếm...">
+							<button class="btn btn-primary" type="submit" onclick="timKiem()"
+								style="background-color: #A89386; border: none">Tìm
+								kiếm</button>
 						</div>
-						</form>
+					</form>
 				</div>
 				<c:if test="${!empty error}">
 					<div>
@@ -214,12 +216,13 @@
 										<img src="images/${nguoiDung.anhDaiDien }" alt=""
 											style="border-radius: 6px; width: 70px;">
 										<div>
-											<label for=""><c:out value="${nguoiDung.hoTen}" /></label>
-											<br> <small>Hoạt động: 1 phút trước</small>
+											<label for=""><c:out value="${nguoiDung.hoTen}" /></label> <br>
+											<small>Hoạt động: 1 phút trước</small>
 										</div>
 									</div>
 									<div>
-										<a name="" id="" class="btn btn-primary" href="#" role="button">Kết bạn 0</a>
+										<a name="" id="" class="btn btn-primary" href="#"
+											role="button">Kết bạn 0</a>
 									</div>
 								</div>
 							</div>
@@ -262,19 +265,43 @@
 			const output = document.getElementById("output");
 			output.innerHTML = input.value;
 		}
-		
 	</script>
-	<script >
+	<script>
 	function timKiem() {
-	    var tuKhoa = "quý";
+	    $("#timKiemForm").submit(function(event) {
+	        event.preventDefault();
+	    });
+	    var tuKhoa = $("#tuKhoaCuaToi").val();
+
 	    $.ajax({
-	        url: "/timKiem",
+	        url: "/timKiemTheoTen",
 	        method: "GET",
-	        data: { tuKhoaCuaToi: tuKhoa },
-	        success: function (data) {
-	            alert(data);
+	        data: {
+	            tuKhoaCuaToi: tuKhoa
 	        },
-	        error: function (xhr, status, error) {
+	        success: function(data) {
+	            $("#danhSachTimKiem").empty();
+
+	            data.forEach(function(item) {
+	                var html = '<div class="col-md-6">' +
+	                    '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">' +
+	                    '<div class="user-profile">' +
+	                    '<img src="images/' + item[1] + '" alt="" style="border-radius: 6px; width: 70px;">' +
+	                    '<div>' +
+	                    '<label for="">' + item[0] + '</label> <br>' +
+	                    '<small>Hoạt động: 1 phút trước</small>' +
+	                    '</div>' +
+	                    '</div>' +
+	                    '<div>' +
+	                    '<a name="" id="" class="btn btn-primary" href="#" role="button">Kết bạn</a>' +
+	                    '</div>' +
+	                    '</div>' +
+	                    '</div>';
+
+	                $("#danhSachTimKiem").append(html);
+	            });
+	        },
+	        error: function(xhr, status, error) {
 	            console.log(error); // Thông báo lỗi nếu có
 	        }
 	    });
