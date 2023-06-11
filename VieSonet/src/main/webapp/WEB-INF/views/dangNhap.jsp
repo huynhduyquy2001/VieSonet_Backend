@@ -131,12 +131,9 @@ span.psw {
 
 					</ul>
 					<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-						<li class="nav-item"><a class="nav-link" href="#"><small
+						<li class="nav-item"><a class="nav-link" href="/dangky"><small
 								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;"><button
-										class="btnBorder" id="loginBtn">Đăng nhập</button></small></a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><small
-								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;"><button
-										class="btnBorder" id="registerBtn">Đăng kí</button></small></a></li>
+										class="btnBorder" >Đăng kí</button></small></a></li>
 					</ul>
 				</div>
 
@@ -204,68 +201,6 @@ span.psw {
 							</a>
 						</form>
 					</center>
-				</div>
-			</div>
-		</div>
-		<div class="container" id="registerForm" hidden
-			style="width: 60%; min-width: 350px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
-			<div class="row" style="padding: 0; border-radius: 10px;">
-				<div class="col-md-4  col-sm-12 animationTop2 img-thumbnail"
-					style="padding: 3%; border-radius: 10px; position: relative; background-color: white; box-shadow: 15px 15px 5px rgba(0, 0, 0, 0.1);">
-					<img
-						src="https://i.pinimg.com/originals/9c/0a/91/9c0a912fe0b387863e7d7639c8db02c1.png"
-						class="img-fluid" alt="Sample image"
-						style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); max-width: 100%; max-height: 80%;">
-				</div>
-				<div
-					class="col-md-8 col-sm-12 animate__animated animate__jackInTheBox img-thumbnail"
-					style="padding: 3%; box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.1);">
-					<form action="">
-						<div class="row">
-							<center>
-								<h3 style="color: #F27323;">ĐĂNG KÝ</h3>
-								<hr style="width: 30%;">
-							</center>
-							<div class="col-md-6">
-
-								<input class="form-control ip" type="text"
-									placeholder="Số điện thoại?" required>
-								<!-- <small style="color: yellow">${message1}</small> <br> -->
-
-								<input class="form-control ip" type="password"
-									placeholder="Mật khẩu?" required>
-								<!-- <small style="color: yellow">${message2}</small><br> -->
-
-								<input class="form-control ip" type="password"
-									placeholder="Mật khẩu xác nhận?" required>
-								<!-- <small style="color: yellow">${message3}</small><br> -->
-							</div>
-							<div class="col-md-6">
-
-								<input class="form-control ip" type="text" placeholder="Email?"
-									required> 
-									
-									<input class="form-control ip" type="email"
-									placeholder="Email?" required>
-								<!-- <small style="color: yellow">${message4}</small><br> -->
-								<label for="uname">Giới tính</label> <br> <label> <input
-									${form.gioiTinh?'checked':' '} type="radio" name="gioiTinh"
-									id="input" value="true" checked="checked"> Nam
-								</label> &nbsp &nbsp &nbsp &nbsp <label> <input
-									${form.gioiTinh?' ':' checked'} type="radio" name="gioiTinh"
-									id="input" value="false"> Nữ
-								</label> <input class="ip" type="hidden" name="admin" value="false">
-							</div>
-							<br>
-
-						</div>
-						<br>
-						<center>
-							<button class="lgin" type="submit"
-								style="background-color: #F27323;">Đăng ký</button>
-						</center>
-						<br> <a href="/ASM_Java4/index"> Quên mật khẩu? </a>
-					</form>
 				</div>
 			</div>
 		</div>

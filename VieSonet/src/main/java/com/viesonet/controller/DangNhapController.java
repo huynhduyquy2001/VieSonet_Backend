@@ -29,15 +29,17 @@ public class DangNhapController {
 	@GetMapping("/dangnhap")
 	public String dangNhap(Model m) {
 		String user = cookieService.getValue("user");
-
 		if (user != null) {
 			String pass = cookieService.getValue("pass");
 			m.addAttribute("user", user);
 			m.addAttribute("pass", pass);
 		}
+		
+		m.addAttribute("hienDangNhap","");
+		m.addAttribute("hienDangKy","hidden");
 		return "dangNhap";
 	}
-
+	
 	@PostMapping("/dangnhap")
 	public String dangNhap2( Model m) {
 		String sdt = paramService.getString("sdt", "");
