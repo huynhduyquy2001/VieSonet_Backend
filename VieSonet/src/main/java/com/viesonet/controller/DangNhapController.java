@@ -34,9 +34,6 @@ public class DangNhapController {
 			m.addAttribute("user", user);
 			m.addAttribute("pass", pass);
 		}
-		
-		m.addAttribute("hienDangNhap","");
-		m.addAttribute("hienDangKy","hidden");
 		return "dangNhap";
 	}
 	
