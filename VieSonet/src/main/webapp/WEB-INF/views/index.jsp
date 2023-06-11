@@ -58,7 +58,6 @@
 <body>
 	<div
 		style="position: fixed; right: 0; max-height: 90vh; opacity: 0.1; bottom: 0;">
-
 	</div>
 	<!-- <img src="images/sunset-reduced.jpg" style="position: fixed; left: 0; max-height: 100vh; z-index: -2; width: 100%; top: 40px; opacity: 0.4; bottom: 0; height: 100%; object-fit: cover;" alt=""> -->
 	<!-- style="box-shadow: 0 1px 2px rgb(0 0 0 / 10%);" -->
@@ -66,7 +65,7 @@
 		<nav class="navbar navbar-expand-sm navbar-light"
 			style="border: none; padding-top: 0; padding-bottom: 0;">
 			<div class="container">
-				<a class="navbar-brand nhan" href="#"
+				<a class="navbar-brand nhan" href="/"
 					style="color: #222; font-weight: bolder; font-family: 'robo';">
 					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
 				</a>
@@ -134,7 +133,7 @@
 								<a class="dropdown-item" href="/dangnhap"><small>Danh sách bạn bè</small></a>
 								<a class="dropdown-item" href="/dangnhap"><small>Lời mời kết bạn</small></a>
 								<a class="dropdown-item" href="/dangnhap"><small>Điều khoản</small></a>
-								<a class="dropdown-item" href="/dangnhap"><small>Đăng xuất</small></a>
+								<a class="dropdown-item" href="/dangxuat"><small>Đăng xuất</small></a>
 							</div></li>
 
 					</ul>

@@ -66,7 +66,6 @@ public class DanhSachBanBeController {
 		System.out.println("SL bạn bè " + slbb);
 		return "DanhSachBanBe";
 	}
-	
 	@GetMapping("/DanhSachBanBe/dongy/{maLoiMoi}")
 	public String dongYKetBan(@PathVariable int maLoiMoi) {
 		// thêm người ta vào danh sách bạn bè
@@ -102,5 +101,6 @@ public class DanhSachBanBeController {
 		NguoiDung dsNguoiDung2 = nguoiDungDao.findBySdt(sdtCN);
 		model.addAttribute("dsNguoiDung2", dsNguoiDung2);
 	}
+	
 
 }

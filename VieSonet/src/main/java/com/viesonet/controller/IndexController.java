@@ -284,5 +284,11 @@ public class IndexController {
 		bvvpDao.saveAndFlush(baiViet);
 		return "success";
 	}
+	@GetMapping("/dangxuat")
+	public String dangXuat() {
+		session.remove("sdt");
+		session.remove("vt");
+		return"redirect:/dangnhap";
+	}
 
 }
