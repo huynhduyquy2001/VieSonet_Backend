@@ -139,7 +139,6 @@ span.psw {
 
 			</div>
 		</nav>
-		<!-- Header nè -->
 	</header>
 	<div>
 		<img class="animate__animated animate__rotateInDownLeft"

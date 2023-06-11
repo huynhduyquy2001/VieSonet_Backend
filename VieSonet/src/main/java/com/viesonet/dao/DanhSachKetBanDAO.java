@@ -22,4 +22,11 @@ public interface DanhSachKetBanDAO extends JpaRepository<DanhSachKetBan, Integer
 	  @Query("SELECT bb FROM DanhSachKetBan bb WHERE bb.nguoiDung.sdt = ?1 OR bb.nguoiLa.sdt = ?1")
 	  List<DanhSachKetBan> findFriends(String soDienThoai);
 	  
+	
+	
+	@Query("SELECT bb.maLoiMoi FROM DanhSachKetBan bb WHERE bb.nguoiDung.sdt like ?1 AND bb.nguoiLa.sdt like ?1")
+	List<Integer> findMaLoiMoiByNguoiDungAndNguoiLa(String nguoiDung, String nguoiLa);
+	
+	
+	
 }

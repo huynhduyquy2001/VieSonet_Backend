@@ -15,4 +15,7 @@ public interface BanBeDAO extends JpaRepository<BanBe, String> {
 	  long countBySdtBb(String sdt);
 	  @Query("SELECT DISTINCT bb FROM BanBe bb WHERE bb.nguoiDung.sdt = ?1 OR bb.banBe.sdt = ?1")
 	  List<BanBe> findFriends(String soDienThoai);
+	@Query("select bb from BanBe bb where bb.nguoiDung.sdt=?1")
+	List<BanBe> findFriendByUserphone(String soDienThoai);
+	
 }

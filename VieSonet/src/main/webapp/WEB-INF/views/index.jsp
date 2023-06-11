@@ -123,6 +123,7 @@
 
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#" id="dropdownId"
+							class="nav-link dropdown-toggle" href="/profile" id="dropdownId"
 							data-bs-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"><small><img
 									src="images/${taiKhoan.anhDaiDien}" width="30px"
@@ -189,8 +190,8 @@
 								style="display: flex; align-items: center; justify-content: space-between;">
 								<div class="tooltip2">
 									<div class="user-profile ">
-										<img src="images/${BaiViet.nguoiDung.anhDaiDien}"
-											class="img-thumbnail" alt="">
+										<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img src="images/${BaiViet.nguoiDung.anhDaiDien}"
+											class="img-thumbnail" alt=""></a>
 										<div>
 											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br>
 											<small style="font-size: 12px; color: #65676b"> <fmt:formatDate
@@ -201,8 +202,7 @@
 									<span class="tooltip2-text"> <a href="">
 											<div class="row">
 												<div class="col-5">
-													<img src="images/${BaiViet.nguoiDung.anhDaiDien}"
-														class="img-thumbnail" alt="">
+													<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img src="images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt=""></a>
 												</div>
 												<div class="col-7" style="padding: 0; margin: 0;">
 													<label for="" style="padding: 0; margin: 0;"> <small>${BaiViet.nguoiDung.hoTen}</small>
@@ -213,7 +213,7 @@
 																	<li><i class="fa-regular fa-heart"></i> <b>Mối
 																			quan hệ:</b> ${BaiViet.nguoiDung.moiQuanHe}</li>
 																	<li><b><i class="fa-light fa-user-group"></i>
-																			Danh sách bạn bè:</b> ??</li>
+																			Danh sách bạn bè:</b> ${dsBb}</li>
 																</ul>
 														</small>
 													</small></small>

@@ -42,7 +42,8 @@ public class BaiViet {
 	private Boolean trangThai;
 	private Integer luotThich;
 	private Integer luotBinhLuan;
-	
+	@Column(name = "sdt", insertable=false, updatable=false) 
+	private String sdt;
 	/*N-1*/
 	@JsonIgnore
 	@ManyToOne

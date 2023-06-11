@@ -48,4 +48,6 @@ public interface NguoiDungDAO extends JpaRepository<NguoiDung, String> {
 	
 	@Query("SELECT obj.hoTen, obj.anhDaiDien ,obj.sdt FROM NguoiDung obj WHERE obj.sdt LIKE %:hoTen%")
 	List<Object> timNguoiDungTheoSDT(@Param("hoTen") String hoTen);
+	@Query("SELECT u FROM NguoiDung u WHERE u.sdt=:sdt")
+	NguoiDung findBySoDienThoai(String sdt);
 }
