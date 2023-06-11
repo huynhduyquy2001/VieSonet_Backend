@@ -1,5 +1,6 @@
 package com.viesonet.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ import com.viesonet.dao.NguoiDungDAO;
 import com.viesonet.entity.BanBe;
 import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.NguoiDung;
+import com.viesonet.service.CookieService;
 import com.viesonet.service.SessionService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -29,14 +31,16 @@ import jakarta.persistence.EntityNotFoundException;
 public class TimKiemController {
 	@Autowired
 	private NguoiDungDAO nguoiDungDao;
-
-	@Autowired
-	private DanhSachKetBanDAO DSKB;
 	@Autowired
 	SessionService SS;
-
+	@Autowired
+	private DanhSachKetBanDAO dskbDao;
 	@Autowired
 	private BanBeDAO BBDAO;
+	@Autowired
+	SessionService Session;
+	@Autowired
+	CookieService cookie;
 
 
 	
@@ -73,45 +77,57 @@ public class TimKiemController {
 //	}
 	@ResponseBody
 	@GetMapping("/timKiemTheoTen")
-	public List<Object> timKiemTheoTen( Model m, @RequestParam("tuKhoaCuaToi" )String tuKhoa) {
-	    List<Object> danhSach = nguoiDungDao.timNguoiDung(tuKhoa);
-	   // m.addAttribute("danhSachTimKiem", danhSach);
-	    return danhSach;
+	public List<Object> timKiemTheoTen(Model m, @RequestParam("tuKhoaCuaToi") String tuKhoa) {
+		List<Object> danhSach = nguoiDungDao.timNguoiDung(tuKhoa);
+		//m.addAttribute("danhSachTimKiem", danhSach);
+		return danhSach;
 	}
+	@ResponseBody
+	@GetMapping("/timKiemsdt")
+	public List<Object> timKiemsdt(Model m, @RequestParam("tuKhoaCuaToi") String tuKhoa) {
+		List<Object> danhSach1 = nguoiDungDao.timNguoiDungTheoSDT(tuKhoa);
+		List<BanBe> list = BBDAO.findFriends(tuKhoa);
+		m.addAttribute("danhSachBanBe",list);	
+		 //m.addAttribute("danhSachTimKiem", danhSach1);
+		return danhSach1;
+	}
+
 	@GetMapping("/timKiem")
-	public String timKiem() {
-	    return "TimKiem";
+	public String timKiem(Model m) {
+		DSBB(m);
+		return "TimKiem";
 	}
 
+	@GetMapping("/timKiem/ketBan/{maKB}")
+	public String themLoiMoiKetBan(@PathVariable("sdt") String sdt , Model m) {
+		String sdtND = Session.get("sdt");
+		NguoiDung nguoiDung = nguoiDungDao.getById(sdtND);
+		NguoiDung nguoiLa = nguoiDungDao.findBySdt(sdt);
+		System.out.println("Ngưo"+nguoiDung.getSdt());
+		if (nguoiDung.equals(nguoiLa)) {
+			m.addAttribute("message", "Lỗi bạn k tự kết bạn dới chính mình");
+			return "TimKiem";
+		}
+		if (nguoiLa == null) {
+			m.addAttribute("message", "Chưa có kết bạn ✪ ω ✪");
+			return "TimKiem";
+		}
+		 // Kiểm tra xem đã tồn tại lời mời kết bạn giữa hai người dùng hay chưa
+		DanhSachKetBan ds = dskbDao.getByNguoiLaAndNguoiDung(nguoiDung,nguoiLa);
+		if (ds != null) {
+			m.addAttribute("message", "Đã có lời mời trước đó");
+			return "TimKiem";
+		}
+		// Lưu thông tin lời mời vào CSDL
+		ds = new DanhSachKetBan();
+		ds.setNguoiDung(nguoiDung);
+		ds.setNguoiLa(nguoiLa);
+		ds.setNgayGui(new Date());
+		dskbDao.saveAndFlush(ds);
+		return "redirect:/timKiem";
+	}
 
-//	 @GetMapping("/tim-kiem1")
-//	    public String timKiem1(@RequestParam(name ="sdt1", required = false) String sdt, Model model) {
-//	        NguoiDung nguoiDung = nguoiDungDao.findBySdt(sdt);
-//	        model.addAttribute("sdt1", sdt);
-//	        String sdtCN = SS.get("sdt");
-//	        if (nguoiDung != null) {
-//	            model.addAttribute("nguoiDung", nguoiDung);
-//	            
-//	        } else {
-//	            model.addAttribute("error", "Không tìm thấy người dùng với số điện thoại này!");
-//	        }
-//	        DSBB(model);
-//	        DSBanBe(model, sdt);
-//	        return "TimKiem";
-//	    }
-//	@GetMapping("/tim-kiem1")
-//	public String timKiem2(@RequestParam(name = "hoTen", required = false) String hoTen, Model model) {
-//		if (hoTen != null) {
-//			List<NguoiDung> dsNguoiDung = nguoiDungDao.findByhoTenContaining(hoTen);
-//			model.addAttribute("dsNguoiDung", dsNguoiDung);
-//		}
-//		String sdtCN = SS.get("sdt");
-//		// DSBanBe(model, sdtCN);
-//
-//		DSBB(model);
-//		return "TimKiem";
-//	}
-
+	
 	// Lấy dữ liệu người dùng đăng nhập vào trên Session
 //	public void DSBB(Model model) {
 //		// Lấy dữ liệu người dùng đăng nhập vào trên Session
@@ -153,5 +169,11 @@ public class TimKiemController {
 //		System.out.println(nguoiDung1.getSdt());
 //		System.out.println(nguoiDung2.getSdt());
 //	}
+	public void DSBB(Model model) {
+		// Lấy dữ liệu người dùng đăng nhập vào trên Session
+		String sdtCN = SS.get("sdt");
+		NguoiDung dsNguoiDung2 = nguoiDungDao.findBySdt(sdtCN);
+		model.addAttribute("dsNguoiDung2", dsNguoiDung2);
+	}
 
 }

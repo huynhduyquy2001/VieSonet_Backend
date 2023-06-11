@@ -92,7 +92,7 @@
 								style="width: 350px; padding-left: 3px;">
 								<div class="profile-darkButton">
 									<div class="user-profile">
-										<img src="images/avt.jpg" alt="">
+										<img src="images/${dsNguoiDung2.anhDaiDien}" alt="">
 										<div>
 											<p>${dsNguoiDung2.hoTen}</p>
 											<small>Xem trang cá nhân của bạn</small>
@@ -234,6 +234,7 @@
 	</div>
 
 	<script>
+	
 		function toggleDarkMode() {
 			var body = document.body;
 			var header = document.querySelector('.header');
@@ -267,46 +268,155 @@
 		}
 	</script>
 	<script>
-	function timKiem() {
-	    $("#timKiemForm").submit(function(event) {
-	        event.preventDefault();
-	    });
-	    var tuKhoa = $("#tuKhoaCuaToi").val();
+		function timKiem() {
+			const input = document.getElementById("tuKhoaCuaToi");
+			const output = document.getElementById("output");
+			output.innerHTML = input.value;
+			
+			$("#timKiemForm").submit(function(event) {
+				event.preventDefault();
+			});
+			
+			var tuKhoa = $("#tuKhoaCuaToi").val();
+			const kt = tuKhoa.trim();
+			const regex = /^(0\d{9}|0\d{11})$/;
+			<%
+				String sdt = (String) session.getAttribute("sdt");
+			%>
+			function SDT(tuKhoa){
+				data.forEach(function item() {
+				 otherUser = item[2];
+				})
+			}
+			var otherUser;	
+			var myDataJS = '<%=sdt%>';
+			console.log('Giá trị của myDataJS là: ' + myDataJS);
+			console.log('Giá trị của item là: ' + otherUser);
+			if (myDataJS == tuKhoa) {
+				$
+						.ajax({
+							url : "/timKiemsdt",
+							method : "GET",
+							data : {
+								tuKhoaCuaToi : tuKhoa
+							},
+							success : function(data) {
+								$("#danhSachTimKiem").empty();
+								data
+										.forEach(function(item) {
+											var html = '<div class="col-md-6">'
+													+ '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">'
+													+ '<div class="user-profile">'
+													+ '<img src="images/' + item[1] + '" alt="" style="border-radius: 6px; width: 70px;">'
+													+ '<div>'
+													+ '<label for="">'
+													+ item[0]
+													+ '</label> <br>'
+													+ '<small>Hoạt động: 1 phút trước</small>'
+													+ '</div>' + '</div>'
+													+ '<div>'
+													//+ '<a name="" id="" class="btn btn-primary" href="#" role="button">Kết bạn</a>'
+													+ '</div>' + '</div>'
+													+ '</div>';
 
-	    $.ajax({
-	        url: "/timKiemTheoTen",
-	        method: "GET",
-	        data: {
-	            tuKhoaCuaToi: tuKhoa
-	        },
-	        success: function(data) {
-	            $("#danhSachTimKiem").empty();
+											$("#danhSachTimKiem").append(html);
+										});
+							},
+							error : function(xhr, status, error) {
+								console.log(error); // Thông báo lỗi nếu có
+							}
+						});
+			} else if (regex.test(kt) == true) {
+				$
+						.ajax({
+							url : "/timKiemsdt",
+							method : "GET",
+							data : {
+								tuKhoaCuaToi : tuKhoa
+							},
+							success : function(data) {
+								$("#danhSachTimKiem").empty();
+								data
+										.forEach(function(item) {
+											var html = '<div class="col-md-6">'
+													+ '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">'
+													+ '<div class="user-profile">'
+													+ '<img src="images/' + item[1] + '" alt="" style="border-radius: 6px; width: 70px;">'
+													+ '<div>'
+													+ '<label for="">'
+													+ item[0]
+													+ '</label> <br>'
+													+ '<small>Hoạt động: 1 phút trước</small>'
+													+ '</div>'
+													+ '</div>'
+													+ '<div>'
+													+ '<a name="" id="" class="btn btn-primary" href="/timKiem/ketBan/{maKB}" role="button">Kết bạn</a>'
+													+ '</div>'
+													+ '</div>'
+													+ '</div>';
 
-	            data.forEach(function(item) {
-	                var html = '<div class="col-md-6">' +
-	                    '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">' +
-	                    '<div class="user-profile">' +
-	                    '<img src="images/' + item[1] + '" alt="" style="border-radius: 6px; width: 70px;">' +
-	                    '<div>' +
-	                    '<label for="">' + item[0] + '</label> <br>' +
-	                    '<small>Hoạt động: 1 phút trước</small>' +
-	                    '</div>' +
-	                    '</div>' +
-	                    '<div>' +
-	                    '<a name="" id="" class="btn btn-primary" href="#" role="button">Kết bạn</a>' +
-	                    '</div>' +
-	                    '</div>' +
-	                    '</div>';
+											$("#danhSachTimKiem").append(html);
+										});
+							},
+							error : function(xhr, status, error) {
+								console.log(error); // Thông báo lỗi nếu có
+							}
+						});
+			} else {
+				$.ajax({
+							url : "/timKiemTheoTen",
+							method : "GET",
+							data : {
+								tuKhoaCuaToi : tuKhoa
+							},
+							success : function(data) {
+								$("#danhSachTimKiem").empty();
+								data
+										.forEach(function(item) {
+											var html = '<div class="col-md-6">'
+													+ '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">'
+													+ '<div class="user-profile">'
+													+ '<img src="images/' + item[1] + '" alt="" style="border-radius: 6px; width: 70px;">'
+													+ '<div>'
+													+ '<label for="">'
+													+ item[0]
+													+ '</label> <br>'
+													+ '<small>Hoạt động: 1 phút trước</small>'
+													+ '</div>'
+													+ '</div>'
+													+ '<div>'
+													+ '<a name="" id="" class="btn btn-primary" href="/timKiem/ketBan/{maKB}" role="button">Kết bạn</a>'
+													+ '</div>' + '</div>'
+													+ '</div>';
 
-	                $("#danhSachTimKiem").append(html);
-	            });
-	        },
-	        error: function(xhr, status, error) {
-	            console.log(error); // Thông báo lỗi nếu có
-	        }
-	    });
-	}
-
+											var html1 = '<div class="col-md-6">'
+													+ '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">'
+													+ '<div class="user-profile">'
+													+ '<img src="images/' + item[1] + '" alt="" style="border-radius: 6px; width: 70px;">'
+													+ '<div>'
+													+ '<label for="">'
+													+ item[0]
+													+ '</label> <br>'
+													+ '<small>Hoạt động: 1 phút trước</small>'
+													+ '</div>'
+													+ '</div>'
+													+ '<div>'
+													+ '</div>'
+													+ '</div>' + '</div>';
+											if (item[2] == myDataJS) {
+												$("#danhSachTimKiem").append(html1);
+														
+											} else
+												$("#danhSachTimKiem").append(html);
+														
+										});
+							},
+							error : function(xhr, status, error) {
+								console.log(error); // Thông báo lỗi nếu có
+							}
+						});
+			}
+		}
 	</script>
 </body>
 
