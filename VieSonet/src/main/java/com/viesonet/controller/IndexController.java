@@ -1,4 +1,4 @@
- package com.viesonet.controller;
+package com.viesonet.controller;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -116,10 +116,8 @@ public class IndexController {
 		for (DanhSachYeuThich ds : dsyt) {
 			int maBaiViet = ds.getBaiViet().getMaBaiViet();
 			maBaiVietDaThich.add(maBaiViet);
-			System.out.println(maBaiViet);
 		}
 		m.addAttribute("maBaiVietDaThich", maBaiVietDaThich);
-
 		// lấy một vài bạn bè từ danh sách bạn bè
 		List<BanBe> topBanBe = new ArrayList<>();
 		for (int i = 0; i < Math.min(5, listBb.size()); i++) {
@@ -149,6 +147,7 @@ public class IndexController {
 
 		return "index";
 	}
+
 	@ResponseBody
 	@GetMapping("/binhluan/{maBaiViet}")
 	public BinhLuanResponse xemBinhLuan(@PathVariable int maBaiViet) {
@@ -190,14 +189,19 @@ public class IndexController {
 		}
 		// gửi thông báo đến người dùng
 		List<BanBe> listBb = banBeDao.findFriends(sdt);
+
 		for (int i = 0; i < listBb.size(); i++) {
 			ThongBao thongBao = new ThongBao();
 			thongBao.setBaiViet(baiDang);
 			thongBao.setNgayThongBao(timestamp);
-			if (listBb.get(i).getBanBe().getSdt() == sdt) {
+			if (listBb.get(i).getBanBe().getSdt().equals(sdt)) {
+				System.out.println(listBb.get(i).getBanBe().getSdt());
+				System.out.println(sdt);
 				thongBao.setNguoiDung(nguoiDungDAO.getById(listBb.get(i).getNguoiDung().getSdt()));
+			} else {
+				thongBao.setNguoiDung(nguoiDungDAO.getById(listBb.get(i).getBanBe().getSdt()));
 			}
-			thongBao.setNguoiDung(nguoiDungDAO.getById(listBb.get(i).getBanBe().getSdt()));
+
 			thongBao.setNoiDung(nguoiDungDAO.getById(sdt).getHoTen() + " đã đăng bài viết mới.");
 			thongBao.setTrangThai(false);
 			thongBaoDao.saveAndFlush(thongBao);
@@ -276,8 +280,9 @@ public class IndexController {
 		baiViet.setNgayToCao(new Date());
 		baiViet.setLoaiViPham(loaiViPhamDao.getById(loaiViPham));
 		baiViet.setNguoiDung(nguoiDungDAO.getById(sdt));
+		baiViet.setTrangThai(true);
 		bvvpDao.saveAndFlush(baiViet);
 		return "success";
 	}
-	
+
 }

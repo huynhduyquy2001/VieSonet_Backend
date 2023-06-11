@@ -3,41 +3,9 @@
 "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="web.user" template="/WEB-INF/views/index.jsp">
+	<definition name="web.user"
+		template="/WEB-INF/views/index.jsp">
 		<put-attribute name="header"
 			value="/WEB-INF/layout/_header.jsp" />
-	</definition>
-	
-	<definition name="abc/*" extends="web.user">
-		<put-attribute name="body"
-			value="/WEB-INF/views/xyz/{1}.jsp" />
-		<!-- /WEB-INF/views/home/index.jsp -->
-	</definition>
-	
-	<definition name="*/*" extends="web.user">
-		<put-attribute name="body"
-			value="/WEB-INF/views/{1}/{2}.jsp" />
-		<!-- /WEB-INF/views/home/index.jsp -->
-	</definition>
-	
-
-	
-	<!-- Definition Admin layout -->
-	<definition name="web.admin"
-		template="/WEB-INF/views/admin/layout/index.jsp">
-		<put-attribute name="header"
-			value="/WEB-INF/views/admin/layout/_header.jsp" />
-		<put-attribute name="menu"
-			value="/WEB-INF/views/admin/layout/_menu.jsp" />
-		<put-attribute name="body" value="" />
-		<put-attribute name="aside"
-			value="/WEB-INF/views/admin/layout/_aside.jsp" />
-		<put-attribute name="footer"
-			value="/WEB-INF/views/admin/layout/_footer.jsp" />
-	</definition>
-	<definition name="admin/*/*" extends="web.admin">
-		<put-attribute name="body"
-			value="/WEB-INF/views/admin/{1}/{2}.jsp" />
-			<!-- /WEB-INF/views/admin/home/index.jsp -->
 	</definition>
 </tiles-definitions>

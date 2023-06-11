@@ -83,15 +83,14 @@
 							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Trang
 								chủ <span class="visually-hidden">(current)</span>
 						</a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><small
-								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Điều
-									khoản</small></a></li>
-						<li class="nav-item"><a class="nav-link" href="/quanLyNguoiDung"><small
+
+						<li class="nav-item"><a class="nav-link"
+							href="/quanLyNguoiDung"><small
 								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Quản
 									lí</small></a></li>
 					</ul>
 					<form class="d-flex my-2 my-lg-0" action="/tim-kiem">
-						<input 	class="form-control me-sm-2 input-hbh" name="timKiem"
+						<input class="form-control me-sm-2 input-hbh" name="timKiem"
 							style="border-radius: 0; border: none; border-bottom: 1px solid gray; transform: skew(0); background-color: transparent;"
 							type="text" placeholder="Tìm kiếm...">
 						<button class="btn btn-outline-success my-2 my-sm-0" hidden
@@ -129,30 +128,12 @@
 									src="images/${taiKhoan.anhDaiDien}" width="30px"
 									style="border-radius: 50%;" alt=""></small></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownId"
-								style="width: 350px; padding-left: 3px;">
-								<div class="profile-darkButton">
-									<div class="user-profile"
-										style="width: 250px; padding-left: 3%;">
-										<img src="images/avt.jpg" alt="">
-										<div>
-											<p>Alex Carry</p>
-											<small>Xem trang cá nhân của bạn</small>
-										</div>
-									</div>
-								</div>
-								<div class="dropdown-item"
-									style="display: flex; justify-content: space-between; align-items: center;">
-									<small>Chế độ tối:</small>
-									<div class="nut">
-										<input type="checkbox" class="checkbox" id="checkbox"
-											onclick="toggleDarkMode()"> <label class="switch"
-											for="checkbox"> <span class="slider"
-											style="width: 12px; height: 12px;"></span>
-										</label>
-									</div>
-								</div>
-								<a class="dropdown-item" href="/dangnhap"><small>Đăng nhập</small></a> <a
-									class="dropdown-item" href="/dangnhap"><small>Đăng ký</small></a>
+								style="padding-left: 3px; left: -100px; line-height: 35px">
+								<a class="dropdown-item" href="/dangnhap"><small>Xem trang cá nhân</small></a> 
+								<a class="dropdown-item" href="/dangnhap"><small>Danh sách bạn bè</small></a>
+								<a class="dropdown-item" href="/dangnhap"><small>Lời mời kết bạn</small></a>
+								<a class="dropdown-item" href="/dangnhap"><small>Điều khoản</small></a>
+								<a class="dropdown-item" href="/dangnhap"><small>Đăng xuất</small></a>
 							</div></li>
 
 					</ul>
