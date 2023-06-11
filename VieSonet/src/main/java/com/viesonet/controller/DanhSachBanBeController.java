@@ -87,7 +87,7 @@ public class DanhSachBanBeController {
 		banBee.setBanBe(nguoiDung);
 		banBee.setNgayKb(new Date());
 		BanBeDAO.saveAndFlush(banBee);
-		dskbDao.deleteById(maLoiMoi);
+		//dskbDao.deleteById(maLoiMoi);
 		return "redirect:/DanhSachBanBe";
 	}
 	
@@ -96,6 +96,13 @@ public class DanhSachBanBeController {
 		dskbDao.deleteById(maLoiMoi);
 		return "redirect:/DanhSachBanBe";
 	}
+	
+	//Xóa bạn
+		@GetMapping("/DanhSachBanBe/xoa/{maBanBe}")
+		public String XoaBan(@PathVariable String maBanBe) {
+			BanBeDAO.deleteById(maBanBe);
+			return "redirect:/DanhSachBanBe";
+		}
 	// Lấy dữ liệu người dùng đăng nhập vào trên Session
 	public void DSBB(Model model) {	
 		String sdtCN = Session.get("sdt");

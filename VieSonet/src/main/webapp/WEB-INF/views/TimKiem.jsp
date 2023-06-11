@@ -208,8 +208,28 @@
 
 					<div class="row" id="danhSachTimKiem"
 						style="padding: 10px; overflow-y: hidden; overflow-y: scroll; max-height: 85vh;">
+						<c:forEach items="${danhSachBanBe}" var="banBe">
+						<div class="col-md-6">
+						<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
+							<div
+								style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+								<div class="user-profile">
+									<img src="images/${banBe.nguoiDung.anhDaiDien}"
+										class="img-thumbnail" alt="" style="border-radius: 50%;">
+									<div>
+										<label for="">${banBe.nguoiDung.hoTen}</label> <br> <small
+											style="font-size: 12px">Hoạt động: 1 phút trước</small>
+									</div>
+								</div>
+								<div>
+									<a href="#"><i class="fas fa-ellipsis-v"></i></a>
+								</div>
+							</div>
+						</c:if>
+						</div>
+						</c:forEach>
 						<c:forEach var="nguoiDung" items="${danhSachTimKiem}">
-
+						
 						</c:forEach>
 					</div>
 				</div>
@@ -267,7 +287,7 @@
 			<%
 				String sdt = (String) session.getAttribute("sdt");
 			%>
-			function SDT(tuKhoa){
+			function SDT(myDataJS){
 				data.forEach(function item() {
 				 otherUser = item[2];
 				})
@@ -391,8 +411,7 @@
 												$("#danhSachTimKiem").append(html1);
 														
 											} else
-												$("#danhSachTimKiem").append(html);
-														
+												$("#danhSachTimKiem").append(html);				
 										});
 							},
 							error : function(xhr, status, error) {
