@@ -147,9 +147,9 @@
                                 required>
                             <!-- <small style="color: yellow">${message4}</small><br> -->
                             <label for="uname">Giới tính</label> <br>
-                            <label> <input ${form.gioiTinh?'checked':' '}  type="radio" name="gioiTinh" id="input" value="true" checked="checked"> Nam
+                            <label> <input ${form.gioiTinh?'checked':' '}  type="radio" name="gioiTinh" id="inputNam" value="true" checked="checked"> Nam
                         </label> &nbsp &nbsp &nbsp &nbsp
-                        <label> <input ${form.gioiTinh?' ':' checked'} type="radio" name="gioiTinh" id="input"
+                        <label> <input ${form.gioiTinh?' ':' checked'} type="radio" name="gioiTinh" 
                                     value="false"> Nữ
                             </label>
                             <input class="ip" type="hidden" name="admin" value="false">

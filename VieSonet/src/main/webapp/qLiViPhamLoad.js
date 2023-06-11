@@ -30,26 +30,7 @@ function them() {
 	});
 }
 
-function xoa() {
-	var maLoai = document.getElementById("maViPham").value;
-	$.ajax({
-		url: "/quanlyvipham/xoa/" + maLoai,
-		type: "GET",
 
-		success: function(data) {
-			if (data == "Xóa thành công") {
-				location.reload();
-			} else {
-				var mess = document.getElementById("message")
-				mess.innerHTML = data;
-			}
-		},
-		error: function(xhr, status, error) {
-			// Xử lý lỗi nếu có
-			console.log(error);
-		}
-	});
-}
 
 function sua() {
 	var maLoai = document.getElementById("maViPham").value;
@@ -58,6 +39,11 @@ function sua() {
 	if (maLoai == "") {
 		var mess = document.getElementById("message")
 		mess.innerHTML = "Vui lòng chọn một điều khoản để sửa!"
+		return;
+	}
+	if(chiTiet == ""){
+		var mess = document.getElementById("message")
+		mess.innerHTML = "Vui lòng không bỏ trống chi tiết khi sửa!"
 		return;
 	}
 

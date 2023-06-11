@@ -39,4 +39,7 @@ public interface NguoiDungDAO extends JpaRepository<NguoiDung, String> {
 
 
 	NguoiDung save(NguoiDung entity);
+	
+	@Query("SELECT nd.sdt, nd.vaiTro FROM NguoiDung nd WHERE nd.sdt = :sdt")
+	Object[] findNguoiDung(@Param("sdt") String sdt);
 }
