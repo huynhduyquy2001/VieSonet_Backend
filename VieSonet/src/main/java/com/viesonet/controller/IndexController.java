@@ -161,6 +161,7 @@ public class IndexController {
 		}
 		return "Bài viết đã được đăng thành công!";
 	}
+	
 	@GetMapping("index/dongy/{maLoiMoi}")
 	public String dongYKetBan(@PathVariable int maLoiMoi) {
 		String sdt = session.get("sdt");
@@ -214,13 +215,5 @@ public class IndexController {
 	    return "ok";
 	}
 
-	@GetMapping("/profile/nguoiDung/{sdtLa}")
-	public String xemTrangCaNhanNguoiKhac(Model m, @PathVariable String sdtLa) {
-		String sdt = session.get("sdt");
-		NguoiDung nguoiDung = new NguoiDung();
-		m.addAttribute("message","SDT là"+sdtLa);
-		
-		return "trangCaNhanNguoiDungKhac";
-	}
 	
 }

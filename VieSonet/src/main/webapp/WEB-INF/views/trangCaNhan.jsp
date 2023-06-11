@@ -374,13 +374,13 @@
 										<a href="/nguoiDung/${topKb.nguoiLa.sdt}"><img src="images/${topKb.nguoiLa.anhDaiDien}"
 											class="img-thumbnail" alt=""></a>
 										<div>
-											<label class="nhan"
+											<label class="nhan" 
 												style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiLa.hoTen}</label>
 											<small style="display: flex;"> <a
-												class="dropdown-item" href="#"
+												class="dropdown-item" href="profile/dongy/${topKb.maLoiMoi}"
 												style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1); font-size: small;">
 													<center>Đồng ý</center>
-											</a> <a class="dropdown-item" href="#"
+											</a> <a class="dropdown-item" href="profile/tuchoi/${topKb.maLoiMoi}"
 												style="background-color: #A89386; color: white; font-size: small;">
 													<center>Xóa</center>
 											</a>
@@ -391,10 +391,10 @@
 										<div class="btn-group">
 											<div class="dropdown-menu" aria-labelledby="triggerId"
 												style="padding: 0;">
-												<a class="dropdown-item" href="#"
+												<a class="dropdown-item" href="profile/dongy/${topKb.maLoiMoi}"
 													style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1);">
 													<center>Đồng ý</center>
-												</a> <a class="dropdown-item" href="#"
+												</a> <a class="dropdown-item" href="iprofile/tuchoi/${topKb.maLoiMoi}"
 													style="background-color: #A89386; color: white;">
 													<center>Xóa</center>
 												</a>

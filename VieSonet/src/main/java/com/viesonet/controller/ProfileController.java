@@ -296,19 +296,31 @@ public class ProfileController {
 		NguoiDung nguoiDungLa = nguoiDungDao.findBySdt(sdtLa);
         List<BanBe> listBb = banBeDao.findFriendByUserphone(sdtLa);
 		List<Order> orders = new ArrayList<Order>();
+		// Số lượng bạn bè
+		
 		orders.add(new Order(Direction.DESC, "ngayDang"));
 		Sort sort = Sort.by(orders);
 		if(nguoiDung.equals(nguoiDungLa)) {
+			//Chọn tự click bản thân sẽ về trang cá nhân
 			return "redirect:/profile";
 		}else {
-//			System.out.println("Lấy dc sdt lạ");
-//			m.addAttribute("message","SDT là " + sdtLa);
 			m.addAttribute("nguoiDung", nguoiDungDao.findBySoDienThoai(sdtLa));
 			m.addAttribute("nguoiDungHienTai", nguoiDungDao.findBySoDienThoai(sdtHt));
 			m.addAttribute("BaiVietCaNhan", baiVietDao.findBySdt(sdtLa, sort));
+			m.addAttribute("SlBanbe", listBb.size());
 			List<BanBe> list = banBeDao.findFriends(sdtLa);
-//			m.addAttribute("list", list);
+			List<DanhSachKetBan> dsKb = dskbDao.findFriends(sdtLa);
+			
+		    
+
+			//Kiểm tra có phải bạn bè hay người lạ
 			boolean checker = false;
+			//Phân biệt 3 trạng thái sau khi phân biệt bạn hay người lạ
+			//+ 0: Chưa kết bạn và không có gửi lời mời từ 2 phía
+			//+ 1: Chưa kết bạn nhưng người dùng gửi lời mời cho người lạ
+			//+ 2: Chưa kết bạn nhưng người lạ gửi lời mời cho người dùng
+			int trangThai = 0;
+			//Đưa vòng lặp kiểm tra 2 chiều(Vì hiển thị giống nên không sao)
 			for (BanBe banBe : list) {
 			    if ((banBe.getNguoiDung().getSdt().equals(sdtHt) && banBe.getBanBe().getSdt().equals(sdtLa)) || 
 			    	(banBe.getNguoiDung().getSdt().equals(sdtLa) && banBe.getBanBe().getSdt().equals(sdtHt))	) {
@@ -319,13 +331,54 @@ public class ProfileController {
 			    }
 			}
 			m.addAttribute("checker", checker);
-			
+			//Điều kiện là chưa kết bạn với nhau
+			if(checker==false) {
+				//Có 3 điều kiện khác nhau đã nêu trên
+				for(DanhSachKetBan dskb : dsKb) {
+					if ((dskb.getNguoiDung().getSdt().equals(sdtHt) && dskb.getNguoiLa().getSdt().equals(sdtLa)) ) {
+					        // Trạng thái 2: Chưa kết bạn nhưng người dùng gửi lời mời từ người lạ
+					        trangThai = 2;
+					        Integer maLoiMoi = dskb.getMaLoiMoi();
+					        m.addAttribute("lmkb", maLoiMoi);
+					        System.out.println("maLoiMoi: " + maLoiMoi);
+					        // Dừng vòng lặp
+					        break;
+					} else if (dskb.getNguoiDung().getSdt().equals(sdtLa) && dskb.getNguoiLa().getSdt().equals(sdtHt)) {
+							// Trạng thái 1: Chưa kết bạn nhưng người lạ gửi lời mời cho người dùng
+							trangThai = 1;
+							// Dừng vòng lặp
+							break;
+					}
+				}
+			}
+			m.addAttribute("trangThai", trangThai);
 			// Số lượng bạn bè
-			m.addAttribute("SlBanbe", listBb.size());
-			return "trangCaNhanNguoiDungKhac";
-			
+			return "trangCaNhanNguoiDungKhac";	
 		}
-		
 	}
+	@GetMapping("profile/dongy/{maLoiMoi}")
+	public String dongYKetBan(@PathVariable int maLoiMoi) {
+		String sdt = session.get("sdt");
+		NguoiDung nguoiDung = nguoiDungDao.getById(sdt);
+		DanhSachKetBan ds = dskbDao.getById(maLoiMoi);
+		NguoiDung nguoiLa = ds.getNguoiLa();
+		BanBe banBe = new BanBe();
+		banBe.setNguoiDung(nguoiDung);
+		banBe.setBanBe(nguoiLa);
+		banBe.setNgayKb(new Date());
+		banBeDao.saveAndFlush(banBe);
+		dskbDao.deleteById(maLoiMoi);
+		return "redirect:/nguoiDung";
+	}
+	
+	@GetMapping("profile/tuchoi/{lmkb}/nguoiDung/{nguoiDung}")
+	public String tuChoiKetBan(@PathVariable int lmkb, @PathVariable String nguoiDung) {
+//		System.out.println("maLoiMoi: " + maLoiMoi);
+		dskbDao.deleteById(lmkb);
+		System.out.println("nguoiDung: " + nguoiDung);
+		System.out.println("lmkb: " + lmkb);
+		System.out.println("redirect:/nguoiDung/{" + nguoiDung + "}");
+		return "redirect:/nguoiDung/" + nguoiDung;
+	}	
 	
 }

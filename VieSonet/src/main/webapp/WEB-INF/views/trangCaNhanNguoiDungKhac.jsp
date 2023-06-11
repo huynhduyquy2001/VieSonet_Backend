@@ -190,20 +190,38 @@
                         </ul>
                        </small>
                        <c:if test="${checker==true}">
-                       <button 
-		                style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;"><small
-		                style=" white-space: nowrap;
-		               	overflow: hidden; text-overflow: ellipsis;">
-                    	Bạn bè ✓</small></button>
-			        
-			    </c:if>
-			    <c:if test="${checker==false}">
-			        <button 
-		                style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;"><small
-		                style=" white-space: nowrap;
-		               	overflow: hidden; text-overflow: ellipsis;">
-                    	Thêm bạn bè +</small></button>
-			    </c:if>
+	                       <button style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
+	                       <small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+	                    		Bạn bè ✓
+	                    	</small>
+	                    	</button>
+					    </c:if>
+					    <c:if test="${checker==false && trangThai == 0}">
+					        <button style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
+					        <small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+		                     	Thêm bạn bè +
+		                    </small>
+		                    </button>
+					    </c:if>
+					    <c:if test="${checker==false && trangThai == 1}">
+					        <button  style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
+					        <small style=" white-space: nowrap;	overflow: hidden; text-overflow: ellipsis;">
+		                    	Hủy lời mời kết bạn X
+		                    </small>
+		                    </button>
+					    </c:if>
+					    <c:if test="${checker==false && trangThai == 2}">
+					        <button style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
+					        <small style=" white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">
+		                    	Chấp nhận ✓
+		                    </small>
+		                    </button>
+		                    <button style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
+		                    <a href="/profile/tuchoi/${lmkb}/nguoiDung/${nguoiDung.sdt}"><small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">
+		                    	Xóa X
+		                    </small></a>
+		                    </button>	
+					    </c:if>
                 </div>
                 
             </div>
