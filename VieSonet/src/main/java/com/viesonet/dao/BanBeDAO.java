@@ -13,6 +13,6 @@ public interface BanBeDAO extends JpaRepository<BanBe, String> {
 	  BanBe findBysdtBb(String sdtBb);
 	  long countBySdt(String sdt);
 	  long countBySdtBb(String sdt);
-	  @Query("SELECT bb FROM BanBe bb WHERE bb.nguoiDung.sdt = ?1 OR bb.banBe.sdt = ?1")
+	  @Query("SELECT DISTINCT bb FROM BanBe bb WHERE bb.nguoiDung.sdt = ?1 OR bb.banBe.sdt = ?1")
 	  List<BanBe> findFriends(String soDienThoai);
 }

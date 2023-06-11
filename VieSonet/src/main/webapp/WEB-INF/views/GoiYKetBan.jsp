@@ -85,8 +85,8 @@
 							class="nav-link dropdown-toggle" href="#" id="dropdownId"
 							data-bs-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"><small><img
-									src="images/${dsNguoiDung2.anhDaiDien}" width="30px" style="border-radius: 50%;"
-									alt=""></small></a>
+									src="images/${dsNguoiDung2.anhDaiDien}" width="30px"
+									style="border-radius: 50%;" alt=""></small></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownId"
 								style="width: 350px; padding-left: 3px;">
 								<div class="profile-darkButton">
@@ -143,10 +143,11 @@
 									<label class="nhan"
 										style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiLa.hoTen}</label>
 									<small style="display: flex;"> <a class="dropdown-item"
-										href="#"
+										href="GoiYKB/dongy/${topKb.maLoiMoi}"
 										style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1); font-size: small;">
 											<center>Đồng ý</center>
-									</a> <a class="dropdown-item" href="#"
+									</a> <a class="dropdown-item"
+										href="GoiYKB/tuchoi/${topKb.maLoiMoi}"
 										style="background-color: #A89386; color: white; font-size: small;">
 											<center>Xóa</center>
 									</a>
@@ -157,10 +158,11 @@
 								<div class="btn-group">
 									<div class="dropdown-menu" aria-labelledby="triggerId"
 										style="padding: 0;">
-										<a class="dropdown-item" href="#"
+										<a class="dropdown-item" href="GoiYKB/dongy/${topKb.maLoiMoi}"
 											style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1);">
 											<center>Đồng ý</center>
-										</a> <a class="dropdown-item" href="#"
+										</a> <a class="dropdown-item"
+											href="GoiYKB/tuchoi/${topKb.maLoiMoi}"
 											style="background-color: #A89386; color: white;">
 											<center>Xóa</center>
 										</a>
@@ -177,50 +179,31 @@
 				<h5>
 					<b class="nhan">Danh sách gợi ý kết bạn</b>
 				</h5>
+				${message}
 				<hr width="30%" style="opacity: 0.1;">
 				<div class="row"
 					style="padding: 10px; overflow-y: hidden; overflow-y: scroll; max-height: 85vh;">
 					<c:forEach items="${list}" var="ND">
 						<div class="col-md-6">
-							<div
-								style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-								<div class="user-profile">
-									<img src="images/${ND.anhDaiDien}" alt=""
-										style="border-radius: 6px; width: 70px;">
+							<c:if test="${ND.sdt != sessionScope.sdt }">
+								<div
+									style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+
+									<div class="user-profile">
+										<img src="images/${ND.anhDaiDien}" class="img-thumbnail"
+											alt="" style="border-radius: 50%;">
+										<div>
+
+											<label for="">${ND.hoTen}</label> <br> <small
+												style="font-size: 12px">Hoạt động: 1 phút trước</small>
+										</div>
+									</div>
 									<div>
-										<label for="">${ND.hoTen}</label> <br> 
-										<!--  <small>Hoạt động: 1 phút trước</small>-->
-										<small>Trạng thái: ${ND.trangThai ? "Hoạt động": "Ẩn"}</small>
+										<a name="" id="" class="btn btn-primary"
+											href="/GoiYKB/ketBan/${ND.sdt}" role="button">Kết bạn</a>
 									</div>
 								</div>
-								<div>
-									<!-- <a href="#"><i class="fas fa-ellipsis-v"></i></a> -->
-									<a name="" id="" class="btn btn-primary" href="#" role="button">Kết
-										bạn</a>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-					
-					<c:forEach items="${BB}" var="BB">
-						<div class="col-md-6">
-							<div
-								style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-								<div class="user-profile">
-									<img src="images/${BB.banBe.anhDaiDien}" alt=""
-										style="border-radius: 6px; width: 70px;">
-									<div>
-										<label for="">${BB.banBe.hoTen}</label> <br> 
-										 <small>Hoạt động: 1 phút trước</small>
-										<!-- <small>Trạng thái: ${ND.trangThai ? "Hoạt động": "Ẩn"}</small>-->
-									</div>
-								</div>
-								<div>
-									<!-- <a href="#"><i class="fas fa-ellipsis-v"></i></a> 
-									<a name="" id="" class="btn btn-primary" href="#" role="button">Kết
-										bạn</a>-->
-								</div>
-							</div>
+							</c:if>
 						</div>
 					</c:forEach>
 				</div>
