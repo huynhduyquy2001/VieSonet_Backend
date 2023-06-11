@@ -12,19 +12,19 @@
 			$("#danhSachBinhLuan .modal-body .phai").empty();
 
 			// Hiển thị phần nhập bình luận
-			var binhLuanFormHtml = "<b>Bình luận:</b>" +
-				"<form action=''>" +
+			var binhLuanFormHtml = "<form id='binhLuanForm'>" +
 				"<div style='display: flex; flex-direction: column;'>" +
-				"<input type='text' class='ip form-control' style='width: 80%;' placeholder='Nhận xét của bạn'>" +
-				"<button class='btn01' style='background: #3B998B; color: white;'>Bình luận</button>" +
+				"<input type='text' id='binhLuan' class='ip form-control' style='width: 80%;' placeholder='Nhận xét của bạn' name='binhLuanCuaToi' required>" +
+				"<button class='btn01' type='submit' style='background: #3B998B; color: white;' onclick='themBinhLuan(" + baiViet[8] + ")'>Bình luận</button>" +
 				"</div>" +
 				"</form>";
+
 
 			$("#danhSachBinhLuan .modal-body .trai").append(binhLuanFormHtml);
 			// Hiển thị danh sách bình luận lên modal
 			danhSachBinhLuan.forEach(function(binhLuan) {
-				var binhLuanHtml = "<div class='user-profile' style='border: 1px solid #E1D4C4; box-sizing: border-box; padding: 4px; border-radius: 5px;background-color: white; margin-bottom:5px'>" +
-					"<img src='images/" + binhLuan[1] + "' class='img-thumbnail' alt=''>" +
+				var binhLuanHtml = "<div class='user-profile animate__animated animate__headShake' style='border: 1px solid #E1D4C4; box-sizing: border-box; padding: 4px; border-radius: 5px;background-color: white; margin-bottom:5px'>" +
+					"<img src='/images/" + binhLuan[1] + "' class='img-thumbnail' alt=''>" +
 					"<div>" +
 					"<div><p class='nhan' style='color: #A59565; font-size: 15px;'>" + binhLuan[0] + "</p></div>" +
 					"<small style='font-size: 12px;'><i class='fa-regular fa-comment'></i> " + binhLuan[2] + "</small><br>" +
@@ -36,11 +36,11 @@
 			});
 			// Hiển thị thông tin bài viết lên modal
 			var baiVietHtml = `
-    <div class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft" style="margin-bottom: 20px; border-radius: 0; box-shadow: 0 0 0;">
+    <div class="write-post-container nenTrangChu img-thumbnail" style="margin-bottom: 20px; border-radius: 0; box-shadow: 0 0 0;">
         <div style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
             <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div class="user-profile">
-                    <img src="images/${baiViet[6]}" class="img-thumbnail" alt="">
+                    <img src="/images/${baiViet[6]}" class="img-thumbnail" alt="">
                     <div>
                         <label class="nhan">${baiViet[5]}</label><br>
                         <small style="font-size: 12px; color: #65676b">${baiViet[2]}</small>
@@ -59,7 +59,7 @@
                 <div style="margin-top: 10px; color: #847577">
                     ${baiViet[0]}
                     <center>
-                        <img src="images/${baiViet[1]}" width="100%" alt="" style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
+                        <img src="/images/${baiViet[1]}" width="100%" alt="" style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
                     </center>
                 </div>
             </a>
@@ -79,7 +79,10 @@
 			$("#danhSachBinhLuan .modal-body .phai").append(baiVietHtml);
 
 			// Mở modal
-			$("#danhSachBinhLuan").modal("show");
+			if (!$("#danhSachBinhLuan").is(":visible")) {
+				// Mở modal chỉ khi nó chưa được hiển thị
+				$("#danhSachBinhLuan").modal("show");
+			}
 		},
 		error: function(xhr, status, error) {
 			// Xử lý lỗi nếu có
@@ -87,3 +90,142 @@
 		}
 	});
 }
+
+$(document).ready(function() {
+	$("#postForm").submit(function(event) {
+		event.preventDefault();
+
+		var formData = new FormData($(this)[0]);
+
+		$.ajax({
+			type: "POST",
+			url: $(this).attr("action"),
+			data: formData,
+			contentType: false,
+			processData: false,
+			success: function(response) {
+				alert(response); // Hiển thị thông báo thành công
+				// Xử lý dữ liệu trả về (nếu cần)
+				// Ví dụ: cập nhật giao diện hoặc hiển thị thông báo trên trang
+			},
+			error: function(e) {
+				alert("Đã xảy ra lỗi: " + e.responseText);
+			}
+		});
+	});
+});
+
+function thichBaiViet(maBaiViet, element) {
+	var isLiked = element.classList.contains('red-heart');
+	if (isLiked) {
+		element.classList.remove('red-heart');
+		element.classList.add('gray-heart');
+		// Giảm số lượt thích
+		var likeCountElement = element.querySelector('.like-count');
+		if (likeCountElement) {
+			var likeCount = parseInt(likeCountElement.textContent);
+			likeCountElement.textContent = likeCount - 1;
+		}
+	} else {
+		element.classList.remove('gray-heart');
+		element.classList.add('red-heart');
+		// Tăng số lượt thích
+		var likeCountElement = element.querySelector('.like-count');
+		if (likeCountElement) {
+			var likeCount = parseInt(likeCountElement.textContent);
+			likeCountElement.textContent = likeCount + 1;
+		}
+	}
+
+	// Tạo một đối tượng XMLHttpRequest
+	var xhr = new XMLHttpRequest();
+
+	// Xác định phương thức và URL của yêu cầu
+	xhr.open('GET', '/index/thich/' + maBaiViet, true);
+
+	// Định nghĩa hàm xử lý khi nhận được phản hồi từ server
+	xhr.onload = function() {
+		if (xhr.status === 200) {
+			console.log(xhr.responseText); // Log kết quả từ server
+			var response = JSON.parse(xhr.responseText); // Chuyển đổi phản hồi thành đối tượng JSON
+
+			// Cập nhật trạng thái nút thích
+
+
+		} else {
+			console.error('Lỗi ' + xhr.status + ': ' + xhr.statusText);
+			// Xử lý lỗi (nếu có)
+		}
+	};
+
+	// Gửi yêu cầu
+	xhr.send();
+}
+
+
+function themBinhLuan(maBaiViet) {
+	$("#binhLuanForm").submit(function(event) {
+		event.preventDefault();
+	});
+
+	var binhLuan = $("#binhLuan").val();
+	$.ajax({
+		url: "/index/thembinhluan/" + maBaiViet,
+		type: "POST",
+		data: { binhLuanCuaToi: binhLuan },
+		success: function(response) {
+			loadBinhLuan(maBaiViet);
+		},
+		error: function(xhr, status, error) {
+			console.error("Lỗi khi thêm bình luận: ", error);
+		}
+	});
+}
+function toCao(maBaiViet) {
+	$("#modalBaoCao .modal-footer").empty();
+	var closeModal = document.createElement("button");
+	closeModal.type = "button";
+	closeModal.className = "btn btn-secondary";
+	closeModal.innerHTML = "Đóng";
+	closeModal.setAttribute("data-bs-dismiss", "modal");
+
+	var baoCaoModal = document.createElement("button");
+	baoCaoModal.type = "button";
+	baoCaoModal.className = "btn btn-primary";
+	baoCaoModal.innerHTML = "Báo cáo";
+	baoCaoModal.addEventListener("click", function() {
+		baoCaoViPham(maBaiViet);
+		$("#modalBaoCao").modal("hide");
+	});
+
+	var modalFooter = document.querySelector("#modalBaoCao .modal-footer");
+	modalFooter.appendChild(closeModal);
+	modalFooter.appendChild(baoCaoModal);
+}
+
+function baoCaoViPham(maBaiViet) {
+	var loaiViPham = $("#viPham").val(); // Lấy giá trị của select box
+
+	$.ajax({
+		url: "/index/baocaovipham/" + maBaiViet,
+		type: "POST",
+		data: { loaiViPham: loaiViPham }, // Truyền giá trị của select box
+		success: function(response) {
+			// Xử lý logic sau khi gọi thành công
+			console.log(response); // In response ra console để kiểm tra
+		},
+		error: function(xhr, status, error) {
+			console.log(error); // In error ra console để debug
+			// Xử lý logic khi gọi gặp lỗi
+		}
+	});
+}
+
+
+
+
+
+
+
+
+

@@ -29,22 +29,22 @@ public class DangNhapController {
 	@GetMapping("/dangnhap")
 	public String dangNhap(Model m) {
 		String user = cookieService.getValue("user");
-
 		if (user != null) {
 			String pass = cookieService.getValue("pass");
 			m.addAttribute("user", user);
 			m.addAttribute("pass", pass);
 		}
-		m.addAttribute("m", "hidden");
-		m.addAttribute("n", "");
+		
+		m.addAttribute("hienDangNhap","");
+		m.addAttribute("hienDangKy","hidden");
 		return "dangNhap";
 	}
-
+	
 	@PostMapping("/dangnhap")
-	public String dangNhap2(@RequestParam(name = "sdt", required = false) String sdt, Model m) {
-//		String sdt = paramService.getString("sdt", "");
+	public String dangNhap2( Model m) {
+		String sdt = paramService.getString("sdt", "");
 		String matKhau = paramService.getString("matKhau", "");
-		boolean remember = paramService.getBoolean("ghiNho", true);
+		boolean remember = paramService.getBoolean("ghiNho", false);
 		try {
 			NguoiDung nDung = dao.findBySdt(sdt);
 			if (sdt.equals(nDung.getSdt()) && matKhau.equals(nDung.getMatKhau())) {
@@ -57,9 +57,7 @@ public class DangNhapController {
 					cookieService.delete("user");
 					cookieService.delete("pass");
 				}
-				m.addAttribute("m", "");
-				m.addAttribute("n", "hidden");
-				return "dangNhap";
+				return "redirect:/";
 			} else {
 				m.addAttribute("message", "Thông tin đăng nhập không chính xác !");
 			}

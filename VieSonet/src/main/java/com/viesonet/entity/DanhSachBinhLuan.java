@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "DanhSachBinhLuan", uniqueConstraints = { @UniqueConstraint(columnNames = { "sdt", "maBaiViet" }) })
+@Table(name = "DanhSachBinhLuan")
 
 @Data
 @NoArgsConstructor
@@ -33,13 +33,6 @@ public class DanhSachBinhLuan {
 	private int maBinhLuan;
 	private String chiTiet;
 
-	public DanhSachBinhLuan(String chiTiet, NguoiDung nguoiDung, Date ngayBinhLuan) {
-		super();
-		this.chiTiet = chiTiet;
-		this.nguoiDung = nguoiDung;
-		this.ngayBinhLuan = ngayBinhLuan;
-	}
-
 	@ManyToOne
 	@JoinColumn(name = "sdt")
 	NguoiDung nguoiDung;
@@ -47,6 +40,8 @@ public class DanhSachBinhLuan {
 	@ManyToOne
 	@JoinColumn(name = "maBaiViet")
 	BaiViet baiViet;
+	
+	
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ngayBinhLuan")

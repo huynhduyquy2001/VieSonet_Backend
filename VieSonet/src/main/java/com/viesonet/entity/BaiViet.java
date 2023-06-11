@@ -33,7 +33,7 @@ public class BaiViet {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int maBaiViet;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ngayDang")
 	Date ngayDang = new Date();
 	
@@ -42,7 +42,8 @@ public class BaiViet {
 	private Boolean trangThai;
 	private Integer luotThich;
 	private Integer luotBinhLuan;
-	
+	@Column(name = "sdt", insertable=false, updatable=false) 
+	private String sdt;
 	/*N-1*/
 	@JsonIgnore
 	@ManyToOne
@@ -62,6 +63,9 @@ public class BaiViet {
 	
 	@OneToMany(mappedBy = "baiViet")
 	List<DanhSachYeuThich> danhSachYeuThich;
+	
+	@OneToMany(mappedBy = "baiViet")
+	List<ThongBao> thongBao;
 	
 	
 }

@@ -9,14 +9,21 @@ import org.springframework.data.repository.query.Param;
 
 import com.viesonet.entity.BaiViet;
 import com.viesonet.entity.PostWithComment;
+import com.viesonet.entity.DanhSachYeuThich;
 
 public interface BaiVietDao extends JpaRepository<BaiViet, Integer> {
 	
 	List<BaiViet> findByNguoiDungSdtIn(List<String> sdtList, Sort sort);
 	
-	@Query("SELECT bv.moTa, bv.hinhAnh, bv.ngayDang, bv.luotThich, bv.luotBinhLuan,  bv.nguoiDung.hoTen, bv.nguoiDung.anhDaiDien, bv.nguoiDung.sdt FROM BaiViet bv WHERE bv.maBaiViet = :maBaiViet")
+	@Query("SELECT  bv.moTa, bv.hinhAnh, bv.ngayDang, bv.luotThich, bv.luotBinhLuan,  bv.nguoiDung.hoTen, bv.nguoiDung.anhDaiDien, bv.nguoiDung.sdt, bv.maBaiViet FROM BaiViet bv WHERE bv.maBaiViet = :maBaiViet")
 	Object findBaiVietByMaBaiViet(@Param("maBaiViet") int maBaiViet);
 
 	@Query("SELECT bv.nguoiDung.sdt FROM BaiViet bv WHERE bv.maBaiViet = :maBaiViet")
 	BaiViet findByMaBaiViet(@Param("maBaiViet") int maBaiViet);
+	
+	@Query("SELECT bv FROM BaiViet bv WHERE bv.sdt = :sdt")
+	  List<BaiViet> findBySdt(@Param("sdt") String sdt, Sort sort);
+	
+	@Query("select ds from DanhSachYeuThich ds where ds.nguoiDung.sdt=?1")
+	List<BaiViet> findBySdt(String sdt);
 }

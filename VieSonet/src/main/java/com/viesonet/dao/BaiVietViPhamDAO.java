@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import com.viesonet.entity.BaiVietViPham;
 import com.viesonet.entity.BanBe;
 
-public interface BaiVietViPhamDAO extends JpaRepository<BaiVietViPham, String> {
+public interface BaiVietViPhamDAO extends JpaRepository<BaiVietViPham, Integer> {
 	@Query("select bv from BaiVietViPham bv where bv.trangThai = true")
 	List<BaiVietViPham> findDanhSachToCao();
 	

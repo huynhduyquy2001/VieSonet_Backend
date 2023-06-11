@@ -245,7 +245,7 @@
                                             <small> Không hoạt động</small>
                                         </label>
                                     </div>
-                                    <div class="mt-5">
+                                    <div  style="margin-top: 1rem">
                                         <c:if test="${thongTin.trangThai == true}">
                                         	<a data-bs-toggle="tooltip" data-bs-placement="top"
                                         title="Khóa tài khoản này" href="/khoaTaiKhoan/${thongTin.sdt}" class="btn me-4" 
