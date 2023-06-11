@@ -191,31 +191,33 @@
                        </small>
                        <c:if test="${checker==true}">
 	                       <button style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
-	                       <small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+	                       <small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">
 	                    		Bạn bè ✓
 	                    	</small>
 	                    	</button>
 					    </c:if>
 					    <c:if test="${checker==false && trangThai == 0}">
 					        <button style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
-					        <small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+					        <a href="/profile/guiLmkb/${nguoiDung.sdt}"><small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">
 		                     	Thêm bạn bè +
-		                    </small>
+		                    </small></a>
 		                    </button>
 					    </c:if>
+					    <!-- Người dùng gửi người lạ -->
 					    <c:if test="${checker==false && trangThai == 1}">
 					        <button  style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
-					        <small style=" white-space: nowrap;	overflow: hidden; text-overflow: ellipsis;">
+					        <a href="/profile/tuchoi/${lmkb}/nguoiDung/${nguoiDung.sdt}"><small style=" white-space: nowrap;	overflow: hidden; text-overflow: ellipsis; color: white;">
 		                    	Hủy lời mời kết bạn X
-		                    </small>
+		                    </small></a>
 		                    </button>
 					    </c:if>
+					    <!-- Người lạ gửi người dùng -->
 					    <c:if test="${checker==false && trangThai == 2}">
 					        <button style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
-					        <small style=" white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">
+					        <a href="/profile/dongy/${lmkb}/nguoiDung/${nguoiDung.sdt}"><small style=" white-space: nowrap;overflow: hidden; text-overflow: ellipsis; color: white;">
 		                    	Chấp nhận ✓
 		                    </small>
-		                    </button>
+		                    </button></a>
 		                    <button style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
 		                    <a href="/profile/tuchoi/${lmkb}/nguoiDung/${nguoiDung.sdt}"><small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">
 		                    	Xóa X

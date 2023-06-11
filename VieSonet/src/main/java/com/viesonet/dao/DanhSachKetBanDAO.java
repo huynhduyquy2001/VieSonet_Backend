@@ -19,6 +19,7 @@ public interface DanhSachKetBanDAO extends JpaRepository<DanhSachKetBan, Integer
 	@Query("SELECT bb.maLoiMoi FROM DanhSachKetBan bb WHERE bb.nguoiDung.sdt like ?1 AND bb.nguoiLa.sdt like ?1")
 	List<Integer> findMaLoiMoiByNguoiDungAndNguoiLa(String nguoiDung, String nguoiLa);
 	
-	
+	@Query("select kb from DanhSachKetBan kb where kb.nguoiLa.sdt =?1")
+	List<DanhSachKetBan> findDsBySdttest(String soDienThoai);
 	
 }

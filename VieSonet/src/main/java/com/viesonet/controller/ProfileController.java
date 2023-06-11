@@ -124,10 +124,11 @@ public class ProfileController {
 			m.addAttribute("SlBanbe", listBb.size());
 			// danh sách kết bạn
 			List<DanhSachKetBan> danhSachKetBan = dskbDao.findDsBySdt(sdt);
-			m.addAttribute("SlKb", danhSachKetBan.size());
+			List<DanhSachKetBan> danhSachKetBan1 = dskbDao.findDsBySdttest(sdt);
+			m.addAttribute("SlKb", danhSachKetBan1.size());
 			List<DanhSachKetBan> topKetBan = new ArrayList<>();
-			for (int i = 0; i < Math.min(3, danhSachKetBan.size()); i++) {
-				topKetBan.add(danhSachKetBan.get(i));
+			for (int i = 0; i < Math.min(3, danhSachKetBan1.size()); i++) {
+				topKetBan.add(danhSachKetBan1.get(i));
 			}
 			m.addAttribute("topKetBan", topKetBan);
 //			System.out.println(topKetBan.size());
@@ -288,6 +289,28 @@ public class ProfileController {
 			dsytDao.delete(baiVietYeuThich);
 		}
 	}
+	@GetMapping("profile/dongy/{maLoiMoi}")
+	public String dongYKetBan(@PathVariable int maLoiMoi) {
+		String sdt = session.get("sdt");
+		NguoiDung nguoiDung = nguoiDungDao.getById(sdt);
+		DanhSachKetBan ds = dskbDao.getById(maLoiMoi);
+		NguoiDung nguoiLa = ds.getNguoiLa();
+		BanBe banBe = new BanBe();
+		banBe.setNguoiDung(nguoiDung);
+		banBe.setBanBe(nguoiLa);
+		banBe.setNgayKb(new Date());
+		banBeDao.saveAndFlush(banBe);
+		dskbDao.deleteById(maLoiMoi);
+		return "redirect:/profile";
+	}
+	
+	@GetMapping("profile/tuchoi/{maLoiMoi}")
+	public String tuChoiKetBan(@PathVariable int maLoiMoi) {
+		dskbDao.deleteById(maLoiMoi);
+		return "redirect:/profile";
+	}
+	
+	//---------------------------------Người dùng khác-------------------------------------------
 	//Lấy thông tin người dùng khác
 	@GetMapping("/nguoiDung/{sdt}")
 	public String getNguoiDung(@PathVariable("sdt") String sdtLa, Model m) {
@@ -310,9 +333,6 @@ public class ProfileController {
 			m.addAttribute("SlBanbe", listBb.size());
 			List<BanBe> list = banBeDao.findFriends(sdtLa);
 			List<DanhSachKetBan> dsKb = dskbDao.findFriends(sdtLa);
-			
-		    
-
 			//Kiểm tra có phải bạn bè hay người lạ
 			boolean checker = false;
 			//Phân biệt 3 trạng thái sau khi phân biệt bạn hay người lạ
@@ -322,8 +342,8 @@ public class ProfileController {
 			int trangThai = 0;
 			//Đưa vòng lặp kiểm tra 2 chiều(Vì hiển thị giống nên không sao)
 			for (BanBe banBe : list) {
-			    if ((banBe.getNguoiDung().getSdt().equals(sdtHt) && banBe.getBanBe().getSdt().equals(sdtLa)) || 
-			    	(banBe.getNguoiDung().getSdt().equals(sdtLa) && banBe.getBanBe().getSdt().equals(sdtHt))	) {
+			    if (((banBe.getNguoiDung().getSdt().equals(sdtHt) && banBe.getBanBe().getSdt().equals(sdtLa)) || 
+			    	(banBe.getNguoiDung().getSdt().equals(sdtLa) && banBe.getBanBe().getSdt().equals(sdtHt)))	) {
 			        // Nếu tìm thấy số điện thoại trùng, đánh dấu là có
 			        checker = true;
 			        // Dừng vòng lặp
@@ -337,15 +357,19 @@ public class ProfileController {
 				for(DanhSachKetBan dskb : dsKb) {
 					if ((dskb.getNguoiDung().getSdt().equals(sdtHt) && dskb.getNguoiLa().getSdt().equals(sdtLa)) ) {
 					        // Trạng thái 2: Chưa kết bạn nhưng người dùng gửi lời mời từ người lạ
-					        trangThai = 2;
+					        trangThai = 1;
+					        //Lấy mã lời mời kết bạn
 					        Integer maLoiMoi = dskb.getMaLoiMoi();
 					        m.addAttribute("lmkb", maLoiMoi);
 					        System.out.println("maLoiMoi: " + maLoiMoi);
 					        // Dừng vòng lặp
 					        break;
-					} else if (dskb.getNguoiDung().getSdt().equals(sdtLa) && dskb.getNguoiLa().getSdt().equals(sdtHt)) {
+					} if (dskb.getNguoiDung().getSdt().equals(sdtLa) && dskb.getNguoiLa().getSdt().equals(sdtHt)) {
 							// Trạng thái 1: Chưa kết bạn nhưng người lạ gửi lời mời cho người dùng
-							trangThai = 1;
+							trangThai = 2;
+							//Lấy mã lời mời kết bạn
+							Integer maLoiMoi = dskb.getMaLoiMoi();
+							m.addAttribute("lmkb", maLoiMoi);
 							// Dừng vòng lặp
 							break;
 					}
@@ -356,29 +380,47 @@ public class ProfileController {
 			return "trangCaNhanNguoiDungKhac";	
 		}
 	}
-	@GetMapping("profile/dongy/{maLoiMoi}")
-	public String dongYKetBan(@PathVariable int maLoiMoi) {
-		String sdt = session.get("sdt");
-		NguoiDung nguoiDung = nguoiDungDao.getById(sdt);
-		DanhSachKetBan ds = dskbDao.getById(maLoiMoi);
-		NguoiDung nguoiLa = ds.getNguoiLa();
+	
+	//Đồng ý kết bạn từ trang người dùng khác
+	@GetMapping("profile/dongy/{lmkb}/nguoiDung/{nguoiDung}")
+	public String dongYKetBan(@PathVariable("nguoiDung") String sdt,@PathVariable int lmkb) {
+		String sdtHt = session.get("sdt");
+		NguoiDung nguoiDung = nguoiDungDao.getById(sdtHt);
+//		DanhSachKetBan ds = dskbDao.getById(lmkb);
+		NguoiDung nguoiDungLa = nguoiDungDao.findBySdt(sdt);	
 		BanBe banBe = new BanBe();
 		banBe.setNguoiDung(nguoiDung);
-		banBe.setBanBe(nguoiLa);
+		banBe.setBanBe(nguoiDungLa);
 		banBe.setNgayKb(new Date());
 		banBeDao.saveAndFlush(banBe);
-		dskbDao.deleteById(maLoiMoi);
-		return "redirect:/nguoiDung";
+		dskbDao.deleteById(lmkb);
+		return "redirect:/nguoiDung/" + sdt;
 	}
 	
+	//Từ chối kết bạn từ trang người dùng khác
 	@GetMapping("profile/tuchoi/{lmkb}/nguoiDung/{nguoiDung}")
 	public String tuChoiKetBan(@PathVariable int lmkb, @PathVariable String nguoiDung) {
-//		System.out.println("maLoiMoi: " + maLoiMoi);
 		dskbDao.deleteById(lmkb);
-		System.out.println("nguoiDung: " + nguoiDung);
-		System.out.println("lmkb: " + lmkb);
-		System.out.println("redirect:/nguoiDung/{" + nguoiDung + "}");
+//		System.out.println("nguoiDung: " + nguoiDung);
+//		System.out.println("lmkb: " + lmkb);
+//		System.out.println("redirect:/nguoiDung/{" + nguoiDung + "}");
 		return "redirect:/nguoiDung/" + nguoiDung;
 	}	
+	
+	//Gửi lời mời kết bạn 
+	
+	@GetMapping("profile/guiLmkb/{nguoiDung}")
+	public String guiLoiMoiKetBan(@PathVariable String nguoiDung,@PathVariable("nguoiDung") String sdt) {
+		String sdtHt = session.get("sdt");
+		DanhSachKetBan ds = new DanhSachKetBan();
+		NguoiDung nguoiDungHT = nguoiDungDao.getById(sdtHt);
+		NguoiDung nguoiLa = nguoiDungDao.findBySdt(sdt);
+		ds.setNguoiDung(nguoiDungHT);
+		ds.setNguoiLa(nguoiLa);
+		ds.setNgayGui(new Date());
+		dskbDao.saveAndFlush(ds);
+		return "redirect:/nguoiDung/" + nguoiDung;
+	}	
+	
 	
 }
