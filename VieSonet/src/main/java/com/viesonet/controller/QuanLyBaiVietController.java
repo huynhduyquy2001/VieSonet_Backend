@@ -74,8 +74,6 @@ public class QuanLyBaiVietController {
 	@RequestMapping("/danhDauBaiViet/{maBaiViet}")
 	public  DSToCaoVaViPham danhDauBaiViet(@PathVariable String maBaiViet) {
 		daoBVVP.danhDauViPham(Integer.parseInt(maBaiViet));
-		BaiViet bv = daoBV.findByMaBaiViet(Integer.parseInt(maBaiViet));
-		
 		String sql = "select maBaiViet, COUNT(maToCao) AS 'SoLuong' from BaiVietViPham where trangThai = 1 group by maBaiViet order by SoLuong DESC";
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[]{});
 		List<DanhSachBaiVietBiToCao> dsToCao = new ArrayList<>();

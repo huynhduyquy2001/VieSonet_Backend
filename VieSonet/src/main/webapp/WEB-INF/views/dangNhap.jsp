@@ -137,7 +137,7 @@
 			src="images/hoaSen.png" width="10%"
 			class="animate__animated animate__fadeInUp"
 			style="position: absolute; bottom: 0; right: 0;" alt="">
-		<div class="container" id="loginForm"
+		<div class="container" id="loginForm" ${n}
 			style="width: 60%; min-width: 350px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
 			<div class="row" style="padding: 0; border-radius: 10px;">
 				<div class="col-md-4  col-sm-12 animationTop2 delay-02 img-thumbnail"
@@ -191,7 +191,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="container" id="registerForm" hidden
+		<div class="container" id="registerForm" ${m}
 			style="width: 60%; min-width: 350px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
 			<div class="row" style="padding: 0; border-radius: 10px;">
 				<div class="col-md-4  col-sm-12 animationTop2 img-thumbnail"

@@ -35,6 +35,8 @@ public class DangNhapController {
 			m.addAttribute("user", user);
 			m.addAttribute("pass", pass);
 		}
+		m.addAttribute("m", "hidden");
+		m.addAttribute("n", "");
 		return "dangNhap";
 	}
 
@@ -55,7 +57,9 @@ public class DangNhapController {
 					cookieService.delete("user");
 					cookieService.delete("pass");
 				}
-				return "redirect:/";
+				m.addAttribute("m", "");
+				m.addAttribute("n", "hidden");
+				return "dangNhap";
 			} else {
 				m.addAttribute("message", "Thông tin đăng nhập không chính xác !");
 			}
