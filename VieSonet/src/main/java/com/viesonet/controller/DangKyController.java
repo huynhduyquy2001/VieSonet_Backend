@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.viesonet.dao.NguoiDungDAO;
+import com.viesonet.dao.VaiTroDAO;
 import com.viesonet.entity.NguoiDung;
+import com.viesonet.entity.VaiTro;
 import com.viesonet.service.ParamService;
 
 @Controller
@@ -16,6 +18,8 @@ public class DangKyController {
 	ParamService paramService;
 	@Autowired
 	NguoiDungDAO dao;
+	@Autowired
+	VaiTroDAO vTDao;
 
 	@GetMapping("/dangky")
 	public String dangKy(Model model) {
@@ -26,7 +30,6 @@ public class DangKyController {
 	@RequestMapping("/dangky")
 	public String dangKy2(@ModelAttribute("nguoiDung") NguoiDung item, Model m) {
 		String xacNhanMatKhau = paramService.getString("xacNhanMatKhau", "");
-
 		if (!dao.existsBySdt(item.getSdt())) {
 			if(dao.existsBySdt(item.getEmail())) {
 				m.addAttribute("message", "Email này đã được đăng ký");
@@ -37,8 +40,10 @@ public class DangKyController {
 					} else {
 						item.setAnhDaiDien("avatar1.jpg");
 					}
-
+					item.setVaiTro(vTDao.getById(1));
 					item.setTrangThai(true);
+					item.setSoLuongBanBe(0);
+					item.setLuotViPham(0);
 					item.setAnhBia("anhBia.jpg");
 					dao.save(item);
 				} else {
@@ -54,13 +59,6 @@ public class DangKyController {
 		return "dangKy";
 	}
 
-//	public VaiTro setMaVT(int value) {
-//	    VaiTro vaiTro;
-//	    // Ánh xạ giá trị kiểu int thành thuộc tính tương ứng của đối tượng vaiTro
-//	    // Cách ánh xạ cụ thể phụ thuộc vào cách định nghĩa của lớp VaiTro
-//	    vaiTro.setMaVaiTro(value);
-//	    vaiTro.setTenVaiTro(vaiTro.getTenVaiTro() + value);
-//	    return vaiTro;
-//	}
+
 
 }

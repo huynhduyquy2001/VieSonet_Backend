@@ -56,18 +56,6 @@ public class QuanLyViPhamController {
 	    }
 	}
 
-
-
-	@ResponseBody
-	@RequestMapping("/quanlyvipham/xoa/{maLoai}")
-	public String delete(Model m, @PathVariable("maLoai") Integer maLoai) {
-	    if(dao.existsByMaLoai(maLoai)) {
-	        dao.deleteById(maLoai);
-	        return "Xóa thành công";
-	    }else {
-	       return "Mã vi phạm không tồn tại";
-	    }
-	}
 	
 	@ResponseBody
 	@RequestMapping("/quanlyvipham/sua/{maLoai}")

@@ -18,6 +18,9 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.js"
+	integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+	crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/f737751420.js"></script>
 <link rel="stylesheet" href="style.css">
 <title>Quên mật khẩu</title>
@@ -110,15 +113,7 @@ span.psw {
 			</div>
 		</nav>
 	</header>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<div>
-		<button onclick="guiMa()">Con lạy mười phương chư phật cho con chạy dùm !</button>
-	</div>
+
 	<div>
 		<img class="animate__animated animate__fadeInDown"
 			src="images/chim-lac-1.png" width="15%"
@@ -139,43 +134,42 @@ span.psw {
 				<div
 					class="col-md-8 col-sm-12 img-thumbnail animate__animated animate__backInRight"
 					style="padding: 3%; box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.1);">
-					<form >
-						<div class="row">
-							<center>
-								<h3 style="color: #F27323;">QUÊN MẬT KHẨU</h3>
-								<hr style="width: 30%;">
-								${message }
-							</center>
-							<div class="col-md-8">
-								<input class="form-control ip" type="text"
-									placeholder="Email đăng ký?" name="email"
-									pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
-							</div>
 
-							<div class="col-md-4">
-								<br>
-								
-							</div>
-							
+					<div class="row">
+						<center>
+							<h3 style="color: #F27323;">QUÊN MẬT KHẨU</h3>
+							<hr style="width: 30%;">
+							<div id="message"></div>
+						</center>
+						<div class="col-md-8">
+							<input class="form-control ip" type="text"
+								placeholder="Email đăng ký?" id="email"
+								>
+						</div>
+
+						<div class="col-md-4">
 							<br>
-							<center>
-								<button class="lgin">Xem mật khẩu</button>
-							</center>
-							
-					</form>
-					<button class="lgin" >Gửi mã</button>
-				</div>
-				<br> <a href="" onclick="guiMa()"> Đăng nhập </a> <span class="psw">Chưa
-					có <a href="/ASM_Java4/dangKy" style="color: #F5A425;">tài
-						khoản?</a>
-				</span>
+							<button class="lgin" onclick="guiMa()">Gửi mã</button>
+						</div>
+						<div class="col-md-12">
+							<br> <input class="form-control ip" type="text"
+								placeholder="Mã đã cung cấp" id="matMa">
+						</div>
+						<center>
+							<button class="lgin" onClick="xemMatKhau()">Xác nhận</button>
+						</center>
+					</div>
+					<br> <a href=""> Đăng nhập </a> <span class="psw">Chưa
+						có <a href="/ASM_Java4/dangKy" style="color: #F5A425;">tài
+							khoản?</a>
+					</span>
 
+				</div>
 			</div>
 		</div>
+
 	</div>
-	
-	</div>
-	
+
 </body>
 <script src="${pageContext.request.contextPath}/quenMatKhauLoad.js">
 	
