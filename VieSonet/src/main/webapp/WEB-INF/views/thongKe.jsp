@@ -67,7 +67,7 @@
                                     khoản</small></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/quanLyNguoiDung"><small style=" white-space: nowrap;
+                            <a class="nav-link" href="/quanly/quanLyNguoiDung"><small style=" white-space: nowrap;
                                 overflow: hidden; 
                                 text-overflow: ellipsis;font-family: 'Roboto', sans-serif;letter-spacing: 0.1em; ">Quản
                                     lí</small></a>
@@ -106,8 +106,8 @@
                                         </label>
                                     </div>
                                 </div>
-                                <a class="dropdown-item" href="#"><small>Đăng nhập</small></a>
-                                <a class="dropdown-item" href="#"><small>Đăng ký</small></a>
+                                <a class="dropdown-item" href="/dangnhap"><small>Đăng nhập</small></a>
+                                <a class="dropdown-item" href="/dangky"><small>Đăng ký</small></a>
                             </div>
                         </li>
 

@@ -71,7 +71,7 @@
                                 text-overflow: ellipsis;font-family: 'Roboto', sans-serif;letter-spacing: 0.1em; ">Điều khoản</small></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><small style=" white-space: nowrap;
+                            <a class="nav-link" href="/quanly/quanlyNguoiDung"><small style=" white-space: nowrap;
                                 overflow: hidden; 
                                 text-overflow: ellipsis;font-family: 'Roboto', sans-serif;letter-spacing: 0.1em; ">Quản lí</small></a>
                         </li>
