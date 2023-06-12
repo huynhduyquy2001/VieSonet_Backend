@@ -40,10 +40,7 @@
 </head>
 <body>
 	<div class="split-background"></div>
-	<img src="images/cayTre.png"
-		class="header animate__animated animate__fadeInUp"
-		style="position: fixed; right: 0; max-height: 90vh; z-index: -2;"
-		alt="">
+	
 	<header class="header">
 		<nav class="navbar navbar-expand-sm navbar-light"
 			style="border: none; padding-top: 0; padding-bottom: 0;">

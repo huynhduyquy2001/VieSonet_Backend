@@ -46,7 +46,7 @@ public class QuanLyNguoiDungController {
 	
 	@Transactional
 	@ResponseBody
-	@RequestMapping("/quanly/goViPham/{sdt}")
+	@RequestMapping("/goViPham/{sdt}")
 	public String goViPham(@PathVariable String sdt, Model m) throws JsonProcessingException {
 		String userHienTai = sessionService.get("sdt");
 		daoND.resetLuotViPham("0"+sdt);
@@ -58,7 +58,7 @@ public class QuanLyNguoiDungController {
 		return ds;
 	}
 	
-	@GetMapping("/quanly/chinhSua/{sdt}")
+	@GetMapping("/chinhSua/{sdt}")
 	public String chinhSua(@PathVariable String sdt, Model m) {
 		String userHienTai = sessionService.get("sdt");
 		m.addAttribute("thongTin", ndDAO.findBySdt(sdt));
@@ -67,7 +67,7 @@ public class QuanLyNguoiDungController {
 	}
 	
 	@Transactional
-	@RequestMapping("/quanly/khoaTaiKhoan/{sdt}")
+	@RequestMapping("/khoaTaiKhoan/{sdt}")
 	public String khoaTaiKhoan(@PathVariable String sdt, Model m){
 		String userHienTai = sessionService.get("sdt");
 		daoND.khoaTaiKhoan(sdt);
@@ -77,7 +77,7 @@ public class QuanLyNguoiDungController {
 	}
 	
 	@Transactional
-	@RequestMapping("/quanly/moKhoaTaiKhoan/{sdt}")
+	@RequestMapping("/moKhoaTaiKhoan/{sdt}")
 	public String moTaiKhoan(@PathVariable String sdt, Model m){
 		String userHienTai = sessionService.get("sdt");
 		daoND.moTaiKhoan(sdt);
@@ -87,7 +87,7 @@ public class QuanLyNguoiDungController {
 	}
 	
 	@Transactional
-	@RequestMapping("/quanly/doiVaiTro/{vaiTro}/{sdt}")
+	@RequestMapping("/doiVaiTro/{vaiTro}/{sdt}")
 	public String moTaiKhoan(@PathVariable String vaiTro, @PathVariable String sdt, Model m) {
 		String userHienTai = sessionService.get("sdt");
 		daoND.doiVaitro(vaiTro, sdt);
@@ -97,21 +97,21 @@ public class QuanLyNguoiDungController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/quanly/timKiemDanhSachSDT/{sdt}")
+	@RequestMapping("/timKiemDanhSachSDT/{sdt}")
 	public NguoiDungJson timKiemSdt(@PathVariable String sdt, Model m) throws JsonProcessingException {
 		NguoiDungJson nd = daoND.findBySdt(sdt);
 		return nd;
 	}
 	
 	@ResponseBody
-	@RequestMapping("/quanly/timKiemDanhSachTen/{tuKhoa}")
+	@RequestMapping("/timKiemDanhSachTen/{tuKhoa}")
 	public List<NguoiDungJson> timKiemTen(@PathVariable String tuKhoa, Model m){
 		List<NguoiDungJson> nd1 = daoND.findByHoTen(tuKhoa);
 		return nd1;
 	}
 	
 	@ResponseBody
-	@RequestMapping("/quanly/timKiemAll")
+	@RequestMapping("/timKiemAll")
 	public List<NguoiDungJson> timKiemAll(){
 		String userHienTai = sessionService.get("sdt");
 		List<NguoiDungJson> nd1 = daoND.findDSNguoiDungKhacNguoiDungHienTai(userHienTai);

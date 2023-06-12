@@ -69,7 +69,6 @@ public class GoiYKetBanController {
 			topKetBan.add(danhSachKetBan.get(i));
 		}
 		model.addAttribute("topKetBan", topKetBan);
-
 		// Danh sách người dùng không phải là bạn của sđt đang đăng nhập
 		List<NguoiDung> list = nguoiDungDao.findUnrelatedFriends(sdtCN);
 		//List<DanhSachKetBan> list = dskbDao.findFriends(sdtCN);

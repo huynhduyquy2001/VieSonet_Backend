@@ -106,10 +106,9 @@
 								style="overflow: hidden; max-height: 60vh; overflow-y: scroll; left: -100px">
 								<c:forEach items="${thongBao}" var="item">
 									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
-
 										<div class="user-profile"
 											style="width: 250px; padding-left: 3%;">
-											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
+											<img src="images/${item.nguoiDung.anhDaiDien}"  alt="">
 											<div>
 												<p style="font-size: 13px">${item.noiDung}</p>
 												<small style="font-size: 11px">${item.ngayThongBao}</small>
@@ -125,7 +124,7 @@
 							data-bs-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"><small><img
 									src="images/${taiKhoan.anhDaiDien}" width="30px"
-									style="border-radius: 50%;" alt=""></small></a>
+									style="border-radius: 50%; border: 1px solid gray" alt=""></small></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownId"
 								style="padding-left: 3px; left: -100px; line-height: 35px">
 								<a class="dropdown-item" href="/profile">
@@ -173,7 +172,7 @@
 									<button type="button" class="btn" data-bs-toggle="modal"
 										data-bs-target="#modalId">
 										<a data-bs-toggle="modal" href="#exampleModalToggle"><i
-											class="fa-regular fa-image"></i> Photo</a>
+											class="fa-regular fa-image"></i> Hình ảnh</a>
 									</button>
 								</div>
 							</div>
@@ -312,7 +311,8 @@
 								</div>
 							</div>
 							<div>
-								<label class="nhan">Lời mời kết bạn(${SlKb})</label>
+							<a href="/GoiYKB"><label class="nhan">Lời mời kết bạn(${SlKb})</label></a>
+								
 								<c:forEach items="${topKetBan}" var="topKb">
 									<div>
 										<div class="user-profile">
@@ -354,9 +354,10 @@
 						</div>
 
 						<div class="col-md-6">
-							<label class="nhan"
+						<a href="/DanhSachBanBe"><label class="nhan"
 								style="box-sizing: border-box; padding-left: 10px">Danh
-								sách bạn bè(${SlBanbe})</label> <br> <br>
+								sách bạn bè(${SlBanbe})</label></a>
+							 <br> <br>
 
 							<c:forEach items="${topBanbe}" var="banBe">
 								<div
@@ -457,7 +458,7 @@
 							</div>
 						</div>
 						<br>
-						<textarea name="moTaBaiDang" placeholder="Bạn muốn đăng gì?" id=""
+						<textarea name="moTaBaiDang" placeholder="Bạn đang nghĩ gì?" id=""
 							cols="30" rows="3"
 							style="width: 100%; border: 0px; outline: none; border-bottom: 1px solid #ccc; background: transparent; resize: none;"></textarea>
 
@@ -470,7 +471,7 @@
 					<div class="modal-footer">
 						<div class="input-group mb-3">
 							<label class="input-group-text" for="inputGroupFile01"> <i
-								class="fa-regular fa-image"></i>Photo/Video
+								class="fa-regular fa-image"></i>Hình ảnh
 							</label> <input type="file" class="form-control" name="photo_file"
 								id="inputGroupFile01">
 						</div>

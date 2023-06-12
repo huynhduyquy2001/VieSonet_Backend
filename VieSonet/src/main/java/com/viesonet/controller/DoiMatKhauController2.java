@@ -43,7 +43,7 @@ public class DoiMatKhauController2 {
 				nDung.setMatKhau(matKhauMoi);
 				dao.save(nDung);
 				m.addAttribute("message", "Đổi mật khẩu thành công");
-				return "redirect:/dangnhap";
+				return "redirect:/";
 			} else {
 				m.addAttribute("message", "Mật khẩu và mật khẩu xác nhận không khớp");
 			}
