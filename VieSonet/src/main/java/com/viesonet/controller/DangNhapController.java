@@ -47,6 +47,7 @@ public class DangNhapController {
 			if (sdt.equals(nDung.getSdt()) && matKhau.equals(nDung.getMatKhau())) {
 				m.addAttribute("message1", "");
 				sessionService.set("sdt", sdt);
+				sessionService.set("vt", nDung.getVaiTro().getMaVaiTro());
 				if (remember) {
 					cookieService.add("user", sdt, 10);
 					cookieService.add("pass", matKhau, 10);

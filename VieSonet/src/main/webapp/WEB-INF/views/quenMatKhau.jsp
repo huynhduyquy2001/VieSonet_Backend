@@ -141,7 +141,7 @@ span.psw {
 							<hr style="width: 30%;">
 							<div id="message"></div>
 						</center>
-						<div class="col-md-8">
+						<div class="col-md-7">
 							<input class="form-control ip" type="text"
 								placeholder="Email đăng ký?" id="email"
 								>
