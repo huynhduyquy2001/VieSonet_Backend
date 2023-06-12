@@ -1,6 +1,7 @@
 package com.viesonet.interceptor;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -18,6 +19,7 @@ public class MyInterceptor implements HandlerInterceptor {
         	response.sendRedirect("/dangnhap");
             return false;
         }
+        
         return true;
     }
 
@@ -28,7 +30,8 @@ public class MyInterceptor implements HandlerInterceptor {
 	}
 
 	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
-	}
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        LocalDateTime accessTime = LocalDateTime.now();
+        // Lưu trữ hoặc xử lý thời gian truy cập tại đây
+    }
 }

@@ -129,11 +129,12 @@
 									style="border-radius: 50%;" alt=""></small></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownId"
 								style="padding-left: 3px; left: -100px; line-height: 35px">
-								<a class="dropdown-item" href="/dangnhap"><small>Xem trang cá nhân</small></a> 
-								<a class="dropdown-item" href="/dangnhap"><small>Danh sách bạn bè</small></a>
-								<a class="dropdown-item" href="/dangnhap"><small>Lời mời kết bạn</small></a>
-								<a class="dropdown-item" href="/dangnhap"><small>Điều khoản</small></a>
-								<a class="dropdown-item" href="/dangxuat"><small>Đăng xuất</small></a>
+								<a class="dropdown-item" href="/dangnhap"><small>Xem
+										trang cá nhân</small></a> <a class="dropdown-item" href="/dangnhap"><small>Danh
+										sách bạn bè</small></a> <a class="dropdown-item" href="/dangnhap"><small>Lời
+										mời kết bạn</small></a> <a class="dropdown-item" href="/dangnhap"><small>Điều
+										khoản</small></a> <a class="dropdown-item" href="/dangxuat"><small>Đăng
+										xuất</small></a>
 							</div></li>
 
 					</ul>
@@ -189,7 +190,8 @@
 								style="display: flex; align-items: center; justify-content: space-between;">
 								<div class="tooltip2">
 									<div class="user-profile ">
-										<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img src="images/${BaiViet.nguoiDung.anhDaiDien}"
+										<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img
+											src="images/${BaiViet.nguoiDung.anhDaiDien}"
 											class="img-thumbnail" alt=""></a>
 										<div>
 											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br>
@@ -201,7 +203,9 @@
 									<span class="tooltip2-text"> <a href="">
 											<div class="row">
 												<div class="col-5">
-													<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img src="images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt=""></a>
+													<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img
+														src="images/${BaiViet.nguoiDung.anhDaiDien}"
+														class="img-thumbnail" alt=""></a>
 												</div>
 												<div class="col-7" style="padding: 0; margin: 0;">
 													<label for="" style="padding: 0; margin: 0;"> <small>${BaiViet.nguoiDung.hoTen}</small>
@@ -344,11 +348,10 @@
 												class="img-thumbnail" alt="" style="border-radius: 50%;">
 											<div>
 												<label for="">${banBe.nguoiDung.hoTen}</label> <br> <small
-													style="font-size: 12px">Hoạt động: 1 phút trước</small>
+													style="font-size: 12px">Hoạt động: <fmt:formatDate
+														value="${banBe.nguoiDung.thoiGianTruyCap}"
+														pattern="dd-MM-yyyy HH:mm" /></small>
 											</div>
-										</div>
-										<div>
-											<a href="#"><i class="fas fa-ellipsis-v"></i></a>
 										</div>
 									</div>
 								</c:if>
@@ -360,11 +363,10 @@
 												class="img-thumbnail" alt="" style="border-radius: 50%;">
 											<div>
 												<label for="">${banBe.banBe.hoTen}</label> <br> <small
-													style="font-size: 12px">Hoạt động: 1 phút trước</small>
+													style="font-size: 12px">Hoạt động: <fmt:formatDate
+														value="${banBe.banBe.thoiGianTruyCap}"
+														pattern="dd-MM-yyyy HH:mm" /></small>
 											</div>
-										</div>
-										<div>
-											<a href="#"><i class="fas fa-ellipsis-v"></i></a>
 										</div>
 									</div>
 								</c:if>

@@ -46,7 +46,7 @@ public class NguoiDung {
 	private Integer soLuongBanBe;
 
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "thoiGianTruyCap")
 	Date thoiGianTruyCap = new Date();
 	
