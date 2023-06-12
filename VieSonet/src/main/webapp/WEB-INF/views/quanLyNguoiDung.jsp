@@ -246,19 +246,7 @@
                                         </label>
                                     </div>
                                     <div  style="margin-top: 1rem">
-                                        <c:if test="${thongTin.trangThai == true}">
-                                        	<a data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Khóa tài khoản này" href="/quanly/khoaTaiKhoan/${thongTin.sdt}" class="btn me-4" 
-                                        style="background: rgba(234,229,224,1); width: 60px;">
-                                        <i class="fa-solid fa-user-slash"></i> </a>
-                                        </c:if>
-    
-                                        <c:if test="${thongTin.trangThai == false}">
-                                        <a data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Mở khóa tài khoản này" href="/quanly/moKhoaTaiKhoan/${thongTin.sdt}" class="btn me-4" 
-                                        style="background: rgba(234,229,224,1); width: 60px;">
-                                        <i class="fa-solid fa-user-check"></i></a>
-                                        </c:if>
+                                  
     
                                         <c:if test="${not empty thongTin}">
                                         	<a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" data-bs-toggle="tooltip" data-bs-placement="top"

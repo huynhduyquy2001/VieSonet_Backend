@@ -1,13 +1,12 @@
 function guiMa() {
 	var email = document.getElementById("email").value;
 
-
 	if (!email) {
 		var mess = document.getElementById("message");
 		mess.innerHTML = "Vui lòng nhập địa chỉ email";
 		return;
 	}
-
+	
 	$.ajax({
 		url: "/quenmatkhau/guima",
 		type: "GET",

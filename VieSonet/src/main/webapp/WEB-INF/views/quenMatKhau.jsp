@@ -90,7 +90,7 @@ span.psw {
 		<nav class="navbar navbar-expand-sm navbar-light"
 			style="border: none; padding-top: 0; padding-bottom: 0;">
 			<div class="container">
-				<a class="navbar-brand nhan" href="#"
+				<a class="navbar-brand nhan" 
 					style="color: #222; font-weight: bolder; font-family: 'robo';">
 					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
 				</a>
@@ -147,7 +147,7 @@ span.psw {
 								>
 						</div>
 
-						<div class="col-md-4">
+						<div class="col-md-5">
 							<br>
 							<button class="lgin" onclick="guiMa()">Gửi mã</button>
 						</div>
@@ -159,8 +159,8 @@ span.psw {
 							<button class="lgin" onClick="xemMatKhau()">Xác nhận</button>
 						</center>
 					</div>
-					<br> <a href=""> Đăng nhập </a> <span class="psw">Chưa
-						có <a href="/ASM_Java4/dangKy" style="color: #F5A425;">tài
+					<br> <a href="/dangnhap"> Đăng nhập </a> <span class="psw">Chưa
+						có <a href="/dangky" style="color: #F5A425;">tài
 							khoản?</a>
 					</span>
 
@@ -171,7 +171,68 @@ span.psw {
 	</div>
 
 </body>
-<script src="${pageContext.request.contextPath}/quenMatKhauLoad.js">
+<script >
+function guiMa() {
+	var email = document.getElementById("email").value;
+
+	if (!email) {
+		var mess = document.getElementById("message");
+		mess.innerHTML = "Vui lòng nhập địa chỉ email";
+		return;
+	}
 	
+	$.ajax({
+		url: "/quenmatkhau/guima",
+		type: "GET",
+		data: {
+			mail: email
+		},
+		success: function(data) {
+			var tb = data;
+			var mess = document.getElementById("message");
+			mess.innerHTML = "";
+			mess.innerHTML += tb;
+		},
+		error: function(xhr, status, error) {
+			// Xử lý lỗi nếu có
+			console.log(error);
+		}
+	});
+}
+
+
+function xemMatKhau() {
+	var matMa = document.getElementById("matMa").value;
+	var email = document.getElementById("email").value;
+	if (!email) {
+		var mess = document.getElementById("message");
+		mess.innerHTML = "Vui lòng nhập địa chỉ email";
+		return;
+	}
+	if (!matMa) {
+		var mess = document.getElementById("message");
+		mess.innerHTML = "Vui lòng nhập mật mã đã gửi hoặc bấm vào nút gửi mã nếu chưa";
+		return;
+	}
+
+	$.ajax({
+		url: "/quenmatkhau/xemmatkhau",
+		type: "GET",
+		data: {
+			ma: matMa,
+			mail: email
+		},
+		success: function(data) {
+			if (data == "Mật mã đúng") {
+				window.location.href = "/DoiMatKhau";
+			}else{
+				var mess = document.getElementById("message")
+				mess.innerHTML = data;
+			}
+
+		}
+	});
+}
+
 </script>
 </html>

@@ -82,32 +82,38 @@
 
 <body>
     <div class="split-background"></div>
-    <header class="header animationTop3">
-        <nav class="navbar navbar-expand-sm navbar-light" style="border: none;padding-top: 0; padding-bottom: 0;">
-            <div class="container">
-                <a class="navbar-brand nhan" href="#" style="color: #222; font-weight: bolder; font-family: 'robo';">
-                    <img src="images/chimLac.png" height="30px" alt=""> VIE_SONET</a>
-                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="collapsibleNavId">
-                    <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+   <header class="header animationTop3"style="background: transparent;">
+		<nav class="navbar navbar-expand-sm navbar-light"
+			style="border: none; padding-top: 0; padding-bottom: 0;">
+			<div class="container">
+				<a class="navbar-brand nhan"
+					style="color: #222; font-weight: bolder; font-family: 'robo';">
+					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
+				</a>
+				<button class="navbar-toggler d-lg-none" type="button"
+					data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
+					aria-controls="collapsibleNavId" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="collapsibleNavId">
+					<ul class="navbar-nav me-auto mt-2 mt-lg-0">
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><small style=" white-space: nowrap;
-                                overflow: hidden; 
-                                text-overflow: ellipsis;font-family: 'Roboto', sans-serif;letter-spacing: 0.1em; ">Điều
-                                    khoản</small></a>
-                        </li>
+						<li class="nav-item"><a class="nav-link" href="/dieukhoan"><small
+								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Điều
+									khoản</small></a></li>
 
-                    </ul>
+					</ul>
+					<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+						<li class="nav-item"><a class="nav-link" href="/dangnhap"><small
+								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;"><button
+										class="btnBorder" >Đăng nhập</button></small></a></li>
+					</ul>
+				</div>
 
-                </div>
-            </div>
-        </nav>
-    </header>
+			</div>
+		</nav>
+	</header>
     <div>
         <img class="animate__animated animate__fadeInDown" src="images/chim-lac-1.png" width="15%" style="position: absolute; top: 40px; left: 0;" alt="">
         <img src="images/hoaSen.png" width="10%" class="animate__animated animate__fadeInUp" style="position: absolute; bottom: 0; right: 0;" alt="">
@@ -162,10 +168,9 @@
                         <button class="lgin" type="submit">Đăng ký</button>
                     </center>
                     <br>
-                    <a href="/ASM_Java4/index">
+                    <a href="/quenmatkhau">
                         Quên mật khẩu?
-                    </a> <span class="psw">Đã có <a href="/ASM_Java4/dangKy" style="color: #F5A425;">tài
-                            khoản?</a></span>
+                    
                 </form>
             </div>
            </div>

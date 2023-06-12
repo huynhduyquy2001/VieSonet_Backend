@@ -133,6 +133,8 @@
 								<small>Danh sách bạn bè</small></a> 
 								<a class="dropdown-item" href="/GoiYKB">
 								<small>Lời mời kết bạn</small></a> 
+								<a class="dropdown-item" href="/doimatkhau">
+								<small>Đổi mật khẩu</small></a> 
 								<a class="dropdown-item" href="/dieukhoan">
 								<small>Điều khoản</small></a> 
 								<a class="dropdown-item" href="/dangxuat">
@@ -325,7 +327,7 @@
 													class="dropdown-item" href="index/dongy/${topKb.maLoiMoi}"
 													style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1); font-size: small;">
 														<center>Đồng ý</center>
-												</a> <a class="dropdown-item" href="#"
+												</a> <a class="dropdown-item" href="index/tuchoi/${topKb.maLoiMoi}"
 													style="background-color: #A89386; color: white; font-size: small;">
 														<center>Xóa</center>
 												</a>

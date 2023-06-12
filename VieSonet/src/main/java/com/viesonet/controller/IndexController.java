@@ -235,7 +235,7 @@ public class IndexController {
 	@GetMapping("index/tuchoi/{maLoiMoi}")
 	public String tuChoiKetBan(@PathVariable int maLoiMoi) {
 		dskbDao.deleteById(maLoiMoi);
-		return "redirect:/index";
+		return "redirect:/";
 	}
 
 	@GetMapping("index/thich/{maBaiViet}")

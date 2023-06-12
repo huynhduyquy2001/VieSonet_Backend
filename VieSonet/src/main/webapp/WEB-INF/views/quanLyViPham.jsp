@@ -26,7 +26,7 @@
 	integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
 	crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/f737751420.js"></script>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
     <title>Quản lý vi phạm</title>
     <style>
         .menuDropdown {
@@ -200,7 +200,7 @@
                                 </div>
                                 <div id="message"></div>
                                 <div class="mb-3 mt-5">        
-                                    <button type="button" class="btn btn-danger" onclick="xoa()">Xóa</button>
+                                  
                                     <button type="button" class="btn btn-danger" onclick="them()">Thêm</button>
                                     <button type="button" class="btn btn-danger" onclick="sua()">Sửa</button>  
                                 </div>

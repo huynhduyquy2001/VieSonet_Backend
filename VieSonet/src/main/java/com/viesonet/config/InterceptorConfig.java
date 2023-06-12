@@ -18,19 +18,26 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
 	@Autowired
 	private AccessTimeInterceptor accessTimeInterceptor;
-	
+
 	@Autowired
 	private AdminInterceptor adminInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(authInterceptor).addPathPatterns("/**") // Áp dụng cho tất cả các đường dẫn
+		registry.addInterceptor(authInterceptor).addPathPatterns("/**")
+				// Áp dụng cho tất cả các đường dẫn
+				.excludePathPatterns("/dangnhap").excludePathPatterns("/dieukhoan").excludePathPatterns("/dangky")
+				.excludePathPatterns("/quenmatkhau").excludePathPatterns("/quenmatkhau/guima")
+				.excludePathPatterns("/quenmatkhau/xemmatkhau").excludePathPatterns("/style.css")
+
+				.excludePathPatterns("/images/**");
+
+		registry.addInterceptor(accessTimeInterceptor).addPathPatterns("/**").excludePathPatterns("/quenmatkhau/guima")
 				.excludePathPatterns("/dangnhap").excludePathPatterns("/style.css").excludePathPatterns("/images/**");
 		
-		registry.addInterceptor(accessTimeInterceptor).addPathPatterns("/**").excludePathPatterns("/dangnhap")
-				.excludePathPatterns("/style.css").excludePathPatterns("/images/**");
+		registry.addInterceptor(adminInterceptor).addPathPatterns("/quanly/**");
 		
-		
+
 	}
 
 	@Override

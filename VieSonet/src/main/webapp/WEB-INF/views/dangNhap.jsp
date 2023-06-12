@@ -108,11 +108,11 @@ span.psw {
 			class="header animate__animated animate__fadeInUp"
 			style="max-height: 90vh;" alt="">
 	</div>
-	<header class="header animationTop3">
+	<header class="header animationTop3"style="background: transparent;">
 		<nav class="navbar navbar-expand-sm navbar-light"
 			style="border: none; padding-top: 0; padding-bottom: 0;">
 			<div class="container">
-				<a class="navbar-brand nhan" href="#"
+				<a class="navbar-brand nhan"
 					style="color: #222; font-weight: bolder; font-family: 'robo';">
 					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
 				</a>
@@ -125,7 +125,7 @@ span.psw {
 				<div class="collapse navbar-collapse" id="collapsibleNavId">
 					<ul class="navbar-nav me-auto mt-2 mt-lg-0">
 
-						<li class="nav-item"><a class="nav-link" href="#"><small
+						<li class="nav-item"><a class="nav-link" href="/dieukhoan"><small
 								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Điều
 									khoản</small></a></li>
 
@@ -196,7 +196,7 @@ span.psw {
 								<button class="lgin" style="background-color: #007ACC;">Đăng
 									nhập</button>
 							</center>
-							<br> <a href="/ASM_Java4/index"> <small>Quên mật
+							<br> <a href="/quenmatkhau"> <small>Quên mật
 									khẩu?</small>
 							</a>
 						</form>

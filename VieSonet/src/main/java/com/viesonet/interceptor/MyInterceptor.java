@@ -28,10 +28,4 @@ public class MyInterceptor implements HandlerInterceptor {
 			ModelAndView modelAndView) throws Exception {
 
 	}
-
-	@Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        LocalDateTime accessTime = LocalDateTime.now();
-        // Lưu trữ hoặc xử lý thời gian truy cập tại đây
-    }
 }
