@@ -42,6 +42,7 @@ public class DanhSachBinhLuan {
 	BaiViet baiViet;
 	
 	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ngayBinhLuan")
 	Date ngayBinhLuan = new Date();

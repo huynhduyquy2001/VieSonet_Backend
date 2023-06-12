@@ -29,7 +29,6 @@ public class DangNhapController {
 	@GetMapping("/dangnhap")
 	public String dangNhap(Model m) {
 		String user = cookieService.getValue("user");
-
 		if (user != null) {
 			String pass = cookieService.getValue("pass");
 			m.addAttribute("user", user);
@@ -37,29 +36,31 @@ public class DangNhapController {
 		}
 		return "dangNhap";
 	}
-
+	
 	@PostMapping("/dangnhap")
-	public String dangNhap2(@RequestParam(name = "sdt", required = false) String sdt, Model m) {
-//		String sdt = paramService.getString("sdt", "");
+	public String dangNhap2( Model m) {
+		String sdt = paramService.getString("sdt", "");
 		String matKhau = paramService.getString("matKhau", "");
-		boolean remember = paramService.getBoolean("ghiNho", true);
-		NguoiDung nDung = dao.findBySdt(sdt);
-		if (sdt.equals(nDung.getSdt()) && matKhau.equals(nDung.getMatKhau())) {
-			m.addAttribute("message1", "");
-			sessionService.set("sdt", sdt);
-			if (remember) {
-				cookieService.add("user", sdt, 10);
-				cookieService.add("pass", matKhau, 10);
+		boolean remember = paramService.getBoolean("ghiNho", false);
+		try {
+			NguoiDung nDung = dao.findBySdt(sdt);
+			if (sdt.equals(nDung.getSdt()) && matKhau.equals(nDung.getMatKhau())) {
+				m.addAttribute("message1", "");
+				sessionService.set("sdt", sdt);
+				if (remember) {
+					cookieService.add("user", sdt, 10);
+					cookieService.add("pass", matKhau, 10);
+				} else {
+					cookieService.delete("user");
+					cookieService.delete("pass");
+				}
+				return "redirect:/";
 			} else {
-				cookieService.delete("user");
-				cookieService.delete("pass");
+				m.addAttribute("message", "Thông tin đăng nhập không chính xác !");
 			}
-//			return "index";
-		} else {
-			m.addAttribute("message", "Thông tin đăng nhập không chính xác !");
-			return "dangNhap";
+		} catch (Exception e) {
+			m.addAttribute("message", "Số điện thoại không tồn tại");
 		}
-
-		return "redirect:/index";
+		return "dangNhap";
 	}
 }

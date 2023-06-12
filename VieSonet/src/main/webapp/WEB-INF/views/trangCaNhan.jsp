@@ -527,7 +527,7 @@
 									${BaiViet.moTa}
 									<center>
 										<img class="lazy" data-src="images/${BaiViet.hinhAnh}"
-											width="100%" alt=""
+											width="60%" alt=""
 											style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
 									</center>
 								</div>
@@ -617,69 +617,7 @@
 		</div>
 	</div>
 	
-   <!-- Modal chỉnh sửa bài viết -->
-   <!--   <div class="modal fade" id="exampleModalToggle123" aria-hidden="true"
-		aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content"
-				style="background-color: rgba(246, 245, 244, 1);">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalToggleLabel">
-						<b style="margin-left: 170px;">Chỉnh sửa bài viết</b>
-					</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<form action="/baiviet/update" method="post"
-					 enctype="multipart/form-data">
-					<div class="modal-body">
-					
-						<div class="user-profile">
-							<img src="images/${nguoiDung.anhDaiDien}" alt="">
-							<div>
-								<label>${nguoiDung.hoTen}
-									</p> <small style="font-size: 12px">
-										<div>
-											<select name="cheDo"
-												style="border: none; background-color: transparent;">
-												<option selected value="1">Công khai</option>
-												<option value="2">Bạn bè</option>
-												<option value="3">Chỉ mình tôi</option>
-											</select>
-										</div>
-								</small>
-							</div>
-						</div>
-						
-						<br>
-						<textarea  name="moTaBaiDang" placeholder="Bạn muốn đăng gì?" id=""
-							cols="30" rows="3" 
-							style="width: 100%; border: 0px; outline: none; border-bottom: 1px solid #ccc; background: transparent; resize: none;">
-							</textarea>
-						<br>
-						<center>
-							<img id="img" src="" width="45%"
-								style="border-radius: 10px; border: 1px solid rgb(184, 182, 182)">
-						</center>
-					</div>
-					<div class="modal-footer">
-						<div class="input-group mb-3">
-							<label class="input-group-text" for="inputGroupFile01"> <i
-								class="fa-regular fa-image"></i>Photo/Video
-							</label> <input type="file" class="form-control" name="photo_file"
-								id="inputGroupFile01">
-						</div>
-
-						<button
-							style="width: 500px; background-color: #5A4F48; border: none;"
-							class="btn btn-primary" data-bs-target="#exampleModalToggle2"
-							data-bs-toggle="modal" data-bs-dismiss="modal">Đăng bài</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div> -->
-   
+  
    <div class="modal fade" id="baiVietChiTiet" tabindex="-1"
 		role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
 		<div class="modal-dialog modal-sm modal-fullscreen" role="document">
@@ -730,56 +668,6 @@
                 img1.src = URL.createObjectURL(input1.files[0]);
         } 
     </script>
-    <script>
-        var header = document.querySelector('header');
-        var lastScrollTop = 0;
-        window.addEventListener('scroll', function () {
-            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (lastScrollTop == 0) {
-                document.getElementById("container").style.marginTop = "70px";
-            }
-            if (scrollTop > lastScrollTop) {
-                header.classList.add('hidden');
-                document.getElementById("container").style.marginTop = "10px";
-                document.getElementById("tinTuc").style.top = "10px";
-                document.getElementById("danhSachBanBe").style.top = "10px";
-
-            } else if (scrollTop < lastScrollTop) {
-                header.classList.remove('hidden');
-                document.getElementById("container").style.marginTop = "70px";
-                document.getElementById("tinTuc").style.top = "70px";
-                document.getElementById("danhSachBanBe").style.top = "70px";
-            }
-            lastScrollTop = scrollTop;
-        });
-
-
-    </script>
-    <script>
-        function toggleDarkMode() {
-            var body = document.body;
-            var header = document.querySelector('.header');
-            var navlink = document.querySelectorAll('.nav-link');
-            var a = document.querySelectorAll('a');
-            var inputhbh = document.querySelector('.input-hbh');
-            body.classList.toggle("dark-mode");
-            header.classList.toggle("dark-mode2");
-            inputhbh.classList.toggle("dark-mode2");
-            inputhbh.style.color = "white";
-            document.querySelector('.dropdown-menu').classList.toggle("dark-mode2");
-
-            document.querySelector('textarea').style.color = "white";
-            for (var i = 0; i < navlink.length; i++) {
-                navlink[i].style.color = "white";
-            }
-            for (var i = 0; i < a.length; i++) {
-                a[i].style.color = "white";
-            }
-        }
-
-    </script>
-
-    <script src="${pageContext.request.contextPath}/lazy.js"></script>
     <script>
         window.onscroll = function () {
             var fixedDiv = document.getElementById("menuTrai");

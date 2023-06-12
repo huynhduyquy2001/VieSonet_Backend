@@ -45,7 +45,8 @@ public class NguoiDung {
 	private Integer luotViPham;
 	private Integer soLuongBanBe;
 
-	@Temporal(TemporalType.DATE)
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "thoiGianTruyCap")
 	Date thoiGianTruyCap = new Date();
 	
@@ -59,7 +60,6 @@ public class NguoiDung {
 	
 	
 	/*N-1*/
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "maVaiTro")
 	VaiTro vaiTro;
@@ -89,8 +89,8 @@ public class NguoiDung {
 	
 	@OneToMany(mappedBy = "nguoiDung")
 	List<DanhSachBinhLuan> danhSachBinhLuan;
-
-
+	@OneToMany(mappedBy = "nguoiDung")
+	List<ThongBao> thongBao;
 
 	
 	
