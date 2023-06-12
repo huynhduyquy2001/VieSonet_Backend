@@ -37,6 +37,7 @@ import com.viesonet.dao.NguoiDungDAO;
 import com.viesonet.entity.BaiViet;
 import com.viesonet.entity.BanBe;
 import com.viesonet.entity.BinhLuanResponse;
+import com.viesonet.entity.CheDo;
 import com.viesonet.entity.DanhSachBinhLuan;
 import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.DanhSachYeuThich;
@@ -351,21 +352,44 @@ public class ProfileController {
 	@GetMapping("/nguoiDung/{sdt}")
 	public String getNguoiDung(@PathVariable("sdt") String sdtLa, Model m) {
 		String sdtHt = session.get("sdt");
+		BaiViet baiViet = new BaiViet();
 		NguoiDung nguoiDung = nguoiDungDao.findBySdt(sdtHt);
-		NguoiDung nguoiDungLa = nguoiDungDao.findBySdt(sdtLa);
-        List<BanBe> listBb = banBeDao.findFriendByUserphone(sdtLa);
+		NguoiDung nguoiLa = nguoiDungDao.findBySdt(sdtLa);
 		List<Order> orders = new ArrayList<Order>();
-		// Số lượng bạn bè
-		
 		orders.add(new Order(Direction.DESC, "ngayDang"));
 		Sort sort = Sort.by(orders);
-		if(nguoiDung.equals(nguoiDungLa)) {
-			//Chọn tự click bản thân sẽ về trang cá nhân
+        List<BanBe> listBb = banBeDao.findFriendByUserphone(sdtLa);
+        List<BaiViet> listBv = baiVietDao.findBySdt(sdtLa, sort);
+
+		// Số lượng bạn bè
+		if(nguoiDung.equals(nguoiLa)) {
+			//Trả về trang cá nhân
 			return "redirect:/profile";
 		}else {
+			//Lấy sdt người dùng khác
 			m.addAttribute("nguoiDung", nguoiDungDao.findBySoDienThoai(sdtLa));
+			//Lấy sdt bản thân
 			m.addAttribute("nguoiDungHienTai", nguoiDungDao.findBySoDienThoai(sdtHt));
-			m.addAttribute("BaiVietCaNhan", baiVietDao.findBySdt(sdtLa, sort));
+			//Đưa vào danh sách mới
+			List<BaiViet> danhSachBaiVietCty = new ArrayList<>();
+			//Kiểm tra bài viết chỉ mình tôi
+			for(BaiViet bv : listBv) {
+				//Lấy chế độ bài viết
+				String tenCheDo = bv.getCheDo().getTenCheDo();
+				//Thích thì xem luôn mã bài viết
+				int maBaiViet = bv.getMaBaiViet();
+				System.out.println("Chế độ bài viết "+maBaiViet+" "+tenCheDo);
+				if (tenCheDo.equals("Công khai") || (tenCheDo.equals("Bạn bè"))) {
+					//Thêm vào ArraysList tạm thời
+			        danhSachBaiVietCty.add(bv);
+			    } else if (tenCheDo.equals("Chỉ mình tôi")) {
+			    	//Loại bỏ bài viết chỉ mình tôi
+			    	danhSachBaiVietCty.remove(bv); 
+			    }
+			}
+			//Hiển thị bài viết
+			m.addAttribute("BaiVietCaNhan", danhSachBaiVietCty);
+//			m.addAttribute("BaiVietCaNhan", baiVietDao.findBySdt(sdtLa, sort));
 			m.addAttribute("SlBanbe", listBb.size());
 			List<BanBe> list = banBeDao.findFriends(sdtLa);
 			List<DanhSachKetBan> dsKb = dskbDao.findFriends(sdtLa);

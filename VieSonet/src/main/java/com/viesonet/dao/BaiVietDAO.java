@@ -22,4 +22,7 @@ public interface BaiVietDao extends JpaRepository<BaiViet, Integer> {
 	
 	@Query("select ds from DanhSachYeuThich ds where ds.nguoiDung.sdt=?1")
 	List<BaiViet> findBySdt(String sdt);
+	
+	
 }
+	

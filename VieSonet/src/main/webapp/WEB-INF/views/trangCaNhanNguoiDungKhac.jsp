@@ -366,7 +366,11 @@
                     </div>
                     <b>Bài viết</b>
                     <hr>
+                    
+                    
+                    
                     <c:forEach items="${BaiVietCaNhan}" var="BaiViet">
+                    
                     <div class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
                         style="margin-bottom: 20px;  border-radius: 0;">
                         <div style="padding: 10px; border: 1px solid rgba(210,199,188,1); margin: 0;">
