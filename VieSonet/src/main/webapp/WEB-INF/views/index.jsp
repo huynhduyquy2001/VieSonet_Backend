@@ -85,7 +85,7 @@
 						</a></li>
 
 						<li class="nav-item"><a class="nav-link"
-							href="/quanLyNguoiDung"><small
+							href="/quanly/quanLyNguoiDung"><small
 								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Quản
 									lí</small></a></li>
 					</ul>

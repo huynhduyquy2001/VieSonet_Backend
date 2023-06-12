@@ -139,26 +139,26 @@
                 <div style="min-height: 80vh; position: relative; padding: 7px; padding-top: 50px; border: 1px solid rgba(210,199,188,1);">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li style="margin-bottom: 20px;" class="ql-link">
-                            <a href="#" class="nav-link" style=" border-radius: 0;">
+                            <a href="/quanly/quanlyvipham" class="nav-link" style=" border-radius: 0;">
                                 <i class="fa-solid fa-triangle-exclamation"></i>&nbsp;&nbsp;
                                 <small><label>Quản lý vi phạm</label></small>
                             </a>
                         </li>
                         <li style="margin-bottom: 20px;" class="ql-link">
-                            <a href="/quanLyNguoiDung" class="nav-link" style=" border-radius: 0;">
+                            <a href="/quanly/quanLyNguoiDung" class="nav-link" style=" border-radius: 0;">
                                 <i class="fa-solid fa-users"></i>&nbsp;&nbsp;
                                 <small><label>Quản lý người dùng</label></small>
                             </a>
                         </li>
                         <li style="margin-bottom: 20px;" class="ql-link">
-                            <a href="/quanLyBaiViet" class="nav-link" style=" border-radius: 0;">
+                            <a href="/quanly/quanLyBaiViet" class="nav-link" style=" border-radius: 0;">
                                 <i class="fa-sharp fa-regular fa-list-dropdown"></i>&nbsp;&nbsp;
                                 <small><label>Quản lý bài viết</label></small>
                             </a>
                         </li>
                         
                         <li style="margin-bottom: 20px;" class="ql-link">
-                            <a href="/thongKe" class="nav-link" style="border-radius: 0;">
+                            <a href="/quanly/thongKe" class="nav-link" style="border-radius: 0;">
                                 <i class="fa-solid fa-chart-column"></i> &nbsp;&nbsp;
                                 <small><label for="">Thống kê</label></small>
                             </a>
