@@ -20,7 +20,7 @@ public class ThongKeController {
 	@Autowired
     private JdbcTemplate jdbcTemplate;
 	
-	@RequestMapping("/thongKe")
+	@RequestMapping("/quanly/thongKe")
 	public String thongKe(Model m) throws JsonProcessingException {
 		String layNam = "SELECT DISTINCT YEAR(ngayToCao) as 'Nam' FROM BaiVietViPham order by YEAR(ngayToCao) DESC";
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(layNam, new Object[]{});

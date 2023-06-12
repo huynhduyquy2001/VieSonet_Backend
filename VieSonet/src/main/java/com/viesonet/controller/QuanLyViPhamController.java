@@ -22,7 +22,7 @@ public class QuanLyViPhamController {
 	@Autowired
 	LoaiViPhamDAO dao;
 
-	@GetMapping("/quanlyvipham")
+	@GetMapping("/quanly/quanlyvipham")
 	public String list(Model m) {
 		m.addAttribute("ds", dao.findAll());
 		return "quanLyViPham";
