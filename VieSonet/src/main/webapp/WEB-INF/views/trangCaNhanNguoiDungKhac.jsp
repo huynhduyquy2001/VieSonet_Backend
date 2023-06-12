@@ -357,20 +357,15 @@
                 <div style=" box-sizing: border-box; margin: 1%; padding: 3%; margin-top: 10px;">
                     <center>
                         <div>
-                            <br>
+                        <i class="fa-regular fa-comment-captions fa-xl"></i><br>
                             ${nguoiDung.gioiThieu}
                         </div>
                     </center>
-                   
                     
                     </div>
                     <b>Bài viết</b>
                     <hr>
-                    
-                    
-                    
                     <c:forEach items="${BaiVietCaNhan}" var="BaiViet">
-                    
                     <div class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
                         style="margin-bottom: 20px;  border-radius: 0;">
                         <div style="padding: 10px; border: 1px solid rgba(210,199,188,1); margin: 0;">
@@ -383,31 +378,7 @@
                                             <small>${BaiViet.ngayDang} </small> <br>
                                         </div>
                                     </div>
-                                    <span class="tooltip2-text">
-                                        <a href="">
-                                            <img src="/images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
-                                            <div>
-                                                <label for="">${BaiViet.nguoiDung.hoTen}  </label> <br>
-                                                <center>
-                                                    <small>
-                                                        <small>
-                                                            <ul style="line-height: 20px; text-align: left;">
-                                                                <li><b><i class="fa-light fa-mountain-sun"></i> Quê
-                                                                        quán:</b>
-                                                                    ${BaiViet.nguoiDung.diaChi}</li>
-                                                                <li><i class="fa-regular fa-heart"></i> <b>Mối quan
-                                                                        hệ:</b>
-                                                                    ${BaiViet.nguoiDung.moiQuanHe}</li>
-                                                                <li><b><i class="fa-light fa-user-group"></i> Danh sách
-                                                                        bạn
-                                                                        bè:</b> ${SlBanbe}</li>
-                                                            </ul>
-                                                        </small>
-                                                    </small>
-                                                </center>
-                                            </div>
-                                        </a>
-                                    </span>
+                                    
                                 </div>
                                 <div>
                                     <div class="btn-group">
@@ -436,26 +407,28 @@
 									</center>
 								</div>
                                <div class="post-reaction">
-								<div class="activity-icons">
-										<input type="hidden" name="maBaiViet" value="${baiViet.maBaiViet}" data-id="${baiViet.maBaiViet}">
+									<div class="activity-icons">
+
 										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
 											class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
-											<i class="fa-duotone fa-heart"></i> &nbsp;
-											${BaiViet.luotThich}
+											<i class="fa-duotone fa-heart"></i> &nbsp; <span
+												class="like-count">${BaiViet.luotThich}</span>
 										</div>
-
-
 										<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
 											<i class="fa-regular fa-comment"></i>&nbsp;
 											${BaiViet.luotBinhLuan}
 										</div>
 									</div>
-							</div>
+								</div>
                             </div>
                         </div>
                     </div>
                     </c:forEach>
                 </div>
+                
+               
+                                
+                
             
     
     <!-- Modal đăng bài --> 

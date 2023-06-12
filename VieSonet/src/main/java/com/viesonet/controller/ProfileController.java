@@ -112,9 +112,27 @@ public class ProfileController {
 			List<Order> orders = new ArrayList<Order>();
 			orders.add(new Order(Direction.DESC, "ngayDang"));
 			Sort sort = Sort.by(orders);
+			List<BaiViet> listBv = baiVietDao.findBySdt(sdt, sort);
+			List<BaiViet> danhSachBaiVietCty = new ArrayList<>();
 		//Load bài viết cá nhân
 			
-			m.addAttribute("BaiVietCaNhan", baiVietDao.findBySdt(sdt, sort));
+			//Kiểm tra bài viết 
+			for(BaiViet bv : listBv) {
+				Boolean trangThaiBv = bv.getTrangThai();
+				if(trangThaiBv) {
+					//Lấy chế độ bài viết
+					danhSachBaiVietCty.add(bv); 
+				} else {
+					danhSachBaiVietCty.remove(bv); 
+				}	
+			}
+			//Hiển thị bài viết
+			m.addAttribute("BaiVietCaNhan", danhSachBaiVietCty);
+			
+			
+			
+			
+//			m.addAttribute("BaiVietCaNhan", baiVietDao.findBySdt(sdt, sort));
 			m.addAttribute("nguoiDung", nguoiDungDao.findBySoDienThoai(sdt));
 			
 			List<BanBe> topBanBe = new ArrayList<>();
@@ -168,6 +186,15 @@ public class ProfileController {
 		} else {
 			baiVietDao.saveAndFlush(baiDang);
 		}
+		return "redirect:/profile";
+	}
+	@GetMapping("/profile/anbaiviet/{maBaiViet}")
+	public String anBaiViet(Model m, @PathVariable int maBaiViet) {
+		BaiViet baiDang = baiVietDao.getById(maBaiViet);
+		String sdt = session.get("sdt");
+		baiDang.setTrangThai(false);
+//		baiDang.setNguoiDung(nguoiDungDao.getById(sdt));
+		baiVietDao.saveAndFlush(baiDang);
 		return "redirect:/profile";
 	}
 	
@@ -225,13 +252,13 @@ public class ProfileController {
 		
 	}
 	
-	//Đăng xuất
-	@GetMapping("/dangxuat")
-	public String dangXuat() {
-		session.remove("sdt");
-		session.remove("vt");
-		return "redirect:/dangnhap";
-	}
+//	//Đăng xuất
+//	@GetMapping("/dangxuat")
+//	public String dangXuat() {
+//		session.remove("sdt");
+//		session.remove("vt");
+//		return "redirect:/dangnhap";
+//	}
 	
 	//Cập nhật thông tin bài viết
 //		@PostMapping("/baiviet/update/{maBaiViet}")
@@ -347,7 +374,7 @@ public class ProfileController {
 		return "redirect:/profile";
 	}
 	
-	//---------------------------------Người dùng khác-------------------------------------------
+	//---------------------------------Người dùng khác-------------------------------------------//
 	//Lấy thông tin người dùng khác
 	@GetMapping("/nguoiDung/{sdt}")
 	public String getNguoiDung(@PathVariable("sdt") String sdtLa, Model m) {
@@ -360,7 +387,7 @@ public class ProfileController {
 		Sort sort = Sort.by(orders);
         List<BanBe> listBb = banBeDao.findFriendByUserphone(sdtLa);
         List<BaiViet> listBv = baiVietDao.findBySdt(sdtLa, sort);
-
+        List<BanBe> listbb = banBeDao.findFriends(sdtLa);
 		// Số lượng bạn bè
 		if(nguoiDung.equals(nguoiLa)) {
 			//Trả về trang cá nhân
@@ -368,24 +395,45 @@ public class ProfileController {
 		}else {
 			//Lấy sdt người dùng khác
 			m.addAttribute("nguoiDung", nguoiDungDao.findBySoDienThoai(sdtLa));
+			
 			//Lấy sdt bản thân
+			
 			m.addAttribute("nguoiDungHienTai", nguoiDungDao.findBySoDienThoai(sdtHt));
 			//Đưa vào danh sách mới
 			List<BaiViet> danhSachBaiVietCty = new ArrayList<>();
-			//Kiểm tra bài viết chỉ mình tôi
+			
+			//Kiểm tra bài viết 
 			for(BaiViet bv : listBv) {
-				//Lấy chế độ bài viết
-				String tenCheDo = bv.getCheDo().getTenCheDo();
-				//Thích thì xem luôn mã bài viết
-				int maBaiViet = bv.getMaBaiViet();
-				System.out.println("Chế độ bài viết "+maBaiViet+" "+tenCheDo);
-				if (tenCheDo.equals("Công khai") || (tenCheDo.equals("Bạn bè"))) {
-					//Thêm vào ArraysList tạm thời
-			        danhSachBaiVietCty.add(bv);
-			    } else if (tenCheDo.equals("Chỉ mình tôi")) {
-			    	//Loại bỏ bài viết chỉ mình tôi
-			    	danhSachBaiVietCty.remove(bv); 
-			    }
+				Boolean trangThaiBv = bv.getTrangThai();
+				if(trangThaiBv) {
+					//Lấy chế độ bài viết
+					String tenCheDo = bv.getCheDo().getTenCheDo();
+					//Thích thì xem luôn mã bài viết
+					int maBaiViet = bv.getMaBaiViet();
+					System.out.println("Chế độ bài viết "+maBaiViet+" "+tenCheDo);
+					if (tenCheDo.equals("Công khai")) {
+						//Thêm vào ArraysList tạm thời
+				        danhSachBaiVietCty.add(bv);
+				    } else if (tenCheDo.equals("Bạn bè")){
+				    	boolean baiVietChinhXac = false;
+				        for (BanBe banBe : listbb) {
+				            if (((banBe.getNguoiDung().getSdt().equals(sdtHt) && banBe.getBanBe().getSdt().equals(sdtLa)) || 
+				                 (banBe.getNguoiDung().getSdt().equals(sdtLa) && banBe.getBanBe().getSdt().equals(sdtHt)))) {
+				                baiVietChinhXac = true;
+				                break;
+				            }
+				        }
+				        if (baiVietChinhXac) {
+				            danhSachBaiVietCty.add(bv);
+				        }
+				    }
+					else if (tenCheDo.equals("Chỉ mình tôi")) {
+				    	//Loại bỏ bài viết chỉ mình tôi
+				    	danhSachBaiVietCty.remove(bv); 
+				    }
+				} else {
+					danhSachBaiVietCty.remove(bv); 
+				}	
 			}
 			//Hiển thị bài viết
 			m.addAttribute("BaiVietCaNhan", danhSachBaiVietCty);
@@ -419,7 +467,7 @@ public class ProfileController {
 				//Có 3 điều kiện khác nhau đã nêu trên
 				for(DanhSachKetBan dskb : dsKb) {
 					if ((dskb.getNguoiDung().getSdt().equals(sdtHt) && dskb.getNguoiLa().getSdt().equals(sdtLa)) ) {
-					        // Trạng thái 2: Chưa kết bạn nhưng người dùng gửi lời mời từ người lạ
+							// Trạng thái 1: Chưa kết bạn nhưng người lạ gửi lời mời cho người dùng
 					        trangThai = 1;
 					        //Lấy mã lời mời kết bạn
 					        Integer maLoiMoi = dskb.getMaLoiMoi();
@@ -428,7 +476,7 @@ public class ProfileController {
 					        // Dừng vòng lặp
 					        break;
 					} if (dskb.getNguoiDung().getSdt().equals(sdtLa) && dskb.getNguoiLa().getSdt().equals(sdtHt)) {
-							// Trạng thái 1: Chưa kết bạn nhưng người lạ gửi lời mời cho người dùng
+							// Trạng thái 2: Chưa kết bạn nhưng người dùng gửi lời mời từ người lạ
 							trangThai = 2;
 							//Lấy mã lời mời kết bạn
 							Integer maLoiMoi = dskb.getMaLoiMoi();
