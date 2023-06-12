@@ -52,10 +52,6 @@ public class NguoiDung {
 	Date thoiGianTruyCap = new Date();
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "ngaySinh")
-	Date ngaySinh = new Date();
-	
-	@Temporal(TemporalType.DATE)
 	@Column(name = "ngayTao")
 	Date ngayGui = new Date();
 	

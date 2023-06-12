@@ -124,6 +124,7 @@ function thongKe2() {
 		},
 		dataType: "json",
 		success: function(data) {
+			console.log(data);
 			var dsDangKy = data;
 			var slDangKy = [];
 			for (var i = 0; i < dsDangKy.length; i++) {

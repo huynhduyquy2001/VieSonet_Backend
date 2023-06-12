@@ -29,7 +29,7 @@ public class DoiMatKhauController2 {
 	}
 
 	@RequestMapping("/DoiMatKhau")
-	public String doiMatKhau1(RedirectAttributes attrRedirect, Model m) {
+	public String doiMatKhau1(RedirectAttributes attrRedirect, Model m ) {
 		String matKhauMoi = paramService.getString("matKhauMoi", "");
 		String matKhauXacNhan = paramService.getString("matKhauXacNhan", "");
 		String sdt = sessionService.get("sdt");

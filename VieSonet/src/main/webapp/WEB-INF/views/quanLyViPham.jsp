@@ -190,7 +190,7 @@
                             <div class="col-5 mt-5">
                                 <div class="mb-3 mt-5">
                                     <label for="" class="form-check-label">Mã vi phạm</label>
-                                    <input type="text" class="form-control ip" id="maViPham"  
+                                    <input type="text" class="form-control ip" id="maViPham" 
                                         aria-describedby="helpId" placeholder="Nhập..." pattern="[0-9]*" required>
                                 </div>
                                 <div class="mb-3 mt-2">
@@ -200,7 +200,6 @@
                                 </div>
                                 <div id="message"></div>
                                 <div class="mb-3 mt-5">        
-                                    <button type="button" class="btn btn-danger" onclick="xoa()">Xóa</button>
                                     <button type="button" class="btn btn-danger" onclick="them()">Thêm</button>
                                     <button type="button" class="btn btn-danger" onclick="sua()">Sửa</button>  
                                 </div>

@@ -22,11 +22,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoaiViPham {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private int maLoai;
-private String chiTiet;
-@JsonIgnore
-@OneToMany(mappedBy = "loaiViPham")
-List<BaiVietViPham> baiVietViPham;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int maLoai;
+	private String chiTiet;
+	@JsonIgnore
+	@OneToMany(mappedBy = "loaiViPham")
+	List<BaiVietViPham> baiVietViPham;
 }

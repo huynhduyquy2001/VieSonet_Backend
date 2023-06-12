@@ -1,7 +1,6 @@
 package com.viesonet.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +41,7 @@ public class DoiMatKhauController {
 				if (matKhauMoi.equalsIgnoreCase(matKhauXacNhan)) {
 					nDung.setMatKhau(matKhauMoi);
 					dao.save(nDung);
-					m.addAttribute("message", "Đổi mật khẩu thành công");
+					attrRedirect.addFlashAttribute("passwordChanged", true);
 				} else {
 					m.addAttribute("message", "Mật khẩu và mật khẩu xác nhận không khớp");
 				}

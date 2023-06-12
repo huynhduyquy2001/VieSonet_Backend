@@ -57,12 +57,10 @@ public class QuenMatKhauController {
 	public String guiMa(Model m, @RequestParam String mail) {
 		NguoiDung nDung = dao.findByEmail(mail);
 		MimeMessage message = sender.createMimeMessage();
-		System.out.println(Arrays.toString(randomNumbers).replaceAll("\\[|\\]|,|\\s", ""));
-		if(nDung.getTrangThai() == false) {
-			return "Tài khoản này đã bị khóa";
-		}
 		try {
-			
+			if(nDung.getTrangThai() == false) {
+				return "Tài khoản này đã bị khóa";
+			}
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
 			helper.setFrom("VIE_SONET");
 			helper.setTo(mail);
