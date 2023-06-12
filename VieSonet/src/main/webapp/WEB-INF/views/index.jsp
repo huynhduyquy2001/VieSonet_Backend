@@ -77,27 +77,11 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="collapsibleNavId">
-					<ul class="navbar-nav me-auto mt-2 mt-lg-0">
-						<li class="nav-item"><a class="nav-link active" href="#"
-							aria-current="page"
-							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Trang
-								chủ <span class="visually-hidden">(current)</span>
-						</a></li>
-
-						<li class="nav-item"><a class="nav-link"
-							href="/quanly/quanLyNguoiDung"><small
-								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Quản
-									lí</small></a></li>
-					</ul>
-					<form class="d-flex my-2 my-lg-0" action="/tim-kiem">
-						<input class="form-control me-sm-2 input-hbh" name="timKiem"
-							style="border-radius: 0; border: none; border-bottom: 1px solid gray; transform: skew(0); background-color: transparent;"
-							type="text" placeholder="Tìm kiếm...">
-						<button class="btn btn-outline-success my-2 my-sm-0" hidden
-							type="submit">Tìm kiếm...</button>
-					</form>
-
 					<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+						<li class="nav-item"><a class="nav-link"
+							href="/timKiem"><small
+								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; letter-spacing: 0.1em; color: black;"><i class="fa-solid fa-magnifying-glass"></i></small></a></li>
+						&nbsp;&nbsp;
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
 							href="#" role="button" aria-haspopup="true" aria-expanded="false"><i
@@ -108,7 +92,7 @@
 									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
 										<div class="user-profile"
 											style="width: 250px; padding-left: 3%;">
-											<img src="images/${item.nguoiDung.anhDaiDien}"  alt="">
+											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
 											<div>
 												<p style="font-size: 13px">${item.noiDung}</p>
 												<small style="font-size: 11px">${item.ngayThongBao}</small>
@@ -127,18 +111,14 @@
 									style="border-radius: 50%; border: 1px solid gray" alt=""></small></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownId"
 								style="padding-left: 3px; left: -100px; line-height: 35px">
-								<a class="dropdown-item" href="/profile">
-								<small>Xem trang cá nhân</small></a> 
-								<a class="dropdown-item" href="/DanhSachBanBe">
-								<small>Danh sách bạn bè</small></a> 
-								<a class="dropdown-item" href="/GoiYKB">
-								<small>Lời mời kết bạn</small></a> 
-								<a class="dropdown-item" href="/doimatkhau">
-								<small>Đổi mật khẩu</small></a> 
-								<a class="dropdown-item" href="/dieukhoan">
-								<small>Điều khoản</small></a> 
-								<a class="dropdown-item" href="/dangxuat">
-								<small>Đăng xuất</small></a>
+								<a class="dropdown-item" href="/profile"> <small>Xem
+										trang cá nhân</small></a> <a class="dropdown-item" href="/DanhSachBanBe">
+									<small>Danh sách bạn bè</small>
+								</a> <a class="dropdown-item" href="/GoiYKB"> <small>Lời
+										mời kết bạn</small></a> <a class="dropdown-item" href="/doimatkhau"> <small>Đổi
+										mật khẩu</small></a> <a class="dropdown-item" href="/dieukhoan"> <small>Điều
+										khoản</small></a> <a class="dropdown-item" href="/dangxuat"> <small>Đăng
+										xuất</small></a>
 							</div></li>
 
 					</ul>
@@ -313,21 +293,23 @@
 								</div>
 							</div>
 							<div>
-							<a href="/GoiYKB"><label class="nhan">Lời mời kết bạn(${SlKb})</label></a>
-								
+								<a href="/GoiYKB"><label class="nhan">Lời mời kết
+										bạn(${SlKb})</label></a>
+
 								<c:forEach items="${topKetBan}" var="topKb">
 									<div>
 										<div class="user-profile">
-											<img src="images/${topKb.nguoiLa.anhDaiDien}"
+											<img src="images/${topKb.nguoiDung.anhDaiDien}"
 												class="img-thumbnail" alt="">
 											<div>
 												<label class="nhan"
-													style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiLa.hoTen}</label>
+													style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiDung.hoTen}</label>
 												<small style="display: flex;"> <a
 													class="dropdown-item" href="index/dongy/${topKb.maLoiMoi}"
 													style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1); font-size: small;">
 														<center>Đồng ý</center>
-												</a> <a class="dropdown-item" href="index/tuchoi/${topKb.maLoiMoi}"
+												</a> <a class="dropdown-item"
+													href="index/tuchoi/${topKb.maLoiMoi}"
 													style="background-color: #A89386; color: white; font-size: small;">
 														<center>Xóa</center>
 												</a>
@@ -356,10 +338,9 @@
 						</div>
 
 						<div class="col-md-6">
-						<a href="/DanhSachBanBe"><label class="nhan"
+							<a href="/DanhSachBanBe"><label class="nhan"
 								style="box-sizing: border-box; padding-left: 10px">Danh
-								sách bạn bè(${SlBanbe})</label></a>
-							 <br> <br>
+									sách bạn bè(${SlBanbe})</label></a> <br> <br>
 
 							<c:forEach items="${topBanbe}" var="banBe">
 								<div

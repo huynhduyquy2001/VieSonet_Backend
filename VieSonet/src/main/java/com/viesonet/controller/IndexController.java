@@ -125,7 +125,7 @@ public class IndexController {
 		m.addAttribute("topBanbe", topBanBe);
 		// Số lượng bạn bè
 		m.addAttribute("SlBanbe", listBb.size());
-		// danh sách kết bạn
+		// danh sách lời mời kết bạn
 		List<DanhSachKetBan> danhSachKetBan = dskbDao.findDsBySdt(sdt);
 		m.addAttribute("SlKb", danhSachKetBan.size());
 		List<DanhSachKetBan> topKetBan = new ArrayList<>();
@@ -221,13 +221,6 @@ public class IndexController {
 		banBe.setBanBe(nguoiLa);
 		banBe.setNgayKb(new Date());
 		banBeDao.saveAndFlush(banBe);
-
-		// thêm mình vào danh sách bạn bè của ng ta
-		BanBe banBee = new BanBe();
-		banBee.setNguoiDung(nguoiLa);
-		banBee.setBanBe(nguoiDung);
-		banBee.setNgayKb(new Date());
-		banBeDao.saveAndFlush(banBee);
 		dskbDao.deleteById(maLoiMoi);
 		return "redirect:/";
 	}
