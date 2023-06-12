@@ -4,7 +4,7 @@ function thongKe1() {
 	var Nam = selectElement.value;
 
 	$.ajax({
-		url: "/getThongKe",
+		url: "/quanly/getThongKe",
 		type: "POST",
 		data: {
 			Nam: Nam
@@ -117,7 +117,7 @@ function thongKe2() {
 	var Nam = selectElement.value;
 
 	$.ajax({
-		url: "/getThongKe2",
+		url: "/quanly/getThongKe2",
 		type: "POST",
 		data: {
 			Nam: Nam
@@ -181,7 +181,7 @@ function thongKe3() {
 	var Date = inputDate.value;
 
 	$.ajax({
-		url: "/getThongKe3",
+		url: "/quanly/getThongKe3",
 		type: "POST",
 		data: {
 			Date: Date

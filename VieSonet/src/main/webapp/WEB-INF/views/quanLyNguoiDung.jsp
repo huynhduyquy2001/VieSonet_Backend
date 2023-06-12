@@ -66,7 +66,7 @@
                                     khoản</small></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><small style=" white-space: nowrap;
+                            <a class="nav-link" href="/quanly/quanLyNguoiDung"><small style=" white-space: nowrap;
                                 overflow: hidden; 
                                 text-overflow: ellipsis;font-family: 'Roboto', sans-serif;letter-spacing: 0.1em; ">Quản
                                     lí</small></a>
@@ -106,8 +106,8 @@
                                         </label>
                                     </div>
                                 </div>
-                                <a class="dropdown-item" href="#"><small>Đăng nhập</small></a>
-                                <a class="dropdown-item" href="#"><small>Đăng ký</small></a>
+                                <a class="dropdown-item" href="/dangnhap"><small>Đăng nhập</small></a>
+                                <a class="dropdown-item" href="/dangky"><small>Đăng ký</small></a>
                             </div>
                         </li>
 
@@ -248,14 +248,14 @@
                                     <div  style="margin-top: 1rem">
                                         <c:if test="${thongTin.trangThai == true}">
                                         	<a data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Khóa tài khoản này" href="/khoaTaiKhoan/${thongTin.sdt}" class="btn me-4" 
+                                        title="Khóa tài khoản này" href="/quanly/khoaTaiKhoan/${thongTin.sdt}" class="btn me-4" 
                                         style="background: rgba(234,229,224,1); width: 60px;">
                                         <i class="fa-solid fa-user-slash"></i> </a>
                                         </c:if>
     
                                         <c:if test="${thongTin.trangThai == false}">
                                         <a data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Mở khóa tài khoản này" href="/moKhoaTaiKhoan/${thongTin.sdt}" class="btn me-4" 
+                                        title="Mở khóa tài khoản này" href="/quanly/moKhoaTaiKhoan/${thongTin.sdt}" class="btn me-4" 
                                         style="background: rgba(234,229,224,1); width: 60px;">
                                         <i class="fa-solid fa-user-check"></i></a>
                                         </c:if>
@@ -267,9 +267,9 @@
                                                             <i class="fa-solid fa-user-pen"></i>
                                         					</a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                       		 <li><a class="dropdown-item btn btn-danger" href="/doiVaiTro/1/${thongTin.sdt}"><i class="fa-solid fa-user-hair"></i> Người dùng</a></li>
-                                             <li><a class="dropdown-item btn btn-danger" href="/doiVaiTro/2/${thongTin.sdt}"><i class="fa-solid fa-user-helmet-safety"></i> Nhân viên</a></li>
-                                             <li><a class="dropdown-item btn btn-danger" href="/doiVaiTro/3/${thongTin.sdt}"><i class="fa-solid fa-user-tie"></i> Quản lý</a></li>
+                                       		 <li><a class="dropdown-item btn btn-danger" href="/quanly/doiVaiTro/1/${thongTin.sdt}"><i class="fa-solid fa-user-hair"></i> Người dùng</a></li>
+                                             <li><a class="dropdown-item btn btn-danger" href="/quanly/doiVaiTro/2/${thongTin.sdt}"><i class="fa-solid fa-user-helmet-safety"></i> Nhân viên</a></li>
+                                             <li><a class="dropdown-item btn btn-danger" href="/quanly/doiVaiTro/3/${thongTin.sdt}"><i class="fa-solid fa-user-tie"></i> Quản lý</a></li>
                                         </ul>
                                         </c:if>
                                     </div>
@@ -334,7 +334,7 @@
                                             </a>
                                             </c:if>
                                             <a data-bs-toggle="tooltip" data-bs-placement="top"
-                                                title="Chỉnh sửa" href="/chinhSua/${ds.sdt}">
+                                                title="Chỉnh sửa" href="/quanly/chinhSua/${ds.sdt}">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
                                         </td>

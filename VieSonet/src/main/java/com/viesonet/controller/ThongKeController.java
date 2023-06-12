@@ -100,7 +100,7 @@ public class ThongKeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/getThongKe")
+	@RequestMapping("/quanly/getThongKe")
 	public ThongKeResponse ThongKe1(@RequestParam String Nam, Model m) throws JsonProcessingException {
 		int nam1;
 		if(Nam.equals("0")) {
@@ -133,7 +133,7 @@ public class ThongKeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/getThongKe2")
+	@RequestMapping("/quanly/getThongKe2")
 	public String ThongKe2(@RequestParam String Nam, Model m) throws JsonProcessingException {
 		int nam1;
 		if(Nam.equals("0")) {
@@ -159,7 +159,7 @@ public class ThongKeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/getThongKe3")
+	@RequestMapping("/quanly/getThongKe3")
 	public String thongKe3(@RequestParam String Date) throws JsonProcessingException {
 		    String date;
 		    if(Date.equals("")) {

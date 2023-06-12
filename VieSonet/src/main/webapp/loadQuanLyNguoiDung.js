@@ -1,6 +1,6 @@
 function goViPham(sdt) {
 	$.ajax({
-		url: "/goViPham/" + sdt,
+		url: "/quanly/goViPham/" + sdt,
 		type: "GET",
 		success: function(data) {
 			let myDiv = document.getElementById("tableLoad");
@@ -42,7 +42,7 @@ function goViPham(sdt) {
 					+ "<td>"
 					+ button
 					+ "<a data-bs-toggle='tooltip' data-bs-placement='top'"
-					+ " title='Chỉnh sửa' href='/chinhSua/" + item.sdt + "'>"
+					+ " title='Chỉnh sửa' href='/quanly/chinhSua/" + item.sdt + "'>"
 					+ " <i class='fa-solid fa-pen-to-square'></i>"
 					+ "</a>"
 					+ "</td>"
@@ -66,7 +66,7 @@ function timKiem() {
 	if (regex.test(kt) == true) {
 		// Thực hiện cuộc gọi AJAX để tìm kiếm số điện thoại
 		$.ajax({
-			url: "/timKiemDanhSachSDT/" + kt,
+			url: "/quanly/timKiemDanhSachSDT/" + kt,
 			type: "GET",
 			success: function(data) {
 				let myDiv = document.getElementById("tableLoad");
@@ -123,7 +123,7 @@ function timKiem() {
 		// Thực hiện cuộc gọi AJAX để tìm kiếm từ khóa
 		if(kt.length === 0){
 			$.ajax({
-			url: "/timKiemAll",
+			url: "/quanly/timKiemAll",
 			type: "POST",
 			success: function(data) {
 				console.log(data)
@@ -181,7 +181,7 @@ function timKiem() {
 		});
 		}else{
 			$.ajax({
-			url: "/timKiemDanhSachTen/" + kt,
+			url: "/quanly/timKiemDanhSachTen/" + kt,
 			type: "POST",
 			success: function(data) {
 				console.log(data)

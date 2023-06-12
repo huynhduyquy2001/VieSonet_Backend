@@ -63,7 +63,7 @@ public class QuanLyBaiVietController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/chiTietBaiViet/{maBaiViet}")
+	@RequestMapping("/quanly/chiTietBaiViet/{maBaiViet}")
 	public Object chiTietBaiViet(@PathVariable String maBaiViet) {
 		Object bv = daoBV.findBaiVietByMaBaiViet(Integer.parseInt(maBaiViet));
 		return bv;
@@ -71,7 +71,7 @@ public class QuanLyBaiVietController {
 
 	@Transactional
 	@ResponseBody
-	@RequestMapping("/danhDauBaiViet/{maBaiViet}")
+	@RequestMapping("/quanly/danhDauBaiViet/{maBaiViet}")
 	public DSToCaoVaViPham danhDauBaiViet(@PathVariable String maBaiViet) {
 		daoBVVP.danhDauViPham(Integer.parseInt(maBaiViet));
 		String sql = "select maBaiViet, COUNT(maToCao) AS 'SoLuong' from BaiVietViPham where trangThai = 1 group by maBaiViet order by SoLuong DESC";
@@ -97,7 +97,7 @@ public class QuanLyBaiVietController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/xemBaiViet/{maBaiViet}")
+	@RequestMapping("/quanly/xemBaiViet/{maBaiViet}")
 	public Object xem(@PathVariable String maBaiViet) {
 		Object bv = daoBV.findBaiVietByMaBaiViet(Integer.parseInt(maBaiViet));
 		return bv;
@@ -105,7 +105,7 @@ public class QuanLyBaiVietController {
 
 	@Transactional
 	@ResponseBody
-	@RequestMapping("/xoaBaiVietViPham/{maBaiViet}")
+	@RequestMapping("/quanly/xoaBaiVietViPham/{maBaiViet}")
 	public List<DanhSachViPham> goViPham(@PathVariable String maBaiViet) {
 		String sql3 = "DELETE FROM BaiVietViPham WHERE maBaiViet = ?";
 		jdbcTemplate.update(sql3, new Object[] { Integer.parseInt(maBaiViet) });

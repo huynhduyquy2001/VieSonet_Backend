@@ -1,6 +1,6 @@
 function chiTietBaiViet(maBaiViet) {
 	$.ajax({
-		url: "/chiTietBaiViet/" + maBaiViet,
+		url: "/quanly/chiTietBaiViet/" + maBaiViet,
 		type: "GET",
 		success: function(data) {
 			let myDiv = document.getElementById("modalBody");
@@ -47,7 +47,7 @@ function chiTietBaiViet(maBaiViet) {
 
 function danhDauViPham(maBaiViet) {
 	$.ajax({
-		url: "/danhDauBaiViet/" + maBaiViet,
+		url: "/quanly/danhDauBaiViet/" + maBaiViet,
 		type: "GET",
 		success: function(data) {
 			let myDiv = document.getElementById("tableLoad");
@@ -113,7 +113,7 @@ function danhDauViPham(maBaiViet) {
 
 function xemBaiViet(maBaiViet) {
 	$.ajax({
-		url: "/xemBaiViet/" + maBaiViet,
+		url: "/quanly/xemBaiViet/" + maBaiViet,
 		type: "GET",
 		success: function(data) {
 			let myDiv = document.getElementById("modalBody");
@@ -162,7 +162,7 @@ function xemBaiViet(maBaiViet) {
 
 function xoaBaiVietViPham(maBaiViet){
 	$.ajax({
-		url: "/xoaBaiVietViPham/" + maBaiViet,
+		url: "/quanly/xoaBaiVietViPham/" + maBaiViet,
 		type: "GET",
 		success: function(data) {
 			let myDiv2 = document.getElementById("tableLoad2");
