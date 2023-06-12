@@ -40,7 +40,7 @@
 </head>
 <body>
 	<div class="split-background"></div>
-	<img src="images/cayTre.png"
+	<img src=""
 		class="header animate__animated animate__fadeInUp"
 		style="position: fixed; right: 0; max-height: 90vh; z-index: -2;"
 		alt="">
@@ -189,14 +189,14 @@
 									<img src="images/${banBe.nguoiDung.anhDaiDien}"
 										class="img-thumbnail" alt="" style="border-radius: 50%;">
 									<div>
-									mã bạn bè ${banBe.maBanBe}
+							
 										<label for="">${banBe.nguoiDung.hoTen}</label> <br> <small
 											style="font-size: 12px">Hoạt động: 1 phút trước</small>
-											${banBe.sdt}
+										
 									</div> 
 								</div>
 								<div>
-									<a href="/DanhSachBanBe/xoa/${banBe.maBanBe}" role="button" class="btn btn-primary">Hủy kết bạn</a>	
+									<a href="/DanhSachBanBe/xoa/${banBe.maBanBe}" role="button" class="btn btn-primary"style=" background-color: #A89386; border-color: transparent;">Hủy kết bạn</a>	
 								</div>
 							</div>
 						</c:if>
@@ -209,11 +209,11 @@
 									<div>
 										<label for="">${banBe.banBe.hoTen}</label> <br> <small
 											style="font-size: 12px">Hoạt động: 1 phút trước</small>
-											${banBe.banBe.sdt}
+											
 									</div>
 								</div>
 								<div>
-									<a href="/DanhSachBanBe/xoa/${banBe.maBanBe}" role="button" class="btn btn-primary">Hủy kết bạn</a>
+									<a href="/DanhSachBanBe/xoa/${banBe.maBanBe}" role="button" class="btn btn-primary" style=" background-color: #A89386; border-color: transparent;">Hủy kết bạn</a>
 								</div>
 							</div>
 						</c:if>

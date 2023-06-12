@@ -56,7 +56,7 @@ public class TimKiemController {
 		 //m.addAttribute("danhSachTimKiem", danhSach1);
 		return danhSach1;
 	}
-
+	
 	@GetMapping("/timKiem")
 	public String timKiem(Model m) {
 		DSBB(m);

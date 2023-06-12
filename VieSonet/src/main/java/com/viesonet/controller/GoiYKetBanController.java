@@ -59,8 +59,6 @@ public class GoiYKetBanController {
 	public String GoiYKB(String sdt, Model model) {
 		DSBB(model);
 		String sdtCN = Session.get("sdt");
-		List<BanBe> listBB = banBeDao.findFriends(sdtCN);
-		model.addAttribute("danhSachBanBe",listBB);
 		// danh sách kết bạn và đếm số lượng kết bạn
 		List<DanhSachKetBan> danhSachKetBan = dskbDao.findDsBySdt(sdtCN);
 		model.addAttribute("SlKb", danhSachKetBan.size());
@@ -75,6 +73,7 @@ public class GoiYKetBanController {
 		//List<DanhSachKetBan> list = dskbDao.findFriends(sdtCN);
 		model.addAttribute("list", list);
 		System.out.println("SLKB"+danhSachKetBan.size());
+		
 		return "GoiYKetBan";
 	}
 		@GetMapping("/GoiYKB/ketBan/{sdt}")
@@ -105,7 +104,6 @@ public class GoiYKetBanController {
 			dskbDao.saveAndFlush(ds);
 			return "redirect:/GoiYKB";
 		}
-		
 		@GetMapping("/GoiYKB/dongy/{maLoiMoi}")
 		public String dongYKetBan(@PathVariable int maLoiMoi) {
 			// thêm người ta vào danh sách bạn bè
