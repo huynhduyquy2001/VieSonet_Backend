@@ -22,14 +22,14 @@ public class QuanLyViPhamController {
 	@Autowired
 	LoaiViPhamDAO dao;
 
-	@GetMapping("/quanlyvipham")
+	@GetMapping("/quanly/quanlyvipham")
 	public String list(Model m) {
 		m.addAttribute("ds", dao.findAll());
 		return "quanLyViPham";
 	}
 
 	@ResponseBody
-	@RequestMapping("/quanlyvipham/them/{maLoai}")
+	@RequestMapping("/quanly/quanlyvipham/them/{maLoai}")
 	public String them(@RequestParam("maViPham") String maViPhamStr, @RequestParam("chiTiet") String chiTiet) {
 	   
 	    int maViPham;
@@ -58,7 +58,7 @@ public class QuanLyViPhamController {
 
 	
 	@ResponseBody
-	@RequestMapping("/quanlyvipham/sua/{maLoai}")
+	@RequestMapping("/quanly/quanlyvipham/sua/{maLoai}")
 	public String update(Model m, @PathVariable("maLoai") Integer maLoai, @RequestParam("chiTiet") String chiTiet) {
 	    Optional<LoaiViPham> opt = dao.findById(maLoai);
 	    if(opt.isPresent()) {

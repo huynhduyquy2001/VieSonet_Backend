@@ -24,7 +24,7 @@
 			// Hiển thị danh sách bình luận lên modal
 			danhSachBinhLuan.forEach(function(binhLuan) {
 				var binhLuanHtml = "<div class='user-profile animate__animated animate__headShake' style='border: 1px solid #E1D4C4; box-sizing: border-box; padding: 4px; border-radius: 5px;background-color: white; margin-bottom:5px'>" +
-					"<img src='images/" + binhLuan[1] + "' class='img-thumbnail' alt=''>" +
+					"<img src='/images/" + binhLuan[1] + "' class='img-thumbnail' alt=''>" +
 					"<div>" +
 					"<div><p class='nhan' style='color: #A59565; font-size: 15px;'>" + binhLuan[0] + "</p></div>" +
 					"<small style='font-size: 12px;'><i class='fa-regular fa-comment'></i> " + binhLuan[2] + "</small><br>" +
@@ -40,7 +40,7 @@
         <div style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
             <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div class="user-profile">
-                    <img src="images/${baiViet[6]}" class="img-thumbnail" alt="">
+                    <img src="/images/${baiViet[6]}" class="img-thumbnail" alt="">
                     <div>
                         <label class="nhan">${baiViet[5]}</label><br>
                         <small style="font-size: 12px; color: #65676b">${baiViet[2]}</small>
@@ -59,7 +59,7 @@
                 <div style="margin-top: 10px; color: #847577">
                     ${baiViet[0]}
                     <center>
-                        <img src="images/${baiViet[1]}" width="100%" alt="" style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
+                        <img src="/images/${baiViet[1]}" width="100%" alt="" style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
                     </center>
                 </div>
             </a>
@@ -120,9 +120,21 @@ function thichBaiViet(maBaiViet, element) {
 	if (isLiked) {
 		element.classList.remove('red-heart');
 		element.classList.add('gray-heart');
+		// Giảm số lượt thích
+		var likeCountElement = element.querySelector('.like-count');
+		if (likeCountElement) {
+			var likeCount = parseInt(likeCountElement.textContent);
+			likeCountElement.textContent = likeCount - 1;
+		}
 	} else {
 		element.classList.remove('gray-heart');
 		element.classList.add('red-heart');
+		// Tăng số lượt thích
+		var likeCountElement = element.querySelector('.like-count');
+		if (likeCountElement) {
+			var likeCount = parseInt(likeCountElement.textContent);
+			likeCountElement.textContent = likeCount + 1;
+		}
 	}
 
 	// Tạo một đối tượng XMLHttpRequest
@@ -139,11 +151,7 @@ function thichBaiViet(maBaiViet, element) {
 
 			// Cập nhật trạng thái nút thích
 
-			// Cập nhật số lượt thích
-			var likeCountElement = element.querySelector('.like-count');
-			if (likeCountElement) {
-				likeCountElement.textContent = response.luotThich;
-			}
+
 		} else {
 			console.error('Lỗi ' + xhr.status + ': ' + xhr.statusText);
 			// Xử lý lỗi (nếu có)
@@ -166,40 +174,58 @@ function themBinhLuan(maBaiViet) {
 		type: "POST",
 		data: { binhLuanCuaToi: binhLuan },
 		success: function(response) {
-
 			loadBinhLuan(maBaiViet);
-
 		},
 		error: function(xhr, status, error) {
 			console.error("Lỗi khi thêm bình luận: ", error);
 		}
 	});
 }
-
-
 function toCao(maBaiViet) {
-    $("#modalBaoCao .modal-footer").empty();
+	$("#modalBaoCao .modal-footer").empty();
+	var closeModal = document.createElement("button");
+	closeModal.type = "button";
+	closeModal.className = "btn btn-secondary";
+	closeModal.innerHTML = "Đóng";
+	closeModal.setAttribute("data-bs-dismiss", "modal");
 
-    var closeModal = document.createElement("button");
-    closeModal.type = "button";
-    closeModal.className = "btn btn-secondary";
-    closeModal.innerHTML = "Đóng";
-    closeModal.setAttribute("data-bs-dismiss", "modal");
+	var baoCaoModal = document.createElement("button");
+	baoCaoModal.type = "button";
+	baoCaoModal.className = "btn btn-primary";
+	baoCaoModal.innerHTML = "Báo cáo";
+	baoCaoModal.addEventListener("click", function() {
+		baoCaoViPham(maBaiViet);
+		$("#modalBaoCao").modal("hide");
+	});
 
-    var baoCaoModal = document.createElement("button");
-    baoCaoModal.type = "button";
-    baoCaoModal.className = "btn btn-primary";
-    baoCaoModal.innerHTML = "Báo cáo";
-    baoCaoModal.onclick = function() {
-        BaoCaoViPham(maBaiViet);
-        $("#modalBaoCao").modal("hide");
-    };
-
-    var modalFooter = document.querySelector("#modalBaoCao .modal-footer");
-    modalFooter.appendChild(closeModal);
-    modalFooter.appendChild(baoCaoModal);
+	var modalFooter = document.querySelector("#modalBaoCao .modal-footer");
+	modalFooter.appendChild(closeModal);
+	modalFooter.appendChild(baoCaoModal);
 }
 
-function baoCaoViPham(maBaiViet){
-	
+function baoCaoViPham(maBaiViet) {
+	var loaiViPham = $("#viPham").val(); // Lấy giá trị của select box
+
+	$.ajax({
+		url: "/index/baocaovipham/" + maBaiViet,
+		type: "POST",
+		data: { loaiViPham: loaiViPham }, // Truyền giá trị của select box
+		success: function(response) {
+			// Xử lý logic sau khi gọi thành công
+			console.log(response); // In response ra console để kiểm tra
+		},
+		error: function(xhr, status, error) {
+			console.log(error); // In error ra console để debug
+			// Xử lý logic khi gọi gặp lỗi
+		}
+	});
 }
+
+
+
+
+
+
+
+
+

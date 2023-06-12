@@ -37,6 +37,12 @@ public class BanBe {
 	@JoinColumn(name = "sdtBb")
 	NguoiDung banBe;
 	
+	@Column(name = "sdtBb", insertable=false, updatable=false) 
+	private String sdtBb;
+	
+	@Column(name = "sdt", insertable=false, updatable=false) 
+	private String sdt;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ngayKb")
 	Date ngayKb = new Date();

@@ -24,6 +24,8 @@ public class DangKyController {
 	@GetMapping("/dangky")
 	public String dangKy(Model model) {
 		model.addAttribute("user", new NguoiDung());
+		model.addAttribute("hienDangNhap","hidden");
+		model.addAttribute("hienDangKy","");
 		return "dangKy";
 	}
 

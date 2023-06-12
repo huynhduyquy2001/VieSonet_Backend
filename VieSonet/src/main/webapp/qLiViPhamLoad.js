@@ -8,7 +8,7 @@ function them() {
 	}
 
 	$.ajax({
-		url: "/quanlyvipham/them/" + maLoai,
+		url: "/quanly/quanlyvipham/them/" + maLoai,
 		type: "GET",
 		data: {
 			maViPham: maLoai,
@@ -65,7 +65,7 @@ function sua() {
 	}
 
 	$.ajax({
-		url: "/quanlyvipham/sua/" + maLoai,
+		url: "/quanly/quanlyvipham/sua/" + maLoai,
 		type: "GET",
 		data: {
 			chiTiet: chiTiet

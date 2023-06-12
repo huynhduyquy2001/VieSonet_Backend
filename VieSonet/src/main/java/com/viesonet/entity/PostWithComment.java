@@ -21,6 +21,4 @@ public class PostWithComment {
 	String hinhAnh;
 	int luotLike;
 	int luotBinhLuan;
-	
-	
 }

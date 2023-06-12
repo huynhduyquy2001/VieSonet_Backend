@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="fr"%>
@@ -55,11 +55,9 @@
 }
 </style>
 </head>
-
 <body>
 	<div
 		style="position: fixed; right: 0; max-height: 90vh; opacity: 0.1; bottom: 0;">
-
 	</div>
 	<!-- <img src="images/sunset-reduced.jpg" style="position: fixed; left: 0; max-height: 100vh; z-index: -2; width: 100%; top: 40px; opacity: 0.4; bottom: 0; height: 100%; object-fit: cover;" alt=""> -->
 	<!-- style="box-shadow: 0 1px 2px rgb(0 0 0 / 10%);" -->
@@ -67,7 +65,7 @@
 		<nav class="navbar navbar-expand-sm navbar-light"
 			style="border: none; padding-top: 0; padding-bottom: 0;">
 			<div class="container">
-				<a class="navbar-brand nhan" href="#"
+				<a class="navbar-brand nhan" href="/"
 					style="color: #222; font-weight: bolder; font-family: 'robo';">
 					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
 				</a>
@@ -84,52 +82,59 @@
 							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Trang
 								chủ <span class="visually-hidden">(current)</span>
 						</a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><small
-								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Điều
-									khoản</small></a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><small
+
+						<li class="nav-item"><a class="nav-link"
+							href="/quanly/quanLyNguoiDung"><small
 								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Quản
 									lí</small></a></li>
 					</ul>
-					<form class="d-flex my-2 my-lg-0">
-						<input class="form-control me-sm-2 input-hbh"
+					<form class="d-flex my-2 my-lg-0" action="/tim-kiem">
+						<input class="form-control me-sm-2 input-hbh" name="timKiem"
 							style="border-radius: 0; border: none; border-bottom: 1px solid gray; transform: skew(0); background-color: transparent;"
-							type="text" placeholder="Search">
+							type="text" placeholder="Tìm kiếm...">
 						<button class="btn btn-outline-success my-2 my-sm-0" hidden
-							type="submit">Search</button>
+							type="submit">Tìm kiếm...</button>
 					</form>
 
 					<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
 						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+							href="#" role="button" aria-haspopup="true" aria-expanded="false"><i
+								class="fa-regular fa-bell"></i> (${thongBaoChuaXem})</a>
+							<div class="dropdown-menu"
+								style="overflow: hidden; max-height: 60vh; overflow-y: scroll; left: -100px">
+								<c:forEach items="${thongBao}" var="item">
+									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
+
+										<div class="user-profile"
+											style="width: 250px; padding-left: 3%;">
+											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
+											<div>
+												<p style="font-size: 13px">${item.noiDung}</p>
+												<small style="font-size: 11px">${item.ngayThongBao}</small>
+											</div>
+										</div>
+
+									</a>
+								</c:forEach>
+
+							</div></li>
+
+						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#" id="dropdownId"
+							class="nav-link dropdown-toggle" href="/profile" id="dropdownId"
 							data-bs-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"><small><img
-									src="images/avt.jpg" width="30px" style="border-radius: 50%;"
-									alt=""></small></a>
+									src="images/${taiKhoan.anhDaiDien}" width="30px"
+									style="border-radius: 50%;" alt=""></small></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownId"
-								style="width: 350px; padding-left: 3px;">
-								<div class="profile-darkButton">
-									<div class="user-profile">
-										<img src="images/avt.jpg" alt="">
-										<div>
-											<p>Alex Carry</p>
-											<small>Xem trang cá nhân của bạn</small>
-										</div>
-									</div>
-								</div>
-								<div class="dropdown-item"
-									style="display: flex; justify-content: space-between; align-items: center;">
-									<small>Chế độ tối:</small>
-									<div class="nut">
-										<input type="checkbox" class="checkbox" id="checkbox"
-											onclick="toggleDarkMode()"> <label class="switch"
-											for="checkbox"> <span class="slider"
-											style="width: 12px; height: 12px;"></span>
-										</label>
-									</div>
-								</div>
-								<a class="dropdown-item" href="#"><small>Đăng nhập</small></a> <a
-									class="dropdown-item" href="#"><small>Đăng ký</small></a>
+								style="padding-left: 3px; left: -100px; line-height: 35px">
+								<a class="dropdown-item" href="/dangnhap"><small>Xem
+										trang cá nhân</small></a> <a class="dropdown-item" href="/dangnhap"><small>Danh
+										sách bạn bè</small></a> <a class="dropdown-item" href="/dangnhap"><small>Lời
+										mời kết bạn</small></a> <a class="dropdown-item" href="/dangnhap"><small>Điều
+										khoản</small></a> <a class="dropdown-item" href="/dangxuat"><small>Đăng
+										xuất</small></a>
 							</div></li>
 
 					</ul>
@@ -150,9 +155,9 @@
 							class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
 							style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
 							<div class="user-profile">
-								<img src="images/avt.jpg" alt="">
+								<img src="images/${taiKhoan.anhDaiDien}" alt="">
 								<div>
-									<label for="">Huỳnh Duy Quý</label> <br> <small>
+									<label for="">${taiKhoan.hoTen}</label> <br> <small>
 										Công khai <i class="fas fa-caret-down"></i>
 									</small>
 								</div>
@@ -185,8 +190,9 @@
 								style="display: flex; align-items: center; justify-content: space-between;">
 								<div class="tooltip2">
 									<div class="user-profile ">
-										<img src="images/${BaiViet.nguoiDung.anhDaiDien}"
-											class="img-thumbnail" alt="">
+										<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img
+											src="images/${BaiViet.nguoiDung.anhDaiDien}"
+											class="img-thumbnail" alt=""></a>
 										<div>
 											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br>
 											<small style="font-size: 12px; color: #65676b"> <fmt:formatDate
@@ -197,19 +203,20 @@
 									<span class="tooltip2-text"> <a href="">
 											<div class="row">
 												<div class="col-5">
-													<img src="images/${BaiViet.nguoiDung.anhDaiDien}"
-														class="img-thumbnail" alt="">
+													<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img
+														src="images/${BaiViet.nguoiDung.anhDaiDien}"
+														class="img-thumbnail" alt=""></a>
 												</div>
 												<div class="col-7" style="padding: 0; margin: 0;">
 													<label for="" style="padding: 0; margin: 0;"> <small>${BaiViet.nguoiDung.hoTen}</small>
 													</label> <small><small> <small>
 																<ul style="line-height: 20px; text-align: left;">
 																	<li><b><i class="fa-light fa-mountain-sun"></i>
-																			Quê quán:</b> ${BaiViet.nguoiDung.diaChi}</li>
+																			Sống tại:</b> ${BaiViet.nguoiDung.diaChi}</li>
 																	<li><i class="fa-regular fa-heart"></i> <b>Mối
 																			quan hệ:</b> ${BaiViet.nguoiDung.moiQuanHe}</li>
 																	<li><b><i class="fa-light fa-user-group"></i>
-																			Danh sách bạn bè:</b> ??</li>
+																			Danh sách bạn bè:</b> ${dsBb}</li>
 																</ul>
 														</small>
 													</small></small>
@@ -227,7 +234,9 @@
 											data-bs-toggle="dropdown" aria-haspopup="true"
 											aria-expanded="false"> </span>
 										<div class="dropdown-menu" aria-labelledby="triggerId">
-											<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalBaoCao" onclick="toCao(${BaiViet.maBaiViet})">Báo cáo vi phạm</a>
+											<a class="dropdown-item" data-bs-toggle="modal"
+												data-bs-target="#modalBaoCao"
+												onclick="toCao(${BaiViet.maBaiViet})">Báo cáo vi phạm</a>
 										</div>
 									</div>
 								</div>
@@ -247,8 +256,8 @@
 
 										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
 											class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
-											<i class="fa-duotone fa-heart"></i> &nbsp;
-											${BaiViet.luotThich}
+											<i class="fa-duotone fa-heart"></i> &nbsp; <span
+												class="like-count">${BaiViet.luotThich}</span>
 										</div>
 
 
@@ -329,22 +338,40 @@
 							<label class="nhan"
 								style="box-sizing: border-box; padding-left: 10px">Danh
 								sách bạn bè(${SlBanbe})</label> <br> <br>
-							<c:forEach items="${topBanbe}" var="top">
-								<div
-									style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-									<div class="user-profile">
-										<img src="images/${top.banBe.anhDaiDien}"
-											class="img-thumbnail" alt="" style="border-radius: 50%;">
-										<div>
-											<label for="">${top.banBe.hoTen}</label> <br> <small
-												style="font-size: 12px">Hoạt động: 1 phút trước</small>
+
+							<c:forEach items="${topBanbe}" var="banBe">
+								<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
+									<div
+										style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+										<div class="user-profile">
+											<img src="images/${banBe.nguoiDung.anhDaiDien}"
+												class="img-thumbnail" alt="" style="border-radius: 50%;">
+											<div>
+												<label for="">${banBe.nguoiDung.hoTen}</label> <br> <small
+													style="font-size: 12px">Hoạt động: <fmt:formatDate
+														value="${banBe.nguoiDung.thoiGianTruyCap}"
+														pattern="dd-MM-yyyy HH:mm" /></small>
+											</div>
 										</div>
 									</div>
-									<div>
-										<a href="#"><i class="fas fa-ellipsis-v"></i></a>
+								</c:if>
+								<c:if test="${banBe.banBe.sdt != sessionScope.sdt}">
+									<div
+										style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+										<div class="user-profile">
+											<img src="images/${banBe.banBe.anhDaiDien}"
+												class="img-thumbnail" alt="" style="border-radius: 50%;">
+											<div>
+												<label for="">${banBe.banBe.hoTen}</label> <br> <small
+													style="font-size: 12px">Hoạt động: <fmt:formatDate
+														value="${banBe.banBe.thoiGianTruyCap}"
+														pattern="dd-MM-yyyy HH:mm" /></small>
+											</div>
+										</div>
 									</div>
-								</div>
+								</c:if>
 							</c:forEach>
+
 						</div>
 					</div>
 				</div>
@@ -402,7 +429,6 @@
 							</label> <input type="file" class="form-control" name="photo_file"
 								id="inputGroupFile01">
 						</div>
-
 						<button
 							style="width: 500px; background-color: #5A4F48; border: none;"
 							class="btn btn-primary" data-bs-target="#exampleModalToggle2"
@@ -422,10 +448,7 @@
 					<div class="row">
 						<div data-bs-dismiss="modal" style="cursor: pointer;">X</div>
 						<div class="col-md-6 trai order-sm-2 col-xs-12 order-1"></div>
-						<div class="col-md-6 phai order-sm-1 col-xs-12">
-						
-							
-						</div>
+						<div class="col-md-6 phai order-sm-1 col-xs-12"></div>
 
 					</div>
 				</div>
@@ -434,32 +457,31 @@
 		</div>
 	</div>
 	<!-- Modal báo cáo -->
-  <div class="modal fade" id="modalBaoCao" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalTitleId">Nội dung tố cáo</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" onclick="BaoCaoViPham(${maBaiViet})">
-          <select name="chiTietViPham" id="" class="form-control">
-            <option value="">Ngôn từ gây thù ghét</option>
-            <option value="">Nội dung bạo lực và phản cảm</option>
-            <option value="">Ảnh khỏa thân người lớn và hoạt động tình dục</option>
-            <option value="">Gạ gẫm tình dục</option>
-            <option value="">Bạo lực và khích nộ</option>
-            <option value="">Cá nhân và tổ chức nguy hiểm</option>
-            <option value="">Cấu kết gây hại và cổ xúy tội ác</option>
-            <option value="">Hàng hóa và dịch vụ bị hạn chế</option>
-            <option value="">Gian lận và lừa đảo</option>
-          </select>
-        </div>
-        <div class="modal-footer">
-          
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="modal fade" id="modalBaoCao" tabindex="-1" role="dialog"
+		aria-labelledby="modalTitleId" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalTitleId">Nội dung tố cáo</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<select name="loaiViPham" id="viPham" class="form-control">
+						<c:forEach var="viPham" items="${danhSachViPham}">
+							<option value="${viPham.maLoai}">${viPham.chiTiet}</option>
+						</c:forEach>
+					</select>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Đóng</button>
+					<button type="button" class="btn btn-primary">Báo cáo</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- load ảnh -->
 	<script>
         let img = document.getElementById('img');

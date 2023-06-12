@@ -3,7 +3,6 @@
 )
 AS
 BEGIN
-
     -- Tạo bảng tạm chứa 12 tháng
     WITH Thang(Thang) AS (
         SELECT 1
@@ -14,7 +13,7 @@ BEGIN
     ThongKe(Thang, SoBaiVietViPham) AS (
         SELECT MONTH(ngayToCao), COUNT(DISTINCT maBaiViet)
         FROM BaiVietViPham
-        WHERE YEAR(ngayToCao) = @Nam
+        WHERE YEAR(ngayToCao) = @Nam  and trangThai = 0
         GROUP BY MONTH(ngayToCao)
     )
     -- Kết hợp thông tin với bảng tạm chứa 12 tháng
@@ -42,7 +41,7 @@ BEGIN
     ThongKe(Thang, SoLuotBaoCao) AS (
         SELECT MONTH(ngayToCao), COUNT(DISTINCT maToCao)
         FROM BaiVietViPham
-        WHERE YEAR(ngayToCao) = @Nam
+        WHERE YEAR(ngayToCao) = @Nam and trangThai = 1
         GROUP BY MONTH(ngayToCao)
     )
     -- Kết hợp thông tin với bảng tạm chứa 12 tháng
@@ -81,7 +80,6 @@ BEGIN
 END
 --Lệnh chạy chương trình xem kết quả
 EXEC sp_ThongKeSoLuongDangKyTheoThang  @nam = 2023 -->Truyền tham số để xét điều kiện
-
 
 --3.Thống kê bài viết có số lượt thích cao nhất theo ngày tháng năm-- 
 --Lệnh tạo

@@ -123,7 +123,7 @@
                         <center>
                             <h3 style="color: #F27323;">ĐĂNG KÝ </h3>
                             <hr style="width: 30%;">
-                            ${message }
+                            ${message}
                         </center>
                         <div class="col-md-6">
                             
