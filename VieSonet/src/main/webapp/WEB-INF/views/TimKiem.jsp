@@ -39,7 +39,7 @@
 <title>Tìm Kiếm</title>
 </head>
 <body>
-	<img src="images/cayTre.png"
+	<img src=""
 		class="animate__animated animate__fadeInUp"
 		style="position: fixed; right: 0; max-height: 90vh; z-index: -2;"
 		alt="">
@@ -140,30 +140,6 @@
 							</center>
 							<hr style="opacity: 0.1;">
 						</div>
-						<div>
-							<h5>
-								<b class="nhan">Bộ lọc</b>
-							</h5>
-							<!-- Nav tabs -->
-							<ul class="nav flex-column nav-tabs" id="myTab" role="tablist">
-								<li class="nav-item" role="presentation">
-									<button class="nav-link active" id="home-tab"
-										data-bs-toggle="tab" data-bs-target="#home" type="button"
-										role="tab" aria-controls="home" aria-selected="true">
-										<i class="fa-solid fa-bars"></i>&nbsp;Tất cả
-									</button>
-								</li>
-
-								<li class="nav-item" role="presentation">
-									<button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-										data-bs-target="#profile" type="button" role="tab"
-										aria-controls="profile" aria-selected="false">
-										<i class="fa-light fa-users"></i>&nbsp;Bạn bè
-									</button>
-								</li>
-
-							</ul>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -189,15 +165,6 @@
 					</div>
 				</c:if>
 				${message}
-
-				<!-- Tab panes -->
-				<div class="tab-content">
-					<div class="tab-pane active" id="home" role="tabpanel"
-						aria-labelledby="home-tab">Tất cả</div>
-					<div class="tab-pane" id="profile" role="tabpanel"
-						aria-labelDledby="profile-tab">Bạn bè</div>
-				</div>
-
 				<div
 					style="border: 1px solid rgba(210, 199, 188, 1); padding: 10px;">
 					<h5>
@@ -208,25 +175,7 @@
 
 					<div class="row" id="danhSachTimKiem"
 						style="padding: 10px; overflow-y: hidden; overflow-y: scroll; max-height: 85vh;">
-						<c:forEach var="nguoiDung" items="${danhSachTimKiem}">
-							<div class="col-md-6">
-								<div
-									style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-									<div class="user-profile">
-										<img src="images/${nguoiDung.anhDaiDien }" alt=""
-											style="border-radius: 6px; width: 70px;">
-										<div>
-											<label for=""><c:out value="${nguoiDung.hoTen}" /></label> <br>
-											<small>Hoạt động: 1 phút trước</small>
-										</div>
-									</div>
-									<div>
-										<a name="" id="" class="btn btn-primary" href="#"
-											role="button">Kết bạn 0</a>
-									</div>
-								</div>
-							</div>
-						</c:forEach>
+							
 					</div>
 				</div>
 			</div>
@@ -283,7 +232,7 @@
 			<%
 				String sdt = (String) session.getAttribute("sdt");
 			%>
-			function SDT(tuKhoa){
+			function SDT(myDataJS){
 				data.forEach(function item() {
 				 otherUser = item[2];
 				})
@@ -335,9 +284,20 @@
 								tuKhoaCuaToi : tuKhoa
 							},
 							success : function(data) {
+								
 								$("#danhSachTimKiem").empty();
+								
 								data
 										.forEach(function(item) {
+											var	sdt;
+											console.log('Giá trị của myDataJS là: ' + myDataJS);
+											console.log('Giá trị của item sdt 2 là: ' + item[2]);
+											console.log('Giá trị của item sdt 3 là: ' + item[3]);
+											if(myDataJS == item[3	]){
+												sdt = "";
+											}else{
+												sdt = "<a class='btn btn-primary' href=''/timKiem/ketBan/{maKB}' role='button' style=' background-color: #A89386; border-color: transparent;'>Kết bạn</a>"
+											}
 											var html = '<div class="col-md-6">'
 													+ '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">'
 													+ '<div class="user-profile">'
@@ -350,7 +310,7 @@
 													+ '</div>'
 													+ '</div>'
 													+ '<div>'
-													+ '<a name="" id="" class="btn btn-primary" href="/timKiem/ketBan/{maKB}" role="button">Kết bạn</a>'
+													+ sdt
 													+ '</div>'
 													+ '</div>'
 													+ '</div>';
@@ -371,8 +331,17 @@
 							},
 							success : function(data) {
 								$("#danhSachTimKiem").empty();
-								data
-										.forEach(function(item) {
+								
+								data.forEach(function(item) {
+									console.log('Giá trị của myDataJS là: ' + myDataJS);
+									console.log('Giá trị của item 3 là: ' + item[3]);
+									console.log('Giá trị của item 4 là: ' + item[4]);
+									var	ten;
+									if(myDataJS == item[3]){
+										ten = "";
+									}else{
+										ten = "<a class='btn btn-primary' href=''/timKiem/ketBan/{maKB}' role='button' style=' background-color: #A89386; border-color: transparent;'>Kết bạn</a>"
+									}
 											var html = '<div class="col-md-6">'
 													+ '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">'
 													+ '<div class="user-profile">'
@@ -385,7 +354,7 @@
 													+ '</div>'
 													+ '</div>'
 													+ '<div>'
-													+ '<a name="" id="" class="btn btn-primary" href="/timKiem/ketBan/{maKB}" role="button">Kết bạn</a>'
+													+ ten
 													+ '</div>' + '</div>'
 													+ '</div>';
 
@@ -407,8 +376,7 @@
 												$("#danhSachTimKiem").append(html1);
 														
 											} else
-												$("#danhSachTimKiem").append(html);
-														
+												$("#danhSachTimKiem").append(html);				
 										});
 							},
 							error : function(xhr, status, error) {

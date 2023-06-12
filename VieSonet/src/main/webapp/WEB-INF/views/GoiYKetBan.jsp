@@ -40,7 +40,7 @@
 </head>
 <body>
 	<div class="split-background"></div>
-	<img src="images/cayTre.png"
+	<img src=""
 		class="header animate__animated animate__fadeInUp"
 		style="position: fixed; right: 0; max-height: 90vh; z-index: -2;"
 		alt="">
@@ -200,7 +200,26 @@
 									</div>
 									<div>
 										<a name="" id="" class="btn btn-primary"
-											href="/GoiYKB/ketBan/${ND.sdt}" role="button">Kết bạn</a>
+											href="/GoiYKB/ketBan/${ND.sdt}" role="button" style=" background-color: #A89386; border-color: transparent;">Kết bạn</a>
+									</div>
+								</div>
+							</c:if>
+							<c:if test="${ND.sdt == sessionScope.sdt }">
+								<div
+									style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+
+									<div class="user-profile">
+										<img src="images/${ND.anhDaiDien}" class="img-thumbnail"
+											alt="" style="border-radius: 50%;">
+										<div>
+
+											<label for="">${ND.hoTen}</label> <br> <small
+												style="font-size: 12px">Hoạt động: 1 phút trước</small>
+										</div>
+									</div>
+									<div>
+										<a name="" id="" class="btn btn-primary"
+											href="/GoiYKB/ketBan/${ND.sdt}" role="button" style=" background-color: #A89386; border-color: transparent;">Kết bạn</a>
 									</div>
 								</div>
 							</c:if>

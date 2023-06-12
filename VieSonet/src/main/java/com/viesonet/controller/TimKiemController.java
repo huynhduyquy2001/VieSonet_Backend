@@ -86,15 +86,16 @@ public class TimKiemController {
 	@GetMapping("/timKiemsdt")
 	public List<Object> timKiemsdt(Model m, @RequestParam("tuKhoaCuaToi") String tuKhoa) {
 		List<Object> danhSach1 = nguoiDungDao.timNguoiDungTheoSDT(tuKhoa);
-		List<BanBe> list = BBDAO.findFriends(tuKhoa);
-		m.addAttribute("danhSachBanBe",list);	
 		 //m.addAttribute("danhSachTimKiem", danhSach1);
 		return danhSach1;
 	}
-
+	
 	@GetMapping("/timKiem")
 	public String timKiem(Model m) {
 		DSBB(m);
+		String sdtCN = SS.get("sdt");
+		List<BanBe> list = BBDAO.findFriends(sdtCN);
+		m.addAttribute("danhSachBanBe",list);	
 		return "TimKiem";
 	}
 

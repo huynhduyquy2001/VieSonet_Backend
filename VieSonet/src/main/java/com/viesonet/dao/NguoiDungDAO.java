@@ -22,21 +22,10 @@ public interface NguoiDungDAO extends JpaRepository<NguoiDung, String> {
 	@Query("SELECT bv.nguoiDung.hoTen, bv.nguoiDung.anhDaiDien, bv.nguoiDung.sdt FROM BaiViet bv WHERE bv.maBaiViet = :maBaiViet")
 	Object findNguoiDungByMaBaiViet(@Param("maBaiViet") int maBaiViet);
 	
-	
 	NguoiDung findByHoTen(String hoTen);
 	NguoiDung findBySdt(String sdt);
 	NguoiDung findByEmail(String email);
 	Boolean existsBySdt(String sdt);
-	
-	@Query("SELECT obj FROM NguoiDung obj WHERE obj.hoTen LIKE %:hoTen%")
-	List<NguoiDung> findByhoTenContaining(@Param("hoTen") String hoTen);
-	
-	@Query("SELECT obj.hoTen, obj.anhDaiDien FROM NguoiDung obj WHERE obj.hoTen LIKE %:hoTen%")
-	List<Object> timNguoiDung(@Param("hoTen") String hoTen);
-
-
-	@Query("SELECT DISTINCT nd FROM NguoiDung nd JOIN BanBe bb ON bb.sdt = nd.sdt WHERE nd.sdt NOT IN (SELECT bb2.sdtBb FROM BanBe bb2 WHERE bb2.sdt = :sdt)")
-	List<NguoiDung> findUnrelatedFriends(@Param("sdt") String sdt);
 
 
 	NguoiDung save(NguoiDung entity);
@@ -46,7 +35,16 @@ public interface NguoiDungDAO extends JpaRepository<NguoiDung, String> {
 	@Query("select sdt from NguoiDung where sdt =?1")
 	NguoiDung timsdt(@Param("sdt") String sdt);
 	
-	@Query("SELECT obj.hoTen, obj.anhDaiDien ,obj.sdt FROM NguoiDung obj WHERE obj.sdt LIKE %:hoTen%")
+	
+	List<NguoiDung> findByhoTenContaining(String hoTen);
+	
+	@Query("SELECT DISTINCT nd FROM NguoiDung nd JOIN BanBe bb ON bb.sdt = nd.sdt WHERE nd.sdt NOT IN (SELECT bb2.sdtBb FROM BanBe bb2 WHERE bb2.sdt = :sdt)")
+	List<NguoiDung> findUnrelatedFriends(@Param("sdt") String sdt);
+	
+	@Query("SELECT DISTINCT b.nguoiDung.hoTen, b.nguoiDung.anhDaiDien, b.nguoiDung.sdt, b.sdtBb , b.nguoiDung.sdt FROM BanBe b WHERE b.nguoiDung.hoTen like %:hoTen%")
+	List<Object> timNguoiDung(@Param("hoTen") String hoTen);
+	
+	@Query("SELECT DISTINCT b.nguoiDung.hoTen, b.nguoiDung.anhDaiDien, b.nguoiDung.sdt, b.sdtBb FROM BanBe b WHERE b.nguoiDung.sdt like %:hoTen%")
 	List<Object> timNguoiDungTheoSDT(@Param("hoTen") String hoTen);
 	@Query("SELECT u FROM NguoiDung u WHERE u.sdt=:sdt")
 	NguoiDung findBySoDienThoai(String sdt);

@@ -186,12 +186,14 @@
 									<img src="images/${banBe.nguoiDung.anhDaiDien}"
 										class="img-thumbnail" alt="" style="border-radius: 50%;">
 									<div>
+							
 										<label for="">${banBe.nguoiDung.hoTen}</label> <br> <small
 											style="font-size: 12px">Hoạt động: 1 phút trước</small>
-									</div>
+										
+									</div> 
 								</div>
 								<div>
-									<a href="#"><i class="fas fa-ellipsis-v"></i></a>
+									<a href="/DanhSachBanBe/xoa/${banBe.maBanBe}" role="button" class="btn btn-primary"style=" background-color: #A89386; border-color: transparent;">Hủy kết bạn</a>	
 								</div>
 							</div>
 						</c:if>
@@ -204,10 +206,11 @@
 									<div>
 										<label for="">${banBe.banBe.hoTen}</label> <br> <small
 											style="font-size: 12px">Hoạt động: 1 phút trước</small>
+											
 									</div>
 								</div>
 								<div>
-									<a href="#"><i class="fas fa-ellipsis-v"></i></a>
+									<a href="/DanhSachBanBe/xoa/${banBe.maBanBe}" role="button" class="btn btn-primary" style=" background-color: #A89386; border-color: transparent;">Hủy kết bạn</a>
 								</div>
 							</div>
 						</c:if>
