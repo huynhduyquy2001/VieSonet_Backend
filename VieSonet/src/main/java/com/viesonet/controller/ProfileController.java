@@ -112,6 +112,7 @@ public class ProfileController {
 			orders.add(new Order(Direction.DESC, "ngayDang"));
 			Sort sort = Sort.by(orders);
 		//Load bài viết cá nhân
+			
 			m.addAttribute("BaiVietCaNhan", baiVietDao.findBySdt(sdt, sort));
 			m.addAttribute("nguoiDung", nguoiDungDao.findBySoDienThoai(sdt));
 			
@@ -141,7 +142,7 @@ public class ProfileController {
 	
 	//Đăng bài viết
 	@PostMapping("/profile/dangbai")
-	public String dangBai( @RequestParam("photo_file") MultipartFile photofile, Model m) {
+	public String dangBai( @RequestParam("photo_file") MultipartFile photofile,@RequestParam("cheDo") int selectedValue ,Model m) {
 		BaiViet baiDang = new BaiViet();
 		if (photofile.isEmpty())
 			baiDang.setHinhAnh("");
@@ -149,7 +150,7 @@ public class ProfileController {
 			baiDang.setHinhAnh(photofile.getOriginalFilename());
 		}
 		String sdt = session.get("sdt");
-		int cheDo = param.getInt("cheDo", 1);
+		int cheDo = param.getInt("cheDo", selectedValue);
 		// Lấy ngày và giờ hiện tại
 		Calendar cal = Calendar.getInstance();
 		Date ngayGioDang = cal.getTime();
@@ -162,7 +163,7 @@ public class ProfileController {
 		baiDang.setCheDo(cheDoDao.getById(cheDo));
 		baiDang.setNguoiDung(nguoiDungDao.getById(sdt));
 		if (baiDang.getMoTa().equals("") && baiDang.getHinhAnh().equals("")) {
-
+			
 		} else {
 			baiVietDao.saveAndFlush(baiDang);
 		}
@@ -174,10 +175,23 @@ public class ProfileController {
 	@PostMapping("/profile/avatar")
 	public String chinhSuaADD(Model m, @RequestParam("photo_file") MultipartFile photofile) {
 	    String sdt = session.get("sdt");
+	    BaiViet baiDang = new BaiViet();
+	    int cheDo = param.getInt("cheDo", 1);
+	    Calendar cal = Calendar.getInstance();
+		Date ngayGioDang = cal.getTime();
 	    NguoiDung add = nguoiDungDao.findBySdt(sdt);
 	    if (!photofile.isEmpty()) {
 	            add.setAnhDaiDien(photofile.getOriginalFilename());
+	            baiDang.setHinhAnh(photofile.getOriginalFilename());
+	            baiDang.setMoTa(param.getString("moTaBaiViet", ""));
+	    		baiDang.setNgayDang(new Date());
+	    		baiDang.setLuotThich(0);
+	    		baiDang.setLuotBinhLuan(0);
+	    		baiDang.setTrangThai(true);
+	    		baiDang.setCheDo(cheDoDao.getById(cheDo));
+	    		baiDang.setNguoiDung(nguoiDungDao.getById(sdt));
 	            nguoiDungDao.saveAndFlush(add);
+	            baiVietDao.saveAndFlush(baiDang);
 	    }
 	    return "redirect:/profile";
 	}
@@ -189,8 +203,7 @@ public class ProfileController {
 	    NguoiDung add = nguoiDungDao.findBySdt(sdt);
 	    if (!photofile.isEmpty()) {
 	            add.setAnhBia(photofile.getOriginalFilename());
-	            nguoiDungDao.saveAndFlush(add);
-	        
+	            nguoiDungDao.saveAndFlush(add);    
 	    }
 	    return "redirect:/profile";
 	}
@@ -209,6 +222,14 @@ public class ProfileController {
 		nguoiDungDao.saveAndFlush(nguoiDungHienTai);
 		return "redirect:/profile";
 		
+	}
+	
+	//Đăng xuất
+	@GetMapping("/dangxuat")
+	public String dangXuat() {
+		session.remove("sdt");
+		session.remove("vt");
+		return "redirect:/dangnhap";
 	}
 	
 	//Cập nhật thông tin bài viết
@@ -271,6 +292,20 @@ public class ProfileController {
 		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
 	}
 	
+	@PostMapping("/profile/suabinhluan/{maBaiViet}")
+	@ResponseBody
+	public String chinhSuaBinhLuan(@PathVariable int maBaiViet, @RequestParam("binhLuanCuaToi") String binhLuan) {
+	    // Xử lý logic thêm bình luận
+	    String sdt = session.get("sdt");
+	    DanhSachBinhLuan entity = new DanhSachBinhLuan();
+	    entity.setBaiViet(baiVietDao.getById(maBaiViet));
+	    entity.setChiTiet(binhLuan);
+	    entity.setNgayBinhLuan(new Date());
+	    entity.setNguoiDung(nguoiDungDao.getById(sdt));
+	    dsblDao.saveAndFlush(entity);
+	    return "ok";
+	}
+	
 	@GetMapping("profile/thich/{maBaiViet}")
 	@ResponseBody
 	public void thichBaiViet(@PathVariable int maBaiViet) {
@@ -289,6 +324,7 @@ public class ProfileController {
 			dsytDao.delete(baiVietYeuThich);
 		}
 	}
+	
 	@GetMapping("profile/dongy/{maLoiMoi}")
 	public String dongYKetBan(@PathVariable int maLoiMoi) {
 		String sdt = session.get("sdt");
@@ -346,6 +382,9 @@ public class ProfileController {
 			    	(banBe.getNguoiDung().getSdt().equals(sdtLa) && banBe.getBanBe().getSdt().equals(sdtHt)))	) {
 			        // Nếu tìm thấy số điện thoại trùng, đánh dấu là có
 			        checker = true;
+			        int maBanBe = banBe.getMaBanBe();
+			        System.out.println("maLoiMoi: " + maBanBe);
+			        m.addAttribute("mbb", maBanBe);
 			        // Dừng vòng lặp
 			        break;
 			    }
@@ -401,14 +440,10 @@ public class ProfileController {
 	@GetMapping("profile/tuchoi/{lmkb}/nguoiDung/{nguoiDung}")
 	public String tuChoiKetBan(@PathVariable int lmkb, @PathVariable String nguoiDung) {
 		dskbDao.deleteById(lmkb);
-//		System.out.println("nguoiDung: " + nguoiDung);
-//		System.out.println("lmkb: " + lmkb);
-//		System.out.println("redirect:/nguoiDung/{" + nguoiDung + "}");
 		return "redirect:/nguoiDung/" + nguoiDung;
 	}	
 	
 	//Gửi lời mời kết bạn 
-	
 	@GetMapping("profile/guiLmkb/{nguoiDung}")
 	public String guiLoiMoiKetBan(@PathVariable String nguoiDung,@PathVariable("nguoiDung") String sdt) {
 		String sdtHt = session.get("sdt");
@@ -422,5 +457,11 @@ public class ProfileController {
 		return "redirect:/nguoiDung/" + nguoiDung;
 	}	
 	
+	//Hủy kết bạn
+	@GetMapping("profile/huyketban/{nguoiDung}/{mbb}")
+	public String huyKetBan(@PathVariable int mbb, @PathVariable String nguoiDung) {
+		banBeDao.deleteById(String.valueOf(mbb));
+		return "redirect:/nguoiDung/" + nguoiDung;
+	}
 	
 }

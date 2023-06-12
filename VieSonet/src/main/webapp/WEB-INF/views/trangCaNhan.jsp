@@ -180,7 +180,7 @@
                     <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="images/${nguoiDung.anhDaiDien}" width="100%"
                         style="border-radius: 50%;" class="img-thumbnail" alt="">
                 </div>
-                <div class="col-4" style="color: white;">
+                <div class="col-5" style="color: white;">
                     
                     
                     <h3>${nguoiDung.hoTen}</h3>
@@ -231,19 +231,32 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <center><img id="img1" src="" width="45%" style="border-radius: 10px;">
+                <!-- Mô tả -->
+				</p> <small style="font-size: 12px">
+					<div>
+						<select name="cheDo"
+							style="border: none; background-color: transparent;">
+							<option selected value="1">Công khai</option>
+							<option value="2">Bạn bè</option>
+							<option value="3">Chỉ mình tôi</option>
+						</select>
+					</div>
+				</small>
+                <textarea name="moTaBaiViet" placeholder="Mô tả?" id="" cols="55" rows="3" style="border: 0;">Đổi ảnh đại diện nào!!</textarea><br>
+                     <center><img id="img1" src="" width="45%" style="border-radius: 10px;">
                     </center> <br>
+                    
+                </div>
+                <div class="modal-footer post-upload-textarea"
+                    style="padding: 0; padding-left: 10px; padding-right: 10px;">
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="inputGroupFile011"><img src="images/${pageContext.request.contextPath}" style="width: 20px;
                      margin-right: 13px;">Photo/Video</label>
                         <input type="file" class="form-control" id="inputGroupFile011" name="photo_file">
+                        
                     </div>
-                </div>
-                <div class="modal-footer post-upload-textarea"
-                    style="padding: 0; padding-left: 10px; padding-right: 10px;">
-                    <textarea name="" placeholder="Mô tả?" id="" cols="30" rows="3"></textarea><br>
-                    <button style="width: 500px; background-color: #5A4F48; border: none;" class="btn btn-primary">Đăng
-                        ảnh</button>
+                    <button style="width: 500px; background-color: #5A4F48; border: none;" class="btn btn-primary">
+                    Đăng ảnh đại diện</button>
                 </div>
             </div>
         </div>
@@ -371,7 +384,7 @@
                         <c:forEach items="${topKetBan}" var="topKb">
 								<div>
 									<div class="user-profile">
-										<a href="/nguoiDung/${topKb.nguoiLa.sdt}"><img src="images/${topKb.nguoiDung.anhDaiDien}"
+										<a href="/nguoiDung/${topKb.nguoiDung.sdt}"><img src="images/${topKb.nguoiDung.anhDaiDien}"
 											class="img-thumbnail" alt=""></a>
 										<div>
 											<label class="nhan" 
@@ -559,9 +572,9 @@
 					<div class="modal-body">
 					
 						<div class="user-profile">
-							<img src="images/${NguoiDung.hoTen}" alt="">
+							<img src="/images/${nguoiDung.anhDaiDien}" alt="">
 							<div>
-								<label>${NguoiDung.hoTen}
+								<label>${nguoiDung.hoTen}
 									</p> <small style="font-size: 12px">
 										<div>
 											<select name="cheDo"
