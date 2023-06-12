@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.viesonet.interceptor.AccessTimeInterceptor;
+import com.viesonet.interceptor.AdminInterceptor;
 import com.viesonet.interceptor.AuthInterceptor;
 
 @Configuration
@@ -17,13 +18,19 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
 	@Autowired
 	private AccessTimeInterceptor accessTimeInterceptor;
+	
+	@Autowired
+	private AdminInterceptor adminInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(authInterceptor).addPathPatterns("/**") // Áp dụng cho tất cả các đường dẫn
 				.excludePathPatterns("/dangnhap").excludePathPatterns("/style.css").excludePathPatterns("/images/**");
+		
 		registry.addInterceptor(accessTimeInterceptor).addPathPatterns("/**").excludePathPatterns("/dangnhap")
 				.excludePathPatterns("/style.css").excludePathPatterns("/images/**");
+		
+		
 	}
 
 	@Override

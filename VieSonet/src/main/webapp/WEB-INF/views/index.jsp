@@ -4,6 +4,7 @@
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="fr"%>
+
 <!doctype html>
 <html lang="en">
 
@@ -117,9 +118,7 @@
 
 									</a>
 								</c:forEach>
-
 							</div></li>
-
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#" id="dropdownId"
 							class="nav-link dropdown-toggle" href="/profile" id="dropdownId"
@@ -129,12 +128,16 @@
 									style="border-radius: 50%;" alt=""></small></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownId"
 								style="padding-left: 3px; left: -100px; line-height: 35px">
-								<a class="dropdown-item" href="/dangnhap"><small>Xem
-										trang cá nhân</small></a> <a class="dropdown-item" href="/dangnhap"><small>Danh
-										sách bạn bè</small></a> <a class="dropdown-item" href="/dangnhap"><small>Lời
-										mời kết bạn</small></a> <a class="dropdown-item" href="/dangnhap"><small>Điều
-										khoản</small></a> <a class="dropdown-item" href="/dangxuat"><small>Đăng
-										xuất</small></a>
+								<a class="dropdown-item" href="/profile">
+								<small>Xem trang cá nhân</small></a> 
+								<a class="dropdown-item" href="/DanhSachBanBe">
+								<small>Danh sách bạn bè</small></a> 
+								<a class="dropdown-item" href="/GoiYKB">
+								<small>Lời mời kết bạn</small></a> 
+								<a class="dropdown-item" href="/dieukhoan">
+								<small>Điều khoản</small></a> 
+								<a class="dropdown-item" href="/dangxuat">
+								<small>Đăng xuất</small></a>
 							</div></li>
 
 					</ul>
@@ -169,8 +172,8 @@
 								<div class="add-post-links">
 									<button type="button" class="btn" data-bs-toggle="modal"
 										data-bs-target="#modalId">
-										<a href="#"><i class="fa-regular fa-image"></i>
-											Photo/Video</a>
+										<a data-bs-toggle="modal" href="#exampleModalToggle"><i
+											class="fa-regular fa-image"></i> Photo</a>
 									</button>
 								</div>
 							</div>
@@ -195,8 +198,26 @@
 											class="img-thumbnail" alt=""></a>
 										<div>
 											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br>
-											<small style="font-size: 12px; color: #65676b"> <fmt:formatDate
-													value="${BaiViet.ngayDang}" pattern="dd-MM-yyyy HH:mm" />
+											<small style="font-size: 12px; color: #65676b"> <script
+													type="text/javascript">
+                            var currentTime = new Date();
+                            var activityTime = new Date('${BaiViet.ngayDang}');
+                            var timeDiff = currentTime.getTime() - activityTime.getTime();
+                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                            var monthsDiff = Math.floor(daysDiff / 30);
+                            var yearsDiff = Math.floor(monthsDiff / 12);
+
+                            if (daysDiff < 1) {
+                                document.write('1 ngày trước');
+                            } else if (monthsDiff < 1) {
+                                document.write(daysDiff + ' ngày trước');
+                            } else if (yearsDiff < 1) {
+                                document.write(monthsDiff + ' tháng trước');
+                            } else {
+                                document.write('<fmt:formatDate value="${BaiViet.ngayDang}"
+										pattern="dd-MM-yyyy HH:mm" />');
+                            }
+                        </script>
 											</small>
 										</div>
 									</div>
@@ -259,8 +280,6 @@
 											<i class="fa-duotone fa-heart"></i> &nbsp; <span
 												class="like-count">${BaiViet.luotThich}</span>
 										</div>
-
-
 										<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
 											<i class="fa-regular fa-comment"></i>&nbsp;
 											${BaiViet.luotBinhLuan}
@@ -340,37 +359,64 @@
 								sách bạn bè(${SlBanbe})</label> <br> <br>
 
 							<c:forEach items="${topBanbe}" var="banBe">
-								<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
-									<div
-										style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-										<div class="user-profile">
-											<img src="images/${banBe.nguoiDung.anhDaiDien}"
-												class="img-thumbnail" alt="" style="border-radius: 50%;">
-											<div>
-												<label for="">${banBe.nguoiDung.hoTen}</label> <br> <small
-													style="font-size: 12px">Hoạt động: <fmt:formatDate
-														value="${banBe.nguoiDung.thoiGianTruyCap}"
-														pattern="dd-MM-yyyy HH:mm" /></small>
-											</div>
+								<div
+									style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+									<div class="user-profile">
+										<img src="images/${banBe.nguoiDung.anhDaiDien}"
+											class="img-thumbnail" alt="" style="border-radius: 50%;">
+										<div>
+											<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
+												<label for="">${banBe.nguoiDung.hoTen}</label>
+												<br>
+												<small style="font-size: 12px"> Hoạt động: <script
+														type="text/javascript">
+                            var currentTime = new Date();
+                            var activityTime = new Date('${banBe.nguoiDung.thoiGianTruyCap}');
+                            var timeDiff = currentTime.getTime() - activityTime.getTime();
+                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                            var monthsDiff = Math.floor(daysDiff / 30);
+                            var yearsDiff = Math.floor(monthsDiff / 12);
+
+                            if (daysDiff < 1) {
+                                document.write('1 ngày trước');
+                            } else if (monthsDiff < 1) {
+                                document.write(daysDiff + ' ngày trước');
+                            } else if (yearsDiff < 1) {
+                                document.write(monthsDiff + ' tháng trước');
+                            } else {
+                                document.write(yearsDiff + ' năm trước');
+                            }
+                        </script>
+												</small>
+											</c:if>
+											<c:if test="${banBe.banBe.sdt != sessionScope.sdt}">
+												<label for="">${banBe.banBe.hoTen}</label>
+												<br>
+												<small style="font-size: 12px"> Hoạt động: <script
+														type="text/javascript">
+                            var currentTime = new Date();
+                            var activityTime = new Date('${banBe.banBe.thoiGianTruyCap}');
+                            var timeDiff = currentTime.getTime() - activityTime.getTime();
+                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                            var monthsDiff = Math.floor(daysDiff / 30);
+                            var yearsDiff = Math.floor(monthsDiff / 12);
+                            if (daysDiff < 1) {
+                                document.write('1 ngày trước');
+                            } else if (monthsDiff < 1) {
+                                document.write(daysDiff + ' ngày trước');
+                            } else if (yearsDiff < 1) {
+                                document.write(monthsDiff + ' tháng trước');
+                            } else {
+                                document.write(yearsDiff + ' năm trước');
+                            }
+                        </script>
+												</small>
+											</c:if>
 										</div>
 									</div>
-								</c:if>
-								<c:if test="${banBe.banBe.sdt != sessionScope.sdt}">
-									<div
-										style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-										<div class="user-profile">
-											<img src="images/${banBe.banBe.anhDaiDien}"
-												class="img-thumbnail" alt="" style="border-radius: 50%;">
-											<div>
-												<label for="">${banBe.banBe.hoTen}</label> <br> <small
-													style="font-size: 12px">Hoạt động: <fmt:formatDate
-														value="${banBe.banBe.thoiGianTruyCap}"
-														pattern="dd-MM-yyyy HH:mm" /></small>
-											</div>
-										</div>
-									</div>
-								</c:if>
+								</div>
 							</c:forEach>
+
 
 						</div>
 					</div>
@@ -398,8 +444,7 @@
 						<div class="user-profile">
 							<img src="images/avt.jpg" alt="">
 							<div>
-								<label>Alex Carry
-									</p> <small style="font-size: 12px">
+								<label>${taiKhoan.hoTen} <small style="font-size: 12px">
 										<div>
 											<select name="cheDo"
 												style="border: none; background-color: transparent;">

@@ -2,6 +2,7 @@ package com.viesonet.controller;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -106,11 +107,9 @@ public class IndexController {
 		List<Order> orders = new ArrayList<Order>();
 		orders.add(new Order(Direction.DESC, "ngayDang"));
 		Sort sort = Sort.by(orders);
-		List<BaiViet> dsBaiViet = baiVietDao.findByNguoiDungSdtIn(sdtBanBeList, Sort.by(Direction.DESC, "ngayDang"));
+		List<BaiViet> dsBaiViet = baiVietDao.findByNguoiDungSdtInAndCheDoMaCheDoNotIn(sdtBanBeList, 3, Sort.by(Direction.DESC, "ngayDang"));
 		m.addAttribute("DanhSachBv", dsBaiViet);
-
 		// Lấy danh sách bài viết đã thích
-
 		Set<Integer> maBaiVietDaThich = new HashSet<>();
 		List<DanhSachYeuThich> dsyt = dsytDao.findBySdt(sdt);
 		for (DanhSachYeuThich ds : dsyt) {

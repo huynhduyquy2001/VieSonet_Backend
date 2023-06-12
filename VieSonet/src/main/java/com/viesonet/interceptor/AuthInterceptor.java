@@ -15,6 +15,10 @@ public class AuthInterceptor implements HandlerInterceptor {
             response.sendRedirect("/dangnhap");
             return false;
         }
+        if(request.getSession().getAttribute("vt")=="1") {
+        	response.sendRedirect("/");
+        	return false;
+        }
         return true;
     }
 }
