@@ -27,7 +27,7 @@ function loadBinhLuan(maBaiViet) {
 					"<img src='/images/" + binhLuan[1] + "' class='img-thumbnail' alt=''>" +
 					"<div>" +
 					"<div><p class='nhan' style='color: #A59565; font-size: 15px;'>" + binhLuan[0] + "</p></div>" +
-					"<small style='font-size: 12px;'><i class='fa-regular fa-comment'></i> " + binhLuan[2] + "</small><br>" +
+					"<small style='font-size: 12px;'><i class='fa-regular fa-comment'></i> " + binhLuan[2]+ "</small>" + "<a href='#'><i class='fa-solid fa-trash-can-xmark' style='margin-left: 30px;' onclick='xoaBinhLuan("+binhLuan[4]+","+binhLuan[5] +")'></i><a/> <br>" +
 					"<small style='font-size: 10px;'>" + binhLuan[3] + "</small>" +
 					"</div>" +
 					"</div>";
@@ -213,6 +213,101 @@ function baoCaoViPham(maBaiViet) {
 		success: function(response) {
 			// Xử lý logic sau khi gọi thành công
 			console.log(response); // In response ra console để kiểm tra
+		},
+		error: function(xhr, status, error) {
+			console.log(error); // In error ra console để debug
+			// Xử lý logic khi gọi gặp lỗi
+		}
+	});
+}
+
+function xoaBinhLuan(maBaiViet,maBinhLuan){
+	$.ajax({
+		url: "/profile/xoabinhluan/" + maBinhLuan+"/"+maBaiViet,
+		type: "GET",
+		success: function(data) {
+			// Xử lý logic sau khi gọi thành công
+			console.log(data); // In response ra console để kiểm tra
+			// Xử lý dữ liệu trả về từ server
+			var baiViet = data.baiViet;
+			var danhSachBinhLuan = data.danhSachBinhLuan;
+
+			// Xóa các bình luận cũ trong modal (nếu có)
+			$("#danhSachBinhLuan .modal-body .trai").empty();
+			$("#danhSachBinhLuan .modal-body .phai").empty();
+
+			// Hiển thị phần nhập bình luận
+			var binhLuanFormHtml = "<form id='binhLuanForm'>" +
+				"<div style='display: flex; flex-direction: column;'>" +
+				"<input type='text' id='binhLuan' class='ip form-control' style='width: 80%;' placeholder='Nhận xét của bạn' name='binhLuanCuaToi' required>" +
+				"<button class='btn01' type='submit' style='background: #3B998B; color: white;' onclick='themBinhLuan(" + baiViet[8] + ")'>Bình luận</button>" +
+				"</div>" +
+				"</form>";
+
+
+			$("#danhSachBinhLuan .modal-body .trai").append(binhLuanFormHtml);
+			// Hiển thị danh sách bình luận lên modal
+			danhSachBinhLuan.forEach(function(binhLuan) {
+				var binhLuanHtml = "<div class='user-profile animate__animated animate__headShake' style='border: 1px solid #E1D4C4; box-sizing: border-box; padding: 4px; border-radius: 5px;background-color: white; margin-bottom:5px'>" +
+					"<img src='/images/" + binhLuan[1] + "' class='img-thumbnail' alt=''>" +
+					"<div>" +
+					"<div><p class='nhan' style='color: #A59565; font-size: 15px;'>" + binhLuan[0] + "</p></div>" +
+					"<small style='font-size: 12px;'><i class='fa-regular fa-comment'></i> " + binhLuan[2]+ "</small>" + "<a href='#'><i class='fa-solid fa-trash-can-xmark' style='margin-left: 30px;' onclick='xoaBinhLuan("+binhLuan[4]+","+binhLuan[5] +")'></i></a> <br>" +
+					"<small style='font-size: 10px;'>" + binhLuan[3] + "</small>" +
+					"</div>" +
+					"</div>";
+
+				$("#danhSachBinhLuan .modal-body .trai").append(binhLuanHtml);
+			});
+			// Hiển thị thông tin bài viết lên modal
+			var baiVietHtml = `
+    <div class="write-post-container nenTrangChu img-thumbnail" style="margin-bottom: 20px; border-radius: 0; box-shadow: 0 0 0;">
+        <div style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div class="user-profile">
+                    <img src="/images/${baiViet[6]}" class="img-thumbnail" alt="">
+                    <div>
+                        <label class="nhan">${baiViet[5]}</label><br>
+                        <small style="font-size: 12px; color: #65676b">${baiViet[2]}</small>
+                    </div>
+                </div>
+                <div>
+                    <div class="btn-group">
+                        <span class="btn dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+                        <div class="dropdown-menu" aria-labelledby="triggerId">
+                            <a class="dropdown-item" href="#">Báo cáo vi phạm</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="">
+                <div style="margin-top: 10px; color: #847577">
+                    ${baiViet[0]}
+                    <center>
+                        <img src="/images/${baiViet[1]}" width="100%" alt="" style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
+                    </center>
+                </div>
+            </a>
+            <div class="post-reaction">
+                <div class="activity-icons">
+                    <div>
+                        <i class="fa-regular fa-thumbs-up"></i> &nbsp; ${baiViet[3]}
+                    </div>
+                    <div>
+                        <i class="fa-regular fa-comment"></i>&nbsp; ${baiViet[4]}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+`;
+			$("#danhSachBinhLuan .modal-body .phai").append(baiVietHtml);
+
+			// Mở modal
+			if (!$("#danhSachBinhLuan").is(":visible")) {
+				// Mở modal chỉ khi nó chưa được hiển thị
+				$("#danhSachBinhLuan").modal("show");
+			}
 		},
 		error: function(xhr, status, error) {
 			console.log(error); // In error ra console để debug

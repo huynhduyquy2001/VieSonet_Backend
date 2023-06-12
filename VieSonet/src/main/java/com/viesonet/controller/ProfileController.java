@@ -320,6 +320,15 @@ public class ProfileController {
 		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
 	}
 	
+	@GetMapping("/profile/xoabinhluan/{maBaiViet}/{maBinhLuan}")
+	@ResponseBody
+	public BinhLuanResponse xoaBinhLuanCN(@PathVariable int maBaiViet,@PathVariable int maBinhLuan) {
+		dsblDao.deleteById(maBinhLuan);
+		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
+		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet, Sort.by(Direction.DESC, "ngayBinhLuan"));
+		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
+	}
+	
 	@PostMapping("/profile/suabinhluan/{maBaiViet}")
 	@ResponseBody
 	public String chinhSuaBinhLuan(@PathVariable int maBaiViet, @RequestParam("binhLuanCuaToi") String binhLuan) {
