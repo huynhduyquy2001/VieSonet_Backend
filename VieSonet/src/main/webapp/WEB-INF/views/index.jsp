@@ -322,8 +322,8 @@
 								<c:forEach items="${topKetBan}" var="topKb">
 									<div>
 										<div class="user-profile">
-											<img src="images/${topKb.nguoiDung.anhDaiDien}"
-												class="img-thumbnail" alt="">
+											<a href="/nguoiDung/${topKb.nguoiDung.sdt} }"><img src="images/${topKb.nguoiDung.anhDaiDien}"
+												class="img-thumbnail" alt=""></a> 
 											<div>
 												<label class="nhan"
 													style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiDung.hoTen}</label>
@@ -369,8 +369,8 @@
 								<div
 									style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
 									<div class="user-profile">
-										<img src="images/${banBe.nguoiDung.anhDaiDien}"
-											class="img-thumbnail" alt="" style="border-radius: 50%;">
+										<a href="/nguoiDung/${banBe.nguoiDung.sdt}"> <img src="images/${banBe.nguoiDung.anhDaiDien}"
+											class="img-thumbnail" alt="" style="border-radius: 50%;"></a>
 										<div>
 											<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
 												<label for="">${banBe.nguoiDung.hoTen}</label>

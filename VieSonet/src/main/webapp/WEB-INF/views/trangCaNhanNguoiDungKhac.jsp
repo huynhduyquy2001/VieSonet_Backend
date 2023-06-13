@@ -389,10 +389,10 @@
                                         <div class="dropdown-menu btn-cap-nhat-bai-viet" aria-labelledby="triggerId">
                                             <!-- href="#exampleModalToggle123" --> 
                                             <button data-bs-toggle="modal" 
-                                           onclick="loadBaiViet(${BaiViet.maBaiViet})"
-                                            
+                                           onclick="toCao(${BaiViet.maBaiViet})"
+                                            	
                 style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background:transparent"><small>
-                    Chỉnh sửa bài viết</small></button>
+                    Báo cáo vi phạm</small></button>
                                         </div>
                                     </div>
                                 </div>
@@ -572,6 +572,32 @@
 		</div>
 	</div>
    
+   <!-- Modal báo cáo -->
+	<div class="modal fade" id="modalBaoCao" tabindex="-1" role="dialog"
+		aria-labelledby="modalTitleId" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalTitleId">Nội dung tố cáo</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<select name="loaiViPham" id="viPham" class="form-control">
+						<c:forEach var="viPham" items="${danhSachViPham}">
+							<option value="${viPham.maLoai}">${viPham.chiTiet}</option>
+						</c:forEach>
+					</select>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Đóng</button>
+					<button type="button" class="btn btn-primary">Báo cáo</button>
+				</div>
+			</div>
+		</div>
+	</div>
    
     <!-- Modal -->
     <!-- Modal hiện danh sách bình luận -->
