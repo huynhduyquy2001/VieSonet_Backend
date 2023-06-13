@@ -50,7 +50,7 @@ BEGIN
     AND nguoiDung.luotViPham > 0; -- Thêm điều kiện này để chỉ giảm khi luotViPham > 0
 END;
 
-
+--Cập nhật trạng thái của bài viết thành false nếu số lượt tố cáo >=5 --
 CREATE TRIGGER tr_UpdateTrangThai2
 ON BaiVietViPham
 AFTER INSERT,UPDATE,DELETE
@@ -88,3 +88,16 @@ BEGIN
             AND maBaiViet NOT IN (SELECT maBaiViet FROM ThongBao);
     END
 END;
+
+--Trạng thái của Bài Viết sẽ thành false nếu Bài Viết Vi Phạm có trạng thái là false
+CREATE TRIGGER bai_viet_vi_pham_trg ON BaiVietViPham AFTER UPDATE
+AS
+BEGIN
+  IF UPDATE(trangThai) AND EXISTS (SELECT * FROM BaiVietViPham WHERE trangThai = 0)
+  BEGIN
+    UPDATE BaiViet
+    SET trangThai = 0
+    FROM BaiViet
+    INNER JOIN BaiVietViPham ON BaiViet.maBaiViet = BaiVietViPham.maBaiViet;
+  END
+END

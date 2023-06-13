@@ -59,7 +59,7 @@
 				</button>
 				<div class="collapse navbar-collapse" id="collapsibleNavId">
 					<ul class="navbar-nav me-auto mt-2 mt-lg-0">
-						<li class="nav-item"><a class="nav-link active" href="#"
+						<li class="nav-item"><a class="nav-link active" href="/"
 							aria-current="page"
 							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Trang
 								chủ <span class="visually-hidden">(current)</span>
