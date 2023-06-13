@@ -34,6 +34,7 @@ import com.viesonet.dao.DanhSachBinhLuanDAO;
 import com.viesonet.dao.DanhSachKetBanDAO;
 import com.viesonet.dao.DanhSachYeuThichDAO;
 import com.viesonet.dao.NguoiDungDAO;
+import com.viesonet.dao.ThongBaoDAO;
 import com.viesonet.entity.BaiViet;
 import com.viesonet.entity.BanBe;
 import com.viesonet.entity.BinhLuanResponse;
@@ -42,6 +43,7 @@ import com.viesonet.entity.DanhSachBinhLuan;
 import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.DanhSachYeuThich;
 import com.viesonet.entity.NguoiDung;
+import com.viesonet.entity.ThongBao;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
 
@@ -79,13 +81,21 @@ public class ProfileController {
 	
 	@Autowired
 	ParamService param;
+	
+	@Autowired
+	ThongBaoDAO thongBaoDao;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 	
 	@RequestMapping("/profile")
 	public String index(Model m, HttpServletRequest request, HttpServletResponse response) {
+		// lấy danh sách thông báo
+		String sdt = session.get("sdt");
+				List<ThongBao> thongBao = thongBaoDao.findByUser(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
+				m.addAttribute("thongBao", thongBao);
+				m.addAttribute("thongBaoChuaXem", thongBaoDao.demThongBaoChuaXem(sdt));
 		HttpSession session = request.getSession();
 		Cookie[] cookies = request.getCookies();
-		String sdt = null;
+
 		NguoiDung nguoiDung = null;
        // Kiểm tra có session chưa
         if (session.getAttribute("sdt") != null) {

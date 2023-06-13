@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +18,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.viesonet.dao.NDDAOJson;
 import com.viesonet.dao.NguoiDungDAO;
+import com.viesonet.dao.ThongBaoDAO;
 import com.viesonet.entity.NguoiDung;
 import com.viesonet.entity.NguoiDungJson;
+import com.viesonet.entity.ThongBao;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
 
@@ -37,12 +41,19 @@ public class QuanLyNguoiDungController {
 	@Autowired
 	ParamService paramService;
 	
+	@Autowired
+	ThongBaoDAO thongBaoDao;
 	
 	@RequestMapping("/quanly/quanLyNguoiDung")
 	public String quanLyNguoiDung (Model m) {
+		
 		String sdt = sessionService.get("sdt");
 		NguoiDung taiKhoan = ndDAO.getById(sdt);
 		m.addAttribute("taiKhoan", taiKhoan);
+		// lấy danh sách thông báo
+		List<ThongBao> thongBao = thongBaoDao.findByUser(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
+		m.addAttribute("thongBao", thongBao);
+		m.addAttribute("thongBaoChuaXem", thongBaoDao.demThongBaoChuaXem(sdt));
 		String userHienTai = sessionService.get("sdt");
 		m.addAttribute("dsNguoiDung", daoND.findDSNguoiDungKhacNguoiDungHienTai(userHienTai));
 		return "quanLyNguoiDung";

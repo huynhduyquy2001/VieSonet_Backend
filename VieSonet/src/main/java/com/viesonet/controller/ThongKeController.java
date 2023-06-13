@@ -7,12 +7,16 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.viesonet.dao.NguoiDungDAO;
+import com.viesonet.dao.ThongBaoDAO;
 import com.viesonet.entity.NguoiDung;
+import com.viesonet.entity.ThongBao;
 import com.viesonet.report.*;
 import com.viesonet.service.SessionService;
 
 import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,11 +34,20 @@ public class ThongKeController {
 	
 	@Autowired
 	NguoiDungDAO nguoiDungDAO;
+	
+	@Autowired
+	ThongBaoDAO thongBaoDao;
 	@RequestMapping("/quanly/thongKe")
 	public String thongKe(Model m) throws JsonProcessingException {
 		String sdt = session.get("sdt");
 		NguoiDung taiKhoan = nguoiDungDAO.getById(sdt);
 		m.addAttribute("taiKhoan", taiKhoan);
+		
+		// lấy danh sách thông báo
+		List<ThongBao> thongBao = thongBaoDao.findByUser(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
+		m.addAttribute("thongBao", thongBao);
+		m.addAttribute("thongBaoChuaXem", thongBaoDao.demThongBaoChuaXem(sdt));
+		
 		String layNam = "SELECT DISTINCT YEAR(ngayToCao) as 'Nam' FROM BaiVietViPham order by YEAR(ngayToCao) DESC";
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(layNam, new Object[]{});
 		List<Object> NamHienCo = new ArrayList<>();

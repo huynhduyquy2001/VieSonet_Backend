@@ -70,14 +70,7 @@
 					style="color: #222; font-weight: bolder; font-family: 'robo';">
 					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
 				</a>
-				<a class="nav-link active" href="/" aria-current="page"
-							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Trang
-								chủ <span class="visually-hidden">(current)</span>
-						</a>
-				<c:if test="${sessionScope.vt == 3}">
-					<a class="nav-link" href="/quanly/quanLyNguoiDung"><small
-				style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Quản lí</small></a>
-				</c:if>
+				
 				<button class="navbar-toggler d-lg-none" type="button"
 					data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
 					aria-controls="collapsibleNavId" aria-expanded="false"
@@ -176,7 +169,7 @@
 							class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
 							style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
 							<div class="user-profile">
-								<img src="images/${taiKhoan.anhDaiDien}" alt="">
+								<a href="/profile"><img src="images/${taiKhoan.anhDaiDien}" alt=""></a>
 								<div>
 									<label for="">${taiKhoan.hoTen}</label> <br> <small>
 										Công khai <i class="fas fa-caret-down"></i>
