@@ -22,6 +22,10 @@ import com.viesonet.entity.PostWithComment;
 import com.viesonet.report.ListYear;
 
 import jakarta.transaction.Transactional;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 public class QuanLyBaiVietController {
@@ -36,7 +40,7 @@ public class QuanLyBaiVietController {
 	JdbcTemplate jdbcTemplate;
 
 	@RequestMapping("/quanly/quanLyBaiViet")
-	public String quanLyBaiViet(Model m) {
+	public String quanLyBaiViet(Model m) throws ParseException {
 		String sql = "select maBaiViet, COUNT(maToCao) AS 'SoLuong' from BaiVietViPham where trangThai = 1 group by maBaiViet order by SoLuong DESC";
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[] {});
 		List<DanhSachBaiVietBiToCao> dsToCao = new ArrayList<>();
@@ -53,7 +57,9 @@ public class QuanLyBaiVietController {
 		for (Map<String, Object> row : rows2) {
 			DanhSachViPham ls = new DanhSachViPham();
 			ls.setMaBaiViet(Integer.parseInt(String.valueOf(row.get("maBaiViet"))));
-			ls.setNgayDang(String.valueOf(row.get("ngayDang")));
+			Date ngayDate = new Date();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			ls.setNgayDang(dateFormat.parse(String.valueOf(row.get("ngayDang"))));
 			ls.setHoTen(String.valueOf(row.get("hoTen")));
 			dsViPham.add(ls);
 		}
@@ -72,7 +78,7 @@ public class QuanLyBaiVietController {
 	@Transactional
 	@ResponseBody
 	@RequestMapping("/quanly/danhDauBaiViet/{maBaiViet}")
-	public DSToCaoVaViPham danhDauBaiViet(@PathVariable String maBaiViet) {
+	public DSToCaoVaViPham danhDauBaiViet(@PathVariable String maBaiViet) throws ParseException {
 		daoBVVP.danhDauViPham(Integer.parseInt(maBaiViet));
 		String sql = "select maBaiViet, COUNT(maToCao) AS 'SoLuong' from BaiVietViPham where trangThai = 1 group by maBaiViet order by SoLuong DESC";
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[] {});
@@ -89,7 +95,9 @@ public class QuanLyBaiVietController {
 		for (Map<String, Object> row : rows2) {
 			DanhSachViPham ls = new DanhSachViPham();
 			ls.setMaBaiViet(Integer.parseInt(String.valueOf(row.get("maBaiViet"))));
-			ls.setNgayDang(String.valueOf(row.get("ngayDang")));
+			Date ngayDate = new Date();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			ls.setNgayDang(dateFormat.parse(String.valueOf(row.get("ngayDang"))));
 			ls.setHoTen(String.valueOf(row.get("hoTen")));
 			dsViPham.add(ls);
 		}
@@ -106,7 +114,7 @@ public class QuanLyBaiVietController {
 	@Transactional
 	@ResponseBody
 	@RequestMapping("/quanly/xoaBaiVietViPham/{maBaiViet}")
-	public List<DanhSachViPham> goViPham(@PathVariable String maBaiViet) {
+	public List<DanhSachViPham> goViPham(@PathVariable String maBaiViet) throws ParseException {
 		String sql3 = "DELETE FROM BaiVietViPham WHERE maBaiViet = ?";
 		jdbcTemplate.update(sql3, new Object[] { Integer.parseInt(maBaiViet) });
 
@@ -116,7 +124,9 @@ public class QuanLyBaiVietController {
 		for (Map<String, Object> row : rows2) {
 			DanhSachViPham ls = new DanhSachViPham();
 			ls.setMaBaiViet(Integer.parseInt(String.valueOf(row.get("maBaiViet"))));
-			ls.setNgayDang(String.valueOf(row.get("ngayDang")));
+			Date ngayDate = new Date();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			ls.setNgayDang(dateFormat.parse(String.valueOf(row.get("ngayDang"))));
 			ls.setHoTen(String.valueOf(row.get("hoTen")));
 			dsViPham.add(ls);
 		}

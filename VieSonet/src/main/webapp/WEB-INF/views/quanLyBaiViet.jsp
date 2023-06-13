@@ -230,7 +230,12 @@
                                 <tbody id="tableLoad2">
                                     <c:forEach var="ds" items="${dsViPham}">
                                     	<tr>
-                                        <td class="anNoiDung" style="max-width: 150px;"><small>${ds.ngayDang}</small>
+                                        <td class="anNoiDung" style="max-width: 150px;"><small> 
+                                        <script type="text/javascript">
+                                        document.write('<fmt:formatDate value="${ds.ngayDang}"
+        										pattern="dd-MM-yyyy" />');
+                                        </script>
+                                         </small>
                                         </td>
                                         <td class="anNoiDung" style=" max-width: 250px;">
                                             <small>${ds.hoTen}</small>

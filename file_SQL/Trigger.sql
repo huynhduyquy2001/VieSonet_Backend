@@ -46,7 +46,8 @@ BEGIN
     FROM nguoiDung
     INNER JOIN BaiViet ON nguoiDung.sdt = BaiViet.sdt
     INNER JOIN deleted ON BaiViet.maBaiViet = deleted.maBaiViet
-    WHERE deleted.trangThai = 'FALSE';
+    WHERE deleted.trangThai = 'FALSE'
+    AND nguoiDung.luotViPham > 0; -- Thêm điều kiện này để chỉ giảm khi luotViPham > 0
 END;
 
 
