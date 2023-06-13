@@ -59,6 +59,8 @@ public class GoiYKetBanController {
 	public String GoiYKB(String sdt, Model model) {
 		DSBB(model);
 		String sdtCN = Session.get("sdt");
+		NguoiDung taiKhoan = nguoiDungDAO.getById(sdtCN);
+		model.addAttribute("taiKhoan", taiKhoan);
 		// danh sách kết bạn và đếm số lượng kết bạn
 		List<DanhSachKetBan> danhSachKetBan = dskbDao.findDsBySdt(sdtCN);
 		model.addAttribute("SlKb", danhSachKetBan.size());

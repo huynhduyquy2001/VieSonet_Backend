@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.viesonet.dao.LoaiViPhamDAO;
+import com.viesonet.dao.NguoiDungDAO;
 import com.viesonet.entity.LoaiViPham;
+import com.viesonet.entity.NguoiDung;
 import com.viesonet.service.ParamService;
+import com.viesonet.service.SessionService;
 
 @Controller
 public class QuanLyViPhamController {
@@ -21,9 +24,16 @@ public class QuanLyViPhamController {
 	ParamService param;
 	@Autowired
 	LoaiViPhamDAO dao;
-
+	@Autowired
+	SessionService session;
+	@Autowired
+	NguoiDungDAO nguoiDungDAO;
+	
 	@GetMapping("/quanly/quanlyvipham")
 	public String list(Model m) {
+		String sdt = session.get("sdt");
+		NguoiDung taiKhoan = nguoiDungDAO.getById(sdt);
+		m.addAttribute("taiKhoan", taiKhoan);
 		m.addAttribute("ds", dao.findAll());
 		return "quanLyViPham";
 	}

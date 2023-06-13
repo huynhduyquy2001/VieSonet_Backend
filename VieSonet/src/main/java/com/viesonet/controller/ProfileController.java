@@ -91,6 +91,8 @@ public class ProfileController {
         if (session.getAttribute("sdt") != null) {
             sdt = (String) session.getAttribute("sdt");
             nguoiDung = nguoiDungDao.findBySdt(sdt);
+            NguoiDung taiKhoan = nguoiDungDao.getById(sdt);
+    		m.addAttribute("taiKhoan", taiKhoan);
         } 
         // Nếu không có, kiểm tra cookie
         else if (cookies != null) {
@@ -99,6 +101,7 @@ public class ProfileController {
                     sdt = cookie.getValue();
                     nguoiDung = nguoiDungDao.findBySdt(sdt);
                     session.setAttribute("sdt", sdt);
+                    
                     break;
                 }
             }
@@ -397,6 +400,9 @@ public class ProfileController {
         List<BanBe> listBb = banBeDao.findFriendByUserphone(sdtLa);
         List<BaiViet> listBv = baiVietDao.findBySdt(sdtLa, sort);
         List<BanBe> listbb = banBeDao.findFriends(sdtLa);
+        
+        NguoiDung taiKhoan = nguoiDungDao.getById(sdtHt);
+		m.addAttribute("taiKhoan", taiKhoan);
 		// Số lượng bạn bè
 		if(nguoiDung.equals(nguoiLa)) {
 			//Trả về trang cá nhân

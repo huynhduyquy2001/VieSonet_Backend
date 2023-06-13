@@ -37,8 +37,12 @@ public class QuanLyNguoiDungController {
 	@Autowired
 	ParamService paramService;
 	
+	
 	@RequestMapping("/quanly/quanLyNguoiDung")
 	public String quanLyNguoiDung (Model m) {
+		String sdt = sessionService.get("sdt");
+		NguoiDung taiKhoan = ndDAO.getById(sdt);
+		m.addAttribute("taiKhoan", taiKhoan);
 		String userHienTai = sessionService.get("sdt");
 		m.addAttribute("dsNguoiDung", daoND.findDSNguoiDungKhacNguoiDungHienTai(userHienTai));
 		return "quanLyNguoiDung";

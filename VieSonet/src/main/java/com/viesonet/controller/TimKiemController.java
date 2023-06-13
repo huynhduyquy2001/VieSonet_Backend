@@ -94,6 +94,9 @@ public class TimKiemController {
 	public String timKiem(Model m) {
 		DSBB(m);
 		String sdtCN = SS.get("sdt");
+		String sdt = Session.get("sdt");
+		NguoiDung taiKhoan = nguoiDungDao.getById(sdt);
+		m.addAttribute("taiKhoan", taiKhoan);
 		List<BanBe> list = BBDAO.findFriends(sdtCN);
 		m.addAttribute("danhSachBanBe",list);	
 		return "TimKiem";

@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.viesonet.dao.BaiVietDao;
 import com.viesonet.dao.BaiVietViPhamDAO;
+import com.viesonet.dao.NguoiDungDAO;
 import com.viesonet.entity.BaiViet;
 import com.viesonet.entity.DSToCaoVaViPham;
 import com.viesonet.entity.DanhSachBaiVietBiToCao;
 import com.viesonet.entity.DanhSachViPham;
+import com.viesonet.entity.NguoiDung;
 import com.viesonet.entity.PostWithComment;
 import com.viesonet.report.ListYear;
+import com.viesonet.service.SessionService;
 
 import jakarta.transaction.Transactional;
 
@@ -34,9 +37,18 @@ public class QuanLyBaiVietController {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-
+	
+	@Autowired
+	SessionService session;
+	
+	@Autowired
+	NguoiDungDAO nguoiDungDAO;
+	
 	@RequestMapping("/quanly/quanLyBaiViet")
 	public String quanLyBaiViet(Model m) {
+		String sdt = session.get("sdt");
+		NguoiDung taiKhoan = nguoiDungDAO.getById(sdt);
+		m.addAttribute("taiKhoan", taiKhoan);
 		String sql = "select maBaiViet, COUNT(maToCao) AS 'SoLuong' from BaiVietViPham where trangThai = 1 group by maBaiViet order by SoLuong DESC";
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[] {});
 		List<DanhSachBaiVietBiToCao> dsToCao = new ArrayList<>();
