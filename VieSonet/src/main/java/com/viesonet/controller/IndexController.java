@@ -45,8 +45,11 @@ import com.viesonet.entity.DanhSachYeuThich;
 import com.viesonet.entity.LoaiViPham;
 import com.viesonet.entity.NguoiDung;
 import com.viesonet.entity.ThongBao;
+import com.viesonet.service.CookieService;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
+
+import jakarta.servlet.http.Cookie;
 
 @Controller
 public class IndexController {
@@ -85,6 +88,9 @@ public class IndexController {
 
 	@Autowired
 	ThongBaoDAO thongBaoDao;
+	
+	@Autowired
+	CookieService cookie;
 
 	// lấy thông tin người dùng
 
