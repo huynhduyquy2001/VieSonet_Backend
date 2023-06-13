@@ -81,7 +81,7 @@
 									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
 										<div class="user-profile"
 											style="width: 250px; padding-left: 3%;">
-											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
+											<img src="/images/${item.nguoiDung.anhDaiDien}" alt="">
 											<div>
 												<p style="font-size: 13px">${item.noiDung}</p>
 												<div style="justify-content: space-between; display: flex;">
@@ -120,7 +120,7 @@
 							class="nav-link dropdown-toggle" href="/profile" id="dropdownId"
 							data-bs-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"><small><img
-									src="images/${taiKhoan.anhDaiDien}" width="30px"
+									src="/images/${taiKhoan.anhDaiDien}" width="30px"
 									style="border-radius: 50%; border: 1px solid gray" alt=""></small></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownId"
 								style="padding-left: 3px; left: -100px; line-height: 35px">

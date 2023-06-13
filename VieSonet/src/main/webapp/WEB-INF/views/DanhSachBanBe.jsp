@@ -125,7 +125,13 @@
 										trang cá nhân</small></a> <a class="dropdown-item" href="/DanhSachBanBe">
 									<small>Danh sách bạn bè</small>
 								</a> <a class="dropdown-item" href="/GoiYKB"> <small>Lời
-										mời kết bạn</small></a> <a class="dropdown-item" href="/doimatkhau"> <small>Đổi
+										mời kết bạn</small></a> 
+										<c:if test="${sessionScope.vt == 2 || sessionScope.vt == 3}">
+										  <!-- Nội dung chỉ hiển thị khi có vai trò 'admin' -->
+										  <a class="dropdown-item" href="/quanly/quanLyBaiViet"> <small>Quản lý</small></a>
+										</c:if>
+										
+										<a class="dropdown-item" href="/doimatkhau"> <small>Đổi
 										mật khẩu</small></a> <a class="dropdown-item" href="/dieukhoan"> <small>Điều
 										khoản</small></a> <a class="dropdown-item" href="/dangxuat"> <small>Đăng
 										xuất</small></a>

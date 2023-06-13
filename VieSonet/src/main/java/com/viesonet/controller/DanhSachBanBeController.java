@@ -54,7 +54,8 @@ public class DanhSachBanBeController {
 		long listBbBB = BanBeDAO.countBySdtBb(sdtCN);
 		long slbb = listBb + listBbBB;
 		model.addAttribute("SlBanbe", slbb);
-
+		NguoiDung taiKhoan = nguoiDungDAO.getById(sdtCN);
+		model.addAttribute("taiKhoan", taiKhoan);
 		// danh sách kết bạn và đếm số lượng kết bạn 
 		List<DanhSachKetBan> danhSachKetBan = dskbDao.findDsBySdt(sdtCN);
 		model.addAttribute("SlKb", danhSachKetBan.size());

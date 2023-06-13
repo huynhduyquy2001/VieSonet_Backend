@@ -70,14 +70,7 @@
 					style="color: #222; font-weight: bolder; font-family: 'robo';">
 					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
 				</a>
-				<a class="nav-link active" href="/" aria-current="page"
-							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Trang
-								chủ <span class="visually-hidden">(current)</span>
-						</a>
-				<c:if test="${sessionScope.vt == 3}">
-					<a class="nav-link" href="/quanly/quanLyNguoiDung"><small
-				style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Quản lí</small></a>
-				</c:if>
+				
 				<button class="navbar-toggler d-lg-none" type="button"
 					data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
 					aria-controls="collapsibleNavId" aria-expanded="false"
@@ -146,7 +139,13 @@
 										trang cá nhân</small></a> <a class="dropdown-item" href="/DanhSachBanBe">
 									<small>Danh sách bạn bè</small>
 								</a> <a class="dropdown-item" href="/GoiYKB"> <small>Lời
-										mời kết bạn</small></a> <a class="dropdown-item" href="/doimatkhau"> <small>Đổi
+										mời kết bạn</small></a> 
+										<c:if test="${sessionScope.vt == 2 || sessionScope.vt == 3}">
+										  <!-- Nội dung chỉ hiển thị khi có vai trò 'admin' -->
+										  <a class="dropdown-item" href="/quanly/quanLyBaiViet"> <small>Quản lý</small></a>
+										</c:if>
+										
+										<a class="dropdown-item" href="/doimatkhau"> <small>Đổi
 										mật khẩu</small></a> <a class="dropdown-item" href="/dieukhoan"> <small>Điều
 										khoản</small></a> <a class="dropdown-item" href="/dangxuat"> <small>Đăng
 										xuất</small></a>
@@ -170,7 +169,7 @@
 							class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
 							style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
 							<div class="user-profile">
-								<img src="images/${taiKhoan.anhDaiDien}" alt="">
+								<a href="/profile"><img src="images/${taiKhoan.anhDaiDien}" alt=""></a>
 								<div>
 									<label for="">${taiKhoan.hoTen}</label> <br> <small>
 										Công khai <i class="fas fa-caret-down"></i>
@@ -330,8 +329,8 @@
 								<c:forEach items="${topKetBan}" var="topKb">
 									<div>
 										<div class="user-profile">
-											<img src="images/${topKb.nguoiDung.anhDaiDien}"
-												class="img-thumbnail" alt="">
+											<a href="/nguoiDung/${topKb.nguoiDung.sdt} }"><img src="images/${topKb.nguoiDung.anhDaiDien}"
+												class="img-thumbnail" alt=""></a> 
 											<div>
 												<label class="nhan"
 													style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiDung.hoTen}</label>
@@ -377,8 +376,20 @@
 								<div
 									style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
 									<div class="user-profile">
-										<img src="images/${banBe.nguoiDung.anhDaiDien}"
+									<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
+									<a href="/nguoiDung/${banBe.nguoiDung.sdt}">
+									<img src="images/${banBe.nguoiDung.anhDaiDien}"
 											class="img-thumbnail" alt="" style="border-radius: 50%;">
+									</a>
+									</c:if>
+									<c:if test="${banBe.banBe.sdt != sessionScope.sdt}">
+									<a href="/nguoiDung/${banBe.banBe.sdt}">
+									<img src="images/${banBe.banBe.anhDaiDien}"
+											class="img-thumbnail" alt="" style="border-radius: 50%;">
+									</a>
+									
+									</c:if>
+										
 										<div>
 											<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
 												<label for="">${banBe.nguoiDung.hoTen}</label>
@@ -421,7 +432,7 @@
                                 document.write(daysDiff + ' ngày trước');
                             } else if (yearsDiff < 1) {
                                 document.write(monthsDiff + ' tháng trước');
-                            } else {
+							} else {
                                 document.write(yearsDiff + ' năm trước');
                             }
                         </script>
@@ -431,6 +442,10 @@
 									</div>
 								</div>
 							</c:forEach>
+
+
+						
+							
 
 
 						</div>
@@ -457,7 +472,7 @@
 					enctype="multipart/form-data">
 					<div class="modal-body">
 						<div class="user-profile">
-							<img src="images/avt.jpg" alt="">
+							<img src="images/${taiKhoan.anhDaiDien}" alt="">
 							<div>
 								<label>${taiKhoan.hoTen} <small style="font-size: 12px">
 										<div>

@@ -89,7 +89,7 @@
 
 <body style="padding-top: 30px; padding-bottom: 70px;">
     <div class="split-background"></div>
-  <header class="header animationTop3">
+    <header class="header animationTop3">
 		<nav class="navbar navbar-expand-sm navbar-light"
 			style="border: none; padding-top: 0; padding-bottom: 0;">
 			<div class="container">
@@ -173,7 +173,13 @@
 										trang cá nhân</small></a> <a class="dropdown-item" href="/DanhSachBanBe">
 									<small>Danh sách bạn bè</small>
 								</a> <a class="dropdown-item" href="/GoiYKB"> <small>Lời
-										mời kết bạn</small></a> <a class="dropdown-item" href="/doimatkhau"> <small>Đổi
+										mời kết bạn</small></a> 
+										<c:if test="${sessionScope.vt == 2 || sessionScope.vt == 3}">
+										  <!-- Nội dung chỉ hiển thị khi có vai trò 'admin' -->
+										  <a class="dropdown-item" href="/quanly/quanLyBaiViet"> <small>Quản lý</small></a>
+										</c:if>
+										
+										<a class="dropdown-item" href="/doimatkhau"> <small>Đổi
 										mật khẩu</small></a> <a class="dropdown-item" href="/dieukhoan"> <small>Điều
 										khoản</small></a> <a class="dropdown-item" href="/dangxuat"> <small>Đăng
 										xuất</small></a>
@@ -409,10 +415,10 @@
                                         <div class="dropdown-menu btn-cap-nhat-bai-viet" aria-labelledby="triggerId">
                                             <!-- href="#exampleModalToggle123" --> 
                                             <button data-bs-toggle="modal" 
-                                           onclick="loadBaiViet(${BaiViet.maBaiViet})"
-                                            
+                                           onclick="(${BaiViet.maBaiViet})"
+                                            	
                 style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background:transparent"><small>
-                    Chỉnh sửa bài viết</small></button>
+                    Báo cáo vi phạm</small></button>
                                         </div>
                                     </div>
                                 </div>
@@ -592,6 +598,32 @@
 		</div>
 	</div>
    
+   <!-- Modal báo cáo -->
+	<div class="modal fade" id="modalBaoCao" tabindex="-1" role="dialog"
+		aria-labelledby="modalTitleId" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalTitleId">Nội dung tố cáo</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<select name="loaiViPham" id="viPham" class="form-control">
+						<c:forEach var="viPham" items="${danhSachViPham}">
+							<option value="${viPham.maLoai}">${viPham.chiTiet}</option>
+						</c:forEach>
+					</select>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Đóng</button>
+					<button type="button" class="btn btn-primary">Báo cáo</button>
+				</div>
+			</div>
+		</div>
+	</div>
    
     <!-- Modal -->
     <!-- Modal hiện danh sách bình luận -->

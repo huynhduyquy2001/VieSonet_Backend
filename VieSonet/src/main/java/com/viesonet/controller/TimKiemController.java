@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.hibernate.grammars.hql.HqlParser.IsNullPredicateContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,24 +77,32 @@ public class TimKiemController {
 //		return "TimKiem";
 //	}
 	@ResponseBody
-	@GetMapping("/timKiemTheoTen")
+	@PostMapping("/timKiemTheoTen")
 	public List<Object> timKiemTheoTen(Model m, @RequestParam("tuKhoaCuaToi") String tuKhoa) {
 		List<Object> danhSach = nguoiDungDao.timNguoiDung(tuKhoa);
 		//m.addAttribute("danhSachTimKiem", danhSach);
 		return danhSach;
 	}
 	@ResponseBody
-	@GetMapping("/timKiemsdt")
-	public List<Object> timKiemsdt(Model m, @RequestParam("tuKhoaCuaToi") String tuKhoa) {
-		List<Object> danhSach1 = nguoiDungDao.timNguoiDungTheoSDT(tuKhoa);
-		 //m.addAttribute("danhSachTimKiem", danhSach1);
-		return danhSach1;
+	@PostMapping("/timKiemsdt")
+	public String timKiemsdt(@RequestParam("tuKhoaCuaToi") String tuKhoa) {
+		//tìm thấy
+	    NguoiDung nguoiDung = nguoiDungDao.timNguoiDungTheoSDT(tuKhoa);
+	    if (nguoiDung != null) {
+	        return "/nguoiDung/" + tuKhoa;
+	    } else {
+	        String message = "Số điện thoại này chưa đăng ký tài khoản";
+	        return message;
+	    }
 	}
 	
 	@GetMapping("/timKiem")
 	public String timKiem(Model m) {
 		DSBB(m);
 		String sdtCN = SS.get("sdt");
+		String sdt = Session.get("sdt");
+		NguoiDung taiKhoan = nguoiDungDao.getById(sdt);
+		m.addAttribute("taiKhoan", taiKhoan);
 		List<BanBe> list = BBDAO.findFriends(sdtCN);
 		m.addAttribute("danhSachBanBe",list);	
 		return "TimKiem";
