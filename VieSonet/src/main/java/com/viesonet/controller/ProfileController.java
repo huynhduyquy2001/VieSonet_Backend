@@ -398,8 +398,11 @@ public class ProfileController {
 		List<Order> orders = new ArrayList<Order>();
 		orders.add(new Order(Direction.DESC, "ngayDang"));
 		Sort sort = Sort.by(orders);
+		//danh sách bạn của người lạ
         List<BanBe> listBb = banBeDao.findFriendByUserphone(sdtLa);
+        //danh sách bài viết
         List<BaiViet> listBv = baiVietDao.findBySdt(sdtLa, sort);
+        //
         List<BanBe> listbb = banBeDao.findFriends(sdtLa);
         
         NguoiDung taiKhoan = nguoiDungDao.getById(sdtHt);

@@ -238,7 +238,7 @@
 			const input = document.getElementById("tuKhoaCuaToi");
 			const output = document.getElementById("output");
 			output.innerHTML = input.value;
-			
+
 			$("#timKiemForm").submit(function(event) {
 				event.preventDefault();
 			});
@@ -249,18 +249,18 @@
 			<%
 				String sdt = (String) session.getAttribute("sdt");
 			%>
+			var otherUser;	
 			function SDT(myDataJS){
 				data.forEach(function item() {
 				 otherUser = item[2];
 				})
 			}
-			var otherUser;	
+
 			var myDataJS = '<%=sdt%>';
 			console.log('Giá trị của myDataJS là: ' + myDataJS);
 			console.log('Giá trị của item là: ' + otherUser);
 			if (myDataJS == tuKhoa) {
-				$
-						.ajax({
+				$.ajax({
 							url : "/timKiemsdt",
 							method : "GET",
 							data : {
@@ -310,7 +310,7 @@
 											console.log('Giá trị của myDataJS là: ' + myDataJS);
 											console.log('Giá trị của item sdt 2 là: ' + item[2]);
 											console.log('Giá trị của item sdt 3 là: ' + item[3]);
-											if(myDataJS == item[3	]){
+											if(myDataJS == item[3]){
 												sdt = "";
 											}else{
 												sdt = "<a class='btn btn-primary' href=''/timKiem/ketBan/{maKB}' role='button' style=' background-color: #A89386; border-color: transparent;'>Kết bạn</a>"
