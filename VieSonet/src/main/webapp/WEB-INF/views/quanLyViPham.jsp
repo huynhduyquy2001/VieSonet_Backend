@@ -53,8 +53,9 @@
 			<div class="container">
 				<a class="navbar-brand nhan" href="/"
 					style="color: #222; font-weight: bolder; font-family: 'robo';">
-					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
+					<img src="/images/chimLac.png" height="30px" alt=""> VIE_SONET
 				</a>
+				
 				<button class="navbar-toggler d-lg-none" type="button"
 					data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
 					aria-controls="collapsibleNavId" aria-expanded="false"
@@ -76,7 +77,7 @@
 									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
 										<div class="user-profile"
 											style="width: 250px; padding-left: 3%;">
-											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
+											<img src="${pageContext.request.contextPath}/images/${item.nguoiDung.anhDaiDien}" alt="">
 											<div>
 												<p style="font-size: 13px">${item.noiDung}</p>
 												<div style="justify-content: space-between; display: flex;">
@@ -115,7 +116,7 @@
 							class="nav-link dropdown-toggle" href="/profile" id="dropdownId"
 							data-bs-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"><small><img
-									src="images/${taiKhoan.anhDaiDien}" width="30px"
+									src="/images/${taiKhoan.anhDaiDien}" width="30px"
 									style="border-radius: 50%; border: 1px solid gray" alt=""></small></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownId"
 								style="padding-left: 3px; left: -100px; line-height: 35px">
@@ -223,7 +224,7 @@
                                 <div id="message"></div>
                                 <div class="mb-3 mt-5">        
                                   
-                                    <button type="button" class="btn btn-danger" onclick="them()">Thêm</button>
+                                    <button type="button" class="btn btn-danger" style="background-color: #368E9D; border: transparent" onclick="them()">Thêm</button>
                                     <button type="button" class="btn btn-danger" onclick="sua()">Sửa</button>  
                                 </div>
                             </div>

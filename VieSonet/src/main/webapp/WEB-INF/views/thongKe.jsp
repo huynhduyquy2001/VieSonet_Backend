@@ -40,16 +40,15 @@
 </head>
 
 <body>
-
-
-    <header class="header animationTop3">
+<header class="header animationTop3">
 		<nav class="navbar navbar-expand-sm navbar-light"
 			style="border: none; padding-top: 0; padding-bottom: 0;">
 			<div class="container">
 				<a class="navbar-brand nhan" href="/"
 					style="color: #222; font-weight: bolder; font-family: 'robo';">
-					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
+					<img src="/images/chimLac.png" height="30px" alt=""> VIE_SONET
 				</a>
+				
 				<button class="navbar-toggler d-lg-none" type="button"
 					data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
 					aria-controls="collapsibleNavId" aria-expanded="false"
@@ -71,7 +70,7 @@
 									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
 										<div class="user-profile"
 											style="width: 250px; padding-left: 3%;">
-											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
+											<img src="${pageContext.request.contextPath}/images/${item.nguoiDung.anhDaiDien}" alt="">
 											<div>
 												<p style="font-size: 13px">${item.noiDung}</p>
 												<div style="justify-content: space-between; display: flex;">
@@ -110,7 +109,7 @@
 							class="nav-link dropdown-toggle" href="/profile" id="dropdownId"
 							data-bs-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"><small><img
-									src="images/${taiKhoan.anhDaiDien}" width="30px"
+									src="/images/${taiKhoan.anhDaiDien}" width="30px"
 									style="border-radius: 50%; border: 1px solid gray" alt=""></small></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownId"
 								style="padding-left: 3px; left: -100px; line-height: 35px">

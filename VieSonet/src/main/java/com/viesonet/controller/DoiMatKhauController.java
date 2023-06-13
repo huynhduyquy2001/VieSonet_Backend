@@ -42,6 +42,7 @@ public class DoiMatKhauController {
 					nDung.setMatKhau(matKhauMoi);
 					dao.save(nDung);
 					m.addAttribute("message", "Đổi mật khẩu thành công");
+					return "/dangNhap";
 				} else {
 					m.addAttribute("message", "Mật khẩu và mật khẩu xác nhận không khớp");
 				}

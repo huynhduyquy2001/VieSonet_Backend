@@ -101,6 +101,7 @@
 					style="color: #222; font-weight: bolder; font-family: 'robo';">
 					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
 				</a>
+				
 				<button class="navbar-toggler d-lg-none" type="button"
 					data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
 					aria-controls="collapsibleNavId" aria-expanded="false"

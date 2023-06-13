@@ -64,8 +64,9 @@
 			<div class="container">
 				<a class="navbar-brand nhan" href="/"
 					style="color: #222; font-weight: bolder; font-family: 'robo';">
-					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
+					<img src="/images/chimLac.png" height="30px" alt=""> VIE_SONET
 				</a>
+				
 				<button class="navbar-toggler d-lg-none" type="button"
 					data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
 					aria-controls="collapsibleNavId" aria-expanded="false"
@@ -87,7 +88,7 @@
 									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
 										<div class="user-profile"
 											style="width: 250px; padding-left: 3%;">
-											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
+											<img src="${pageContext.request.contextPath}/images/${item.nguoiDung.anhDaiDien}" alt="">
 											<div>
 												<p style="font-size: 13px">${item.noiDung}</p>
 												<div style="justify-content: space-between; display: flex;">
@@ -126,7 +127,7 @@
 							class="nav-link dropdown-toggle" href="/profile" id="dropdownId"
 							data-bs-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"><small><img
-									src="images/${taiKhoan.anhDaiDien}" width="30px"
+									src="/images/${taiKhoan.anhDaiDien}" width="30px"
 									style="border-radius: 50%; border: 1px solid gray" alt=""></small></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownId"
 								style="padding-left: 3px; left: -100px; line-height: 35px">
@@ -135,7 +136,7 @@
 									<small>Danh sách bạn bè</small>
 								</a> <a class="dropdown-item" href="/GoiYKB"> <small>Lời
 										mời kết bạn</small></a> 
-										<c:if test="${sessionScope.vt == 3 || sessionScope.vt == 2}">
+										<c:if test="${sessionScope.vt == 2 || sessionScope.vt == 3}">
 										  <!-- Nội dung chỉ hiển thị khi có vai trò 'admin' -->
 										  <a class="dropdown-item" href="/quanly/quanLyBaiViet"> <small>Quản lý</small></a>
 										</c:if>
@@ -250,7 +251,12 @@
                                 <tbody id="tableLoad2">
                                     <c:forEach var="ds" items="${dsViPham}">
                                     	<tr>
-                                        <td class="anNoiDung" style="max-width: 150px;"><small>${ds.ngayDang}</small>
+                                        <td class="anNoiDung" style="max-width: 150px;"><small> 
+                                        <script type="text/javascript">
+                                        document.write('<fmt:formatDate value="${ds.ngayDang}"
+        										pattern="dd-MM-yyyy" />');
+                                        </script>
+                                         </small>
                                         </td>
                                         <td class="anNoiDung" style=" max-width: 250px;">
                                             <small>${ds.hoTen}</small>

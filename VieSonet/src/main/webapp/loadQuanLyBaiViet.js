@@ -6,6 +6,14 @@ function chiTietBaiViet(maBaiViet) {
 			let myDiv = document.getElementById("modalBody");
 			myDiv.innerHTML = "";
 			var baiViet = data;
+			let dateString = baiViet[2];
+			let date = new Date(dateString);
+
+			let day = date.getUTCDate().toString().padStart(2, '0');
+			let month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+			let year = date.getUTCFullYear().toString();
+
+			let outputDate = `${year}-${month}-${day}`;
 			var tb = `<div class="write-post-container nenTrangChu img-thumbnail"
                         style="margin-bottom: 20px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
                         <div style=" display: flex; align-items: center; justify-content: space-between; ">
@@ -17,7 +25,7 @@ function chiTietBaiViet(maBaiViet) {
                                 <a href="/nguoiDung/${baiViet[7]}" target="_blank">
                                     <p style="color: #A59565;"> ${baiViet[5]}</p>
                                     </a> 
-                                    <small>${baiViet[2]} pm</small>
+                                    <small>` + outputDate + `</small>
                                 </div>
                             </div>
                         </div>
@@ -93,13 +101,13 @@ function danhDauViPham(maBaiViet) {
 					+ "      style='background-color: rgba(234,229,224,1); color: #413026; border: 1px solid #5A4F48;'"
 					+ " class='btn btn-info btn-sm info-button'>"
 					+ " <i class='fa-light fa-eye'></i></a>"
-						+ " <a data-bs-toggle='tooltip' data-bs-placement='top' title='Gỡ khỏi danh sách vi phạm' href='#'"
-						+ "  onclick='xoaBaiVietViPham(" + item.maBaiViet + ")' style='background-color: rgba(234,229,224,1); color: #413026; border: 1px solid #5A4F48;'"
-						+ "  class='btn btn-info btn-sm info-button'>"
-						+ "  <i class='fa-solid fa-file-import'></i>"
-						+ "</a>"
-						+ "</td>"
-						+ "</tr>"
+					+ " <a data-bs-toggle='tooltip' data-bs-placement='top' title='Gỡ khỏi danh sách vi phạm' href='#'"
+					+ "  onclick='xoaBaiVietViPham(" + item.maBaiViet + ")' style='background-color: rgba(234,229,224,1); color: #413026; border: 1px solid #5A4F48;'"
+					+ "  class='btn btn-info btn-sm info-button'>"
+					+ "  <i class='fa-solid fa-file-import'></i>"
+					+ "</a>"
+					+ "</td>"
+					+ "</tr>"
 				myDiv2.innerHTML += table2;
 			});
 		},
@@ -120,7 +128,14 @@ function xemBaiViet(maBaiViet) {
 			myDiv.innerHTML = "";
 
 			var baiViet = data;
+			let dateString = baiViet[2];
+			let date = new Date(dateString);
 
+			let day = date.getUTCDate().toString().padStart(2, '0');
+			let month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+			let year = date.getUTCFullYear().toString();
+
+			let outputDate = `${year}-${month}-${day}`;
 			var tb = `<div class="write-post-container nenTrangChu img-thumbnail"
                         style="margin-bottom: 20px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
                         <div style=" display: flex; align-items: center; justify-content: space-between; ">
@@ -132,7 +147,7 @@ function xemBaiViet(maBaiViet) {
                          			<a href="/nguoiDung/${baiViet[7]}" target="_blank">
                                     <p style="color: #A59565;"> ${baiViet[5]}</p>
                                     </a> 
-                                    <small>${baiViet[2]} pm</small>
+                                    <small>${outputDate}</small>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +175,7 @@ function xemBaiViet(maBaiViet) {
 	});
 }
 
-function xoaBaiVietViPham(maBaiViet){
+function xoaBaiVietViPham(maBaiViet) {
 	$.ajax({
 		url: "/quanly/xoaBaiVietViPham/" + maBaiViet,
 		type: "GET",
@@ -180,13 +195,13 @@ function xoaBaiVietViPham(maBaiViet){
 					+ "      style='background-color: rgba(234,229,224,1); color: #413026; border: 1px solid #5A4F48;'"
 					+ " class='btn btn-info btn-sm info-button'>"
 					+ " <i class='fa-light fa-eye'></i></a>"
-						+ " <a data-bs-toggle='tooltip' data-bs-placement='top' title='Gỡ khỏi danh sách vi phạm' href='#'"
-						+ "  onclick='xoaBaiVietViPham(" + item.maBaiViet + ")' style='background-color: rgba(234,229,224,1); color: #413026; border: 1px solid #5A4F48;'"
-						+ "  class='btn btn-info btn-sm info-button'>"
-						+ "  <i class='fa-solid fa-file-import'></i>"
-						+ "</a>"
-						+ "</td>"
-						+ "</tr>"
+					+ " <a data-bs-toggle='tooltip' data-bs-placement='top' title='Gỡ khỏi danh sách vi phạm' href='#'"
+					+ "  onclick='xoaBaiVietViPham(" + item.maBaiViet + ")' style='background-color: rgba(234,229,224,1); color: #413026; border: 1px solid #5A4F48;'"
+					+ "  class='btn btn-info btn-sm info-button'>"
+					+ "  <i class='fa-solid fa-file-import'></i>"
+					+ "</a>"
+					+ "</td>"
+					+ "</tr>"
 				myDiv2.innerHTML += table2;
 			});
 		},
