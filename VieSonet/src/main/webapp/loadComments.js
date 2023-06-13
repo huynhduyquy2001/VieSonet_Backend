@@ -221,6 +221,7 @@ function baoCaoViPham(maBaiViet) {
 	});
 }
 
+
 function xoaThongBao(maThongBao){
 	$.ajax({
     url: "/xoathongbao/" + maThongBao, // Replace maThongBao with the actual notification ID
