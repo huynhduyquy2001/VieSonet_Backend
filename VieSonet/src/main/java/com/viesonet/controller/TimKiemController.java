@@ -66,33 +66,33 @@ public class TimKiemController {
 		return "TimKiem";
 	}
 
-	@GetMapping("/timKiem/ketBan/{maKB}")
+	@GetMapping("/timKiem/ketBan/{sdt}")
 	public String themLoiMoiKetBan(@PathVariable("sdt") String sdt , Model m) {
-		String sdtND = Session.get("sdt");
-		NguoiDung nguoiDung = nguoiDungDao.getById(sdtND);
-		NguoiDung nguoiLa = nguoiDungDao.findBySdt(sdt);
-		System.out.println("Ngưo"+nguoiDung.getSdt());
-		if (nguoiDung.equals(nguoiLa)) {
-			m.addAttribute("message", "Lỗi bạn k tự kết bạn dới chính mình");
-			return "TimKiem";
-		}
-		if (nguoiLa == null) {
-			m.addAttribute("message", "Chưa có kết bạn ✪ ω ✪");
-			return "TimKiem";
-		}
-		 // Kiểm tra xem đã tồn tại lời mời kết bạn giữa hai người dùng hay chưa
-		DanhSachKetBan ds = dskbDao.getByNguoiLaAndNguoiDung(nguoiDung,nguoiLa);
-		if (ds != null) {
-			m.addAttribute("message", "Đã có lời mời trước đó");
-			return "TimKiem";
-		}
-		// Lưu thông tin lời mời vào CSDL
-		ds = new DanhSachKetBan();
-		ds.setNguoiDung(nguoiDung);
-		ds.setNguoiLa(nguoiLa);
-		ds.setNgayGui(new Date());
-		dskbDao.saveAndFlush(ds);
-		return "redirect:/timKiem";
+			String sdtND = Session.get("sdt");
+			NguoiDung nguoiDung = nguoiDungDao.getById(sdtND);
+			NguoiDung nguoiLa = nguoiDungDao.findBySdt(sdt);
+			System.out.println("Ngưo"+nguoiDung.getSdt());
+			if (nguoiDung.equals(nguoiLa)) {
+				m.addAttribute("message", "Lỗi bạn k tự kết bạn dới chính mình");
+				return "GoiYKetBan";
+			}
+			if (nguoiLa == null) {
+				m.addAttribute("message", "Chưa có kết bạn ✪ ω ✪");
+				return "GoiYKetBan";
+			}
+			 // Kiểm tra xem đã tồn tại lời mời kết bạn giữa hai người dùng hay chưa
+			DanhSachKetBan ds = dskbDao.getByNguoiLaAndNguoiDung(nguoiDung,nguoiLa);
+			if (ds != null) {
+				m.addAttribute("message", "Đã có lời mời trước đó");
+				return "GoiYKetBan";
+			}
+			// Lưu thông tin lời mời vào CSDL
+			ds = new DanhSachKetBan();
+			ds.setNguoiDung(nguoiDung);
+			ds.setNguoiLa(nguoiLa);
+			ds.setNgayGui(new Date());
+			dskbDao.saveAndFlush(ds);
+			return "redirect:/timKiem";
 	}
 
 	

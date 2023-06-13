@@ -73,7 +73,7 @@ public class DanhSachBanBeController {
 		String sdt = Session.get("sdt");
 		NguoiDung nguoiDung = nguoiDungDAO.getById(sdt);
 		DanhSachKetBan ds = dskbDao.getById(maLoiMoi);
-		NguoiDung nguoiLa = ds.getNguoiLa();
+		NguoiDung nguoiLa = ds.getNguoiDung();
 
 		BanBe banBe = new BanBe();
 		banBe.setNguoiDung(nguoiDung);
@@ -82,12 +82,7 @@ public class DanhSachBanBeController {
 		BanBeDAO.saveAndFlush(banBe);
 
 		// thêm mình vào danh sách bạn bè của ng ta
-		BanBe banBee = new BanBe();
-		banBee.setNguoiDung(nguoiLa);
-		banBee.setBanBe(nguoiDung);
-		banBee.setNgayKb(new Date());
-		BanBeDAO.saveAndFlush(banBee);
-		//dskbDao.deleteById(maLoiMoi);
+		dskbDao.deleteById(maLoiMoi);
 		return "redirect:/DanhSachBanBe";
 	}
 	

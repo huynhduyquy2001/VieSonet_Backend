@@ -70,16 +70,7 @@
 						<li class="nav-item"><a class="nav-link" href="#"><small
 								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Quản
 									lí</small></a></li>
-					</ul>
-					<form class="d-flex my-2 my-lg-0"
-						onsubmit="displayText(); return false;">
-						<input class="form-control me-sm-2 input-hbh" name="sdt1"
-							id="name"
-							style="border-radius: 0; border: none; border-bottom: 1px solid gray; transform: skew(0); background-color: transparent;"
-							type="text" placeholder="Search">
-						<button class="btn btn-outline-success my-2 my-sm-0"
-							onclick="showName()" hidden="" type="submit">Search</button>
-					</form>
+					</ul>	
 
 					<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
 						<li class="nav-item dropdown"><a
@@ -329,10 +320,10 @@
 											console.log('Giá trị của myDataJS là: ' + myDataJS);
 											console.log('Giá trị của item sdt 2 là: ' + item[2]);
 											console.log('Giá trị của item sdt 3 là: ' + item[3]);
-											if(myDataJS == item[3	]){
+											if(myDataJS == item[3]){
 												sdt = "";
 											}else{
-												sdt = "<a class='btn btn-primary' href=''/timKiem/ketBan/{maKB}' role='button' style=' background-color: #A89386; border-color: transparent;'>Kết bạn</a>"
+												sdt = "<a class='btn btn-primary' href='/timKiem/ketBan/item[3]' role='button' style=' background-color: #A89386; border-color: transparent;'>Kết bạn</a>"
 											}
 											var html = '<div class="col-md-6">'
 													+ '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">'
@@ -371,12 +362,14 @@
 								data.forEach(function(item) {
 									console.log('Giá trị của myDataJS là: ' + myDataJS);
 									console.log('Giá trị của item 3 là: ' + item[3]);
-									console.log('Giá trị của item 4 là: ' + item[4]);
+									
 									var	ten;
+									var kb = item[2];
+									console.log('Giá trị của kb  là: ' + kb);
 									if(myDataJS == item[3]){
 										ten = "";
 									}else{
-										ten = "<a class='btn btn-primary' href=''/timKiem/ketBan/{maKB}' role='button' style=' background-color: #A89386; border-color: transparent;'>Kết bạn</a>"
+										ten = "<a class='btn btn-primary' href='/timKiem/ketBan/"+kb+"' role='button' style=' background-color: #A89386; border-color: transparent;'>Kết bạn</a>"
 									}
 											var html = '<div class="col-md-6">'
 													+ '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">'

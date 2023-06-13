@@ -110,20 +110,14 @@ public class GoiYKetBanController {
 			String sdt = Session.get("sdt");
 			NguoiDung nguoiDung = nguoiDungDAO.getById(sdt);
 			DanhSachKetBan ds = dskbDao.getById(maLoiMoi);
-			NguoiDung nguoiLa = ds.getNguoiLa();
+			NguoiDung nguoiLa = ds.getNguoiDung();
 
 			BanBe banBe = new BanBe();
 			banBe.setNguoiDung(nguoiDung);
 			banBe.setBanBe(nguoiLa);
 			banBe.setNgayKb(new Date());
 			banBeDao.saveAndFlush(banBe);
-
-			// thêm mình vào danh sách bạn bè của ng ta
-			BanBe banBee = new BanBe();
-			banBee.setNguoiDung(nguoiLa);
-			banBee.setBanBe(nguoiDung);
-			banBee.setNgayKb(new Date());
-			banBeDao.saveAndFlush(banBee);
+			// thêm mình vào danh sách bạn bè của ng t
 			dskbDao.deleteById(maLoiMoi);
 			return "redirect:/GoiYKB";
 		}

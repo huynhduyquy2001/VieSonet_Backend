@@ -40,7 +40,7 @@
 </head>
 <body>
 	<div class="split-background"></div>
-	<img src=""
+	<img src="	"
 		class="header animate__animated animate__fadeInUp"
 		style="position: fixed; right: 0; max-height: 90vh; z-index: -2;"
 		alt="">
@@ -137,11 +137,11 @@
 					<c:forEach items="${topKetBan}" var="topKb">
 						<div>
 							<div class="user-profile">
-								<a href="#"><img src="images/${topKb.nguoiLa.anhDaiDien}"
+								<a href="#"><img src="images/${topKb.nguoiDung.anhDaiDien}"
 									class="img-thumbnail" alt=""></a>
 								<div>
 									<label class="nhan"
-										style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiLa.hoTen}</label>
+										style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiDung.hoTen}</label>
 									<small style="display: flex;"> <a class="dropdown-item"
 										href="DanhSachBanBe/dongy/${topKb.maLoiMoi}"
 										style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1); font-size: small;">
