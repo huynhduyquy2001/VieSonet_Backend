@@ -107,7 +107,8 @@ public class IndexController {
 		List<Order> orders = new ArrayList<Order>();
 		orders.add(new Order(Direction.DESC, "ngayDang"));
 		Sort sort = Sort.by(orders);
-		List<BaiViet> dsBaiViet = baiVietDao.findByNguoiDungSdtInAndCheDoMaCheDoNotIn(sdtBanBeList, 3, Sort.by(Direction.DESC, "ngayDang"));
+		List<BaiViet> dsBaiViet = baiVietDao.findByNguoiDungSdtInAndCheDoMaCheDoNotIn(sdtBanBeList, 3,
+				Sort.by(Direction.DESC, "ngayDang"));
 		m.addAttribute("DanhSachBv", dsBaiViet);
 		// Lấy danh sách bài viết đã thích
 		Set<Integer> maBaiVietDaThich = new HashSet<>();
@@ -276,11 +277,26 @@ public class IndexController {
 		bvvpDao.saveAndFlush(baiViet);
 		return "success";
 	}
+
 	@GetMapping("/dangxuat")
 	public String dangXuat() {
 		session.remove("sdt");
 		session.remove("vt");
-		return"redirect:/dangnhap";
+		return "redirect:/dangnhap";
+	}
+
+	@ResponseBody
+	@GetMapping("/xoathongbao/{maThongBao}")
+	public List<Object> xoaThongBao(@PathVariable int maThongBao, Model m) {
+
+		thongBaoDao.deleteById(maThongBao);
+		String sdt = session.get("sdt");
+		// lấy danh sách thông báo
+		List<Object> thongBao = thongBaoDao.timDanhSachThongBao(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
+		m.addAttribute("thongBao", thongBao);
+		m.addAttribute("thongBaoChuaXem", thongBaoDao.demThongBaoChuaXem(sdt));
+
+		return thongBao;
 	}
 
 }

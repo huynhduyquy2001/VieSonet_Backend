@@ -78,15 +78,14 @@
 				</button>
 				<div class="collapse navbar-collapse" id="collapsibleNavId">
 					<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-						<li class="nav-item"><a class="nav-link"
-							href="/timKiem"><small
-								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; letter-spacing: 0.1em; color: black;"><i class="fa-solid fa-magnifying-glass"></i></small></a></li>
-						&nbsp;&nbsp;
+						<li class="nav-item"><a class="nav-link" href="/timKiem"><small
+								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; letter-spacing: 0.1em; color: black;"><i
+									class="fa-solid fa-magnifying-glass"></i></small></a></li> &nbsp;&nbsp;
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
 							href="#" role="button" aria-haspopup="true" aria-expanded="false"><i
-								class="fa-regular fa-bell"></i> (${thongBaoChuaXem})</a>
-							<div class="dropdown-menu"
+								class="fa-regular fa-bell"></i> <span id="soLuongThongBao">(${thongBaoChuaXem})</span></a>
+							<div class="dropdown-menu" id="danhSachThongBao"
 								style="overflow: hidden; max-height: 60vh; overflow-y: scroll; left: -100px">
 								<c:forEach items="${thongBao}" var="item">
 									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
@@ -95,7 +94,31 @@
 											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
 											<div>
 												<p style="font-size: 13px">${item.noiDung}</p>
-												<small style="font-size: 11px">${item.ngayThongBao}</small>
+												<div style="justify-content: space-between; display: flex;">
+													<small style="font-size: 11px"> <script
+															type="text/javascript">
+                            var currentTime = new Date();
+                            var activityTime = new Date('${item.ngayThongBao}');
+                            var timeDiff = currentTime.getTime() - activityTime.getTime();
+                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                            var monthsDiff = Math.floor(daysDiff / 30);
+                            var yearsDiff = Math.floor(monthsDiff / 12);
+
+                            if (daysDiff < 1) {
+                                document.write('1 ngày trước');
+                            } else if (monthsDiff < 1) {
+                                document.write(daysDiff + ' ngày trước');
+                            } else if (yearsDiff < 1) {
+                                document.write(monthsDiff + ' tháng trước');
+                            } else {
+                                document.write('<fmt:formatDate value="${item.ngayThongBao}"
+										pattern="dd-MM-yyyy HH:mm" />');
+                            }
+                        </script>
+													</small> <small style="font-size: 12px"><a
+														style="cursor: pointer;"
+														onclick="xoaThongBao(${item.maThongBao})">x</a></small>
+												</div>
 											</div>
 										</div>
 

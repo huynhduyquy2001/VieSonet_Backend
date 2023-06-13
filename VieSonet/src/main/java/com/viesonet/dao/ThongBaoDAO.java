@@ -15,5 +15,8 @@ List<ThongBao> findByUser(String sdt, Sort sort);
 @Query(value="select count(*) from ThongBao where sdt=?1 and trangThai=0", nativeQuery = true)
 int demThongBaoChuaXem(String sdt);
 
+@Query("SELECT tb.maThongBao, tb.baiViet.maBaiViet, tb.nguoiDung.hoTen, tb.nguoiDung.anhDaiDien, tb.noiDung, tb.ngayThongBao FROM ThongBao tb WHERE tb.nguoiDung.sdt = ?1")
+List<Object> timDanhSachThongBao(String sdt, Sort sort);
+
 
 }

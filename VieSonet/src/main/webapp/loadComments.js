@@ -221,6 +221,61 @@ function baoCaoViPham(maBaiViet) {
 	});
 }
 
+function xoaThongBao(maThongBao){
+	$.ajax({
+    url: "/xoathongbao/" + maThongBao, // Replace maThongBao with the actual notification ID
+    method: "GET",
+    success: function (data) {
+       $("#danhSachThongBao").empty();
+       $("#soLuongThongBao").empty();
+var soLuongThongBao= $("#soLuongThongBao").val();
+var dataLength = data.length;
+$("#soLuongThongBao").append('('+dataLength+')');
+    data.forEach(function (item) {
+        var itemHtml = `<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
+            <div class="user-profile" style="width: 250px; padding-left: 3%;">
+                <img src="images/${item.nguoiDung.anhDaiDien}" alt="">
+                <div>
+                    <p style="font-size: 13px">${item.noiDung}</p>
+                    <div style="justify-content: space-between; display: flex;">
+                        <small style="font-size: 11px">
+                            <script type="text/javascript">
+                                var currentTime = new Date();
+                                var activityTime = new Date('${item.ngayThongBao}');
+                                var timeDiff = currentTime.getTime() - activityTime.getTime();
+                                var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                                var monthsDiff = Math.floor(daysDiff / 30);
+                                var yearsDiff = Math.floor(monthsDiff / 12);
+
+                                if (daysDiff < 1) {
+                                    document.write('1 ngày trước');
+                                } else if (monthsDiff < 1) {
+                                    document.write(daysDiff + ' ngày trước');
+                                } else if (yearsDiff < 1) {
+                                    document.write(monthsDiff + ' tháng trước');
+                                } else {
+                                    document.write('<fmt:formatDate value="${item.ngayThongBao}" pattern="dd-MM-yyyy HH:mm" />');
+                                }
+                            </script>
+                        </small>
+                        <small style="font-size: 12px"><a style="cursor: pointer;" onclick="xoaThongBao(${item.maThongBao})">x</a></small>
+                    </div>
+                </div>
+            </div>
+        </a>`;
+
+        // Thêm itemHtml vào #danhSachThongBao
+        $("#danhSachThongBao").append(itemHtml);
+    });
+    
+    },
+    error: function (xhr, status, error) {
+        console.log(error); // Handle the error response here
+    }
+});
+
+}
+
 
 
 
