@@ -331,14 +331,12 @@
                                 placeholder="Quê quán?" value="${nguoiDung.diaChi}" name="diaChi"/>
                         </li>
                         <li><i class="fa-regular fa-heart"></i> <b>Mối quan hệ:</b>
-                            <input class="form-control input-hbh"
-                                style="border-radius: 0; border: none; border-bottom: 1px solid gray;" type="text"
-                                placeholder="Mối quan hệ?" value="${nguoiDung.moiQuanHe}" name="moiQuanHe"/>
-                            <select name="moiQuanHe"
+                            <select name="moiQuanHe" class="form-control"
 								style="border: none; background-color: transparent;">
-								<option selected value="1">Độc thân</option>
-								<option value="2">Đang hẹn hò</option>
-								<option value="3">Đã kết hồn</option>
+								<option selected value="${nguoiDung.moiQuanHe}">${nguoiDung.moiQuanHe}</option>
+								<option value="Độc thân">Độc thân</option>
+								<option value="Đang hẹn hò">Đang hẹn hò</option>
+								<option value="Đã kết hôn">Đã kết hồn</option>
 							</select>
                         </li>
                         <li><b><i class="fa-regular fa-envelope"></i> Email:</b>

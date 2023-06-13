@@ -375,8 +375,8 @@
 								<div
 									style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
 									<div class="user-profile">
-										<a href="/nguoiDung/${banBe.nguoiDung.sdt}"> <img src="images/${banBe.nguoiDung.anhDaiDien}"
-											class="img-thumbnail" alt="" style="border-radius: 50%;"></a>
+										<img src="images/${banBe.nguoiDung.anhDaiDien}"
+											class="img-thumbnail" alt="" style="border-radius: 50%;">
 										<div>
 											<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
 												<label for="">${banBe.nguoiDung.hoTen}</label>
@@ -419,7 +419,7 @@
                                 document.write(daysDiff + ' ngày trước');
                             } else if (yearsDiff < 1) {
                                 document.write(monthsDiff + ' tháng trước');
-                            } else {
+							} else {
                                 document.write(yearsDiff + ' năm trước');
                             }
                         </script>
@@ -429,6 +429,10 @@
 									</div>
 								</div>
 							</c:forEach>
+
+
+						
+							
 
 
 						</div>

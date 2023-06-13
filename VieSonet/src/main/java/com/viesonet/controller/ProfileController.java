@@ -248,6 +248,7 @@ public class ProfileController {
 		NguoiDung nguoiDungHienTai = nguoiDungDao.findBySdt(sdt);
 		nguoiDungHienTai.setHoTen(nguoiDung.getHoTen());
 	    nguoiDungHienTai.setEmail(nguoiDung.getEmail());
+	    nguoiDungHienTai.setMoiQuanHe(nguoiDung.getMoiQuanHe());
 	    nguoiDungHienTai.setDiaChi(nguoiDung.getDiaChi());
 	    nguoiDungHienTai.setGioiThieu(nguoiDung.getGioiThieu());
 		nguoiDungDao.saveAndFlush(nguoiDungHienTai);

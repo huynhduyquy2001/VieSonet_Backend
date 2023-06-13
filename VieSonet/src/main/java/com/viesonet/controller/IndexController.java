@@ -213,10 +213,9 @@ public class IndexController {
 	public String dongYKetBan(@PathVariable int maLoiMoi) {
 		// thêm người ta vào danh sách bạn bè
 		String sdt = session.get("sdt");
-		NguoiDung nguoiDung = nguoiDungDAO.getById(sdt);
+		NguoiDung nguoiDung = nguoiDungDAO.getById(sdt); //0939790299
 		DanhSachKetBan ds = dskbDao.getById(maLoiMoi);
-		NguoiDung nguoiLa = ds.getNguoiLa();
-
+		NguoiDung nguoiLa = ds.getNguoiDung(); 
 		BanBe banBe = new BanBe();
 		banBe.setNguoiDung(nguoiDung);
 		banBe.setBanBe(nguoiLa);
@@ -225,6 +224,8 @@ public class IndexController {
 		dskbDao.deleteById(maLoiMoi);
 		return "redirect:/";
 	}
+	
+	
 
 	@GetMapping("index/tuchoi/{maLoiMoi}")
 	public String tuChoiKetBan(@PathVariable int maLoiMoi) {
