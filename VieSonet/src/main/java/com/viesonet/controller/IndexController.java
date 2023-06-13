@@ -216,7 +216,7 @@ public class IndexController {
 		BaiVietViPham baiViet = new BaiVietViPham();
 		baiViet.setBaiViet(baiVietDao.getById(maBaiViet));
 		baiViet.setNgayToCao(new Date());
-		baiViet.setChiTiet(chiTietViPham);
+//		baiViet.setChiTiet(chiTietViPham);
 	}
 	
 }
