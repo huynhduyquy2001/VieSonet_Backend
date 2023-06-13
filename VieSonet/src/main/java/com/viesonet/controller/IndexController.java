@@ -94,6 +94,8 @@ public class IndexController {
 		NguoiDung taiKhoan = nguoiDungDAO.getById(sdt);
 		m.addAttribute("taiKhoan", taiKhoan);
 		// lấy danh sách bài viết từ danh sách bạn bè
+
+		// lấy danh sách bạn bè
 		List<BanBe> listBb = banBeDao.findFriends(sdt);
 
 		List<String> sdtBanBeList = listBb.stream().map(banBe -> {
@@ -104,11 +106,13 @@ public class IndexController {
 			}
 		}).collect(Collectors.toList());
 
-		List<Order> orders = new ArrayList<Order>();
-		orders.add(new Order(Direction.DESC, "ngayDang"));
-		Sort sort = Sort.by(orders);
 		List<BaiViet> dsBaiViet = baiVietDao.findByNguoiDungSdtInAndCheDoMaCheDoNotIn(sdtBanBeList, 3,
-				Sort.by(Direction.DESC, "ngayDang"));
+				Sort.by(Sort.Direction.DESC, "ngayDang"));
+		dsBaiViet.removeIf(baiViet -> baiViet.getCheDo().getMaCheDo() == 3);
+		for (BaiViet baiViet : dsBaiViet) {
+		    System.out.println(baiViet.getCheDo().getMaCheDo());
+		}
+
 		m.addAttribute("DanhSachBv", dsBaiViet);
 		// Lấy danh sách bài viết đã thích
 		Set<Integer> maBaiVietDaThich = new HashSet<>();
@@ -213,9 +217,9 @@ public class IndexController {
 	public String dongYKetBan(@PathVariable int maLoiMoi) {
 		// thêm người ta vào danh sách bạn bè
 		String sdt = session.get("sdt");
-		NguoiDung nguoiDung = nguoiDungDAO.getById(sdt); //0939790299
+		NguoiDung nguoiDung = nguoiDungDAO.getById(sdt); // 0939790299
 		DanhSachKetBan ds = dskbDao.getById(maLoiMoi);
-		NguoiDung nguoiLa = ds.getNguoiDung(); 
+		NguoiDung nguoiLa = ds.getNguoiDung();
 		BanBe banBe = new BanBe();
 		banBe.setNguoiDung(nguoiDung);
 		banBe.setBanBe(nguoiLa);
@@ -224,8 +228,6 @@ public class IndexController {
 		dskbDao.deleteById(maLoiMoi);
 		return "redirect:/";
 	}
-	
-	
 
 	@GetMapping("index/tuchoi/{maLoiMoi}")
 	public String tuChoiKetBan(@PathVariable int maLoiMoi) {

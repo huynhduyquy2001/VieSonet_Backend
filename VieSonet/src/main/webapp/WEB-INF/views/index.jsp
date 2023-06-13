@@ -375,8 +375,20 @@
 								<div
 									style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
 									<div class="user-profile">
-										<img src="images/${banBe.nguoiDung.anhDaiDien}"
+									<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
+									<a href="/nguoiDung/${banBe.nguoiDung.sdt}">
+									<img src="images/${banBe.nguoiDung.anhDaiDien}"
 											class="img-thumbnail" alt="" style="border-radius: 50%;">
+									</a>
+									</c:if>
+									<c:if test="${banBe.banBe.sdt != sessionScope.sdt}">
+									<a href="/nguoiDung/${banBe.banBe.sdt}">
+									<img src="images/${banBe.banBe.anhDaiDien}"
+											class="img-thumbnail" alt="" style="border-radius: 50%;">
+									</a>
+									
+									</c:if>
+										
 										<div>
 											<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
 												<label for="">${banBe.nguoiDung.hoTen}</label>
