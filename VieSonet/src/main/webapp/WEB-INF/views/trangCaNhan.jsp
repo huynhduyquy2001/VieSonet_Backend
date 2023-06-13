@@ -93,81 +93,89 @@
 
 <body style="padding-top: 30px; padding-bottom: 70px;">
     <div class="split-background"></div>
-    <header class="header animate__animated animate__fadeInUp">
-        <nav class="navbar navbar-expand-sm navbar-light" style="border: none;padding-top: 0; padding-bottom: 0;">
-            <div class="container">
-                <a class="navbar-brand nhan" href="/index" style="color: #5A4F48; font-weight: bolder; font-family: 'robo';">
-                    <img src="images/chimLac.png" height="30px" alt=""> VIE_SONET</a>
-                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="collapsibleNavId">
-                    <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="/index" aria-current="page" style=" white-space: nowrap;
-                            overflow: hidden; 
-                            text-overflow: ellipsis;font-family: 'Roboto', sans-serif;letter-spacing: 0.1em;">Trang chủ
-                                <span class="visually-hidden">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><small style=" white-space: nowrap;
-                                overflow: hidden; 
-                                text-overflow: ellipsis;font-family: 'Roboto', sans-serif;letter-spacing: 0.1em; ">Điều
-                                    khoản</small></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><small style=" white-space: nowrap;
-                                overflow: hidden; 
-                                text-overflow: ellipsis;font-family: 'Roboto', sans-serif;letter-spacing: 0.1em; ">Quản
-                                    lí</small></a>
-                        </li>
-                    </ul>
-                    <form class="d-flex my-2 my-lg-0">
-                        <input class="form-control me-sm-2 input-hbh"
-                            style="border-radius: 0; border: none; border-bottom: 1px solid gray; transform: skew(0); background-color: transparent;"
-                            type="text" placeholder="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" hidden type="submit">Search</button>
-                    </form>
+    <header class="header animationTop3">
+		<nav class="navbar navbar-expand-sm navbar-light"
+			style="border: none; padding-top: 0; padding-bottom: 0;">
+			<div class="container">
+				<a class="navbar-brand nhan" href="/"
+					style="color: #222; font-weight: bolder; font-family: 'robo';">
+					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
+				</a>
+				<button class="navbar-toggler d-lg-none" type="button"
+					data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
+					aria-controls="collapsibleNavId" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="collapsibleNavId">
+					<ul class="navbar-nav me-auto mt-2 mt-lg-0">
+						<li class="nav-item"><a class="nav-link active" href="#"
+							aria-current="page"
+							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Trang
+								chủ <span class="visually-hidden">(current)</span>
+						</a></li>
 
-                    <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="/profile" id="dropdownId" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false"><small><img src="images/${nguoiDung.anhDaiDien}" width="30px"
-                                        style="border-radius: 50%;" alt=""></small></a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownId"
-                                style="width: 350px; padding-left: 3px;">
-                                <div class="profile-darkButton">
-                                    <div class="user-profile">
-                                         <img src="images/${nguoiDung.anhDaiDien}" alt="">
-                                        <div>
-                                            <p> ${nguoiDung.hoTen}</p>
-                                            <small>Xem trang cá nhân của bạn</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="dropdown-item"
-                                    style="display: flex; justify-content: space-between; align-items: center;">
-                                    <small>Chế độ tối:</small>
-                                    <div class="nut">
-                                        <input type="checkbox" class="checkbox" id="checkbox"
-                                            onclick="toggleDarkMode()">
-                                        <label class="switch" for="checkbox">
-                                            <span class="slider" style="width: 12px;height: 12px;"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <a class="dropdown-item" href="/dangnhap"><small>Đăng nhập</small></a>
-                                <a class="dropdown-item" href="#"><small>Đăng ký</small></a>
-                            </div>
-                        </li>
+						<li class="nav-item"><a class="nav-link"
+							href="/quanly/quanLyNguoiDung"><small
+								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; font-variant: small-caps; letter-spacing: 0.1em; color: black;">Quản
+									lí</small></a></li>
+					</ul>
+					<form class="d-flex my-2 my-lg-0" action="/tim-kiem">
+						<input class="form-control me-sm-2 input-hbh" name="timKiem"
+							style="border-radius: 0; border: none; border-bottom: 1px solid gray; transform: skew(0); background-color: transparent;"
+							type="text" placeholder="Tìm kiếm...">
+						<button class="btn btn-outline-success my-2 my-sm-0" hidden
+							type="submit">Tìm kiếm...</button>
+					</form>
 
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+					<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+							href="#" role="button" aria-haspopup="true" aria-expanded="false"><i
+								class="fa-regular fa-bell"></i> (${thongBaoChuaXem})</a>
+							<div class="dropdown-menu"
+								style="overflow: hidden; max-height: 60vh; overflow-y: scroll; left: -100px">
+								<c:forEach items="${thongBao}" var="item">
+									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
+
+										<div class="user-profile"
+											style="width: 250px; padding-left: 3%;">
+											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
+											<div>
+												<p style="font-size: 13px">${item.noiDung}</p>
+												<small style="font-size: 11px">${item.ngayThongBao}</small>
+											</div>
+										</div>
+
+									</a>
+								</c:forEach>
+							</div></li>
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" id="dropdownId"
+							class="nav-link dropdown-toggle" href="/profile" id="dropdownId"
+							data-bs-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"><small><img
+									src="images/${nguoiDung.anhDaiDien}" width="30px"
+									style="border-radius: 50%;" alt=""></small></a>
+							<div class="dropdown-menu" aria-labelledby="dropdownId"
+								style="padding-left: 3px; left: -100px; line-height: 35px">
+								<a class="dropdown-item" href="/profile">
+								<small>Xem trang cá nhân</small></a> 
+								<a class="dropdown-item" href="/DanhSachBanBe">
+								<small>Danh sách bạn bè</small></a> 
+								<a class="dropdown-item" href="/GoiYKB">
+								<small>Lời mời kết bạn</small></a> 
+								<a class="dropdown-item" href="/dieukhoan">
+								<small>Điều khoản</small></a> 
+								<a class="dropdown-item" href="/dangxuat">
+								<small>Đăng xuất</small></a>
+							</div></li>
+
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
     <div class="row" style="margin-top: 10px; position: relative;">
         <div class="video-overlay">
         </div>
@@ -231,19 +239,32 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <center><img id="img1" src="" width="45%" style="border-radius: 10px;">
+                <!-- Mô tả -->
+				</p> <small style="font-size: 12px">
+					<div>
+						<select name="cheDo"
+							style="border: none; background-color: transparent;">
+							<option selected value="1">Công khai</option>
+							<option value="2">Bạn bè</option>
+							<option value="3">Chỉ mình tôi</option>
+						</select>
+					</div>
+				</small>
+                <textarea name="moTaBaiViet" placeholder="Mô tả?" id="" cols="55" rows="3" style="border: 0;">Đổi ảnh đại diện nào!!</textarea><br>
+                     <center><img id="img1" src="" width="45%" style="border-radius: 10px;">
                     </center> <br>
+                    
+                </div>
+                <div class="modal-footer post-upload-textarea"
+                    style="padding: 0; padding-left: 10px; padding-right: 10px;">
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="inputGroupFile011"><img src="images/${pageContext.request.contextPath}" style="width: 20px;
                      margin-right: 13px;">Photo/Video</label>
                         <input type="file" class="form-control" id="inputGroupFile011" name="photo_file">
+                        
                     </div>
-                </div>
-                <div class="modal-footer post-upload-textarea"
-                    style="padding: 0; padding-left: 10px; padding-right: 10px;">
-                    <textarea name="" placeholder="Mô tả?" id="" cols="30" rows="3"></textarea><br>
-                    <button style="width: 500px; background-color: #5A4F48; border: none;" class="btn btn-primary">Đăng
-                        ảnh</button>
+                    <button style="width: 500px; background-color: #5A4F48; border: none;" class="btn btn-primary">
+                    Đăng ảnh đại diện</button>
                 </div>
             </div>
         </div>
@@ -317,8 +338,8 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn01">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn01">Lưu</button>
                 </div>
             </div>
         </div>
@@ -332,7 +353,7 @@
     </script>
     <div class="container">
         <div class="row" >
-            <div class="col-md-4" style="position: relative;" >
+            <div class="col-md-5" style="position: relative;" >
                 <div class="menuTrai" id="menuTrai">
                     <div style=" border-radius: 6px; box-sizing: border-box; margin: 1%; padding: 3%; margin-top: 10px;">
                         <b>Bài đăng</b>
@@ -366,16 +387,16 @@
                         </div>
                         <hr>
                         <div style="display: flex; justify-content: space-between;">
-                            Lời mời kết bạn(${SlKb}) &nbsp; <small><small style="color: #F27323;">Xem tất cả>></small></small>
+                            Lời mời kết bạn(${SlKb}) &nbsp; <a href="/DanhSachBanBe"><small><small style="color: #F27323;">Xem tất cả>></small></small></a> 
                         </div>
                         <c:forEach items="${topKetBan}" var="topKb">
 								<div>
 									<div class="user-profile">
-										<a href="/nguoiDung/${topKb.nguoiLa.sdt}"><img src="images/${topKb.nguoiLa.anhDaiDien}"
+										<a href="/nguoiDung/${topKb.nguoiDung.sdt}"><img src="images/${topKb.nguoiDung.anhDaiDien}"
 											class="img-thumbnail" alt=""></a>
 										<div>
 											<label class="nhan" 
-												style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiLa.hoTen}</label>
+												style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiDung.hoTen}</label>
 											<small style="display: flex;"> <a
 												class="dropdown-item" href="profile/dongy/${topKb.maLoiMoi}"
 												style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1); font-size: small;">
@@ -407,7 +428,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 offset-md-4">
+            <div class="col-md-7 offset-md-5">
                 <div style=" box-sizing: border-box; margin: 1%; padding: 3%; margin-top: 10px;">
                     <center>
                         <div>
@@ -500,11 +521,16 @@
                                         </span>
                                         <div class="dropdown-menu btn-cap-nhat-bai-viet" aria-labelledby="triggerId">
                                             <!-- href="#exampleModalToggle123" --> 
-                                            <button data-bs-toggle="modal" 
+                                           <button data-bs-toggle="modal" 
                                            onclick="loadBaiViet(${BaiViet.maBaiViet})"
-                                            
-                style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background:transparent"><small>
-                    Chỉnh sửa bài viết</small></button>
+                                            style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background:transparent">
+                                            <small>Chỉnh sửa bài viết</small>
+                    						</button>
+                    						<hr>
+                    						<a href="/profile/anbaiviet/${BaiViet.maBaiViet}">
+                    						<button  style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background:transparent">
+                    						<small >Xóa bài viết</small>
+                    						</button></a>
                                         </div>
                                     </div>
                                 </div>
@@ -519,21 +545,19 @@
 									</center>
 								</div>
                                <div class="post-reaction">
-								<div class="activity-icons">
-										<input type="hidden" name="maBaiViet" value="${baiViet.maBaiViet}" data-id="${baiViet.maBaiViet}">
+									<div class="activity-icons">
+
 										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
 											class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
-											<i class="fa-duotone fa-heart"></i> &nbsp;
-											${BaiViet.luotThich}
+											<i class="fa-duotone fa-heart"></i> &nbsp; <span
+												class="like-count">${BaiViet.luotThich}</span>
 										</div>
-
-
 										<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
 											<i class="fa-regular fa-comment"></i>&nbsp;
 											${BaiViet.luotBinhLuan}
 										</div>
 									</div>
-							</div>
+								</div>
                             </div>
                         </div>
                     </div>
@@ -559,9 +583,9 @@
 					<div class="modal-body">
 					
 						<div class="user-profile">
-							<img src="images/${NguoiDung.hoTen}" alt="">
+							<img src="/images/${nguoiDung.anhDaiDien}" alt="">
 							<div>
-								<label>${NguoiDung.hoTen}
+								<label>${nguoiDung.hoTen}
 									</p> <small style="font-size: 12px">
 										<div>
 											<select name="cheDo"

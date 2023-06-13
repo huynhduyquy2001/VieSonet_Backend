@@ -191,31 +191,39 @@
                        </small>
                        <c:if test="${checker==true}">
 	                       <button style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
-	                       <small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+	                        <small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">
 	                    		Bạn bè ✓
+	                    	</small>
+	                    	</button>
+	                    	<button style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
+	                    	<a href="/profile/huyketban/${nguoiDung.sdt}/${mbb}">
+							<small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">
+	                    		Xóa bạn X
 	                    	</small>
 	                    	</button>
 					    </c:if>
 					    <c:if test="${checker==false && trangThai == 0}">
 					        <button style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
-					        <small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+					        <a href="/profile/guiLmkb/${nguoiDung.sdt}"><small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">
 		                     	Thêm bạn bè +
-		                    </small>
+		                    </small></a>
 		                    </button>
 					    </c:if>
+					    <!-- Người dùng gửi người lạ -->
 					    <c:if test="${checker==false && trangThai == 1}">
 					        <button  style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
-					        <small style=" white-space: nowrap;	overflow: hidden; text-overflow: ellipsis;">
+					        <a href="/profile/tuchoi/${lmkb}/nguoiDung/${nguoiDung.sdt}"><small style=" white-space: nowrap;	overflow: hidden; text-overflow: ellipsis; color: white;">
 		                    	Hủy lời mời kết bạn X
-		                    </small>
+		                    </small></a>
 		                    </button>
 					    </c:if>
+					    <!-- Người lạ gửi người dùng -->
 					    <c:if test="${checker==false && trangThai == 2}">
 					        <button style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
-					        <small style=" white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">
+					        <a href="/profile/dongy/${lmkb}/nguoiDung/${nguoiDung.sdt}"><small style=" white-space: nowrap;overflow: hidden; text-overflow: ellipsis; color: white;">
 		                    	Chấp nhận ✓
 		                    </small>
-		                    </button>
+		                    </button></a>
 		                    <button style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background-color: transparent; color: white;">
 		                    <a href="/profile/tuchoi/${lmkb}/nguoiDung/${nguoiDung.sdt}"><small style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: white;">
 		                    	Xóa X
@@ -344,125 +352,16 @@
 
     </script>
     <div class="container">
-        <div class="row" >
-            <div class="col-md-4" style="position: relative;" >
-                <div class="menuTrai" id="menuTrai">
-                    <div style=" border-radius: 6px; box-sizing: border-box; margin: 1%; padding: 3%; margin-top: 10px;">
-                        <b>Bài đăng</b>
-                        <div class="write-post-container nenTrangChu img-thumbnail"
-                            style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
-                            <div class="user-profile">
-                            	
-                                <img src="/images/${nguoiDung.anhDaiDien}" alt="">
-                                <div>
-                                    <label>${nguoiDung.hoTen}</label>
-                                    <br>
-                                    <small>
-                                        Công khai <i class="fas fa-caret-down"></i>
-                                    </small>
-                                    
-                                </div>
-                            </div>
-    
-                            <div class="post-upload-textarea">
-                                <textarea data-bs-toggle="modal" href="#exampleModalToggle" name=""
-                                    placeholder="Bạn muốn đăng gì?" id="" cols="30" rows="1"></textarea>
-                                <div class="add-post-links">
-                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalId">
-                                        <a href="#"><i class="fa-regular fa-image"></i> Photo/Video</a>
-                                    </button>
-                                </div>
-    
-    
-                            </div>
-    
-                        </div>
-                        <hr>
-                        <div style="display: flex; justify-content: space-between;">
-                            Lời mời kết bạn(${SlKb}) &nbsp; <small><small style="color: #F27323;">Xem tất cả>></small></small>
-                        </div>
-                        <c:forEach items="${topKetBan}" var="topKb">
-								<div>
-									<div class="user-profile">
-										<a href="${topKb.nguoiLa.sdt}"><img src="/images/${topKb.nguoiLa.anhDaiDien}"
-											class="img-thumbnail" alt=""></a>
-										<div>
-											<label class="nhan"
-												style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiLa.hoTen}</label>
-											<small style="display: flex;"> <a
-												class="dropdown-item" href="#"
-												style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1); font-size: small;">
-													<center>Đồng ý</center>
-											</a> <a class="dropdown-item" href="#"
-												style="background-color: #A89386; color: white; font-size: small;">
-													<center>Xóa</center>
-											</a>
-											</small>
-										</div>
-									</div>
-									<div>
-										<div class="btn-group">
-											<div class="dropdown-menu" aria-labelledby="triggerId"
-												style="padding: 0;">
-												<a class="dropdown-item" href="#"
-													style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1);">
-													<center>Đồng ý</center>
-												</a> <a class="dropdown-item" href="#"
-													style="background-color: #A89386; color: white;">
-													<center>Xóa</center>
-												</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</c:forEach>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8 offset-md-4">
+        	<!-- Chỉnh giao diện bài đăng -->
+            <div class="col-md-10 offset-md-1">
                 <div style=" box-sizing: border-box; margin: 1%; padding: 3%; margin-top: 10px;">
                     <center>
                         <div>
-                            <br>
+                        <i class="fa-regular fa-comment-captions fa-xl"></i><br>
                             ${nguoiDung.gioiThieu}
                         </div>
                     </center>
-                   
-                    <div class="baiDang"
-                        style=" border-radius: 6px; box-sizing: border-box; margin: 1%; padding: 3%; margin-top: 10px;">
-                        Bài đăng:
-                        <div class="write-post-container nenTrangChu img-thumbnail"
-                            style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
-                            
-                            <div class="user-profile">
-                                <img src="/images/${NguoiDung.anhDaiDien}" alt="">
-                                <div>
-                                    <label>${NguoiDung.hoTen}</label>
-                                    <br>
-                                    <small>
-                                        Công khai <i class="fas fa-caret-down"></i>
-                                    </small>
-                                </div>
-                            </div>
-
-                            <div class="post-upload-textarea">
-                                <textarea data-bs-toggle="modal" href="#exampleModalToggle" name=""
-                                    placeholder="Bạn muốn đăng gì?" id="" cols="30" rows="1"></textarea>
-                                <div class="add-post-links">
-                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalId">
-                                        <a href="#"><i class="fa-regular fa-image"></i> Photo/Video</a>
-                                    </button>
-                                </div>
-
-
-                            </div>
-
-                        </div>
-					
-
-                        
-                        </div>
+                    
                     </div>
                     <b>Bài viết</b>
                     <hr>
@@ -479,31 +378,7 @@
                                             <small>${BaiViet.ngayDang} </small> <br>
                                         </div>
                                     </div>
-                                    <span class="tooltip2-text">
-                                        <a href="">
-                                            <img src="/images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
-                                            <div>
-                                                <label for="">${BaiViet.nguoiDung.hoTen}  </label> <br>
-                                                <center>
-                                                    <small>
-                                                        <small>
-                                                            <ul style="line-height: 20px; text-align: left;">
-                                                                <li><b><i class="fa-light fa-mountain-sun"></i> Quê
-                                                                        quán:</b>
-                                                                    ${BaiViet.nguoiDung.diaChi}</li>
-                                                                <li><i class="fa-regular fa-heart"></i> <b>Mối quan
-                                                                        hệ:</b>
-                                                                    ${BaiViet.nguoiDung.moiQuanHe}</li>
-                                                                <li><b><i class="fa-light fa-user-group"></i> Danh sách
-                                                                        bạn
-                                                                        bè:</b> ${SlBanbe}</li>
-                                                            </ul>
-                                                        </small>
-                                                    </small>
-                                                </center>
-                                            </div>
-                                        </a>
-                                    </span>
+                                    
                                 </div>
                                 <div>
                                     <div class="btn-group">
@@ -532,26 +407,28 @@
 									</center>
 								</div>
                                <div class="post-reaction">
-								<div class="activity-icons">
-										<input type="hidden" name="maBaiViet" value="${baiViet.maBaiViet}" data-id="${baiViet.maBaiViet}">
+									<div class="activity-icons">
+
 										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
 											class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
-											<i class="fa-duotone fa-heart"></i> &nbsp;
-											${BaiViet.luotThich}
+											<i class="fa-duotone fa-heart"></i> &nbsp; <span
+												class="like-count">${BaiViet.luotThich}</span>
 										</div>
-
-
 										<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
 											<i class="fa-regular fa-comment"></i>&nbsp;
 											${BaiViet.luotBinhLuan}
 										</div>
 									</div>
-							</div>
+								</div>
                             </div>
                         </div>
                     </div>
                     </c:forEach>
                 </div>
+                
+               
+                                
+                
             
     
     <!-- Modal đăng bài --> 

@@ -19,7 +19,8 @@ public interface BaiVietDao extends JpaRepository<BaiViet, Integer> {
 	
 	@Query("SELECT  bv.moTa, bv.hinhAnh, bv.ngayDang, bv.luotThich, bv.luotBinhLuan,  bv.nguoiDung.hoTen, bv.nguoiDung.anhDaiDien, bv.nguoiDung.sdt, bv.maBaiViet FROM BaiViet bv WHERE bv.maBaiViet = :maBaiViet")
 	Object findBaiVietByMaBaiViet(@Param("maBaiViet") int maBaiViet);
-
+	
+	
 	@Query("SELECT bv.nguoiDung.sdt FROM BaiViet bv WHERE bv.maBaiViet = :maBaiViet")
 	BaiViet findByMaBaiViet(@Param("maBaiViet") int maBaiViet);
 	
@@ -28,4 +29,7 @@ public interface BaiVietDao extends JpaRepository<BaiViet, Integer> {
 	
 	@Query("select ds from DanhSachYeuThich ds where ds.nguoiDung.sdt=?1")
 	List<BaiViet> findBySdt(String sdt);
+	
+	
 }
+	
