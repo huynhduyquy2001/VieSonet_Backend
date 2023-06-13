@@ -44,7 +44,7 @@
 		class="header animate__animated animate__fadeInUp"
 		style="position: fixed; right: 0; max-height: 90vh; z-index: -2;"
 		alt="">
-	<header class="header">
+	<header class="header animationTop3">
 		<nav class="navbar navbar-expand-sm navbar-light"
 			style="border: none; padding-top: 0; padding-bottom: 0;">
 			<div class="container">

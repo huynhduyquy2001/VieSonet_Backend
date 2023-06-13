@@ -34,7 +34,7 @@
 <body style="padding-top: 55px; padding-bottom: 55px;">
     <img src="images/cayTre.png" class="header animate__animated animate__fadeInUp" style="position: fixed; right: 0; max-height: 90vh;z-index: -2;" alt="">
     <!-- style="box-shadow: 0 1px 2px rgb(0 0 0 / 10%);" -->
-    <header class="header animate__animated animate__fadeInUp">
+    <header class="header animationTop3">
         <nav class="navbar navbar-expand-sm navbar-light" style="border: none;padding-top: 0; padding-bottom: 0;">
             <div class="container">
                 <a class="navbar-brand nhan" href="#" style="color: #222; font-weight: bolder; font-family: 'robo';">

@@ -47,7 +47,7 @@
 </head>
 
 <body>
-    <header class="header animate__animated animate__fadeInUp">
+  <header class="header animationTop3">
         <nav class="navbar navbar-expand-sm navbar-light" style="border: none;padding-top: 0; padding-bottom: 0;">
             <div class="container">
                 <a class="navbar-brand nhan" href="#" style="color: #5A4F48; font-weight: bolder; font-family: 'robo';">

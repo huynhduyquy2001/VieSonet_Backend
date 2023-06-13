@@ -41,7 +41,7 @@
 <body>
 	<div class="split-background"></div>
 	
-	<header class="header">
+	<header class="header animationTop3">
 		<nav class="navbar navbar-expand-sm navbar-light"
 			style="border: none; padding-top: 0; padding-bottom: 0;">
 			<div class="container">
