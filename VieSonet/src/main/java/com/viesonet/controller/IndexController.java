@@ -156,6 +156,9 @@ public class IndexController {
 	@GetMapping("/binhluan/{maBaiViet}")
 	public BinhLuanResponse xemBinhLuan(@PathVariable int maBaiViet) {
 		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
+		BaiViet obj = baiVietDao.getById(maBaiViet);
+		obj.setLuotBinhLuan(obj.getLuotBinhLuan()+1);
+		baiVietDao.saveAndFlush(obj);
 		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet,
 				Sort.by(Direction.DESC, "ngayBinhLuan"));
 		return new BinhLuanResponse(baiViet, danhSachBinhLuan);

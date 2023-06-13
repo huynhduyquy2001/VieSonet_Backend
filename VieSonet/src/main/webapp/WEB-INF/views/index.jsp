@@ -471,7 +471,7 @@
 					enctype="multipart/form-data">
 					<div class="modal-body">
 						<div class="user-profile">
-							<img src="images/avt.jpg" alt="">
+							<img src="images/${taiKhoan.anhDaiDien}" alt="">
 							<div>
 								<label>${taiKhoan.hoTen} <small style="font-size: 12px">
 										<div>
