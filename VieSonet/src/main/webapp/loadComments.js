@@ -66,7 +66,7 @@
             <div class="post-reaction">
                 <div class="activity-icons">
                     <div>
-                        <i class="fa-regular fa-thumbs-up"></i> &nbsp; ${baiViet[3]}
+                        <i class="fa-duotone fa-heart"></i> &nbsp; ${baiViet[3]}
                     </div>
                     <div>
                         <i class="fa-regular fa-comment"></i>&nbsp; ${baiViet[4]}

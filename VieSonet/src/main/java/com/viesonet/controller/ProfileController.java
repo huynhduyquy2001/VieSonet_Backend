@@ -174,7 +174,7 @@ public class ProfileController {
 	
 	//Đăng bài viết
 	@PostMapping("/profile/dangbai")
-	public String dangBai( @RequestParam("photo_file") MultipartFile photofile,@RequestParam("cheDo") int selectedValue ,Model m) {
+	public String dangBai( @RequestParam("photo_file1") MultipartFile photofile,@RequestParam("cheDo") int selectedValue ,Model m) {
 		BaiViet baiDang = new BaiViet();
 		if (photofile.isEmpty())
 			baiDang.setHinhAnh("");
@@ -564,5 +564,26 @@ public class ProfileController {
 		banBeDao.deleteById(String.valueOf(mbb));
 		return "redirect:/nguoiDung/" + nguoiDung;
 	}
+	@ResponseBody
+	@GetMapping("/hienBaiViet/{maBaiViet}")
+	public Object hienBaiViet(@PathVariable("maBaiViet") int maBaiViet) {
+	    Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
+	    return baiViet;
+	}
+	@PostMapping("chinhSuaBaiViet/{maBaiViet}")
+	public String chinhSuaBaiViet(@PathVariable("maBaiViet") int maBaiViet, @RequestParam("photo_file_fix") MultipartFile photofile, @RequestParam("cheDoCuaToi") int cheDoCuaToi) {
+		BaiViet baiViet = baiVietDao.getById(maBaiViet);
+
+		baiViet.setCheDo(cheDoDao.getById(cheDoCuaToi));
+		if (photofile.isEmpty())
+			baiViet.setHinhAnh(baiViet.getHinhAnh());
+		else {
+			baiViet.setHinhAnh(photofile.getOriginalFilename());
+		}
+		baiVietDao.saveAndFlush(baiViet);
+		
+		return"redirect:/profile";
+	}
+
 	
 }

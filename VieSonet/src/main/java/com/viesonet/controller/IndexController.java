@@ -1,5 +1,6 @@
 package com.viesonet.controller;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +49,8 @@ import com.viesonet.entity.ThongBao;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
 
+import jakarta.servlet.ServletContext;
+
 @Controller
 public class IndexController {
 	@Autowired
@@ -85,6 +88,9 @@ public class IndexController {
 
 	@Autowired
 	ThongBaoDAO thongBaoDao;
+	
+	@Autowired 
+	ServletContext context;
 
 	// lấy thông tin người dùng
 
@@ -157,7 +163,6 @@ public class IndexController {
 	public BinhLuanResponse xemBinhLuan(@PathVariable int maBaiViet) {
 		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
 		BaiViet obj = baiVietDao.getById(maBaiViet);
-		obj.setLuotBinhLuan(obj.getLuotBinhLuan()+1);
 		baiVietDao.saveAndFlush(obj);
 		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet,
 				Sort.by(Direction.DESC, "ngayBinhLuan"));
@@ -172,6 +177,12 @@ public class IndexController {
 		if (photofile.isEmpty()) {
 			baiDang.setHinhAnh("");
 		} else {
+			String pathUpload = context.getRealPath("/images/"+photofile.getOriginalFilename());
+			try {
+				photofile.transferTo(new File(pathUpload));				
+			} catch (Exception e) {
+				
+			}
 			baiDang.setHinhAnh(photofile.getOriginalFilename());
 		}
 		String sdt = session.get("sdt");
@@ -247,11 +258,21 @@ public class IndexController {
 			baiVietYeuThich.setNgayYeuThich(new Date());
 			baiVietYeuThich.setBaiViet(baiVietDao.getById(maBaiViet));
 			baiVietYeuThich.setNguoiDung(nguoiDungDAO.getById(sdt));
+			
+			BaiViet obj = baiVietDao.getById(maBaiViet);
+			obj.setLuotThich(obj.getLuotThich()+1);
+			baiVietDao.saveAndFlush(obj);
+			
 			dsytDao.saveAndFlush(baiVietYeuThich);
 		} else {
 			baiVietYeuThich.setNgayYeuThich(new Date());
 			baiVietYeuThich.setBaiViet(baiVietDao.getById(maBaiViet));
 			baiVietYeuThich.setNguoiDung(nguoiDungDAO.getById(sdt));
+			
+			BaiViet obj = baiVietDao.getById(maBaiViet);
+			obj.setLuotThich(obj.getLuotThich()-1);
+			baiVietDao.saveAndFlush(obj);
+			
 			dsytDao.delete(baiVietYeuThich);
 		}
 	}
@@ -266,6 +287,11 @@ public class IndexController {
 		entity.setChiTiet(binhLuan);
 		entity.setNgayBinhLuan(new Date());
 		entity.setNguoiDung(nguoiDungDAO.getById(sdt));
+
+		BaiViet obj = baiVietDao.getById(maBaiViet);
+		obj.setLuotBinhLuan(obj.getLuotBinhLuan()+1);
+		baiVietDao.saveAndFlush(obj);
+		
 		dsblDao.saveAndFlush(entity);
 		return "ok";
 	}

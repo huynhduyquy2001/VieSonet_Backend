@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="fr"%>
@@ -54,6 +55,9 @@
 .gray-heart {
 	color: gray; /* Màu xám cho trái tim chưa thích */
 }
+div.dropdown-menu.baoCao{
+transform: translate(-80%, 39px);
+}
 </style>
 </head>
 <body>
@@ -62,6 +66,7 @@
 	</div>
 	<!-- <img src="images/sunset-reduced.jpg" style="position: fixed; left: 0; max-height: 100vh; z-index: -2; width: 100%; top: 40px; opacity: 0.4; bottom: 0; height: 100%; object-fit: cover;" alt=""> -->
 	<!-- style="box-shadow: 0 1px 2px rgb(0 0 0 / 10%);" -->
+	<tiles:insertAttribute name="header"/>
 	<header class="header animationTop3">
 		<nav class="navbar navbar-expand-sm navbar-light"
 			style="border: none; padding-top: 0; padding-bottom: 0;">
@@ -159,7 +164,7 @@
 	<div class="container" id="container"
 		style="transition: 0.5s; margin-top: 70px;">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-5">
 				<div>
 					<div>
 						<b class="nhan">ĐĂNG BÀI</b>
@@ -198,10 +203,10 @@
 				<c:forEach items="${DanhSachBv}" var="BaiViet">
 					<div
 						class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
-						style="margin-bottom: 20px; border-radius: 0; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
-						<div style="padding: 10px; margin: 0;">
+						style="margin-bottom: 20px; border-radius: 0; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); padding: 0; padding-top: 10px; padding-bottom: 10px">
+						<div style=" margin: 0;">
 							<div
-								style="display: flex; align-items: center; justify-content: space-between;">
+								style="display: flex; align-items: center; justify-content: space-between; padding-left: 10px">
 								<div class="tooltip2">
 									<div class="user-profile ">
 										<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img
@@ -248,7 +253,7 @@
 																	<li><i class="fa-regular fa-heart"></i> <b>Mối
 																			quan hệ:</b> ${BaiViet.nguoiDung.moiQuanHe}</li>
 																	<li><b><i class="fa-light fa-user-group"></i>
-																			Danh sách bạn bè:</b> ${dsBb}</li>
+																		Email:</b> ${BaiViet.nguoiDung.email}</li>
 																</ul>
 														</small>
 													</small></small>
@@ -265,8 +270,8 @@
 										<span class="btn dropdown-toggle" type="button" id="triggerId"
 											data-bs-toggle="dropdown" aria-haspopup="true"
 											aria-expanded="false"> </span>
-										<div class="dropdown-menu" aria-labelledby="triggerId">
-											<a class="dropdown-item" data-bs-toggle="modal"
+										<div class="dropdown-menu baoCao" aria-labelledby="triggerId" style=" transform: translate(-80%, 39px);">
+											<a class="dropdown-item" data-bs-toggle="modal"  st
 												data-bs-target="#modalBaoCao"
 												onclick="toCao(${BaiViet.maBaiViet})">Báo cáo vi phạm</a>
 										</div>
@@ -275,15 +280,18 @@
 							</div>
 							<div style="margin-top: 10px; color: #847577">
 								<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
-									${BaiViet.moTa}
+									&nbsp; ${BaiViet.moTa}
 									<center>
-										<img class="lazy" data-src="images/${BaiViet.hinhAnh}"
+									<div class="bg-image hover-zoom">
+									<img class="lazy " data-src="images/${BaiViet.hinhAnh}"
 											width="100%" alt=""
-											style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
+											style="margin-top: 10px; margin-bottom: 10px;">
+									</div>
+										
 									</center>
 								</div>
 
-								<div class="post-reaction">
+								<div class="post-reaction" style="padding-left: 10px">
 									<div class="activity-icons">
 
 										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
@@ -303,8 +311,8 @@
 					</div>
 				</c:forEach>
 			</div>
-			<div class="col-md-5 menuLeft animate__animated animate__backInRight"
-				style="position: fixed; top: 70px; right: 5%;">
+			<div class="col-md-6 menuLeft animate__animated animate__backInRight"
+				style="position: fixed; top: 70px; right: 5%;z-index: -10">
 				<div class="row ">
 					<div class="row" style="margin-left: 2px">
 						<div class="col-md-6">
@@ -564,6 +572,7 @@
         input.onchange = (e) => {
             if (input.files[0])
                 img.src = URL.createObjectURL(input.files[0]);
+            
         } 
     </script>
 

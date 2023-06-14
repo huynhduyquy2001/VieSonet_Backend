@@ -27,7 +27,7 @@ function loadBinhLuan(maBaiViet) {
 					"<img src='/images/" + binhLuan[1] + "' class='img-thumbnail' alt=''>" +
 					"<div>" +
 					"<div><p class='nhan' style='color: #A59565; font-size: 15px;'>" + binhLuan[0] + "</p></div>" +
-					"<small style='font-size: 12px;'><i class='fa-regular fa-comment'></i> " + binhLuan[2]+ "</small>" + "<a href='#'><i class='fa-solid fa-trash-can-xmark' style='margin-left: 30px;' onclick='xoaBinhLuan("+binhLuan[4]+","+binhLuan[5] +")'></i><a/> <br>" +
+					"<small style='font-size: 12px;'><i class='fa-regular fa-comment'></i> " + binhLuan[2] + "</small>" + "<a href='#'><i class='fa-solid fa-trash-can-xmark' style='margin-left: 30px;' onclick='xoaBinhLuan(" + binhLuan[4] + "," + binhLuan[5] + ")'></i><a/> <br>" +
 					"<small style='font-size: 10px;'>" + binhLuan[3] + "</small>" +
 					"</div>" +
 					"</div>";
@@ -221,9 +221,9 @@ function baoCaoViPham(maBaiViet) {
 	});
 }
 
-function xoaBinhLuan(maBaiViet,maBinhLuan){
+function xoaBinhLuan(maBaiViet, maBinhLuan) {
 	$.ajax({
-		url: "/profile/xoabinhluan/" + maBinhLuan+"/"+maBaiViet,
+		url: "/profile/xoabinhluan/" + maBinhLuan + "/" + maBaiViet,
 		type: "GET",
 		success: function(data) {
 			// Xử lý logic sau khi gọi thành công
@@ -252,7 +252,7 @@ function xoaBinhLuan(maBaiViet,maBinhLuan){
 					"<img src='/images/" + binhLuan[1] + "' class='img-thumbnail' alt=''>" +
 					"<div>" +
 					"<div><p class='nhan' style='color: #A59565; font-size: 15px;'>" + binhLuan[0] + "</p></div>" +
-					"<small style='font-size: 12px;'><i class='fa-regular fa-comment'></i> " + binhLuan[2]+ "</small>" + "<a href='#'><i class='fa-solid fa-trash-can-xmark' style='margin-left: 30px;' onclick='xoaBinhLuan("+binhLuan[4]+","+binhLuan[5] +")'></i></a> <br>" +
+					"<small style='font-size: 12px;'><i class='fa-regular fa-comment'></i> " + binhLuan[2] + "</small>" + "<a href='#'><i class='fa-solid fa-trash-can-xmark' style='margin-left: 30px;' onclick='xoaBinhLuan(" + binhLuan[4] + "," + binhLuan[5] + ")'></i></a> <br>" +
 					"<small style='font-size: 10px;'>" + binhLuan[3] + "</small>" +
 					"</div>" +
 					"</div>";
@@ -315,3 +315,4 @@ function xoaBinhLuan(maBaiViet,maBinhLuan){
 		}
 	});
 }
+

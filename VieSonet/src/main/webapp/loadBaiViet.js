@@ -11,11 +11,6 @@ function loadBaiViet(maBaiViet) {
 
 			$("#danhSachBinhLuan .modal-body .phai").empty();
 
-			
-
-
-			
-
 			// Hiển thị thông tin bài viết lên modal
 			var baiVietHtml = `
     <div class="write-post-container nenTrangChu img-thumbnail" style="margin-bottom: 20px; border-radius: 0; box-shadow: 0 0 0;">
