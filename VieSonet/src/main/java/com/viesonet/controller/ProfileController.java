@@ -170,13 +170,6 @@ public class ProfileController {
 	@PostMapping("/profile/dangbai")
 	public String dangBai( @RequestParam("photo_file") MultipartFile photofile,@RequestParam("cheDo") int selectedValue ,Model m) throws IllegalStateException, IOException {
 		BaiViet baiDang = new BaiViet();
-		if (photofile.isEmpty())
-			baiDang.setHinhAnh("");
-		else {
-			baiDang.setHinhAnh(photofile.getOriginalFilename());
-		}
-		String sdt = session.get("sdt");
-		int cheDo = param.getInt("cheDo", selectedValue);
 		Random rand = new Random();
         int[] numbers = new int[9];
         String str = "";
@@ -187,7 +180,15 @@ public class ProfileController {
 	    String path = "images/" + str + "_"+ photofile.getOriginalFilename() ;
 	    File uploadedFile = new File(req.getSession().getServletContext().getRealPath(path)); // tạo đối tượng File mới dựa trên đường dẫn filePath
         String filename = str + "_" + photofile.getOriginalFilename(); // lấy tên file	
-	    photofile.transferTo(uploadedFile); // sao chép file hình ảnh đến thư mục images     
+	    photofile.transferTo(uploadedFile); // sao chép file hình ảnh đến thư mục images 
+		if (photofile.isEmpty())
+			baiDang.setHinhAnh("");
+		else {
+			baiDang.setHinhAnh(filename);
+		}
+		String sdt = session.get("sdt");
+		int cheDo = param.getInt("cheDo", selectedValue);
+		    
 		// Lấy ngày và giờ hiện tại
 		Calendar cal = Calendar.getInstance();
 		Date ngayGioDang = cal.getTime();
