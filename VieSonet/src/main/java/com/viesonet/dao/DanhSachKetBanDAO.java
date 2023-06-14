@@ -29,4 +29,6 @@ public interface DanhSachKetBanDAO extends JpaRepository<DanhSachKetBan, Integer
 	@Query("select kb from DanhSachKetBan kb where kb.nguoiLa.sdt =?1")
 	List<DanhSachKetBan> findDsBySdttest(String soDienThoai);
 	
+	
+	
 }

@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
-<%@taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="fr"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="fr" %>
+
 
 <!doctype html>
 <html lang="en">
@@ -54,112 +54,21 @@
 .gray-heart {
 	color: gray; /* Màu xám cho trái tim chưa thích */
 }
+div.dropdown-menu.baoCao{
+transform: translate(-80%, 39px);
+}
 </style>
 </head>
 <body>
 	<div
 		style="position: fixed; right: 0; max-height: 90vh; opacity: 0.1; bottom: 0;">
 	</div>
-	<!-- <img src="images/sunset-reduced.jpg" style="position: fixed; left: 0; max-height: 100vh; z-index: -2; width: 100%; top: 40px; opacity: 0.4; bottom: 0; height: 100%; object-fit: cover;" alt=""> -->
-	<!-- style="box-shadow: 0 1px 2px rgb(0 0 0 / 10%);" -->
-	<header class="header animationTop3">
-		<nav class="navbar navbar-expand-sm navbar-light"
-			style="border: none; padding-top: 0; padding-bottom: 0;">
-			<div class="container">
-				<a class="navbar-brand nhan" href="/"
-					style="color: #222; font-weight: bolder; font-family: 'robo';">
-					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
-				</a>
-				
-				<button class="navbar-toggler d-lg-none" type="button"
-					data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
-					aria-controls="collapsibleNavId" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="collapsibleNavId">
-					<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-						<li class="nav-item"><a class="nav-link" href="/timKiem"><small
-								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; letter-spacing: 0.1em; color: black;"><i
-									class="fa-solid fa-magnifying-glass"></i></small></a></li> &nbsp;&nbsp;
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-							href="#" role="button" aria-haspopup="true" aria-expanded="false"><i
-								class="fa-regular fa-bell"></i> <span id="soLuongThongBao">(${thongBaoChuaXem})</span></a>
-							<div class="dropdown-menu" id="danhSachThongBao"
-								style="overflow: hidden; max-height: 60vh; overflow-y: scroll; left: -100px">
-								<c:forEach items="${thongBao}" var="item">
-									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
-										<div class="user-profile"
-											style="width: 250px; padding-left: 3%;">
-											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
-											<div>
-												<p style="font-size: 13px">${item.noiDung}</p>
-												<div style="justify-content: space-between; display: flex;">
-													<small style="font-size: 11px"> <script
-															type="text/javascript">
-                            var currentTime = new Date();
-                            var activityTime = new Date('${item.ngayThongBao}');
-                            var timeDiff = currentTime.getTime() - activityTime.getTime();
-                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-                            var monthsDiff = Math.floor(daysDiff / 30);
-                            var yearsDiff = Math.floor(monthsDiff / 12);
-
-                            if (daysDiff < 1) {
-                                document.write('1 ngày trước');
-                            } else if (monthsDiff < 1) {
-                                document.write(daysDiff + ' ngày trước');
-                            } else if (yearsDiff < 1) {
-                                document.write(monthsDiff + ' tháng trước');
-                            } else {
-                                document.write('<fmt:formatDate value="${item.ngayThongBao}"
-										pattern="dd-MM-yyyy HH:mm" />');
-                            }
-                        </script>
-													</small> <small style="font-size: 12px"><a
-														style="cursor: pointer;"
-														onclick="xoaThongBao(${item.maThongBao})">x</a></small>
-												</div>
-											</div>
-										</div>
-
-									</a>
-								</c:forEach>
-							</div></li>
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="#" id="dropdownId"
-							class="nav-link dropdown-toggle" href="/profile" id="dropdownId"
-							data-bs-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"><small><img
-									src="images/${taiKhoan.anhDaiDien}" width="30px"
-									style="border-radius: 50%; border: 1px solid gray" alt=""></small></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownId"
-								style="padding-left: 3px; left: -100px; line-height: 35px">
-								<a class="dropdown-item" href="/profile"> <small>Xem
-										trang cá nhân</small></a> <a class="dropdown-item" href="/DanhSachBanBe">
-									<small>Danh sách bạn bè</small>
-								</a> <a class="dropdown-item" href="/GoiYKB"> <small>Lời
-										mời kết bạn</small></a> 
-										<c:if test="${sessionScope.vt == 2 || sessionScope.vt == 3}">
-										  <!-- Nội dung chỉ hiển thị khi có vai trò 'admin' -->
-										  <a class="dropdown-item" href="/quanly/quanLyBaiViet"> <small>Quản lý</small></a>
-										</c:if>
-										
-										<a class="dropdown-item" href="/doimatkhau"> <small>Đổi
-										mật khẩu</small></a> <a class="dropdown-item" href="/dieukhoan"> <small>Điều
-										khoản</small></a> <a class="dropdown-item" href="/dangxuat"> <small>Đăng
-										xuất</small></a>
-							</div></li>
-
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
+	<%@include file="_header.jsp"%>
+	
 	<div class="container" id="container"
 		style="transition: 0.5s; margin-top: 70px;">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-5">
 				<div>
 					<div>
 						<b class="nhan">ĐĂNG BÀI</b>
@@ -198,10 +107,10 @@
 				<c:forEach items="${DanhSachBv}" var="BaiViet">
 					<div
 						class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
-						style="margin-bottom: 20px; border-radius: 0; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
-						<div style="padding: 10px; margin: 0;">
+						style="margin-bottom: 20px; border-radius: 0; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); padding: 0; padding-top: 10px; padding-bottom: 10px">
+						<div style=" margin: 0;">
 							<div
-								style="display: flex; align-items: center; justify-content: space-between;">
+								style="display: flex; align-items: center; justify-content: space-between; padding-left: 10px">
 								<div class="tooltip2">
 									<div class="user-profile ">
 										<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img
@@ -248,7 +157,7 @@
 																	<li><i class="fa-regular fa-heart"></i> <b>Mối
 																			quan hệ:</b> ${BaiViet.nguoiDung.moiQuanHe}</li>
 																	<li><b><i class="fa-light fa-user-group"></i>
-																			Danh sách bạn bè:</b> ${dsBb}</li>
+																		Email:</b> ${BaiViet.nguoiDung.email}</li>
 																</ul>
 														</small>
 													</small></small>
@@ -265,8 +174,8 @@
 										<span class="btn dropdown-toggle" type="button" id="triggerId"
 											data-bs-toggle="dropdown" aria-haspopup="true"
 											aria-expanded="false"> </span>
-										<div class="dropdown-menu" aria-labelledby="triggerId">
-											<a class="dropdown-item" data-bs-toggle="modal"
+										<div class="dropdown-menu baoCao" aria-labelledby="triggerId" style=" transform: translate(-80%, 39px);">
+											<a class="dropdown-item" data-bs-toggle="modal"  st
 												data-bs-target="#modalBaoCao"
 												onclick="toCao(${BaiViet.maBaiViet})">Báo cáo vi phạm</a>
 										</div>
@@ -275,15 +184,18 @@
 							</div>
 							<div style="margin-top: 10px; color: #847577">
 								<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
-									${BaiViet.moTa}
+									&nbsp; ${BaiViet.moTa}
 									<center>
-										<img class="lazy" data-src="images/${BaiViet.hinhAnh}"
+									<div class="bg-image hover-zoom">
+									<img class="lazy " data-src="images/${BaiViet.hinhAnh}"
 											width="100%" alt=""
-											style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
+											style="margin-top: 10px; margin-bottom: 10px;">
+									</div>
+										
 									</center>
 								</div>
 
-								<div class="post-reaction">
+								<div class="post-reaction" style="padding-left: 10px">
 									<div class="activity-icons">
 
 										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
@@ -303,7 +215,7 @@
 					</div>
 				</c:forEach>
 			</div>
-			<div class="col-md-5 menuLeft animate__animated animate__backInRight"
+			<div class="col-md-6 menuLeft animate__animated animate__backInRight"
 				style="position: fixed; top: 70px; right: 5%;">
 				<div class="row ">
 					<div class="row" style="margin-left: 2px">
@@ -564,6 +476,7 @@
         input.onchange = (e) => {
             if (input.files[0])
                 img.src = URL.createObjectURL(input.files[0]);
+            
         } 
     </script>
 

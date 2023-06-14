@@ -1,5 +1,6 @@
 package com.viesonet.controller;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.viesonet.dao.BaiVietDao;
+import com.viesonet.dao.BaiVietDAO;
+
 import com.viesonet.dao.BaiVietViPhamDAO;
 import com.viesonet.dao.NguoiDungDAO;
 import com.viesonet.dao.ThongBaoDAO;
@@ -45,16 +47,15 @@ import com.viesonet.entity.DanhSachYeuThich;
 import com.viesonet.entity.LoaiViPham;
 import com.viesonet.entity.NguoiDung;
 import com.viesonet.entity.ThongBao;
-import com.viesonet.service.CookieService;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
 
-import jakarta.servlet.http.Cookie;
+import jakarta.servlet.ServletContext;
 
 @Controller
 public class IndexController {
 	@Autowired
-	BaiVietDao baiVietDao;
+	BaiVietDAO baiVietDao;
 
 	@Autowired
 	NguoiDungDAO nguoiDungDAO;
@@ -89,8 +90,8 @@ public class IndexController {
 	@Autowired
 	ThongBaoDAO thongBaoDao;
 	
-	@Autowired
-	CookieService cookie;
+	@Autowired 
+	ServletContext context;
 
 	// lấy thông tin người dùng
 
@@ -163,7 +164,6 @@ public class IndexController {
 	public BinhLuanResponse xemBinhLuan(@PathVariable int maBaiViet) {
 		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
 		BaiViet obj = baiVietDao.getById(maBaiViet);
-		obj.setLuotBinhLuan(obj.getLuotBinhLuan()+1);
 		baiVietDao.saveAndFlush(obj);
 		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet,
 				Sort.by(Direction.DESC, "ngayBinhLuan"));
@@ -178,6 +178,12 @@ public class IndexController {
 		if (photofile.isEmpty()) {
 			baiDang.setHinhAnh("");
 		} else {
+			String pathUpload = context.getRealPath("/images/"+photofile.getOriginalFilename());
+			try {
+				photofile.transferTo(new File(pathUpload));				
+			} catch (Exception e) {
+				
+			}
 			baiDang.setHinhAnh(photofile.getOriginalFilename());
 		}
 		String sdt = session.get("sdt");
@@ -253,11 +259,21 @@ public class IndexController {
 			baiVietYeuThich.setNgayYeuThich(new Date());
 			baiVietYeuThich.setBaiViet(baiVietDao.getById(maBaiViet));
 			baiVietYeuThich.setNguoiDung(nguoiDungDAO.getById(sdt));
+			
+			BaiViet obj = baiVietDao.getById(maBaiViet);
+			obj.setLuotThich(obj.getLuotThich()+1);
+			baiVietDao.saveAndFlush(obj);
+			
 			dsytDao.saveAndFlush(baiVietYeuThich);
 		} else {
 			baiVietYeuThich.setNgayYeuThich(new Date());
 			baiVietYeuThich.setBaiViet(baiVietDao.getById(maBaiViet));
 			baiVietYeuThich.setNguoiDung(nguoiDungDAO.getById(sdt));
+			
+			BaiViet obj = baiVietDao.getById(maBaiViet);
+			obj.setLuotThich(obj.getLuotThich()-1);
+			baiVietDao.saveAndFlush(obj);
+			
 			dsytDao.delete(baiVietYeuThich);
 		}
 	}
@@ -272,6 +288,11 @@ public class IndexController {
 		entity.setChiTiet(binhLuan);
 		entity.setNgayBinhLuan(new Date());
 		entity.setNguoiDung(nguoiDungDAO.getById(sdt));
+
+		BaiViet obj = baiVietDao.getById(maBaiViet);
+		obj.setLuotBinhLuan(obj.getLuotBinhLuan()+1);
+		baiVietDao.saveAndFlush(obj);
+		
 		dsblDao.saveAndFlush(entity);
 		return "ok";
 	}
