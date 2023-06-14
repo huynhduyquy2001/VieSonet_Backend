@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,6 @@ import com.viesonet.dao.DanhSachBinhLuanDAO;
 import com.viesonet.dao.DanhSachKetBanDAO;
 import com.viesonet.dao.DanhSachYeuThichDAO;
 import com.viesonet.dao.NguoiDungDAO;
-import com.viesonet.dao.ThongBaoDAO;
 import com.viesonet.entity.BaiViet;
 import com.viesonet.entity.BanBe;
 import com.viesonet.entity.BinhLuanResponse;
@@ -43,7 +43,6 @@ import com.viesonet.entity.DanhSachBinhLuan;
 import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.DanhSachYeuThich;
 import com.viesonet.entity.NguoiDung;
-import com.viesonet.entity.ThongBao;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
 
@@ -81,21 +80,19 @@ public class ProfileController {
 	
 	@Autowired
 	ParamService param;
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 	
 	@Autowired
-	ThongBaoDAO thongBaoDao;
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
+	HttpServletRequest req;
+	
+	@Autowired
+	HttpServletResponse resp;
 	
 	@RequestMapping("/profile")
 	public String index(Model m, HttpServletRequest request, HttpServletResponse response) {
-		// lấy danh sách thông báo
-		String sdt = session.get("sdt");
-				List<ThongBao> thongBao = thongBaoDao.findByUser(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
-				m.addAttribute("thongBao", thongBao);
-				m.addAttribute("thongBaoChuaXem", thongBaoDao.demThongBaoChuaXem(sdt));
 		HttpSession session = request.getSession();
 		Cookie[] cookies = request.getCookies();
-
+		String sdt = null;
 		NguoiDung nguoiDung = null;
        // Kiểm tra có session chưa
         if (session.getAttribute("sdt") != null) {
@@ -117,8 +114,6 @@ public class ProfileController {
             }
         }
         List<BanBe> listBb = banBeDao.findFriendByUserphone(sdt);
-		List<String> sdtBanBeList = listBb.stream().map(banBe -> banBe.getBanBe().getSdt())
-				.collect(Collectors.toList());
 		//Nào có đăng nhập thì đổi
 		if (nguoiDung != null) {
 		//Sắp xếp giảm dần theo ngày đăng
@@ -133,7 +128,6 @@ public class ProfileController {
 			for(BaiViet bv : listBv) {
 				Boolean trangThaiBv = bv.getTrangThai();
 				if(trangThaiBv) {
-					//Lấy chế độ bài viết
 					danhSachBaiVietCty.add(bv); 
 				} else {
 					danhSachBaiVietCty.remove(bv); 
@@ -174,7 +168,7 @@ public class ProfileController {
 	
 	//Đăng bài viết
 	@PostMapping("/profile/dangbai")
-	public String dangBai( @RequestParam("photo_file1") MultipartFile photofile,@RequestParam("cheDo") int selectedValue ,Model m) {
+	public String dangBai( @RequestParam("photo_file") MultipartFile photofile,@RequestParam("cheDo") int selectedValue ,Model m) throws IllegalStateException, IOException {
 		BaiViet baiDang = new BaiViet();
 		if (photofile.isEmpty())
 			baiDang.setHinhAnh("");
@@ -183,6 +177,17 @@ public class ProfileController {
 		}
 		String sdt = session.get("sdt");
 		int cheDo = param.getInt("cheDo", selectedValue);
+		Random rand = new Random();
+        int[] numbers = new int[9];
+        String str = "";
+        for (int i = 0; i < 9; i++) {
+            numbers[i] = rand.nextInt(9); // tạo số ngẫu nhiên từ 0 đến 999999999
+            str = str + String.valueOf(numbers[i]);
+        }
+	    String path = "images/" + str + "_"+ photofile.getOriginalFilename() ;
+	    File uploadedFile = new File(req.getSession().getServletContext().getRealPath(path)); // tạo đối tượng File mới dựa trên đường dẫn filePath
+        String filename = str + "_" + photofile.getOriginalFilename(); // lấy tên file	
+	    photofile.transferTo(uploadedFile); // sao chép file hình ảnh đến thư mục images     
 		// Lấy ngày và giờ hiện tại
 		Calendar cal = Calendar.getInstance();
 		Date ngayGioDang = cal.getTime();
@@ -201,6 +206,7 @@ public class ProfileController {
 		}
 		return "redirect:/profile";
 	}
+	//Ẩn bài viết
 	@GetMapping("/profile/anbaiviet/{maBaiViet}")
 	public String anBaiViet(Model m, @PathVariable int maBaiViet) {
 		BaiViet baiDang = baiVietDao.getById(maBaiViet);
@@ -214,36 +220,58 @@ public class ProfileController {
 	
 	//Chỉnh sửa ảnh đại diện
 	@PostMapping("/profile/avatar")
-	public String chinhSuaADD(Model m, @RequestParam("photo_file") MultipartFile photofile) {
+	public String chinhSuaADD(Model m, @RequestParam("photo_file") MultipartFile photofile) throws IOException {
 	    String sdt = session.get("sdt");
 	    BaiViet baiDang = new BaiViet();
 	    int cheDo = param.getInt("cheDo", 1);
 	    Calendar cal = Calendar.getInstance();
-		Date ngayGioDang = cal.getTime();
+	    Date ngayGioDang = cal.getTime();
 	    NguoiDung add = nguoiDungDao.findBySdt(sdt);
+	    Random rand = new Random();
+        int[] numbers = new int[9];
+        String str = "";
+        for (int i = 0; i < 9; i++) {
+            numbers[i] = rand.nextInt(9); // tạo số ngẫu nhiên từ 0 đến 999999999
+            str = str + String.valueOf(numbers[i]);
+        }
 	    if (!photofile.isEmpty()) {
-	            add.setAnhDaiDien(photofile.getOriginalFilename());
-	            baiDang.setHinhAnh(photofile.getOriginalFilename());
-	            baiDang.setMoTa(param.getString("moTaBaiViet", ""));
-	    		baiDang.setNgayDang(new Date());
-	    		baiDang.setLuotThich(0);
-	    		baiDang.setLuotBinhLuan(0);
-	    		baiDang.setTrangThai(true);
-	    		baiDang.setCheDo(cheDoDao.getById(cheDo));
-	    		baiDang.setNguoiDung(nguoiDungDao.getById(sdt));
-	            nguoiDungDao.saveAndFlush(add);
-	            baiVietDao.saveAndFlush(baiDang);
+	    String path = "images/" + str + "_"+ photofile.getOriginalFilename() ;
+	    File uploadedFile = new File(req.getSession().getServletContext().getRealPath(path)); // tạo đối tượng File mới dựa trên đường dẫn filePath
+        String filename = str + "_" + photofile.getOriginalFilename(); // lấy tên file	
+	    photofile.transferTo(uploadedFile); // sao chép file hình ảnh đến thư mục images      	
+	    	add.setAnhDaiDien(filename); // cập nhật đường dẫn tương đối đến file hình ảnh trong trường anhDaiDien của đối tượng NguoiDung
+	        baiDang.setHinhAnh(filename);
+	        baiDang.setMoTa(param.getString("moTaBaiViet", ""));
+	        baiDang.setNgayDang(new Date());
+	        baiDang.setLuotThich(0);
+	        baiDang.setLuotBinhLuan(0);
+	        baiDang.setTrangThai(true);
+	        baiDang.setCheDo(cheDoDao.getById(cheDo));
+	        baiDang.setNguoiDung(nguoiDungDao.getById(sdt));
+	        baiVietDao.saveAndFlush(baiDang);
+	        nguoiDungDao.saveAndFlush(add);
 	    }
 	    return "redirect:/profile";
 	}
 	
 	//Chỉnh sửa ảnh bìa
 	@PostMapping("/profile/background")
-	public String chinhSuaAB(Model m, @RequestParam("photo_file2") MultipartFile photofile) {
+	public String chinhSuaAB(Model m, @RequestParam("photo_file2") MultipartFile photofile) throws IllegalStateException, IOException {
 	    String sdt = session.get("sdt");
 	    NguoiDung add = nguoiDungDao.findBySdt(sdt);
+	    Random rand = new Random();
+        int[] numbers = new int[9];
+        String str = "";
+	    for (int i = 0; i < 9; i++) {
+            numbers[i] = rand.nextInt(9); // tạo số ngẫu nhiên từ 0 đến 999999999
+            str = str + String.valueOf(numbers[i]);
+        }
 	    if (!photofile.isEmpty()) {
-	            add.setAnhBia(photofile.getOriginalFilename());
+	    	String path = "images/" + str + "_"+ photofile.getOriginalFilename() ;
+	 	    File uploadedFile = new File(req.getSession().getServletContext().getRealPath(path)); // tạo đối tượng File mới dựa trên đường dẫn filePath
+	        String filename = str + "_" + photofile.getOriginalFilename(); // lấy tên file	
+	        photofile.transferTo(uploadedFile); // sao chép file hình ảnh đến thư mục images  
+	 	    add.setAnhDaiDien(filename); // cập nhật đường dẫn tương đối đến file hình ảnh trong trường anhDaiDien của đối tượng NguoiDung
 	            nguoiDungDao.saveAndFlush(add);    
 	    }
 	    return "redirect:/profile";
@@ -378,10 +406,11 @@ public class ProfileController {
 	
 	@GetMapping("profile/dongy/{maLoiMoi}")
 	public String dongYKetBan(@PathVariable int maLoiMoi) {
+		// thêm người ta vào danh sách bạn bè
 		String sdt = session.get("sdt");
-		NguoiDung nguoiDung = nguoiDungDao.getById(sdt);
+		NguoiDung nguoiDung = nguoiDungDao.getById(sdt); // 0939790299
 		DanhSachKetBan ds = dskbDao.getById(maLoiMoi);
-		NguoiDung nguoiLa = ds.getNguoiLa();
+		NguoiDung nguoiLa = ds.getNguoiDung();
 		BanBe banBe = new BanBe();
 		banBe.setNguoiDung(nguoiDung);
 		banBe.setBanBe(nguoiLa);
@@ -408,11 +437,8 @@ public class ProfileController {
 		List<Order> orders = new ArrayList<Order>();
 		orders.add(new Order(Direction.DESC, "ngayDang"));
 		Sort sort = Sort.by(orders);
-		//danh sách bạn của người lạ
         List<BanBe> listBb = banBeDao.findFriendByUserphone(sdtLa);
-        //danh sách bài viết
         List<BaiViet> listBv = baiVietDao.findBySdt(sdtLa, sort);
-        //
         List<BanBe> listbb = banBeDao.findFriends(sdtLa);
         
         NguoiDung taiKhoan = nguoiDungDao.getById(sdtHt);
@@ -564,26 +590,5 @@ public class ProfileController {
 		banBeDao.deleteById(String.valueOf(mbb));
 		return "redirect:/nguoiDung/" + nguoiDung;
 	}
-	@ResponseBody
-	@GetMapping("/hienBaiViet/{maBaiViet}")
-	public Object hienBaiViet(@PathVariable("maBaiViet") int maBaiViet) {
-	    Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
-	    return baiViet;
-	}
-	@PostMapping("chinhSuaBaiViet/{maBaiViet}")
-	public String chinhSuaBaiViet(@PathVariable("maBaiViet") int maBaiViet, @RequestParam("photo_file_fix") MultipartFile photofile, @RequestParam("cheDoCuaToi") int cheDoCuaToi) {
-		BaiViet baiViet = baiVietDao.getById(maBaiViet);
-
-		baiViet.setCheDo(cheDoDao.getById(cheDoCuaToi));
-		if (photofile.isEmpty())
-			baiViet.setHinhAnh(baiViet.getHinhAnh());
-		else {
-			baiViet.setHinhAnh(photofile.getOriginalFilename());
-		}
-		baiVietDao.saveAndFlush(baiViet);
-		
-		return"redirect:/profile";
-	}
-
 	
 }
