@@ -131,7 +131,8 @@ public class GoiYKetBanController {
 		String sdtND = Session.get("sdt");
 		NguoiDung nguoiDung = nguoiDungDao.getById(sdtND);
 		NguoiDung nguoiLa = nguoiDungDAO.findBySdt(sdt);
-		System.out.println("Ngưo" + nguoiDung.getSdt());
+
+		
 		if (nguoiDung.equals(nguoiLa)) {
 			m.addAttribute("message", "Lỗi bạn k tự kết bạn với chính mình");
 			return "GoiYKetBan";
