@@ -27,7 +27,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.viesonet.dao.BaiVietDao;
+import com.viesonet.dao.BaiVietDAO;
+
 import com.viesonet.dao.BanBeDAO;
 import com.viesonet.dao.CheDoDAO;
 import com.viesonet.dao.DanhSachBinhLuanDAO;
@@ -59,7 +60,7 @@ public class ProfileController {
 	NguoiDungDAO nguoiDungDao;
 
 	@Autowired
-	BaiVietDao baiVietDao;
+	BaiVietDAO baiVietDao;
 
 	@Autowired
 	BanBeDAO banBeDao;

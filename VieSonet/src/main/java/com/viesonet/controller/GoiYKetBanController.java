@@ -3,6 +3,7 @@ package com.viesonet.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,7 +62,7 @@ public class GoiYKetBanController {
 		String sdtCN = Session.get("sdt");
 		NguoiDung taiKhoan = nguoiDungDAO.getById(sdtCN);
 		model.addAttribute("taiKhoan", taiKhoan);
-		// danh sách kết bạn và đếm số lượng kết bạn
+		// danh sách lời mời kết bạn và đếm số lượng kết bạn
 		List<DanhSachKetBan> danhSachKetBan = dskbDao.findDsBySdt(sdtCN);
 		model.addAttribute("SlKb", danhSachKetBan.size());
 		List<DanhSachKetBan> topKetBan = new ArrayList<>();
@@ -69,71 +70,120 @@ public class GoiYKetBanController {
 			topKetBan.add(danhSachKetBan.get(i));
 		}
 		model.addAttribute("topKetBan", topKetBan);
-		// Danh sách người dùng không phải là bạn của sđt đang đăng nhập
-		List<NguoiDung> list = nguoiDungDao.findUnrelatedFriends(sdtCN);
-		//List<DanhSachKetBan> list = dskbDao.findFriends(sdtCN);
-		model.addAttribute("list", list);
-		System.out.println("SLKB"+danhSachKetBan.size());
+
+
+		// lấy danh sách bạn bè
+		List<BanBe> listBb = banBeDao.findFriends(sdtCN);
+
+		List<String> sdtBb = listBb.stream().map(banBe -> {
+			if (banBe.getBanBe().getSdt().equals(sdt)) {
+				return banBe.getNguoiDung().getSdt();
+			} else {
+				return banBe.getBanBe().getSdt();
+			}
+		}).collect(Collectors.toList());
+		System.out.println("Danh sach ban be"+sdtBb);
+		// lấy danh sách bạn của bạn
+
+		List<BanBe> danhSachBanCuaBan = banBeDao.timBanCuaBan(sdtBb);
+		
+		List<String> sdtBanCuaBan = danhSachBanCuaBan.stream().map(banBe -> {
+			if (sdtBb.contains(banBe.getBanBe().getSdt())) {
+				return banBe.getNguoiDung().getSdt();
+			} else {
+				return banBe.getBanBe().getSdt();
+			}
+		}).collect(Collectors.toList());
+		
+		System.out.println("Danh sach ban cua ban:"+ sdtBanCuaBan);
+		//loại những người đã là bạn của mình
+		List<String> filteredList = sdtBanCuaBan.stream()
+		        .filter(item -> !sdtBb.contains(item))
+		        .collect(Collectors.toList());
+		
+		System.out.println("sau khi loai nhung nguoi la ban cua minh còn: "+filteredList.size());
+		
+		// lấy danh sách lời mời kết bạn
+		List<DanhSachKetBan> dskb = dskbDao.findFriends(sdtCN);
+		List<String> danhSachLoiMoi = dskb.stream().map(loiMoi -> {
+			if (loiMoi.getNguoiDung().getSdt().equals(sdt)) {
+				return loiMoi.getNguoiDung().getSdt();
+			} else {
+				return loiMoi.getNguoiLa().getSdt();
+			}
+		}).collect(Collectors.toList());
+		
+		System.out.println("danh sách loi moi ket ban "+danhSachLoiMoi.size());
+		//loại những người đã có trong danh sách kết bạn
+		List<String> filteredList2 = filteredList.stream()
+		        .filter(item -> !danhSachLoiMoi.contains(item))
+		        .collect(Collectors.toList());
+		
+		System.out.println("loai nhung nguoi trong danh sách loi moi ket ban"+filteredList2.size());
+		
+		model.addAttribute("list", nguoiDungDao.findNguoiDungBySdtIn(filteredList2));
 		
 		return "GoiYKetBan";
 	}
-		@GetMapping("/GoiYKB/ketBan/{sdt}")
-		public String themLoiMoiKetBan(@PathVariable("sdt") String sdt , Model m) {
-			String sdtND = Session.get("sdt");
-			NguoiDung nguoiDung = nguoiDungDao.getById(sdtND);
-			NguoiDung nguoiLa = nguoiDungDAO.findBySdt(sdt);
-			System.out.println("Ngưo"+nguoiDung.getSdt());
-			if (nguoiDung.equals(nguoiLa)) {
-				m.addAttribute("message", "Lỗi bạn k tự kết bạn dới chính mình");
-				return "GoiYKetBan";
-			}
-			if (nguoiLa == null) {
-				m.addAttribute("message", "Chưa có kết bạn ✪ ω ✪");
-				return "GoiYKetBan";
-			}
-			 // Kiểm tra xem đã tồn tại lời mời kết bạn giữa hai người dùng hay chưa
-			DanhSachKetBan ds = dskbDao.getByNguoiLaAndNguoiDung(nguoiDung,nguoiLa);
-			if (ds != null) {
-				m.addAttribute("message", "Đã có lời mời trước đó");
-				return "GoiYKetBan";
-			}
-			// Lưu thông tin lời mời vào CSDL
-			ds = new DanhSachKetBan();
-			ds.setNguoiDung(nguoiDung);
-			ds.setNguoiLa(nguoiLa);
-			ds.setNgayGui(new Date());
-			dskbDao.saveAndFlush(ds);
-			return "redirect:/GoiYKB";
-		}
-		@GetMapping("/GoiYKB/dongy/{maLoiMoi}")
-		public String dongYKetBan(@PathVariable int maLoiMoi) {
-			// thêm người ta vào danh sách bạn bè
-			String sdt = Session.get("sdt");
-			NguoiDung nguoiDung = nguoiDungDAO.getById(sdt);
-			DanhSachKetBan ds = dskbDao.getById(maLoiMoi);
-			NguoiDung nguoiLa = ds.getNguoiLa();
 
-			BanBe banBe = new BanBe();
-			banBe.setNguoiDung(nguoiDung);
-			banBe.setBanBe(nguoiLa);
-			banBe.setNgayKb(new Date());
-			banBeDao.saveAndFlush(banBe);
+	@GetMapping("/GoiYKB/ketBan/{sdt}")
+	public String themLoiMoiKetBan(@PathVariable("sdt") String sdt, Model m) {
+		String sdtND = Session.get("sdt");
+		NguoiDung nguoiDung = nguoiDungDao.getById(sdtND);
+		NguoiDung nguoiLa = nguoiDungDAO.findBySdt(sdt);
+		System.out.println("Ngưo" + nguoiDung.getSdt());
+		if (nguoiDung.equals(nguoiLa)) {
+			m.addAttribute("message", "Lỗi bạn k tự kết bạn với chính mình");
+			return "GoiYKetBan";
+		}
+		if (nguoiLa == null) {
+			m.addAttribute("message", "Chưa có kết bạn ✪ ω ✪");
+			return "GoiYKetBan";
+		}
+		// Kiểm tra xem đã tồn tại lời mời kết bạn giữa hai người dùng hay chưa
+		DanhSachKetBan ds = dskbDao.getByNguoiLaAndNguoiDung(nguoiDung, nguoiLa);
+		if (ds != null) {
+			m.addAttribute("message", "Đã có lời mời trước đó");
+			return "GoiYKetBan";
+		}
+		// Lưu thông tin lời mời vào CSDL
+		ds = new DanhSachKetBan();
+		ds.setNguoiDung(nguoiDung);
+		ds.setNguoiLa(nguoiLa);
+		ds.setNgayGui(new Date());
+		dskbDao.saveAndFlush(ds);
+		return "redirect:/GoiYKB";
+	}
 
-			// thêm mình vào danh sách bạn bè của ng ta
-			BanBe banBee = new BanBe();
-			banBee.setNguoiDung(nguoiLa);
-			banBee.setBanBe(nguoiDung);
-			banBee.setNgayKb(new Date());
-			banBeDao.saveAndFlush(banBee);
-			dskbDao.deleteById(maLoiMoi);
-			return "redirect:/GoiYKB";
-		}
-		
-		@GetMapping("/GoiYKB/tuchoi/{maLoiMoi}")
-		public String tuChoiKetBan(@PathVariable int maLoiMoi) {
-			dskbDao.deleteById(maLoiMoi);
-			return "redirect:/GoiYKB";
-		}
+	@GetMapping("/GoiYKB/dongy/{maLoiMoi}")
+	public String dongYKetBan(@PathVariable int maLoiMoi) {
+		// thêm người ta vào danh sách bạn bè
+		String sdt = Session.get("sdt");
+		NguoiDung nguoiDung = nguoiDungDAO.getById(sdt);
+		DanhSachKetBan ds = dskbDao.getById(maLoiMoi);
+		NguoiDung nguoiLa = ds.getNguoiLa();
+
+		BanBe banBe = new BanBe();
+		banBe.setNguoiDung(nguoiDung);
+		banBe.setBanBe(nguoiLa);
+		banBe.setNgayKb(new Date());
+		banBeDao.saveAndFlush(banBe);
+
+		// thêm mình vào danh sách bạn bè của ng ta
+		BanBe banBee = new BanBe();
+		banBee.setNguoiDung(nguoiLa);
+		banBee.setBanBe(nguoiDung);
+		banBee.setNgayKb(new Date());
+		banBeDao.saveAndFlush(banBee);
+		dskbDao.deleteById(maLoiMoi);
+		return "redirect:/GoiYKB";
+	}
+
+	@GetMapping("/GoiYKB/tuchoi/{maLoiMoi}")
+	public String tuChoiKetBan(@PathVariable int maLoiMoi) {
+		dskbDao.deleteById(maLoiMoi);
+		return "redirect:/GoiYKB";
+	}
 
 	// Lấy dữ liệu người dùng đăng nhập vào trên Session
 	public void DSBB(Model model) {

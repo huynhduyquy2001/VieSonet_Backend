@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<meta charset="UTF-8">
+
 <header class="header animationTop3">
     <nav class="navbar navbar-expand-sm navbar-light" style="border: none; padding-top: 0; padding-bottom: 0;">
         <div class="container">
@@ -68,7 +70,7 @@
                             style="padding-left: 3px; left: -100px; line-height: 35px">
                             <a class="dropdown-item" href="/profile"> <small>Xem trang cá nhân</small></a>
                             <a class="dropdown-item" href="/DanhSachBanBe"> <small>Danh sách bạn bè</small></a>
-                            <a class="dropdown-item" href="/GoiYKB"> <small>Lời mời kết bạn</small></a>
+                            <a class="dropdown-item" href="/GoiYKB"> <small>Gợi ý kết bạn</small></a>
                             <c:if test="${sessionScope.vt == 2 || sessionScope.vt == 3}">
                                 <!-- Nội dung chỉ hiển thị khi có vai trò 'admin' -->
                                 <a class="dropdown-item" href="/quanly/quanLyBaiViet"> <small>Quản lý</small></a>
