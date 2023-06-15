@@ -168,7 +168,7 @@ public class ProfileController {
 	
 	//Đăng bài viết
 	@PostMapping("/profile/dangbai")
-	public String dangBai( @RequestParam("photo_file") MultipartFile photofile,@RequestParam("cheDo") int selectedValue ,Model m) throws IllegalStateException, IOException {
+	public String dangBai( @RequestParam("photo_file1") MultipartFile photofile,@RequestParam("cheDo") int selectedValue ,Model m) throws IllegalStateException, IOException {
 		BaiViet baiDang = new BaiViet();
 		Random rand = new Random();
         int[] numbers = new int[9];
@@ -272,7 +272,7 @@ public class ProfileController {
 	 	    File uploadedFile = new File(req.getSession().getServletContext().getRealPath(path)); // tạo đối tượng File mới dựa trên đường dẫn filePath
 	        String filename = str + "_" + photofile.getOriginalFilename(); // lấy tên file	
 	        photofile.transferTo(uploadedFile); // sao chép file hình ảnh đến thư mục images  
-	 	    add.setAnhDaiDien(filename); // cập nhật đường dẫn tương đối đến file hình ảnh trong trường anhDaiDien của đối tượng NguoiDung
+	 	    add.setAnhBia(filename); // cập nhật đường dẫn tương đối đến file hình ảnh trong trường anhDaiDien của đối tượng NguoiDung
 	            nguoiDungDao.saveAndFlush(add);    
 	    }
 	    return "redirect:/profile";
