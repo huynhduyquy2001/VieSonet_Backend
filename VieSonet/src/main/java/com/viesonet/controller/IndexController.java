@@ -101,10 +101,8 @@ public class IndexController {
 		NguoiDung taiKhoan = nguoiDungDAO.getById(sdt);
 		m.addAttribute("taiKhoan", taiKhoan);
 		// lấy danh sách bài viết từ danh sách bạn bè
-
 		// lấy danh sách bạn bè
 		List<BanBe> listBb = banBeDao.findFriends(sdt);
-
 		List<String> sdtBanBeList = listBb.stream().map(banBe -> {
 			if (banBe.getBanBe().getSdt().equals(sdt)) {
 				return banBe.getNguoiDung().getSdt();
@@ -326,8 +324,6 @@ public class IndexController {
 		String sdt = session.get("sdt");
 		// lấy danh sách thông báo
 		List<Object> thongBao = thongBaoDao.timDanhSachThongBao(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
-		m.addAttribute("thongBao", thongBao);
-		m.addAttribute("thongBaoChuaXem", thongBaoDao.demThongBaoChuaXem(sdt));
 
 		return thongBao;
 	}

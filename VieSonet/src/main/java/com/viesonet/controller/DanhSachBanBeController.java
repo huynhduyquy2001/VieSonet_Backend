@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.viesonet.dao.BanBeDAO;
 import com.viesonet.dao.DanhSachKetBanDAO;
 import com.viesonet.dao.NguoiDungDAO;
+import com.viesonet.dao.ThongBaoDAO;
 import com.viesonet.entity.BanBe;
 import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.NguoiDung;
+import com.viesonet.entity.ThongBao;
 import com.viesonet.service.CookieService;
 import com.viesonet.service.SessionService;
 
@@ -41,6 +45,8 @@ public class DanhSachBanBeController {
 	@Autowired
 	private DanhSachKetBanDAO dskbDao;
 
+	@Autowired
+	ThongBaoDAO thongBaoDao;
 	@GetMapping("/DanhSachBanBe")
 	public String DanhSachBanBe( String sdt, Model model) {
 		//model.addAttribute("sdt", sdt);
@@ -65,6 +71,11 @@ public class DanhSachBanBeController {
 		}
 		model.addAttribute("topKetBan", topKetBan);
 		System.out.println("SL bạn bè " + slbb);
+		
+		// lấy danh sách thông báo
+				List<ThongBao> thongBao = thongBaoDao.findByUser(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
+				model.addAttribute("thongBao", thongBao);
+				model.addAttribute("thongBaoChuaXem", thongBaoDao.demThongBaoChuaXem(sdt));
 		return "DanhSachBanBe";
 	}
 	@GetMapping("/DanhSachBanBe/dongy/{maLoiMoi}")

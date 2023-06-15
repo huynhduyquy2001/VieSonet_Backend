@@ -36,6 +36,7 @@ import com.viesonet.dao.DanhSachBinhLuanDAO;
 import com.viesonet.dao.DanhSachKetBanDAO;
 import com.viesonet.dao.DanhSachYeuThichDAO;
 import com.viesonet.dao.NguoiDungDAO;
+import com.viesonet.dao.ThongBaoDAO;
 import com.viesonet.entity.BaiViet;
 import com.viesonet.entity.BanBe;
 import com.viesonet.entity.BinhLuanResponse;
@@ -44,6 +45,7 @@ import com.viesonet.entity.DanhSachBinhLuan;
 import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.DanhSachYeuThich;
 import com.viesonet.entity.NguoiDung;
+import com.viesonet.entity.ThongBao;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
 
@@ -89,6 +91,8 @@ public class ProfileController {
 	@Autowired
 	HttpServletResponse resp;
 	
+	@Autowired
+	ThongBaoDAO thongBaoDao;
 	@RequestMapping("/profile")
 	public String index(Model m, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -159,6 +163,10 @@ public class ProfileController {
 				topKetBan.add(danhSachKetBan1.get(i));
 			}
 			m.addAttribute("topKetBan", topKetBan);
+			// lấy danh sách thông báo
+			List<ThongBao> thongBao = thongBaoDao.findByUser(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
+			m.addAttribute("thongBao", thongBao);
+			m.addAttribute("thongBaoChuaXem", thongBaoDao.demThongBaoChuaXem(sdt));
 //			System.out.println(topKetBan.size());
 			
 		}

@@ -233,16 +233,17 @@ var soLuongThongBao= $("#soLuongThongBao").val();
 var dataLength = data.length;
 $("#soLuongThongBao").append('('+dataLength+')');
     data.forEach(function (item) {
-        var itemHtml = `<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
+		alert(item[0]);
+        var itemHtml = `<a onclick="loadBinhLuan(${item[1]})">
             <div class="user-profile" style="width: 250px; padding-left: 3%;">
-                <img src="images/${item.nguoiDung.anhDaiDien}" alt="">
+                <img src="images/${item[3]}" alt="">
                 <div>
-                    <p style="font-size: 13px">${item.noiDung}</p>
+                    <p style="font-size: 13px">${item[4]}</p>
                     <div style="justify-content: space-between; display: flex;">
                         <small style="font-size: 11px">
                             <script type="text/javascript">
                                 var currentTime = new Date();
-                                var activityTime = new Date('${item.ngayThongBao}');
+                                var activityTime = new Date('${item[5]}');
                                 var timeDiff = currentTime.getTime() - activityTime.getTime();
                                 var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
                                 var monthsDiff = Math.floor(daysDiff / 30);
@@ -255,11 +256,11 @@ $("#soLuongThongBao").append('('+dataLength+')');
                                 } else if (yearsDiff < 1) {
                                     document.write(monthsDiff + ' tháng trước');
                                 } else {
-                                    document.write('<fmt:formatDate value="${item.ngayThongBao}" pattern="dd-MM-yyyy HH:mm" />');
+                                    document.write('<fmt:formatDate value="${item[5]}" pattern="dd-MM-yyyy HH:mm" />');
                                 }
                             </script>
                         </small>
-                        <small style="font-size: 12px"><a style="cursor: pointer;" onclick="xoaThongBao(${item.maThongBao})">x</a></small>
+                        <small style="font-size: 12px"><a style="cursor: pointer;" onclick="xoaThongBao(${item[0]})">x</a></small>
                     </div>
                 </div>
             </div>
