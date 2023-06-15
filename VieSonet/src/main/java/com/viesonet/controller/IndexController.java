@@ -152,7 +152,7 @@ public class IndexController {
 		// lấy danh sách thông báo
 		List<ThongBao> thongBao = thongBaoDao.findByUser(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
 		m.addAttribute("thongBao", thongBao);
-		m.addAttribute("thongBaoChuaXem", thongBaoDao.demThongBaoChuaXem(sdt));
+		m.addAttribute("thongBaoChuaXem","("+ thongBaoDao.demThongBaoChuaXem(sdt)+")");
 
 		return "index";
 	}
@@ -324,8 +324,20 @@ public class IndexController {
 		String sdt = session.get("sdt");
 		// lấy danh sách thông báo
 		List<Object> thongBao = thongBaoDao.timDanhSachThongBao(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
-
 		return thongBao;
 	}
+	
+	@ResponseBody
+	@PostMapping("danhDauDaDoc")
+	public void danhDauDaDoc(Model m) {
+		String sdt = session.get("sdt");
+		List<ThongBao> thongBao = thongBaoDao.timThongBaoChuaDoc(sdt, false);
+		
+		for(ThongBao tb : thongBao) {
+			tb.setTrangThai(true);
+			thongBaoDao.saveAndFlush(tb);
+		}
+	}
+	
 
 }

@@ -275,8 +275,11 @@ $("#soLuongThongBao").append('('+dataLength+')');
         console.log(error); // Handle the error response here
     }
 });
-
 }
+
+
+
+
 
 
 

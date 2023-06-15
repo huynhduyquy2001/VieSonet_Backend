@@ -118,6 +118,10 @@ public class ProfileController {
                 }
             }
         }
+     // lấy danh sách thông báo
+     		List<ThongBao> thongBao = thongBaoDao.findByUser(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
+     		m.addAttribute("thongBao", thongBao);
+     		m.addAttribute("thongBaoChuaXem","("+ thongBaoDao.demThongBaoChuaXem(sdt)+")");
         List<BanBe> listBb = banBeDao.findFriendByUserphone(sdt);
 		//Nào có đăng nhập thì đổi
 		if (nguoiDung != null) {
@@ -163,10 +167,7 @@ public class ProfileController {
 				topKetBan.add(danhSachKetBan1.get(i));
 			}
 			m.addAttribute("topKetBan", topKetBan);
-			// lấy danh sách thông báo
-			List<ThongBao> thongBao = thongBaoDao.findByUser(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
-			m.addAttribute("thongBao", thongBao);
-			m.addAttribute("thongBaoChuaXem", thongBaoDao.demThongBaoChuaXem(sdt));
+			
 //			System.out.println(topKetBan.size());
 			
 		}
@@ -450,7 +451,10 @@ public class ProfileController {
         List<BanBe> listBb = banBeDao.findFriendByUserphone(sdtLa);
         List<BaiViet> listBv = baiVietDao.findBySdt(sdtLa, sort);
         List<BanBe> listbb = banBeDao.findFriends(sdtLa);
-        
+     // lấy danh sách thông báo
+ 		List<ThongBao> thongBao = thongBaoDao.findByUser(sdtLa, Sort.by(Direction.DESC, "ngayThongBao"));
+ 		m.addAttribute("thongBao", thongBao);
+ 		m.addAttribute("thongBaoChuaXem","("+ thongBaoDao.demThongBaoChuaXem(sdtLa)+")");
         NguoiDung taiKhoan = nguoiDungDao.getById(sdtHt);
 		m.addAttribute("taiKhoan", taiKhoan);
 		// Số lượng bạn bè
@@ -600,5 +604,27 @@ public class ProfileController {
 		banBeDao.deleteById(String.valueOf(mbb));
 		return "redirect:/nguoiDung/" + nguoiDung;
 	}
+	
+	@ResponseBody
+	@GetMapping("/hienBaiViet/{maBaiViet}")
+	public Object hienBaiViet(@PathVariable("maBaiViet") int maBaiViet) {
+	    Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
+	    return baiViet;
+	}
+	@PostMapping("chinhSuaBaiViet/{maBaiViet}")
+	public String chinhSuaBaiViet(@PathVariable("maBaiViet") int maBaiViet, @RequestParam("photo_file_fix") MultipartFile photofile, @RequestParam("cheDoCuaToi") int cheDoCuaToi) {
+		BaiViet baiViet = baiVietDao.getById(maBaiViet);
+
+		baiViet.setCheDo(cheDoDao.getById(cheDoCuaToi));
+		if (photofile.isEmpty())
+			baiViet.setHinhAnh(baiViet.getHinhAnh());
+		else {
+			baiViet.setHinhAnh(photofile.getOriginalFilename());
+		}
+		baiVietDao.saveAndFlush(baiViet);
+		
+		return"redirect:/profile";
+	}
+
 	
 }

@@ -118,46 +118,50 @@
 									class="fa-solid fa-magnifying-glass"></i></small></a></li> &nbsp;&nbsp;
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-							href="#" role="button" aria-haspopup="true" aria-expanded="false"><i
-								class="fa-regular fa-bell"></i> <span id="soLuongThongBao">(${thongBaoChuaXem})</span></a>
+							onclick="danhDauDaDoc(); return false;" role="button"
+							aria-haspopup="true" aria-expanded="false"> <i
+								class="fa-regular fa-bell"></i> <span id="soLuongThongBao">${thongBaoChuaXem}</span>
+						</a>
 							<div class="dropdown-menu" id="danhSachThongBao"
 								style="overflow: hidden; max-height: 60vh; overflow-y: scroll; left: -100px">
+								<c:if test="${empty thongBao}"> <small>Bạn chưa có thông báo nào!</small> </c:if>
+
 								<c:forEach items="${thongBao}" var="item">
 									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
 										<div class="user-profile"
-											style="width: 250px; padding-left: 3%;">
-											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
+											style="width: 250px; padding-left: 3%; padding-right: 5px;${!item.trangThai ? 'background-color: #EBE9E7;' : ''}">
+											<img src="images/${item.baiViet.nguoiDung.anhDaiDien}" alt="">
 											<div>
 												<p style="font-size: 13px">${item.noiDung}</p>
 												<div style="justify-content: space-between; display: flex;">
 													<small style="font-size: 11px"> <script
 															type="text/javascript">
-                            var currentTime = new Date();
-                            var activityTime = new Date('${item.ngayThongBao}');
-                            var timeDiff = currentTime.getTime() - activityTime.getTime();
-                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-                            var monthsDiff = Math.floor(daysDiff / 30);
-                            var yearsDiff = Math.floor(monthsDiff / 12);
+                                                        var currentTime = new Date();
+                                                        var activityTime = new Date('${item.ngayThongBao}');
+                                                        var timeDiff = currentTime.getTime() - activityTime.getTime();
+                                                        var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                                                        var monthsDiff = Math.floor(daysDiff / 30);
+                                                        var yearsDiff = Math.floor(monthsDiff / 12);
 
-                            if (daysDiff < 1) {
-                                document.write('1 ngày trước');
-                            } else if (monthsDiff < 1) {
-                                document.write(daysDiff + ' ngày trước');
-                            } else if (yearsDiff < 1) {
-                                document.write(monthsDiff + ' tháng trước');
-                            } else {
-                                document.write('<fmt:formatDate value="${item.ngayThongBao}"
-										pattern="dd-MM-yyyy HH:mm" />');
-                            }
-                        </script>
-													</small> <small style="font-size: 12px"><a
+                                                        if (daysDiff < 1) {
+                                                            document.write('1 ngày trước');
+                                                        } else if (monthsDiff < 1) {
+                                                            document.write(daysDiff + ' ngày trước');
+                                                        } else if (yearsDiff < 1) {
+                                                            document.write(monthsDiff + ' tháng trước');
+                                                        } else {
+                                                            document.write('<fmt:formatDate value="${item.ngayThongBao}" pattern="dd-MM-yyyy HH:mm" />');
+                                                        }
+                                                    </script>
+													</small> <small style="font-size: 12px"> <a
 														style="cursor: pointer;"
-														onclick="xoaThongBao(${item.maThongBao})">x</a></small>
+														onclick="xoaThongBao(${item.maThongBao})">x</a>
+													</small>
 												</div>
 											</div>
 										</div>
-
 									</a>
+									<hr style="opacity: 0.05; margin: 0">
 								</c:forEach>
 							</div></li>
 						<li class="nav-item dropdown"><a
@@ -172,20 +176,18 @@
 								<a class="dropdown-item" href="/profile"> <small>Xem
 										trang cá nhân</small></a> <a class="dropdown-item" href="/DanhSachBanBe">
 									<small>Danh sách bạn bè</small>
-								</a> <a class="dropdown-item" href="/GoiYKB"> <small>Lời
-										mời kết bạn</small></a>
+								</a> <a class="dropdown-item" href="/GoiYKB"> <small>Gợi
+										ý kết bạn</small></a>
 								<c:if test="${sessionScope.vt == 2 || sessionScope.vt == 3}">
 									<!-- Nội dung chỉ hiển thị khi có vai trò 'admin' -->
 									<a class="dropdown-item" href="/quanly/quanLyBaiViet"> <small>Quản
 											lý</small></a>
 								</c:if>
-
 								<a class="dropdown-item" href="/doimatkhau"> <small>Đổi
 										mật khẩu</small></a> <a class="dropdown-item" href="/dieukhoan"> <small>Điều
 										khoản</small></a> <a class="dropdown-item" href="/dangxuat"> <small>Đăng
 										xuất</small></a>
 							</div></li>
-
 					</ul>
 				</div>
 			</div>
@@ -797,6 +799,65 @@
 		</div>
 	</div>
 
+<!-- Modal chỉnh sửa bài viết -->
+	<div class="modal fade" id="modalChinhSua" aria-hidden="true"
+		aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content"
+				style="background-color: rgba(246, 245, 244, 1);">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalToggleLabel">
+						<b style="margin-left: 170px;">Chỉnh sửa bài viết</b>
+					</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<form method="post" enctype="multipart/form-data">
+					<div class="modal-body">
+						<div class="user-profile">
+							<img id="avtCuaToi" src="" alt="">
+							<div>
+								<label id="tenCuaToi"></label> <small style="font-size: 12px">
+									<div>
+										<select id="cheDoCuaToi" name="cheDoCuaToi"
+											style="border: none; background-color: transparent;">
+											<option selected value="1">Công khai</option>
+											<option value="2">Bạn bè</option>
+											<option value="3">Chỉ mình tôi</option>
+										</select>
+									</div>
+								</small>
+							</div>
+						</div>
+
+						<br>
+						<textarea id="moTaCuaToi" name="moTaCuaToi"
+							placeholder="Bạn muốn đăng gì?" id="" cols="30" rows="3"
+							style="width: 100%; border: 0px; outline: none; border-bottom: 1px solid #ccc; background: transparent; resize: none;"></textarea>
+
+						<br>
+						<center>
+							<img id="hinhAnhCuaToi" name="hinhAnhCuaToi" src="" width="45%"
+								style="border-radius: 10px; border: 1px solid rgb(184, 182, 182)">
+						</center>
+					</div>
+					<div class="modal-footer">
+						<div class="input-group mb-3">
+							<label class="input-group-text" for="inputGroupFile01"> <i
+								class="fa-regular fa-image"></i>Hình ảnh
+							</label> <input type="file" class="form-control" name="photo_file_fix"
+								id="inputMyGroupFile">
+						</div>
+
+						<button id="chinhSuaBaiViet"
+							style="width: 500px; background-color: #5A4F48; border: none;"
+							class="btn btn-primary" data-bs-target="#exampleModalToggle2"
+							data-bs-toggle="modal" data-bs-dismiss="modal">Chỉnh sửa</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 	<div class="modal fade" id="baiVietChiTiet" tabindex="-1" role="dialog"
 		aria-labelledby="modalTitleId" aria-hidden="true">
