@@ -212,6 +212,7 @@
                             <li><i class="fa-regular fa-heart"></i> <b>Mối quan hệ:</b> ${nguoiDung.moiQuanHe}</li>
                             <li><b><i class="fa-regular fa-envelope"></i> Email:</b> ${nguoiDung.email}</li>
                             <li><b><i class="fa-regular fa-registered"></i> Ngày tham gia:</b> ${nguoiDung.ngayTao}</li>
+
                             <li><b><i class="fa-light fa-user-group"></i> Danh sách bạn bè:</b> ${SlBanbe}</li>
                         </ul>
                        </small>
@@ -392,9 +393,7 @@
                                 <div>
                                     <label>${nguoiDung.hoTen}</label>
                                     <br>
-                                    <small>
-                                        Công khai <i class="fas fa-caret-down"></i>
-                                    </small>
+                                    
                                     
                                 </div>
                             </div>
@@ -404,7 +403,7 @@
                                     placeholder="Bạn muốn đăng gì?" id="" cols="30" rows="1"></textarea>
                                 <div class="add-post-links">
                                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
-                                        <a href="#"><i class="fa-regular fa-image"></i> Photo/Video</a>
+                                        <a href="#"><i class="fa-regular fa-image"></i> Hình Ảnh</a>
                                     </button>
                                 </div>
     
@@ -460,7 +459,7 @@
                     <center>
                         <div><i class="fa-sharp fa-solid fa-bomb"></i>
              				<br> 
-                            <textarea class="text-center" data-bs-toggle="modal" href="#exampleModalToggle" name=""
+                            <textarea class="text-center" data-bs-toggle="modal" href="#modalId" name=""
                             placeholder="Bạn muốn đăng gì?" id="" cols="60" rows="3" 
                             style="border: none;background: transparent; resize: none;" >${nguoiDung.gioiThieu}</textarea>           
                         </div>
