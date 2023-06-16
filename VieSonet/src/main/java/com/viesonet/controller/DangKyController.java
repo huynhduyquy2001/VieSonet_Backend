@@ -44,7 +44,6 @@ public class DangKyController {
 					}
 					item.setVaiTro(vTDao.getById(1));
 					item.setTrangThai(true);
-					item.setSoLuongBanBe(0);
 					item.setLuotViPham(0);
 					item.setAnhBia("anhBia.jpg");
 					dao.save(item);

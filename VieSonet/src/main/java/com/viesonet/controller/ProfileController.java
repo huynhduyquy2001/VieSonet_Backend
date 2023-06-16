@@ -305,44 +305,6 @@ public class ProfileController {
 		
 	}
 	
-//	//Đăng xuất
-//	@GetMapping("/dangxuat")
-//	public String dangXuat() {
-//		session.remove("sdt");
-//		session.remove("vt");
-//		return "redirect:/dangnhap";
-//	}
-	
-	//Cập nhật thông tin bài viết
-//		@PostMapping("/baiviet/update/{maBaiViet}")
-//		@ResponseBody
-//		public String chinhSuaBV(Model m,@RequestParam("photo_file") MultipartFile photofile,@RequestParam("moTaBaiDang") String moTaBaiDang,@PathVariable int maBaiViet) {
-//			String sdt = session.get("sdt");
-//			BaiViet baiDang = baiVietDao.getById(maBaiViet);
-//			// Lấy ngày và giờ hiện tại
-//			Calendar cal = Calendar.getInstance();
-//			Date ngayGioDang = cal.getTime();
-//			//Lấy thông tin từ input
-//			
-//			System.out.println("Ma BV: "+baiDang.getMaBaiViet());
-//			int cheDo = param.getInt("cheDo", 1);
-//			baiDang.setMoTa(moTaBaiDang);
-//			baiDang.setCheDo(cheDoDao.getById(cheDo));
-//			baiDang.setNguoiDung(nguoiDungDao.getById(sdt));
-//			if (photofile.isEmpty())
-//				baiDang.setHinhAnh("");
-//			else {
-//				baiDang.setHinhAnh(photofile.getOriginalFilename());
-//			}
-//			if (baiDang.getMoTa().equals("") && baiDang.getHinhAnh().equals("")) {
-//
-//			} else {
-//				baiVietDao.saveAndFlush(baiDang);
-//			}
-//			return "redirect:/profile";
-//			
-//		}
-	
 	@GetMapping("/baiviet/view/{maBaiViet}")
 	@ResponseBody
 	public BinhLuanResponse xemBaiVietChiTiet(@PathVariable int maBaiViet) {
@@ -612,9 +574,9 @@ public class ProfileController {
 	    return baiViet;
 	}
 	@PostMapping("chinhSuaBaiViet/{maBaiViet}")
-	public String chinhSuaBaiViet(@PathVariable("maBaiViet") int maBaiViet, @RequestParam("photo_file_fix") MultipartFile photofile, @RequestParam("cheDoCuaToi") int cheDoCuaToi) {
+	public String chinhSuaBaiViet(@PathVariable("maBaiViet") int maBaiViet, @RequestParam("photo_file_fix") MultipartFile photofile, @RequestParam("cheDoCuaToi") int cheDoCuaToi, @RequestParam("moTaCuaToi") String moTa) {
 		BaiViet baiViet = baiVietDao.getById(maBaiViet);
-
+		baiViet.setMoTa(moTa);
 		baiViet.setCheDo(cheDoDao.getById(cheDoCuaToi));
 		if (photofile.isEmpty())
 			baiViet.setHinhAnh(baiViet.getHinhAnh());

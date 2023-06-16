@@ -154,17 +154,40 @@
 				</div>
 				<div class="row">
 					<div style="display: flex; justify-content: space-between;">
-						&nbsp; <small><small style="color: #F27323;">Xem
-								tất cả>></small></small>
+						
 					</div>
 					<c:forEach items="${topKetBan}" var="topKb">
 						<div>
 							<div class="user-profile">
-								<a href="#"><img src="images/${topKb.nguoiLa.anhDaiDien}"
+								<a href="#"><img src="images/${topKb.nguoiDung.anhDaiDien}"
 									class="img-thumbnail" alt=""></a>
 								<div>
-									<label class="nhan"
-										style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiLa.hoTen}</label>
+									<label 
+										style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiDung.hoTen} | 
+										
+										<small style="color: #333; font-size: 10px"> <script type="text/javascript">
+                            var currentTime = new Date();
+                            var activityTime = new Date('${topKb.ngayGui}');
+                            var timeDiff = currentTime.getTime() - activityTime.getTime();
+                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                            var monthsDiff = Math.floor(daysDiff / 30);
+                            var yearsDiff = Math.floor(monthsDiff / 12);
+
+                            if (daysDiff === 0) {
+                                document.write('Hôm nay');
+                            } else if (daysDiff < 1) {
+                                document.write('1 ngày trước');
+                            } else if (monthsDiff < 1) {
+                                document.write(daysDiff + ' ngày trước');
+                            } else if (yearsDiff < 1) {
+                                document.write(monthsDiff + ' tháng trước');
+                            } else {
+                                document.write('<fmt:formatDate value="${topKb.ngayGui}" pattern="dd-MM-yyyy HH:mm" />');
+                            }
+                        </script></small>
+										
+										</label>
+										<small></small>
 									<small style="display: flex;"> <a class="dropdown-item"
 										href="GoiYKB/dongy/${topKb.maLoiMoi}"
 										style="background-color: rgba(234, 229, 224, 0.8); border-color: rgba(90, 79, 72, 1); font-size: small;">

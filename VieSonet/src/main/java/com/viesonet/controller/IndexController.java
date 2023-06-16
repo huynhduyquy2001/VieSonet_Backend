@@ -2,6 +2,7 @@ package com.viesonet.controller;
 
 import java.io.File;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -47,10 +48,12 @@ import com.viesonet.entity.DanhSachYeuThich;
 import com.viesonet.entity.LoaiViPham;
 import com.viesonet.entity.NguoiDung;
 import com.viesonet.entity.ThongBao;
+import com.viesonet.service.ImageService;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
 
 import jakarta.servlet.ServletContext;
+import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 public class IndexController {
@@ -171,19 +174,37 @@ public class IndexController {
 	@PostMapping("index/dangbai")
 	@ResponseBody
 	public String dangBai(@RequestParam("photo_file") MultipartFile photofile) {
-		// đăng bài viết
 		BaiViet baiDang = new BaiViet();
 		if (photofile.isEmpty()) {
-			baiDang.setHinhAnh("");
+		    baiDang.setHinhAnh("");
 		} else {
-			String pathUpload = context.getRealPath("/images/"+photofile.getOriginalFilename());
-			try {
-				photofile.transferTo(new File(pathUpload));				
-			} catch (Exception e) {
-				
-			}
-			baiDang.setHinhAnh(photofile.getOriginalFilename());
+		    String originalFileName = photofile.getOriginalFilename();
+		    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+		    String newFileName = originalFileName + "-" + LocalDate.now().toString().replace("-", "") + extension;
+		    String pathUpload = context.getRealPath("/images/" + newFileName);
+		    
+		    try {
+		        photofile.transferTo(new File(pathUpload));
+
+		        long fileSize = photofile.getSize();
+		        if (fileSize > 1 * 1024 * 1024) { // Kiểm tra nếu kích thước vượt quá 1MB
+		            double quality = 0.6; // Chất lượng ảnh sau khi giảm dung lượng (0-1)
+		            String outputPath = pathUpload; // Đường dẫn đầu ra cho ảnh sau khi giảm dung lượng
+		            Thumbnails.of(pathUpload)
+		                .scale(1.0)
+		                .outputQuality(quality)
+		                .toFile(outputPath);
+		        }
+
+		        baiDang.setHinhAnh(newFileName);
+
+		        // Xử lý và lưu thông tin bài viết kèm ảnh vào cơ sở dữ liệu
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
 		}
+
 		String sdt = session.get("sdt");
 		int cheDo = paramService.getInt("cheDo", 1);
 		baiDang.setMoTa(paramService.getString("moTaBaiDang", ""));

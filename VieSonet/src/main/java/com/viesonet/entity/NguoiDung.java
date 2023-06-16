@@ -43,7 +43,6 @@ public class NguoiDung {
 	private String anhBia;
 	private Boolean trangThai;
 	private Integer luotViPham;
-	private Integer soLuongBanBe;
 
 	
 	@Temporal(TemporalType.TIMESTAMP)

@@ -190,7 +190,7 @@
         <div class="video-overlay">
         </div>
         <img src="/images/${nguoiDung.anhBia}" alt="" class="img-thumbnail"
-            style="max-height: 300px; width: 100%; object-fit: cover; overflow: hidden; z-index: -10; ">
+            style="max-height: 300px; width: 100%; object-fit: cover; overflow: hidden; z-index: -10; padding: 0;">
         <div class="col-md-5 " style=" position: absolute; transform: translateY(-50%); top: 50%; left: 20px;">
             <div class="row">
             
@@ -375,7 +375,7 @@
     </script>
     <div class="container">
         	<!-- Chỉnh giao diện bài đăng -->
-            <div class="col-md-10 offset-md-1">
+            <div class="col-md-6 offset-md-3">
                 <div style=" box-sizing: border-box; margin: 1%; padding: 3%; margin-top: 10px;">
                     <center>
                         <div>

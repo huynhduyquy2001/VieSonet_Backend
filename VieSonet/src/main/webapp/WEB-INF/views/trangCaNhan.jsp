@@ -196,7 +196,7 @@
 	<div class="row" style="margin-top: 10px; position: relative;">
 		<div class="video-overlay"></div>
 		<img src="images/${nguoiDung.anhBia}" alt="" class="img-thumbnail"
-			style="max-height: 300px; width: 100%; object-fit: cover; overflow: hidden; z-index: -10;">
+			style="max-height: 300px; width: 100%; object-fit: cover; overflow: hidden; z-index: -10; padding: 0">
 		<div class="col-md-5 "
 			style="position: absolute; transform: translateY(-50%); top: 50%; left: 20px;">
 			<div class="row">

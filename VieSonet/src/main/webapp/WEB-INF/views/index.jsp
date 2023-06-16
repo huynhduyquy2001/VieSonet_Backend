@@ -93,7 +93,9 @@ div.dropdown-menu.baoCao {
 						</a>
 							<div class="dropdown-menu" id="danhSachThongBao"
 								style="overflow: hidden; max-height: 60vh; overflow-y: scroll; left: -100px">
-								<c:if test="${empty thongBao}"> <small>Bạn chưa có thông báo nào!</small> </c:if>
+								<c:if test="${empty thongBao}">
+									<small>Bạn chưa có thông báo nào!</small>
+								</c:if>
 
 								<c:forEach items="${thongBao}" var="item">
 									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
@@ -177,7 +179,7 @@ div.dropdown-menu.baoCao {
 								<a href="/profile"><img src="images/${taiKhoan.anhDaiDien}"
 									alt=""></a>
 								<div>
-									<label for="">${taiKhoan.hoTen}</label> 
+									<label for="">${taiKhoan.hoTen}</label>
 								</div>
 							</div>
 							<div class="post-upload-textarea">
@@ -291,7 +293,6 @@ div.dropdown-menu.baoCao {
 
 								<div class="post-reaction" style="padding-left: 10px">
 									<div class="activity-icons">
-
 										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
 											class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
 											<i class="fa-duotone fa-heart"></i> &nbsp; <span
@@ -335,7 +336,7 @@ div.dropdown-menu.baoCao {
 								<c:forEach items="${topKetBan}" var="topKb">
 									<div>
 										<div class="user-profile">
-											<a href="/nguoiDung/${topKb.nguoiDung.sdt} }"><img
+											<a href="/nguoiDung/${topKb.nguoiDung.sdt}"><img
 												src="images/${topKb.nguoiDung.anhDaiDien}"
 												class="img-thumbnail" alt=""></a>
 											<div>
