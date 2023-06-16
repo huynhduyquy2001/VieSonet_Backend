@@ -3,14 +3,19 @@ package com.viesonet.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +34,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.viesonet.dao.BaiVietDAO;
-
 import com.viesonet.dao.BanBeDAO;
 import com.viesonet.dao.CheDoDAO;
 import com.viesonet.dao.DanhSachBinhLuanDAO;
 import com.viesonet.dao.DanhSachKetBanDAO;
 import com.viesonet.dao.DanhSachYeuThichDAO;
 import com.viesonet.dao.NguoiDungDAO;
-import com.viesonet.dao.ThongBaoDAO;
 import com.viesonet.entity.BaiViet;
 import com.viesonet.entity.BanBe;
 import com.viesonet.entity.BinhLuanResponse;
@@ -45,7 +48,6 @@ import com.viesonet.entity.DanhSachBinhLuan;
 import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.DanhSachYeuThich;
 import com.viesonet.entity.NguoiDung;
-import com.viesonet.entity.ThongBao;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
 
@@ -91,8 +93,6 @@ public class ProfileController {
 	@Autowired
 	HttpServletResponse resp;
 	
-	@Autowired
-	ThongBaoDAO thongBaoDao;
 	@RequestMapping("/profile")
 	public String index(Model m, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -118,10 +118,6 @@ public class ProfileController {
                 }
             }
         }
-     // lấy danh sách thông báo
-     		List<ThongBao> thongBao = thongBaoDao.findByUser(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
-     		m.addAttribute("thongBao", thongBao);
-     		m.addAttribute("thongBaoChuaXem","("+ thongBaoDao.demThongBaoChuaXem(sdt)+")");
         List<BanBe> listBb = banBeDao.findFriendByUserphone(sdt);
 		//Nào có đăng nhập thì đổi
 		if (nguoiDung != null) {
@@ -138,6 +134,14 @@ public class ProfileController {
 				Boolean trangThaiBv = bv.getTrangThai();
 				if(trangThaiBv) {
 					danhSachBaiVietCty.add(bv); 
+					// Lấy danh sách bài viết đã thích
+					Set<Integer> maBaiVietDaThich = new HashSet<>();
+					List<DanhSachYeuThich> dsyt = dsytDao.findBySdt(sdt);
+					for (DanhSachYeuThich ds : dsyt) {
+						int maBaiViet = ds.getBaiViet().getMaBaiViet();
+						maBaiVietDaThich.add(maBaiViet);
+					}
+					m.addAttribute("maBaiVietDaThich", maBaiVietDaThich);
 				} else {
 					danhSachBaiVietCty.remove(bv); 
 				}	
@@ -149,6 +153,7 @@ public class ProfileController {
 			
 			
 //			m.addAttribute("BaiVietCaNhan", baiVietDao.findBySdt(sdt, sort));
+//			String gioiTinhText = gioiTinh ? "Nam" : "Nữ";
 			m.addAttribute("nguoiDung", nguoiDungDao.findBySoDienThoai(sdt));
 			
 			List<BanBe> topBanBe = new ArrayList<>();
@@ -167,7 +172,6 @@ public class ProfileController {
 				topKetBan.add(danhSachKetBan1.get(i));
 			}
 			m.addAttribute("topKetBan", topKetBan);
-			
 //			System.out.println(topKetBan.size());
 			
 		}
@@ -178,7 +182,7 @@ public class ProfileController {
 	
 	//Đăng bài viết
 	@PostMapping("/profile/dangbai")
-	public String dangBai( @RequestParam("photo_file") MultipartFile photofile,@RequestParam("cheDo") int selectedValue ,Model m) throws IllegalStateException, IOException {
+	public String dangBai( @RequestParam("photo_file1") MultipartFile photofile,@RequestParam("cheDo") int selectedValue ,Model m) throws IllegalStateException, IOException {
 		BaiViet baiDang = new BaiViet();
 		Random rand = new Random();
         int[] numbers = new int[9];
@@ -282,7 +286,7 @@ public class ProfileController {
 	 	    File uploadedFile = new File(req.getSession().getServletContext().getRealPath(path)); // tạo đối tượng File mới dựa trên đường dẫn filePath
 	        String filename = str + "_" + photofile.getOriginalFilename(); // lấy tên file	
 	        photofile.transferTo(uploadedFile); // sao chép file hình ảnh đến thư mục images  
-	 	    add.setAnhDaiDien(filename); // cập nhật đường dẫn tương đối đến file hình ảnh trong trường anhDaiDien của đối tượng NguoiDung
+	 	    add.setAnhBia(filename); // cập nhật đường dẫn tương đối đến file hình ảnh trong trường anhDaiDien của đối tượng NguoiDung
 	            nguoiDungDao.saveAndFlush(add);    
 	    }
 	    return "redirect:/profile";
@@ -290,19 +294,40 @@ public class ProfileController {
 	
 	//Cập nhật thông tin người dùng
 	@PostMapping("/profile/update")
-	public String chinhSuaTT(Model m,@ModelAttribute("nguoiDung") NguoiDung nguoiDung) {
+	public String chinhSuaTT(Model m,@ModelAttribute("nguoiDung") NguoiDung nguoiDung){
 		NguoiDung thongTin = new NguoiDung();
 		String sdt = session.get("sdt");
-
 		NguoiDung nguoiDungHienTai = nguoiDungDao.findBySdt(sdt);
 		nguoiDungHienTai.setHoTen(nguoiDung.getHoTen());
 	    nguoiDungHienTai.setEmail(nguoiDung.getEmail());
 	    nguoiDungHienTai.setMoiQuanHe(nguoiDung.getMoiQuanHe());
 	    nguoiDungHienTai.setDiaChi(nguoiDung.getDiaChi());
+	    nguoiDungHienTai.setGioiTinh(nguoiDung.getGioiTinh());
 	    nguoiDungHienTai.setGioiThieu(nguoiDung.getGioiThieu());
 		nguoiDungDao.saveAndFlush(nguoiDungHienTai);
 		return "redirect:/profile";
 		
+	}
+	
+	@ResponseBody
+	@GetMapping("/hienBaiViet/{maBaiViet}")
+	public Object hienBaiViet(@PathVariable("maBaiViet") int maBaiViet) {
+	    Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
+	    return baiViet;
+	}
+	@PostMapping("chinhSuaBaiViet/{maBaiViet}")
+	public String chinhSuaBaiViet(@PathVariable("maBaiViet") int maBaiViet, @RequestParam("photo_file_fix") MultipartFile photofile, @RequestParam("cheDoCuaToi") int cheDoCuaToi) {
+		BaiViet baiViet = baiVietDao.getById(maBaiViet);
+
+		baiViet.setCheDo(cheDoDao.getById(cheDoCuaToi));
+		if (photofile.isEmpty())
+			baiViet.setHinhAnh(baiViet.getHinhAnh());
+		else {
+			baiViet.setHinhAnh(photofile.getOriginalFilename());
+		}
+		baiVietDao.saveAndFlush(baiViet);
+		
+		return"redirect:/profile";
 	}
 	
 	@GetMapping("/baiviet/view/{maBaiViet}")
@@ -311,20 +336,29 @@ public class ProfileController {
 		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
 		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet, Sort.by(Direction.DESC, "ngayBinhLuan"));
 		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
-	}	
+	}
 	
 	@PostMapping("/profile/thembinhluan/{maBaiViet}")
 	@ResponseBody
 	public String themBinhLuan(@PathVariable int maBaiViet, @RequestParam("binhLuanCuaToi") String binhLuan) {
-	    // Xử lý logic thêm bình luận
-	    String sdt = session.get("sdt");
-	    DanhSachBinhLuan entity = new DanhSachBinhLuan();
-	    entity.setBaiViet(baiVietDao.getById(maBaiViet));
-	    entity.setChiTiet(binhLuan);
-	    entity.setNgayBinhLuan(new Date());
-	    entity.setNguoiDung(nguoiDungDao.getById(sdt));
-	    dsblDao.saveAndFlush(entity);
-	    return "ok";
+		
+		if (binhLuan.equals("")) {
+			return "";
+		}
+		// Xử lý logic thêm bình luận
+		String sdt = session.get("sdt");
+		DanhSachBinhLuan entity = new DanhSachBinhLuan();
+		entity.setBaiViet(baiVietDao.getById(maBaiViet));
+		entity.setChiTiet(binhLuan);
+		entity.setNgayBinhLuan(new Date());
+		entity.setNguoiDung(nguoiDungDao.getById(sdt));
+
+		BaiViet obj = baiVietDao.getById(maBaiViet);
+		obj.setLuotBinhLuan(obj.getLuotBinhLuan()+1);
+		baiVietDao.saveAndFlush(obj);
+		
+		dsblDao.saveAndFlush(entity);
+		return "ok";
 	}
 	
 	@GetMapping("/profile/binhluan/{maBaiViet}")
@@ -335,12 +369,25 @@ public class ProfileController {
 		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
 	}
 	
+//	// Lấy danh sách bài viết đã thích
+//	Set<Integer> maBaiVietDaThich = new HashSet<>();
+//	List<DanhSachYeuThich> dsyt = dsytDao.findBySdt(sdt);
+//	for (DanhSachYeuThich ds : dsyt) {
+//		int maBaiViet = ds.getBaiViet().getMaBaiViet();
+//		maBaiVietDaThich.add(maBaiViet);
+//	}
+//	m.addAttribute("maBaiVietDaThich", maBaiVietDaThich);
+	
 	@GetMapping("/profile/xoabinhluan/{maBaiViet}/{maBinhLuan}")
 	@ResponseBody
 	public BinhLuanResponse xoaBinhLuanCN(@PathVariable int maBaiViet,@PathVariable int maBinhLuan) {
 		dsblDao.deleteById(maBinhLuan);
 		Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
 		List<Object> danhSachBinhLuan = dsblDao.findBinhLuanByMaBaiViet(maBaiViet, Sort.by(Direction.DESC, "ngayBinhLuan"));
+		
+		BaiViet obj = baiVietDao.getById(maBaiViet);
+		obj.setLuotBinhLuan(obj.getLuotBinhLuan()-1);
+		baiVietDao.saveAndFlush(obj);
 		return new BinhLuanResponse(baiViet, danhSachBinhLuan);
 	}
 	
@@ -359,20 +406,29 @@ public class ProfileController {
 	}
 	
 	@GetMapping("profile/thich/{maBaiViet}")
-	@ResponseBody
 	public void thichBaiViet(@PathVariable int maBaiViet) {
 		String sdt = session.get("sdt");
 		DanhSachYeuThich baiVietYeuThich = dsytDao.findByKey(sdt, maBaiViet);
-		if(baiVietYeuThich == null) {
+		if (baiVietYeuThich == null) {
 			baiVietYeuThich = new DanhSachYeuThich();
 			baiVietYeuThich.setNgayYeuThich(new Date());
 			baiVietYeuThich.setBaiViet(baiVietDao.getById(maBaiViet));
 			baiVietYeuThich.setNguoiDung(nguoiDungDao.getById(sdt));
+			
+			BaiViet obj = baiVietDao.getById(maBaiViet);
+			obj.setLuotThich(obj.getLuotThich()+1);
+			baiVietDao.saveAndFlush(obj);
+			
 			dsytDao.saveAndFlush(baiVietYeuThich);
-		}else {
+		} else {
 			baiVietYeuThich.setNgayYeuThich(new Date());
 			baiVietYeuThich.setBaiViet(baiVietDao.getById(maBaiViet));
 			baiVietYeuThich.setNguoiDung(nguoiDungDao.getById(sdt));
+			
+			BaiViet obj = baiVietDao.getById(maBaiViet);
+			obj.setLuotThich(obj.getLuotThich()-1);
+			baiVietDao.saveAndFlush(obj);
+			
 			dsytDao.delete(baiVietYeuThich);
 		}
 	}
@@ -413,10 +469,7 @@ public class ProfileController {
         List<BanBe> listBb = banBeDao.findFriendByUserphone(sdtLa);
         List<BaiViet> listBv = baiVietDao.findBySdt(sdtLa, sort);
         List<BanBe> listbb = banBeDao.findFriends(sdtLa);
-     // lấy danh sách thông báo
- 		List<ThongBao> thongBao = thongBaoDao.findByUser(sdtLa, Sort.by(Direction.DESC, "ngayThongBao"));
- 		m.addAttribute("thongBao", thongBao);
- 		m.addAttribute("thongBaoChuaXem","("+ thongBaoDao.demThongBaoChuaXem(sdtLa)+")");
+        
         NguoiDung taiKhoan = nguoiDungDao.getById(sdtHt);
 		m.addAttribute("taiKhoan", taiKhoan);
 		// Số lượng bạn bè
@@ -441,6 +494,13 @@ public class ProfileController {
 					String tenCheDo = bv.getCheDo().getTenCheDo();
 					//Thích thì xem luôn mã bài viết
 					int maBaiViet = bv.getMaBaiViet();
+					Set<Integer> maBaiVietDaThich = new HashSet<>();
+					List<DanhSachYeuThich> dsyt = dsytDao.findBySdt(sdtLa);
+					for (DanhSachYeuThich ds : dsyt) {
+						int maBaiViet1 = ds.getBaiViet().getMaBaiViet();
+						maBaiVietDaThich.add(maBaiViet1);
+					}
+					m.addAttribute("maBaiVietDaThich", maBaiVietDaThich);
 					System.out.println("Chế độ bài viết "+maBaiViet+" "+tenCheDo);
 					if (tenCheDo.equals("Công khai")) {
 						//Thêm vào ArraysList tạm thời
@@ -467,6 +527,13 @@ public class ProfileController {
 				}	
 			}
 			//Hiển thị bài viết
+			Set<Integer> maBaiVietDaThich = new HashSet<>();
+			List<DanhSachYeuThich> dsyt = dsytDao.findBySdt(sdtHt);
+			for (DanhSachYeuThich ds : dsyt) {
+				int maBaiViet1 = ds.getBaiViet().getMaBaiViet();
+				maBaiVietDaThich.add(maBaiViet1);
+			}
+			m.addAttribute("maBaiVietDaThich1", maBaiVietDaThich);
 			m.addAttribute("BaiVietCaNhan", danhSachBaiVietCty);
 //			m.addAttribute("BaiVietCaNhan", baiVietDao.findBySdt(sdtLa, sort));
 			m.addAttribute("SlBanbe", listBb.size());
@@ -566,27 +633,5 @@ public class ProfileController {
 		banBeDao.deleteById(String.valueOf(mbb));
 		return "redirect:/nguoiDung/" + nguoiDung;
 	}
-	
-	@ResponseBody
-	@GetMapping("/hienBaiViet/{maBaiViet}")
-	public Object hienBaiViet(@PathVariable("maBaiViet") int maBaiViet) {
-	    Object baiViet = baiVietDao.findBaiVietByMaBaiViet(maBaiViet);
-	    return baiViet;
-	}
-	@PostMapping("chinhSuaBaiViet/{maBaiViet}")
-	public String chinhSuaBaiViet(@PathVariable("maBaiViet") int maBaiViet, @RequestParam("photo_file_fix") MultipartFile photofile, @RequestParam("cheDoCuaToi") int cheDoCuaToi, @RequestParam("moTaCuaToi") String moTa) {
-		BaiViet baiViet = baiVietDao.getById(maBaiViet);
-		baiViet.setMoTa(moTa);
-		baiViet.setCheDo(cheDoDao.getById(cheDoCuaToi));
-		if (photofile.isEmpty())
-			baiViet.setHinhAnh(baiViet.getHinhAnh());
-		else {
-			baiViet.setHinhAnh(photofile.getOriginalFilename());
-		}
-		baiVietDao.saveAndFlush(baiViet);
-		
-		return"redirect:/profile";
-	}
-
 	
 }
