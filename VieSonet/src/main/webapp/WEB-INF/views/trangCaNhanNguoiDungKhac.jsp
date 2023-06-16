@@ -697,31 +697,6 @@
         } 
     </script>
     <script>
-        var header = document.querySelector('header');
-        var lastScrollTop = 0;
-        window.addEventListener('scroll', function () {
-            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (lastScrollTop == 0) {
-                document.getElementById("container").style.marginTop = "70px";
-            }
-            if (scrollTop > lastScrollTop) {
-                header.classList.add('hidden');
-                document.getElementById("container").style.marginTop = "10px";
-                document.getElementById("tinTuc").style.top = "10px";
-                document.getElementById("danhSachBanBe").style.top = "10px";
-
-            } else if (scrollTop < lastScrollTop) {
-                header.classList.remove('hidden');
-                document.getElementById("container").style.marginTop = "70px";
-                document.getElementById("tinTuc").style.top = "70px";
-                document.getElementById("danhSachBanBe").style.top = "70px";
-            }
-            lastScrollTop = scrollTop;
-        });
-
-
-    </script>
-    <script>
         function toggleDarkMode() {
             var body = document.body;
             var header = document.querySelector('.header');
@@ -746,21 +721,7 @@
     </script>
 
     <script src="${pageContext.request.contextPath}/lazy.js"></script>
-    <script>
-        window.onscroll = function () {
-            var fixedDiv = document.getElementById("menuTrai");
-            var scrollPosition = window.scrollY;
-            var windowHeight = window.innerHeight - 300;
-            
-            // Kiểm tra vị trí cuộn của trình duyệt
-            if (scrollPosition >= windowHeight) {
-                fixedDiv.classList.add("fixed");
-            } else {
-                fixedDiv.classList.remove("fixed");
-            }
-        };
-
-    </script>
+    
 	<script src="${pageContext.request.contextPath}/loadBaiViet.js"></script>
     <script src="${pageContext.request.contextPath}/loadCommentsProfile.js"></script>
 	<script src="${pageContext.request.contextPath}/lazy.js"></script>

@@ -237,9 +237,7 @@ div.dropdown-menu.baoCao {
                                             var yearsDiff = Math.floor(monthsDiff / 12);
 											
                                             if (daysDiff === 0) {
-                                                if(minuteDiff === 0){
-                                                	document.write(seconds +  ' giây trước');
-                                                }else if(hourDiff === 0 && minuteDiff < 60){
+                                                 if(hourDiff === 0 && minuteDiff < 60){
                                                 	document.write(minuteDiff +  ' phút trước');
                                                 }
                                                 else if(minuteDiff > 60){
@@ -425,47 +423,67 @@ div.dropdown-menu.baoCao {
 											<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
 												<label for="">${banBe.nguoiDung.hoTen}</label>
 												<br>
-												<small style="font-size: 12px"> Hoạt động: <script
-														type="text/javascript">
-                            var currentTime = new Date();
-                            var activityTime = new Date('${banBe.nguoiDung.thoiGianTruyCap}');
-                            var timeDiff = currentTime.getTime() - activityTime.getTime();
-                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-                            var monthsDiff = Math.floor(daysDiff / 30);
-                            var yearsDiff = Math.floor(monthsDiff / 12);
+												<small style="font-size: 12px"> Hoạt động: <small style="font-size: 12px; color: #65676b"> <script
+													type="text/javascript">
+                                            var currentTime = new Date();
+                                            var activityTime = new Date('${banBe.nguoiDung.thoiGianTruyCap}');
+                                            var timeDiff = currentTime.getTime() - activityTime.getTime();
+                                            var seconds = Math.floor((timeDiff / 1000)%60);
+                                            var minuteDiff = Math.floor((timeDiff / 1000)/60);
+                                            var hourDiff = Math.floor(timeDiff / (1000 * 3600));
+                                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                                            var monthsDiff = Math.floor(daysDiff / 30);
+                                            var yearsDiff = Math.floor(monthsDiff / 12);
+											
+                                            if (daysDiff === 0) {
+                                                 if(hourDiff === 0 && minuteDiff < 60){
+                                                	document.write(minuteDiff +  ' phút trước');
+                                                }
+                                                else if(minuteDiff > 60){
+                                                	document.write(hourDiff +  ' giờ trước');
+                                                }
+                                            } else if (daysDiff < 1) {
+                                                document.write('1 ngày trước');
+                                            } else if (monthsDiff < 1) {
+                                                document.write(daysDiff + ' ngày trước');
+                                            } else if (yearsDiff < 1) {
+                                                document.write(monthsDiff + ' tháng trước');
+                                            }
 
-                            if (daysDiff < 1) {
-                                document.write('1 ngày trước');
-                            } else if (monthsDiff < 1) {
-                                document.write(daysDiff + ' ngày trước');
-                            } else if (yearsDiff < 1) {
-                                document.write(monthsDiff + ' tháng trước');
-                            } else {
-                                document.write(yearsDiff + ' năm trước');
-                            }
                         </script>
+											</small>
 												</small>
 											</c:if>
 											<c:if test="${banBe.banBe.sdt != sessionScope.sdt}">
 												<label for="">${banBe.banBe.hoTen}</label>
 												<br>
 												<small style="font-size: 12px"> Hoạt động: <script
-														type="text/javascript">
-                            var currentTime = new Date();
-                            var activityTime = new Date('${banBe.banBe.thoiGianTruyCap}');
-                            var timeDiff = currentTime.getTime() - activityTime.getTime();
-                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-                            var monthsDiff = Math.floor(daysDiff / 30);
-                            var yearsDiff = Math.floor(monthsDiff / 12);
-                            if (daysDiff < 1) {
-                                document.write('1 ngày trước');
-                            } else if (monthsDiff < 1) {
-                                document.write(daysDiff + ' ngày trước');
-                            } else if (yearsDiff < 1) {
-                                document.write(monthsDiff + ' tháng trước');
-							} else {
-                                document.write(yearsDiff + ' năm trước');
-                            }
+													type="text/javascript">
+                                            var currentTime = new Date();
+                                            var activityTime = new Date('${banBe.banBe.thoiGianTruyCap}');
+                                            var timeDiff = currentTime.getTime() - activityTime.getTime();
+                                            var seconds = Math.floor((timeDiff / 1000)%60);
+                                            var minuteDiff = Math.floor((timeDiff / 1000)/60);
+                                            var hourDiff = Math.floor(timeDiff / (1000 * 3600));
+                                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                                            var monthsDiff = Math.floor(daysDiff / 30);
+                                            var yearsDiff = Math.floor(monthsDiff / 12);
+											
+                                            if (daysDiff === 0) {
+                                                 if(hourDiff === 0 && minuteDiff < 60){
+                                                	document.write(minuteDiff +  ' phút trước');
+                                                }
+                                                else if(minuteDiff > 60){
+                                                	document.write(hourDiff +  ' giờ trước');
+                                                }
+                                            } else if (daysDiff < 1) {
+                                                document.write('1 ngày trước');
+                                            } else if (monthsDiff < 1) {
+                                                document.write(daysDiff + ' ngày trước');
+                                            } else if (yearsDiff < 1) {
+                                                document.write(monthsDiff + ' tháng trước');
+                                            }
+
                         </script>
 												</small>
 											</c:if>
