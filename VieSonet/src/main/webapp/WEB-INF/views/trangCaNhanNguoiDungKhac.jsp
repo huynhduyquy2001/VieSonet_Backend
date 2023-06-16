@@ -374,8 +374,50 @@
                                     <div class="user-profile ">
                                         <img src="/images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
                                         <div>
-                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br> 
-                                            <small>${BaiViet.ngayDang} </small> <br>
+
+                                            <c:if test="${BaiViet.cheDo.maCheDo == 1}">
+                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> 
+                                            <i class="fa-solid fa-earth-americas fa-xs"></i>
+                                            </c:if>
+                                            <c:if test="${BaiViet.cheDo.maCheDo == 2}">
+                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> 
+                                            <i class="fa-solid fa-user-group-simple fa-xs"></i>
+                                            </c:if>
+                                            <c:if test="${BaiViet.cheDo.maCheDo == 3}">
+                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> 
+                                            <i class="fa-solid fa-user-lock fa-xs"></i>
+                                            </c:if>  <br>
+                                            <small style="font-size: 12px; color: #65676b"> <script
+													type="text/javascript">
+                                            var currentTime = new Date();
+                                            var activityTime = new Date('${BaiViet.ngayDang}');
+                                            var timeDiff = currentTime.getTime() - activityTime.getTime();
+                                            var seconds = Math.floor((timeDiff / 1000)%60);
+                                            var minuteDiff = Math.floor((timeDiff / 1000)/60);
+                                            var hourDiff = Math.floor(timeDiff / (1000 * 3600));
+                                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                                            var monthsDiff = Math.floor(daysDiff / 30);
+                                            var yearsDiff = Math.floor(monthsDiff / 12);
+											
+                                            if (daysDiff === 0) {
+                                                if(minuteDiff === 0){
+                                                	document.write(seconds +  ' giây trước');
+                                                }else if(hourDiff === 0 && minuteDiff < 60){
+                                                	document.write(minuteDiff +  ' phút trước');
+                                                }
+                                                else if(minuteDiff > 60){
+                                                	document.write(hourDiff +  ' giờ trước');
+                                                }
+                                            } else if (daysDiff < 1) {
+                                                document.write('1 ngày trước');
+                                            } else if (monthsDiff < 1) {
+                                                document.write(daysDiff + ' ngày trước');
+                                            } else if (yearsDiff < 1) {
+                                                document.write(monthsDiff + ' tháng trước');
+                                            }
+
+                        </script>
+											</small>
                                         </div>
                                     </div>
                                     
@@ -386,14 +428,12 @@
                                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                                         </span>
-                                        <div class="dropdown-menu btn-cap-nhat-bai-viet" aria-labelledby="triggerId">
-                                            <!-- href="#exampleModalToggle123" --> 
-                                            <button data-bs-toggle="modal" 
-                                           onclick="loadBaiViet(${BaiViet.maBaiViet})"
-                                            
-                style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background:transparent"><small>
-                    Chỉnh sửa bài viết</small></button>
-                                        </div>
+                                        <div class="dropdown-menu baoCao" aria-labelledby="triggerId"
+											style="transform: translate(-80%, 39px);">
+											<a class="dropdown-item" data-bs-toggle="modal" st
+												data-bs-target="#modalBaoCao"
+												onclick="toCao(${BaiViet.maBaiViet})">Báo cáo vi phạm</a>
+										</div>
                                     </div>
                                 </div>
                             </div>
@@ -410,11 +450,11 @@
 									<div class="activity-icons">
 
 										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
-											class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
+											class="${maBaiVietDaThich1.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
 											<i class="fa-duotone fa-heart"></i> &nbsp; <span
 												class="like-count">${BaiViet.luotThich}</span>
 										</div>
-										<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
+										<div  onclick="loadBinhLuan(${BaiViet.maBaiViet}, ${maBaiVietDaThich1 })">
 											<i class="fa-regular fa-comment"></i>&nbsp;
 											${BaiViet.luotBinhLuan}
 										</div>
@@ -430,7 +470,32 @@
                                 
                 
             
-    
+    <!-- Modal báo cáo -->
+	<div class="modal fade" id="modalBaoCao" tabindex="-1" role="dialog"
+		aria-labelledby="modalTitleId" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalTitleId">Nội dung tố cáo</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<select name="loaiViPham" id="viPham" class="form-control">
+						<c:forEach var="viPham" items="${danhSachViPham}">
+							<option value="${viPham.maLoai}">${viPham.chiTiet}</option>
+						</c:forEach>
+					</select>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Đóng</button>
+					<button type="button" class="btn btn-primary">Báo cáo</button>
+				</div>
+			</div>
+		</div>
+	</div>
     <!-- Modal đăng bài --> 
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true"
 		aria-labelledby="exampleModalToggleLabel" tabindex="-1">
@@ -494,68 +559,7 @@
 		</div>
 	</div>
 	
-   <!-- Modal chỉnh sửa bài viết -->
-   <!--   <div class="modal fade" id="exampleModalToggle123" aria-hidden="true"
-		aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content"
-				style="background-color: rgba(246, 245, 244, 1);">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalToggleLabel">
-						<b style="margin-left: 170px;">Chỉnh sửa bài viết</b>
-					</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<form action="/baiviet/update" method="post"
-					 enctype="multipart/form-data">
-					<div class="modal-body">
-					
-						<div class="user-profile">
-							<img src="images/${nguoiDung.anhDaiDien}" alt="">
-							<div>
-								<label>${nguoiDung.hoTen}
-									</p> <small style="font-size: 12px">
-										<div>
-											<select name="cheDo"
-												style="border: none; background-color: transparent;">
-												<option selected value="1">Công khai</option>
-												<option value="2">Bạn bè</option>
-												<option value="3">Chỉ mình tôi</option>
-											</select>
-										</div>
-								</small>
-							</div>
-						</div>
-						
-						<br>
-						<textarea  name="moTaBaiDang" placeholder="Bạn muốn đăng gì?" id=""
-							cols="30" rows="3" 
-							style="width: 100%; border: 0px; outline: none; border-bottom: 1px solid #ccc; background: transparent; resize: none;">
-							</textarea>
-						<br>
-						<center>
-							<img id="img" src="" width="45%"
-								style="border-radius: 10px; border: 1px solid rgb(184, 182, 182)">
-						</center>
-					</div>
-					<div class="modal-footer">
-						<div class="input-group mb-3">
-							<label class="input-group-text" for="inputGroupFile01"> <i
-								class="fa-regular fa-image"></i>Photo/Video
-							</label> <input type="file" class="form-control" name="photo_file"
-								id="inputGroupFile01">
-						</div>
-
-						<button
-							style="width: 500px; background-color: #5A4F48; border: none;"
-							class="btn btn-primary" data-bs-target="#exampleModalToggle2"
-							data-bs-toggle="modal" data-bs-dismiss="modal">Đăng bài</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div> -->
+   
    
    <div class="modal fade" id="baiVietChiTiet" tabindex="-1"
 		role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">

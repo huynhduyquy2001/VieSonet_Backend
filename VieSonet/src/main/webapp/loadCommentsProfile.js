@@ -1,4 +1,5 @@
-function loadBinhLuan(maBaiViet) {
+function loadBinhLuan(maBaiViet, maBaiVietDaThich) {
+	console.log(maBaiVietDaThich)
 	$.ajax({
 		url: "/profile/binhluan/" + maBaiViet,
 		type: "GET",
@@ -15,7 +16,7 @@ function loadBinhLuan(maBaiViet) {
 			var binhLuanFormHtml = "<form id='binhLuanForm'>" +
 				"<div style='display: flex; flex-direction: column;'>" +
 				"<input type='text' id='binhLuan' class='ip form-control' style='width: 80%;' placeholder='Nhận xét của bạn' name='binhLuanCuaToi' required>" +
-				"<button class='btn01' type='submit' style='background: #3B998B; color: white;' onclick='themBinhLuan(" + baiViet[8] + ")'>Bình luận</button>" +
+				"<button class='btn01' type='submit' style='background: #3B998B; color: white;' onclick='themBinhLuan(" + baiViet[8] + ","+ maBaiVietDaThich+")'>Bình luận</button>" +
 				"</div>" +
 				"</form>";
 
@@ -35,6 +36,12 @@ function loadBinhLuan(maBaiViet) {
 				$("#danhSachBinhLuan .modal-body .trai").append(binhLuanHtml);
 			});
 			// Hiển thị thông tin bài viết lên modal
+			var heart
+			if(maBaiVietDaThich[0]===baiViet[8]){
+				heart = "red-heart"
+			}else{
+				heart = "gray-heart"
+			}
 			var baiVietHtml = `
     <div class="write-post-container nenTrangChu img-thumbnail" style="margin-bottom: 20px; border-radius: 0; box-shadow: 0 0 0;">
         <div style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
@@ -65,12 +72,15 @@ function loadBinhLuan(maBaiViet) {
             </a>
             <div class="post-reaction">
                 <div class="activity-icons">
-                    <div>
-                        <i class="fa-regular fa-thumbs-up"></i> &nbsp; ${baiViet[3]}
-                    </div>
-                    <div>
-                        <i class="fa-regular fa-comment"></i>&nbsp; ${baiViet[4]}
-                    </div>
+					<div
+						class="`+heart+`">
+							<i class="fa-duotone fa-heart"></i> &nbsp; <span
+							class="like-count">${baiViet[3]}</span>
+						</div>
+						<div>
+							<i class="fa-regular fa-comment"></i>&nbsp;
+							${baiViet[4]}
+					</div>
                 </div>
             </div>
         </div>
@@ -157,13 +167,12 @@ function thichBaiViet(maBaiViet, element) {
 			// Xử lý lỗi (nếu có)
 		}
 	};
-
 	// Gửi yêu cầu
 	xhr.send();
 }
 
 
-function themBinhLuan(maBaiViet) {
+function themBinhLuan(maBaiViet, maBaiVietDaThich) {
 	$("#binhLuanForm").submit(function(event) {
 		event.preventDefault();
 	});
@@ -174,7 +183,7 @@ function themBinhLuan(maBaiViet) {
 		type: "POST",
 		data: { binhLuanCuaToi: binhLuan },
 		success: function(response) {
-			loadBinhLuan(maBaiViet);
+			loadBinhLuan(maBaiViet, maBaiVietDaThich);
 		},
 		error: function(xhr, status, error) {
 			console.error("Lỗi khi thêm bình luận: ", error);
