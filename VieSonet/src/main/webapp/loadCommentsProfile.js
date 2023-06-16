@@ -20,21 +20,77 @@ function loadBinhLuan(maBaiViet, maBaiVietDaThich) {
 				"</div>" +
 				"</form>";
 
-
-			$("#danhSachBinhLuan .modal-body .trai").append(binhLuanFormHtml);
+						$("#danhSachBinhLuan .modal-body .trai").append(binhLuanFormHtml);
 			// Hiển thị danh sách bình luận lên modal
 			danhSachBinhLuan.forEach(function(binhLuan) {
+				
+				var currentTime1 = new Date();
+		
+ 				var activityTime1 = new Date(binhLuan[3]);
+	                    var timeDiff1 = currentTime1.getTime() - activityTime1.getTime();
+	                    var seconds1 = Math.floor((timeDiff1 / 1000) % 60);
+	                    var minuteDiff1 = Math.floor(timeDiff1 / (1000 * 60));
+	                    var hourDiff1 = Math.floor(timeDiff1 / (1000 * 3600));
+	                    var daysDiff1 = Math.floor(timeDiff1 / (1000 * 3600 * 24));
+	                    var monthsDiff1 = Math.floor(daysDiff1 / 30);
+	                    var yearsDiff1 = Math.floor(monthsDiff1 / 12);
+
+	                    var timeString1 = "";
+	                    if (daysDiff1 === 0) {
+	                        if (minuteDiff1 === 0) {
+	                            timeString1 = seconds1 + " giây trước";
+	                        } else if (hourDiff1 === 0 && minuteDiff1 < 60) {
+	                            timeString1 = minuteDiff1 + " phút trước";
+	                        } else if (minuteDiff1 > 60) {
+	                            timeString1 = hourDiff1 + " giờ trước";
+	                        }
+	                    } else if (daysDiff1 < 1) {
+	                        timeString1 = "1 ngày trước";
+	                    } else if (monthsDiff1 < 1) {
+	                        timeString1 = daysDiff1 + " ngày trước";
+	                    } else if (yearsDiff1 < 1) {
+	                        timeString1 = monthsDiff1 + " tháng trước";
+	                    }
+	                    
 				var binhLuanHtml = "<div class='user-profile animate__animated animate__headShake' style='border: 1px solid #E1D4C4; box-sizing: border-box; padding: 4px; border-radius: 5px;background-color: white; margin-bottom:5px'>" +
 					"<img src='/images/" + binhLuan[1] + "' class='img-thumbnail' alt=''>" +
 					"<div>" +
 					"<div><p class='nhan' style='color: #A59565; font-size: 15px;'>" + binhLuan[0] + "</p></div>" +
-					"<small style='font-size: 12px;'><i class='fa-regular fa-comment'></i> " + binhLuan[2] + "</small>" + "<a href='#'><i class='fa-solid fa-trash-can-xmark' style='margin-left: 30px;' onclick='xoaBinhLuan(" + binhLuan[4] + "," + binhLuan[5] + ")'></i><a/> <br>" +
-					"<small style='font-size: 10px;'>" + binhLuan[3] + "</small>" +
+					"<small style='font-size: 12px;'><i class='fa-regular fa-comment'></i> " + binhLuan[2]+ "</small>" + "<a href='#'><i class='fa-solid fa-trash-can-xmark' style='margin-left: 30px;' onclick='xoaBinhLuan("+binhLuan[4]+","+binhLuan[5] +")'></i><a/> <br>" +
+					"<small style='font-size: 10px;'>" + timeString1 + "</small>" +
 					"</div>" +
 					"</div>";
 
 				$("#danhSachBinhLuan .modal-body .trai").append(binhLuanHtml);
 			});
+			// Hiển thị thông tin bài viết lên modal
+			var currentTime = new Date();
+			 
+	                    var activityTime = new Date(baiViet[2]);
+	                    var timeDiff = currentTime.getTime() - activityTime.getTime();
+	                    var seconds = Math.floor((timeDiff / 1000) % 60);
+	                    var minuteDiff = Math.floor(timeDiff / (1000 * 60));
+	                    var hourDiff = Math.floor(timeDiff / (1000 * 3600));
+	                    var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+	                    var monthsDiff = Math.floor(daysDiff / 30);
+	                    var yearsDiff = Math.floor(monthsDiff / 12);
+
+	                    var timeString = "";
+	                    if (daysDiff === 0) {
+	                        if (minuteDiff === 0) {
+	                            timeString = seconds + " giây trước";
+	                        } else if (hourDiff === 0 && minuteDiff < 60) {
+	                            timeString = minuteDiff + " phút trước";
+	                        } else if (minuteDiff > 60) {
+	                            timeString = hourDiff + " giờ trước";
+	                        }
+	                    } else if (daysDiff < 1) {
+	                        timeString = "1 ngày trước";
+	                    } else if (monthsDiff < 1) {
+	                        timeString = daysDiff + " ngày trước";
+	                    } else if (yearsDiff < 1) {
+	                        timeString = monthsDiff + " tháng trước";
+	                    }
 			// Hiển thị thông tin bài viết lên modal
 			var heart
 			if(maBaiVietDaThich[0]===baiViet[8]){
@@ -50,7 +106,7 @@ function loadBinhLuan(maBaiViet, maBaiVietDaThich) {
                     <img src="/images/${baiViet[6]}" class="img-thumbnail" alt="">
                     <div>
                         <label class="nhan">${baiViet[5]}</label><br>
-                        <small style="font-size: 12px; color: #65676b">${baiViet[2]}</small>
+                        <small style="font-size: 12px; color: #65676b">${timeString}</small>
                     </div>
                 </div>
                 <div>
@@ -70,19 +126,7 @@ function loadBinhLuan(maBaiViet, maBaiVietDaThich) {
                     </center>
                 </div>
             </a>
-            <div class="post-reaction">
-                <div class="activity-icons">
-					<div
-						class="`+heart+`">
-							<i class="fa-duotone fa-heart"></i> &nbsp; <span
-							class="like-count">${baiViet[3]}</span>
-						</div>
-						<div>
-							<i class="fa-regular fa-comment"></i>&nbsp;
-							${baiViet[4]}
-					</div>
-                </div>
-            </div>
+           
         </div>
     </div>
 `;
@@ -243,7 +287,7 @@ function xoaBinhLuan(maBaiViet, maBinhLuan) {
 
 			// Xóa các bình luận cũ trong modal (nếu có)
 			$("#danhSachBinhLuan .modal-body .trai").empty();
-			$("#danhSachBinhLuan .modal-body .phai").empty();
+			
 
 			// Hiển thị phần nhập bình luận
 			var binhLuanFormHtml = "<form id='binhLuanForm'>" +
@@ -268,49 +312,7 @@ function xoaBinhLuan(maBaiViet, maBinhLuan) {
 
 				$("#danhSachBinhLuan .modal-body .trai").append(binhLuanHtml);
 			});
-			// Hiển thị thông tin bài viết lên modal
-			var baiVietHtml = `
-    <div class="write-post-container nenTrangChu img-thumbnail" style="margin-bottom: 20px; border-radius: 0; box-shadow: 0 0 0;">
-        <div style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-                <div class="user-profile">
-                    <img src="/images/${baiViet[6]}" class="img-thumbnail" alt="">
-                    <div>
-                        <label class="nhan">${baiViet[5]}</label><br>
-                        <small style="font-size: 12px; color: #65676b">${baiViet[2]}</small>
-                    </div>
-                </div>
-                <div>
-                    <div class="btn-group">
-                        <span class="btn dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
-                        <div class="dropdown-menu" aria-labelledby="triggerId">
-                            <a class="dropdown-item" href="#">Báo cáo vi phạm</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a href="">
-                <div style="margin-top: 10px; color: #847577">
-                    ${baiViet[0]}
-                    <center>
-                        <img src="/images/${baiViet[1]}" width="100%" alt="" style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
-                    </center>
-                </div>
-            </a>
-            <div class="post-reaction">
-                <div class="activity-icons">
-                    <div>
-                        <i class="fa-regular fa-thumbs-up"></i> &nbsp; ${baiViet[3]}
-                    </div>
-                    <div>
-                        <i class="fa-regular fa-comment"></i>&nbsp; ${baiViet[4]}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-`;
-			$("#danhSachBinhLuan .modal-body .phai").append(baiVietHtml);
+			
 
 			// Mở modal
 			if (!$("#danhSachBinhLuan").is(":visible")) {

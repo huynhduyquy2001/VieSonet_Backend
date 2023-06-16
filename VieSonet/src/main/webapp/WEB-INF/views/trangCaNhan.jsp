@@ -447,8 +447,7 @@
 								<div class="add-post-links">
 									<button type="button" class="btn" data-bs-toggle="modal"
 										data-bs-target="#exampleModalToggle">
-										<a href="#"><i class="fa-regular fa-image"></i>
-											Hình ảnh</a>
+										<a href="#"><i class="fa-regular fa-image"></i> Hình ảnh</a>
 									</button>
 								</div>
 
@@ -511,8 +510,8 @@
 					<div>
 						<i class="fa-sharp fa-solid fa-bomb"></i> <br>
 						<textarea class="text-center" data-bs-toggle="modal"
-							href="#modalId" name=""
-							placeholder="Bạn muốn đăng gì?" id="" cols="60" rows="3"
+							href="#modalId" name="" placeholder="Bạn muốn đăng gì?" id=""
+							cols="60" rows="3"
 							style="border: none; background: transparent; resize: none;">${nguoiDung.gioiThieu}</textarea>
 					</div>
 				</center>
@@ -550,38 +549,55 @@
 
 				</div>
 			</div>
-			<b>Bài viết</b>
-			<hr>
-			<c:forEach items="${BaiVietCaNhan}" var="BaiViet">
-				<div
-					class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
-					style="margin-bottom: 20px; border-radius: 0;">
-					<div
-						style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
+
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item" role="presentation">
+					<button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+						data-bs-target="#home" type="button" role="tab"
+						aria-controls="home" aria-selected="true">Bài viết</button>
+				</li>
+				<li class="nav-item" role="presentation">
+					<button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+						data-bs-target="#profile" type="button" role="tab"
+						aria-controls="profile" aria-selected="false">Ảnh</button>
+				</li>
+
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div class="tab-pane active" id="home" role="tabpanel"
+					aria-labelledby="home-tab">
+					<c:forEach items="${BaiVietCaNhan}" var="BaiViet">
 						<div
-							style="display: flex; align-items: center; justify-content: space-between;">
-							<div class="tooltip2">
-									<div class="user-profile ">
-										<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img
-											src="images/${BaiViet.nguoiDung.anhDaiDien}"
-											class="img-thumbnail" alt=""></a>
-										<div>
+							class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
+							style="margin-bottom: 20px; border-radius: 0;">
+							<div
+								style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
+								<div
+									style="display: flex; align-items: center; justify-content: space-between;">
+									<div class="tooltip2">
+										<div class="user-profile ">
+											<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img
+												src="images/${BaiViet.nguoiDung.anhDaiDien}"
+												class="img-thumbnail" alt=""></a>
+											<div>
 
-										<c:if test="${BaiViet.cheDo.maCheDo == 1}">
-											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label>
-											<i class="fa-solid fa-earth-americas fa-xs"></i>
-										</c:if>
-										<c:if test="${BaiViet.cheDo.maCheDo == 2}">
-											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label>
-											<i class="fa-solid fa-user-group-simple fa-xs"></i>
-										</c:if>
-										<c:if test="${BaiViet.cheDo.maCheDo == 3}">
-											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label>
-											<i class="fa-solid fa-user-lock fa-xs"></i>
-										</c:if>
+												<c:if test="${BaiViet.cheDo.maCheDo == 1}">
+													<label class="nhan">${BaiViet.nguoiDung.hoTen}</label>
+													<i class="fa-solid fa-earth-americas fa-xs"></i>
+												</c:if>
+												<c:if test="${BaiViet.cheDo.maCheDo == 2}">
+													<label class="nhan">${BaiViet.nguoiDung.hoTen}</label>
+													<i class="fa-solid fa-user-group-simple fa-xs"></i>
+												</c:if>
+												<c:if test="${BaiViet.cheDo.maCheDo == 3}">
+													<label class="nhan">${BaiViet.nguoiDung.hoTen}</label>
+													<i class="fa-solid fa-user-lock fa-xs"></i>
+												</c:if>
 
-										<br> <small style="font-size: 12px; color: #65676b">
-											<script type="text/javascript">
+												<br> <small style="font-size: 12px; color: #65676b">
+													<script type="text/javascript">
                                             var currentTime = new Date();
                                             var activityTime = new Date('${BaiViet.ngayDang}');
                                             var timeDiff = currentTime.getTime() - activityTime.getTime();
@@ -610,90 +626,119 @@
                                             }
 
                         				</script>
-										</small>
-									</div>
-								</div>
-								<span class="tooltip2-text"> <a href="">
-											<div class="row">
-												<div class="col-5">
-													<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img
-														src="images/${BaiViet.nguoiDung.anhDaiDien}"
-														class="img-thumbnail" alt=""></a>
-												</div>
-												<div class="col-7" style="padding: 0; margin: 0;">
-													<label for="" style="padding: 0; margin: 0;"> <small>${BaiViet.nguoiDung.hoTen}</small>
-													</label> <small><small> <small>
-																<ul style="line-height: 20px; text-align: left;">
-																	<li><b><i class="fa-light fa-mountain-sun"></i>
-																			Sống tại:</b> ${BaiViet.nguoiDung.diaChi}</li>
-																	<li><i class="fa-regular fa-heart"></i> <b>Mối
-																			quan hệ:</b> ${BaiViet.nguoiDung.moiQuanHe}</li>
-																	<li><b><i class="fa-light fa-user-group"></i>
-																			Email:</b> ${BaiViet.nguoiDung.email}</li>
-																</ul>
-														</small>
-													</small></small>
-												</div>
-												<div>
-													<center></center>
-												</div>
+												</small>
 											</div>
-									</a>
-									</span>
-							</div>
-							<div>
-								<div class="btn-group">
-									<span class="btn dropdown-toggle" type="button" id="triggerId"
-										data-bs-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false"> </span>
-									<div class="dropdown-menu btn-cap-nhat-bai-viet"
-										aria-labelledby="triggerId">
-										<!-- href="#exampleModalToggle123" -->
-										<button data-bs-toggle="modal"
-											onclick="hienBaiViet(${BaiViet.maBaiViet})"
-											style="border: 1px solid white; border-radius: 6px; background: transparent; margin: 0; line-height: 0">
-											<small>Chỉnh sửa bài viết</small>
-										</button>
-										<hr>
-										<a href="/profile/anbaiviet/${BaiViet.maBaiViet}">
-											<button
-												style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background: transparent">
-												<small>Xóa bài viết</small>
-											</button>
+										</div>
+										<span class="tooltip2-text"> <a href="">
+												<div class="row">
+													<div class="col-5">
+														<a href="/nguoiDung/${BaiViet.nguoiDung.sdt}"><img
+															src="images/${BaiViet.nguoiDung.anhDaiDien}"
+															class="img-thumbnail" alt=""></a>
+													</div>
+													<div class="col-7" style="padding: 0; margin: 0;">
+														<label for="" style="padding: 0; margin: 0;"> <small>${BaiViet.nguoiDung.hoTen}</small>
+														</label> <small><small> <small>
+																	<ul style="line-height: 20px; text-align: left;">
+																		<li><b><i class="fa-light fa-mountain-sun"></i>
+																				Sống tại:</b> ${BaiViet.nguoiDung.diaChi}</li>
+																		<li><i class="fa-regular fa-heart"></i> <b>Mối
+																				quan hệ:</b> ${BaiViet.nguoiDung.moiQuanHe}</li>
+																		<li><b><i class="fa-light fa-user-group"></i>
+																				Email:</b> ${BaiViet.nguoiDung.email}</li>
+																	</ul>
+															</small>
+														</small></small>
+													</div>
+													<div>
+														<center></center>
+													</div>
+												</div>
 										</a>
+										</span>
+									</div>
+									<div>
+										<div class="btn-group">
+											<span class="btn dropdown-toggle" type="button"
+												id="triggerId" data-bs-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false"> </span>
+											<div class="dropdown-menu btn-cap-nhat-bai-viet"
+												aria-labelledby="triggerId">
+												<!-- href="#exampleModalToggle123" -->
+												<button data-bs-toggle="modal"
+													onclick="hienBaiViet(${BaiViet.maBaiViet})"
+													style="border: 1px solid white; border-radius: 6px; background: transparent; margin: 0; line-height: 0">
+													<small>Chỉnh sửa bài viết</small>
+												</button>
+												<hr>
+												<a href="/profile/anbaiviet/${BaiViet.maBaiViet}">
+													<button
+														style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background: transparent">
+														<small>Xóa bài viết</small>
+													</button>
+												</a>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div style="margin-top: 10px; color: #847577">
-							<div onclick="loadBinhLuan(${BaiViet.maBaiViet}, ${maBaiVietDaThich})">
-								${BaiViet.moTa}
-								<center>
-									<a onclick="loadBinhLuan(${BaiViet.maBaiViet}, ${maBaiVietDaThich })">
-									<img class="lazy" data-src="images/${BaiViet.hinhAnh}"
-										width="60%" alt=""
-										style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;"></a>
-								</center>
-							</div>
-							<div class="post-reaction">
-								<div class="activity-icons">
+								<div style="margin-top: 10px; color: #847577">
+									<div onclick="loadBinhLuan(${BaiViet.maBaiViet}, ${maBaiVietDaThich })">
+										${BaiViet.moTa}
+										<center>
+											
+												<img class="lazy" data-src="images/${BaiViet.hinhAnh}"
+												width="60%" alt=""
+												style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
+										
+										</center>
+									</div>
+									<div class="post-reaction">
+										<div class="activity-icons">
 
-									<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
-										class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
-										<i class="fa-duotone fa-heart"></i> &nbsp; <span
-											class="like-count">${BaiViet.luotThich}</span>
-									</div>
-									<div
-										onclick="loadBinhLuan(${BaiViet.maBaiViet}, ${maBaiVietDaThich })">
-										<i class="fa-regular fa-comment"></i>&nbsp;
-										${BaiViet.luotBinhLuan}
+											<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
+												class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
+												<i class="fa-duotone fa-heart"></i> &nbsp; <span
+													class="like-count">${BaiViet.luotThich}</span>
+											</div>
+											<div
+												onclick="loadBinhLuan(${BaiViet.maBaiViet}, ${maBaiVietDaThich })">
+												<i class="fa-regular fa-comment"></i>&nbsp;
+												${BaiViet.luotBinhLuan}
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</c:forEach>
+
+
 				</div>
-			</c:forEach>
+				<div class="tab-pane" id="profile" role="tabpanel"
+					aria-labelledby="profile-tab">
+					<div class="row">
+						<c:forEach items="${BaiVietCaNhan}" var="BaiViet">
+							<c:if test="${not empty BaiViet.hinhAnh}">
+								<div class="col-md-4">
+									<div onclick="loadBinhLuan(${BaiViet.maBaiViet}, ${maBaiVietDaThich })">
+										<center>
+											<img class="lazy" data-src="images/${BaiViet.hinhAnh}"
+												width="100%" alt=""
+												style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
+										</center>
+									</div>
+								</div>
+							</c:if>
+						</c:forEach>
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+
 		</div>
 
 

@@ -384,10 +384,24 @@
                         </div>
                     </center>
                     
-                    </div>
-                    <b>Bài viết</b>
-                    <hr>
-                    <c:forEach items="${BaiVietCaNhan}" var="BaiViet">
+		                    </div>
+		                     <ul class="nav nav-tabs" id="myTab" role="tablist">
+			            <li class="nav-item" role="presentation">
+			              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+			                role="tab" aria-controls="home" aria-selected="true">Bài viết</button>
+			            </li>
+			            <li class="nav-item" role="presentation">
+			              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+			                role="tab" aria-controls="profile" aria-selected="false">Ảnh</button>
+			            </li>
+			
+			          </ul>
+			
+			          <!-- Tab panes -->
+			          <div class="tab-content">
+			            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+			            
+			            <c:forEach items="${BaiVietCaNhan}" var="BaiViet">
                     <div class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
                         style="margin-bottom: 20px;  border-radius: 0;">
                         <div style="padding: 10px; border: 1px solid rgba(210,199,188,1); margin: 0;">
@@ -460,7 +474,7 @@
                                 </div>
                             </div>
                            <div style="margin-top: 10px; color: #847577">
-								<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
+								<div onclick="loadBinhLuan(${BaiViet.maBaiViet}, ${maBaiVietDaThich1 })">
 									${BaiViet.moTa}
 									<center>
 										<img class="lazy" data-src="/images/${BaiViet.hinhAnh}"
@@ -486,6 +500,29 @@
                         </div>
                     </div>
                     </c:forEach>
+			             </div>
+			            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab"> 
+			            <div class="row">
+						<c:forEach items="${BaiVietCaNhan}" var="BaiViet">
+							<c:if test="${not empty BaiViet.hinhAnh}">
+								<div class="col-md-4">
+									<div onclick="loadBinhLuan(${BaiViet.maBaiViet}, ${maBaiVietDaThich1 })">
+										<center>
+											<img class="lazy" data-src="/images/${BaiViet.hinhAnh}"
+												width="100%" alt=""
+												style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
+										</center>
+									</div>
+								</div>
+							</c:if>
+						</c:forEach>
+
+					</div>
+			             </div>
+			
+			          </div>
+                    <hr>
+                    
                 </div>
                 
                

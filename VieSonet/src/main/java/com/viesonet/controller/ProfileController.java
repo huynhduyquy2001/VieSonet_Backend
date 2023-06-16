@@ -34,19 +34,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.viesonet.dao.BaiVietDAO;
+import com.viesonet.dao.BaiVietViPhamDAO;
 import com.viesonet.dao.BanBeDAO;
 import com.viesonet.dao.CheDoDAO;
 import com.viesonet.dao.DanhSachBinhLuanDAO;
 import com.viesonet.dao.DanhSachKetBanDAO;
 import com.viesonet.dao.DanhSachYeuThichDAO;
+import com.viesonet.dao.LoaiViPhamDAO;
 import com.viesonet.dao.NguoiDungDAO;
 import com.viesonet.entity.BaiViet;
+import com.viesonet.entity.BaiVietViPham;
 import com.viesonet.entity.BanBe;
 import com.viesonet.entity.BinhLuanResponse;
 import com.viesonet.entity.CheDo;
 import com.viesonet.entity.DanhSachBinhLuan;
 import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.DanhSachYeuThich;
+import com.viesonet.entity.LoaiViPham;
 import com.viesonet.entity.NguoiDung;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
@@ -92,6 +96,12 @@ public class ProfileController {
 	
 	@Autowired
 	HttpServletResponse resp;
+	
+	@Autowired
+	BaiVietViPhamDAO bvvpDao;
+
+	@Autowired
+	LoaiViPhamDAO loaiViPhamDao;
 	
 	@RequestMapping("/profile")
 	public String index(Model m, HttpServletRequest request, HttpServletResponse response) {
@@ -469,7 +479,9 @@ public class ProfileController {
         List<BanBe> listBb = banBeDao.findFriendByUserphone(sdtLa);
         List<BaiViet> listBv = baiVietDao.findBySdt(sdtLa, sort);
         List<BanBe> listbb = banBeDao.findFriends(sdtLa);
-        
+     // danh sách điều khoản vi phạm
+     		List<LoaiViPham> danhSachViPham = loaiViPhamDao.findAll();
+     		m.addAttribute("danhSachViPham", danhSachViPham);
         NguoiDung taiKhoan = nguoiDungDao.getById(sdtHt);
 		m.addAttribute("taiKhoan", taiKhoan);
 		// Số lượng bạn bè
@@ -494,13 +506,7 @@ public class ProfileController {
 					String tenCheDo = bv.getCheDo().getTenCheDo();
 					//Thích thì xem luôn mã bài viết
 					int maBaiViet = bv.getMaBaiViet();
-					Set<Integer> maBaiVietDaThich = new HashSet<>();
-					List<DanhSachYeuThich> dsyt = dsytDao.findBySdt(sdtLa);
-					for (DanhSachYeuThich ds : dsyt) {
-						int maBaiViet1 = ds.getBaiViet().getMaBaiViet();
-						maBaiVietDaThich.add(maBaiViet1);
-					}
-					m.addAttribute("maBaiVietDaThich", maBaiVietDaThich);
+					
 					System.out.println("Chế độ bài viết "+maBaiViet+" "+tenCheDo);
 					if (tenCheDo.equals("Công khai")) {
 						//Thêm vào ArraysList tạm thời
@@ -515,7 +521,9 @@ public class ProfileController {
 				            }
 				        }
 				        if (baiVietChinhXac) {
+				        	
 				            danhSachBaiVietCty.add(bv);
+				            
 				        }
 				    }
 					else if (tenCheDo.equals("Chỉ mình tôi")) {
@@ -634,4 +642,17 @@ public class ProfileController {
 		return "redirect:/nguoiDung/" + nguoiDung;
 	}
 	
+	@ResponseBody
+	@PostMapping("/profile/baocaovipham/{maBaiViet}")
+	public String baoCaoBaiViet(@PathVariable int maBaiViet, @RequestParam("loaiViPham") int loaiViPham) {
+		String sdt = session.get("sdt");
+		BaiVietViPham baiViet = new BaiVietViPham();
+		baiViet.setBaiViet(baiVietDao.getById(maBaiViet));
+		baiViet.setNgayToCao(new Date());
+		baiViet.setLoaiViPham(loaiViPhamDao.getById(loaiViPham));
+		baiViet.setNguoiDung(nguoiDungDao.getById(sdt));
+		baiViet.setTrangThai(true);
+		bvvpDao.saveAndFlush(baiViet);
+		return "success";
+	}
 }
