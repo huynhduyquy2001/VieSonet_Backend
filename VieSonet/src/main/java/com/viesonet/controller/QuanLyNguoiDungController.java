@@ -63,15 +63,16 @@ public class QuanLyNguoiDungController {
 	@ResponseBody
 	@RequestMapping("/quanly/goViPham/{sdt}")
 	public String goViPham(@PathVariable String sdt, Model m) throws JsonProcessingException {
-		String userHienTai = sessionService.get("sdt");
-		daoND.resetLuotViPham("0"+sdt);
-		List<NguoiDungJson> nd = daoND.findDSNguoiDungKhacNguoiDungHienTai(userHienTai);
-		NguoiDungJson[] arrayNd = nd.toArray(new NguoiDungJson[nd.size()]);
-		ObjectMapper objectMapper = new ObjectMapper();
-	    // Chuyển đổi danh sách thành chuỗi JSON và gửi nó đến JSP
+	    String userHienTai = sessionService.get("sdt");
+	    daoND.resetLuotViPham(sdt);
+	    List<NguoiDungJson> nd = daoND.findDSNguoiDungKhacNguoiDungHienTai(userHienTai);
+	    NguoiDungJson[] arrayNd = nd.toArray(new NguoiDungJson[nd.size()]);
+	    ObjectMapper objectMapper = new ObjectMapper();
+	    // Chuyển đổi danh sách thành chuỗi JSON và gửi nó về phía client
 	    String ds = objectMapper.writeValueAsString(arrayNd);
-		return ds;
+	    return ds;
 	}
+
 	
 	@GetMapping("/quanly/chinhSua/{sdt}")
 	public String chinhSua(@PathVariable String sdt, Model m) {

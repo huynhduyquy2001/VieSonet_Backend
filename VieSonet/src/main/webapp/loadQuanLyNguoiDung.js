@@ -1,17 +1,20 @@
 function goViPham(sdt) {
+	
 	$.ajax({
 		url: "/quanly/goViPham/" + sdt,
 		type: "GET",
 		success: function(data) {
+			alert(sdt)
 			let myDiv = document.getElementById("tableLoad");
 			myDiv.innerHTML = "";
 			var dsNguoiDung = JSON.parse(data);
+			console.log("OKOKOK")
 			dsNguoiDung.forEach(function(item) {
 				var button
 					if (item.luotViPham == 0) {
 						button = "";
 					} else {
-						button = + "<a onclick='goViPham(" + data.sdt + ")' data-bs-toggle='tooltip' data-bs-placement='top'"
+						button =  "<a onclick='goViPham('" + item.sdt + "')' data-bs-toggle='tooltip' data-bs-placement='top'"
 							+ " title='Gỡ bỏ vi phạm' href='#'' class='me-3'>"
 							+ "<i class='fa-solid fa-file-import'></i>"
 							+ "</a>"
