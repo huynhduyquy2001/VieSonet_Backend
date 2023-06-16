@@ -64,6 +64,7 @@ public class QuanLyNguoiDungController {
 	@RequestMapping("/quanly/goViPham/{sdt}")
 	public String goViPham(@PathVariable String sdt, Model m) throws JsonProcessingException {
 		String userHienTai = sessionService.get("sdt");
+		System.out.println("0"+sdt);
 		daoND.resetLuotViPham("0"+sdt);
 		List<NguoiDungJson> nd = daoND.findDSNguoiDungKhacNguoiDungHienTai(userHienTai);
 		NguoiDungJson[] arrayNd = nd.toArray(new NguoiDungJson[nd.size()]);

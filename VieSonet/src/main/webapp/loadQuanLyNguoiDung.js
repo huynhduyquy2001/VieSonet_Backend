@@ -1,4 +1,5 @@
 function goViPham(sdt) {
+	console.log(sdt)
 	$.ajax({
 		url: "/quanly/goViPham/" + sdt,
 		type: "GET",
@@ -11,7 +12,7 @@ function goViPham(sdt) {
 					if (item.luotViPham == 0) {
 						button = "";
 					} else {
-						button = + "<a onclick='goViPham(" + data.sdt + ")' data-bs-toggle='tooltip' data-bs-placement='top'"
+						button = "<a onclick='goViPham(" + item.sdt + ")' data-bs-toggle='tooltip' data-bs-placement='top'"
 							+ " title='Gỡ bỏ vi phạm' href='#'' class='me-3'>"
 							+ "<i class='fa-solid fa-file-import'></i>"
 							+ "</a>"
@@ -134,7 +135,7 @@ function timKiem() {
 					if (item.luotViPham == 0) {
 						button = "";
 					} else {
-						button = + "<a onclick='goViPham(" + data.sdt + ")' data-bs-toggle='tooltip' data-bs-placement='top'"
+						button = "<a onclick='goViPham(" + item.sdt + ")' data-bs-toggle='tooltip' data-bs-placement='top'"
 							+ " title='Gỡ bỏ vi phạm' href='#'' class='me-3'>"
 							+ "<i class='fa-solid fa-file-import'></i>"
 							+ "</a>"
