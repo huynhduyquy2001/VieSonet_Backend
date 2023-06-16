@@ -65,14 +65,7 @@ function danhDauViPham(maBaiViet) {
 			var dsToCao = data.dsBiToCao;
 			var dsViPham = data.dsViPham;
 			var baiViet = data;
-			let dateString = baiViet[2];
-			let date = new Date(dateString);
 
-			let day = date.getUTCDate().toString().padStart(2, '0');
-			let month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
-			let year = date.getUTCFullYear().toString();
-
-			let outputDate = `${year}-${month}-${day}`;
 			dsToCao.forEach(function(item) {
 				var table = "<tr>"
 					+ "<td class='anNoiDung text-center'>" + item.maBaiViet + "</td>"
@@ -98,6 +91,14 @@ function danhDauViPham(maBaiViet) {
 			});
 
 			dsViPham.forEach(function(item) {
+				let dateString = item.ngayDang;
+				let date = new Date(dateString);
+
+				let day = date.getUTCDate().toString().padStart(2, '0');
+				let month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+				let year = date.getUTCFullYear().toString();
+
+				let outputDate = `${year}-${month}-${day}`;
 				var table2 = "<tr>"
 					+ " <td class='anNoiDung' style='max-width: 150px;'><small>" + outputDate + "</small>"
 					+ " </td>"
