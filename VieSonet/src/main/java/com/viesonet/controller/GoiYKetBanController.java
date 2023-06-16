@@ -124,7 +124,6 @@ public class GoiYKetBanController {
 				.collect(Collectors.toList());
 
 		System.out.println("loai nhung nguoi trong danh sách loi moi ket ban" + filteredList2.size());
-
 		model.addAttribute("list", nguoiDungDao.findNguoiDungBySdtIn(filteredList2));
 		// lấy danh sách thông báo
 		List<ThongBao> thongBao = thongBaoDao.findByUser(sdt, Sort.by(Direction.DESC, "ngayThongBao"));

@@ -212,26 +212,47 @@ div.dropdown-menu.baoCao {
 											src="images/${BaiViet.nguoiDung.anhDaiDien}"
 											class="img-thumbnail" alt=""></a>
 										<div>
-											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br>
+											<label class="nhan"><c:if test="${BaiViet.cheDo.maCheDo == 1}">
+                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> 
+                                            <i class="fa-solid fa-earth-americas fa-xs"></i>
+                                            </c:if>
+                                            <c:if test="${BaiViet.cheDo.maCheDo == 2}">
+                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> 
+                                            <i class="fa-solid fa-user-group-simple fa-xs"></i>
+                                            </c:if>
+                                            <c:if test="${BaiViet.cheDo.maCheDo == 3}">
+                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> 
+                                            <i class="fa-solid fa-user-lock fa-xs"></i>
+                                            </c:if> </label> <br>
 											<small style="font-size: 12px; color: #65676b"> <script
 													type="text/javascript">
-                            var currentTime = new Date();
-                            var activityTime = new Date('${BaiViet.ngayDang}');
-                            var timeDiff = currentTime.getTime() - activityTime.getTime();
-                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-                            var monthsDiff = Math.floor(daysDiff / 30);
-                            var yearsDiff = Math.floor(monthsDiff / 12);
+                                            var currentTime = new Date();
+                                            var activityTime = new Date('${BaiViet.ngayDang}');
+                                            var timeDiff = currentTime.getTime() - activityTime.getTime();
+                                            var seconds = Math.floor((timeDiff / 1000)%60);
+                                            var minuteDiff = Math.floor((timeDiff / 1000)/60);
+                                            var hourDiff = Math.floor(timeDiff / (1000 * 3600));
+                                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                                            var monthsDiff = Math.floor(daysDiff / 30);
+                                            var yearsDiff = Math.floor(monthsDiff / 12);
+											
+                                            if (daysDiff === 0) {
+                                                if(minuteDiff === 0){
+                                                	document.write(seconds +  ' giây trước');
+                                                }else if(hourDiff === 0 && minuteDiff < 60){
+                                                	document.write(minuteDiff +  ' phút trước');
+                                                }
+                                                else if(minuteDiff > 60){
+                                                	document.write(hourDiff +  ' giờ trước');
+                                                }
+                                            } else if (daysDiff < 1) {
+                                                document.write('1 ngày trước');
+                                            } else if (monthsDiff < 1) {
+                                                document.write(daysDiff + ' ngày trước');
+                                            } else if (yearsDiff < 1) {
+                                                document.write(monthsDiff + ' tháng trước');
+                                            }
 
-                            if (daysDiff < 1) {
-                                document.write('1 ngày trước');
-                            } else if (monthsDiff < 1) {
-                                document.write(daysDiff + ' ngày trước');
-                            } else if (yearsDiff < 1) {
-                                document.write(monthsDiff + ' tháng trước');
-                            } else {
-                                document.write('<fmt:formatDate value="${BaiViet.ngayDang}"
-										pattern="dd-MM-yyyy HH:mm" />');
-                            }
                         </script>
 											</small>
 										</div>
@@ -280,7 +301,9 @@ div.dropdown-menu.baoCao {
 							</div>
 							<div style="margin-top: 10px; color: #847577">
 								<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
-									&nbsp; ${BaiViet.moTa}
+									<div style="box-sizing: border-box; padding-left: 5px; padding-right: 5px">
+									${BaiViet.moTa}
+									</div>
 									<center>
 										<div class="bg-image hover-zoom">
 											<img class="lazy " data-src="images/${BaiViet.hinhAnh}"

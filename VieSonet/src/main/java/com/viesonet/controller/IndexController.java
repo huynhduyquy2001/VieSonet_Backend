@@ -2,6 +2,7 @@ package com.viesonet.controller;
 
 import java.io.File;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -114,7 +115,7 @@ public class IndexController {
 			}
 		}).collect(Collectors.toList());
 
-		List<BaiViet> dsBaiViet = baiVietDao.findByNguoiDungSdtInAndCheDoMaCheDoNotIn(sdtBanBeList, 3,
+		List<BaiViet> dsBaiViet = baiVietDao.findByNguoiDungSdtInAndCheDoMaCheDoNotIn(sdtBanBeList, 3, true,
 				Sort.by(Sort.Direction.DESC, "ngayDang"));
 		dsBaiViet.removeIf(baiViet -> baiViet.getCheDo().getMaCheDo() == 3);
 		for (BaiViet baiViet : dsBaiViet) {
@@ -178,11 +179,13 @@ public class IndexController {
 		if (photofile.isEmpty()) {
 		    baiDang.setHinhAnh("");
 		} else {
-		    String originalFileName = photofile.getOriginalFilename();
-		    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-		    String newFileName = originalFileName + "-" + LocalDate.now().toString().replace("-", "") + extension;
-		    String pathUpload = context.getRealPath("/images/" + newFileName);
-		    
+			
+			String originalFileName = photofile.getOriginalFilename();
+			String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+			String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+			String newFileName = originalFileName + "-" + timestamp + extension;
+			String pathUpload = context.getRealPath("/images/" + newFileName);
+
 		    try {
 		        photofile.transferTo(new File(pathUpload));
 
@@ -221,7 +224,7 @@ public class IndexController {
 		baiDang.setCheDo(cheDoDao.getById(cheDo));
 		baiDang.setNguoiDung(nguoiDungDAO.getById(sdt));
 		if (baiDang.getMoTa().equals("") && baiDang.getHinhAnh().equals("")) {
-
+			return "";
 		} else {
 			baiVietDao.saveAndFlush(baiDang);
 		}
@@ -300,6 +303,10 @@ public class IndexController {
 	@PostMapping("/index/thembinhluan/{maBaiViet}")
 	@ResponseBody
 	public String themBinhLuan(@PathVariable int maBaiViet, @RequestParam("binhLuanCuaToi") String binhLuan) {
+		
+		if (binhLuan.equals("")) {
+			return "";
+		}
 		// Xử lý logic thêm bình luận
 		String sdt = session.get("sdt");
 		DanhSachBinhLuan entity = new DanhSachBinhLuan();

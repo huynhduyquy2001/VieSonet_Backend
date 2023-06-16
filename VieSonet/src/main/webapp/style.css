@@ -885,7 +885,7 @@ label:hover{
     display:none;
     position: absolute;
     top: -10%;
-    left: 85%;
+    left: 110%;
     transform: translateX(-50%);
     min-width: 250px;
     padding: 10px;

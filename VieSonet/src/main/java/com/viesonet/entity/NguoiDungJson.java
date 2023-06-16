@@ -41,7 +41,6 @@ public class NguoiDungJson {
 	private String anhBia;
 	private Boolean trangThai;
 	private Integer luotViPham;
-	private Integer soLuongBanBe;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ngaySinh")

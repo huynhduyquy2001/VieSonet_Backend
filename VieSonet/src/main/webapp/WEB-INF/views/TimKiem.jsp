@@ -208,6 +208,11 @@
 	        event.preventDefault();
 	    });
 	    const tuKhoa = document.getElementById("tuKhoaCuaToi").value.trim();
+	    
+	    const input = document.getElementById("tuKhoaCuaToi");
+		const output = document.getElementById("output");
+		output.innerHTML = input.value;
+	    
 	    const regex = /^(0\d{9}|0\d{11})$/;
 	    if (regex.test(tuKhoa)) {
 	        // Thực hiện cuộc gọi AJAX để tìm kiếm số điện thoại
@@ -241,28 +246,57 @@
 	            data: {
 	                tuKhoaCuaToi: tuKhoa
 	            },
-	            success : function(data) {
+	            success: function(data) {
 	                $("#danhSachTimKiem").empty();
 	                data.forEach(function(item) {
-	                    var html = '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">' +
+	                    var currentTime = new Date();
+	                    var activityTime = new Date(item[4]);
+	                    var timeDiff = currentTime.getTime() - activityTime.getTime();
+	                    var seconds = Math.floor((timeDiff / 1000) % 60);
+	                    var minuteDiff = Math.floor(timeDiff / (1000 * 60));
+	                    var hourDiff = Math.floor(timeDiff / (1000 * 3600));
+	                    var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+	                    var monthsDiff = Math.floor(daysDiff / 30);
+	                    var yearsDiff = Math.floor(monthsDiff / 12);
+
+	                    var timeString = "";
+	                    if (daysDiff === 0) {
+	                        if (minuteDiff === 0) {
+	                            timeString = seconds + " giây trước";
+	                        } else if (hourDiff === 0 && minuteDiff < 60) {
+	                            timeString = minuteDiff + " phút trước";
+	                        } else if (minuteDiff > 60) {
+	                            timeString = hourDiff + " giờ trước";
+	                        }
+	                    } else if (daysDiff < 1) {
+	                        timeString = "1 ngày trước";
+	                    } else if (monthsDiff < 1) {
+	                        timeString = daysDiff + " ngày trước";
+	                    } else if (yearsDiff < 1) {
+	                        timeString = monthsDiff + " tháng trước";
+	                    }
+
+	                    var html = '<div class="col-md-6" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">' +
 	                        '<div class="user-profile">' +
-	                        '<a href="/nguoiDung/' + item[2] + '"><img src="images/' + item[1] + '" alt="" style="border-radius: 6px; width: 70px;"></a>' +
+	                        '<a href="/nguoiDung/' + item[2] + '">' +
+	                        '<img src="images/' + item[1] + '" alt="" style="border-radius: 6px; width: 70px;">' +
+	                        '</a>' +
 	                        '<div>' +
 	                        '<label for="">' + item[0] + '</label><br>' +
-	                        '<small>'+item[4]+'</small>' +
+	                        '<small style="font-size: 12px; color: #65676b">' + timeString + '</small>' +
 	                        '</div>' +
 	                        '</div>' +
 	                        '<div>' +
-	                        '<!-- <a name="" id="" class="btn btn-primary" href="#" role="button">Kết bạn</a> -->' +
 	                        '</div>' +
 	                        '</div>';
 
 	                    $("#danhSachTimKiem").append(html);
 	                });
 	            },
-	            error : function(xhr, status, error) {
+	            error: function(xhr, status, error) {
 	                console.log(error); // Thông báo lỗi nếu có
 	            }
+
 	        });
 	    }
 	}
