@@ -233,8 +233,7 @@
 						<button class="btn dropdown-toggle text-white" type="button"
 							id="dropdownMenuButton" data-bs-toggle="dropdown"
 							aria-expanded="false">
-							<i class="fa fa-cog text-white"></i> <b style="color: white;">Chỉnh
-								sửa</b>
+							<i class="fa fa-cog text-white"></i> 
 						</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton"">
 							<button data-bs-toggle="modal" data-bs-target="#modalId"

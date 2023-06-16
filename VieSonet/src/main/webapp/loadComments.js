@@ -60,7 +60,6 @@
 					"<small style='font-size: 10px;'>" + timeString1 + "</small>" +
 					"</div>" +
 					"</div>";
-
 				$("#danhSachBinhLuan .modal-body .trai").append(binhLuanHtml);
 			});
 			// Hiển thị thông tin bài viết lên modal
@@ -237,6 +236,7 @@ function themBinhLuan(maBaiViet) {
 		type: "POST",
 		data: { binhLuanCuaToi: binhLuan },
 		success: function(response) {
+			
 			loadBinhLuan(maBaiViet);
 		},
 		error: function(xhr, status, error) {

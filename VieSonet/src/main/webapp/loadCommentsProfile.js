@@ -91,13 +91,7 @@ function loadBinhLuan(maBaiViet, maBaiVietDaThich) {
 	                    } else if (yearsDiff < 1) {
 	                        timeString = monthsDiff + " tháng trước";
 	                    }
-			// Hiển thị thông tin bài viết lên modal
-			var heart
-			if(maBaiVietDaThich[0]===baiViet[8]){
-				heart = "red-heart"
-			}else{
-				heart = "gray-heart"
-			}
+			
 			var baiVietHtml = `
     <div class="write-post-container nenTrangChu img-thumbnail" style="margin-bottom: 20px; border-radius: 0; box-shadow: 0 0 0;">
         <div style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
