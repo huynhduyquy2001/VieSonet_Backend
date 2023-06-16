@@ -12,8 +12,8 @@ import com.viesonet.entity.PostWithComment;
 import com.viesonet.entity.DanhSachYeuThich;
 
 public interface BaiVietDAO extends JpaRepository<BaiViet, Integer> {
-	@Query("SELECT b FROM BaiViet b WHERE b.nguoiDung.sdt IN :sdtList AND b.cheDo.maCheDo <> :maCheDo")
-	List<BaiViet> findByNguoiDungSdtInAndCheDoMaCheDoNotIn(List<String> sdtList, Integer maCheDo, Sort sort);
+	@Query("SELECT b FROM BaiViet b WHERE b.nguoiDung.sdt IN :sdtList AND b.cheDo.maCheDo <> :maCheDo AND b.trangThai=:trangThai")
+	List<BaiViet> findByNguoiDungSdtInAndCheDoMaCheDoNotIn(List<String> sdtList, Integer maCheDo, Boolean trangThai, Sort sort);
 
 
 	

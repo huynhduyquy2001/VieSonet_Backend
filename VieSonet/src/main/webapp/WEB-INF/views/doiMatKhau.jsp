@@ -142,19 +142,19 @@
 
                             <div class="mb-3 text">
                                 <center>
-                                    <input type="text" class="form-control ip" name="matKhau" id=""
+                                    <input type="password" class="form-control ip" name="matKhau" id=""
                                         aria-describedby="helpId" placeholder="Mật khẩu cũ?" required>
                                 </center>
                             </div>
                             <div class="mb-3">
                                 <center>
-                                    <input type="text" class="form-control ip" name="matKhauMoi" id=""
+                                    <input type="password" class="form-control ip" name="matKhauMoi" id=""
                                         aria-describedby="helpId" placeholder="Mật khẩu?" required>
                                 </center>
                             </div>
                             <div class="mb-3">
                                 <center>
-                                    <input type="text" class="form-control ip" name="matKhauXacNhan" id=""
+                                    <input type="password" class="form-control ip" name="matKhauXacNhan" id=""
                                         aria-describedby="helpId" placeholder="Mật khẩu xác nhận" required>
                             </div>
                             </center>

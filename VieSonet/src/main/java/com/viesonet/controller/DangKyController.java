@@ -33,7 +33,7 @@ public class DangKyController {
 	public String dangKy2(@ModelAttribute("nguoiDung") NguoiDung item, Model m) {
 		String xacNhanMatKhau = paramService.getString("xacNhanMatKhau", "");
 		if (!dao.existsBySdt(item.getSdt())) {
-			if(dao.existsBySdt(item.getEmail())) {
+			if(dao.existsByEmail(item.getEmail())) {
 				m.addAttribute("message", "Email này đã được đăng ký");
 			} else {
 				if (item.getMatKhau().equalsIgnoreCase(xacNhanMatKhau)) {
@@ -44,7 +44,6 @@ public class DangKyController {
 					}
 					item.setVaiTro(vTDao.getById(1));
 					item.setTrangThai(true);
-					item.setSoLuongBanBe(0);
 					item.setLuotViPham(0);
 					item.setAnhBia("anhBia.jpg");
 					dao.save(item);

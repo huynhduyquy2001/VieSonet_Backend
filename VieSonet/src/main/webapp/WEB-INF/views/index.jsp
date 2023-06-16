@@ -1,8 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="fr" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="fr"%>
 
 
 <!doctype html>
@@ -54,8 +55,9 @@
 .gray-heart {
 	color: gray; /* Màu xám cho trái tim chưa thích */
 }
-div.dropdown-menu.baoCao{
-transform: translate(-80%, 39px);
+
+div.dropdown-menu.baoCao {
+	transform: translate(-80%, 39px);
 }
 </style>
 </head>
@@ -63,26 +65,121 @@ transform: translate(-80%, 39px);
 	<div
 		style="position: fixed; right: 0; max-height: 90vh; opacity: 0.1; bottom: 0;">
 	</div>
-	<%@include file="_header.jsp"%>
-	
+	<header class="header animationTop3">
+		<nav class="navbar navbar-expand-sm navbar-light"
+			style="border: none; padding-top: 0; padding-bottom: 0;">
+			<div class="container">
+				<a class="navbar-brand nhan" href="/"
+					style="color: #222; font-weight: bolder; font-family: 'robo';">
+					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
+				</a>
+
+				<button class="navbar-toggler d-lg-none" type="button"
+					data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
+					aria-controls="collapsibleNavId" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="collapsibleNavId">
+					<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+						<li class="nav-item"><a class="nav-link" href="/timKiem"><small
+								style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif; letter-spacing: 0.1em; color: black;"><i
+									class="fa-solid fa-magnifying-glass"></i></small></a></li> &nbsp;&nbsp;
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+							onclick="danhDauDaDoc(); return false;" role="button"
+							aria-haspopup="true" aria-expanded="false"> <i
+								class="fa-regular fa-bell"></i> <span id="soLuongThongBao">${thongBaoChuaXem}</span>
+						</a>
+							<div class="dropdown-menu" id="danhSachThongBao"
+								style="overflow: hidden; max-height: 60vh; overflow-y: scroll; left: -100px">
+								<c:if test="${empty thongBao}">
+									<small>Bạn chưa có thông báo nào!</small>
+								</c:if>
+
+								<c:forEach items="${thongBao}" var="item">
+									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
+										<div class="user-profile"
+											style="width: 250px; padding-left: 3%; padding-right: 5px;${!item.trangThai ? 'background-color: #EBE9E7;' : ''}">
+											<img src="images/${item.baiViet.nguoiDung.anhDaiDien}" alt="">
+											<div>
+												<p style="font-size: 13px">${item.noiDung}</p>
+												<div style="justify-content: space-between; display: flex;">
+													<small style="font-size: 11px"> <script
+															type="text/javascript">
+                                                        var currentTime = new Date();
+                                                        var activityTime = new Date('${item.ngayThongBao}');
+                                                        var timeDiff = currentTime.getTime() - activityTime.getTime();
+                                                        var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                                                        var monthsDiff = Math.floor(daysDiff / 30);
+                                                        var yearsDiff = Math.floor(monthsDiff / 12);
+
+                                                        if (daysDiff < 1) {
+                                                            document.write('1 ngày trước');
+                                                        } else if (monthsDiff < 1) {
+                                                            document.write(daysDiff + ' ngày trước');
+                                                        } else if (yearsDiff < 1) {
+                                                            document.write(monthsDiff + ' tháng trước');
+                                                        } else {
+                                                            document.write('<fmt:formatDate value="${item.ngayThongBao}" pattern="dd-MM-yyyy HH:mm" />');
+                                                        }
+                                                    </script>
+													</small> <small style="font-size: 12px"> <a
+														style="cursor: pointer;"
+														onclick="xoaThongBao(${item.maThongBao})">x</a>
+													</small>
+												</div>
+											</div>
+										</div>
+									</a>
+									<hr style="opacity: 0.05; margin: 0">
+								</c:forEach>
+							</div></li>
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" id="dropdownId"
+							class="nav-link dropdown-toggle" href="/profile" id="dropdownId"
+							data-bs-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false"><small><img
+									src="images/${taiKhoan.anhDaiDien}" width="30px"
+									style="border-radius: 50%; border: 1px solid gray" alt=""></small></a>
+							<div class="dropdown-menu" aria-labelledby="dropdownId"
+								style="padding-left: 3px; left: -100px; line-height: 35px">
+								<a class="dropdown-item" href="/profile"> <small>Xem
+										trang cá nhân</small></a> <a class="dropdown-item" href="/DanhSachBanBe">
+									<small>Danh sách bạn bè</small>
+								</a> <a class="dropdown-item" href="/GoiYKB"> <small>Gợi
+										ý kết bạn</small></a>
+								<c:if test="${sessionScope.vt == 2 || sessionScope.vt == 3}">
+									<!-- Nội dung chỉ hiển thị khi có vai trò 'admin' -->
+									<a class="dropdown-item" href="/quanly/quanLyBaiViet"> <small>Quản
+											lý</small></a>
+								</c:if>
+								<a class="dropdown-item" href="/doimatkhau"> <small>Đổi
+										mật khẩu</small></a> <a class="dropdown-item" href="/dieukhoan"> <small>Điều
+										khoản</small></a> <a class="dropdown-item" href="/dangxuat"> <small>Đăng
+										xuất</small></a>
+							</div></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
 	<div class="container" id="container"
 		style="transition: 0.5s; margin-top: 70px;">
 		<div class="row">
-			<div class="col-md-5">
+			<div class="col-md-5" style="z-index: 10;">
 				<div>
-					<div>
-						<b class="nhan">ĐĂNG BÀI</b>
-					</div>
+
 					<div>
 						<div
 							class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
 							style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
 							<div class="user-profile">
-								<a href="/profile"><img src="images/${taiKhoan.anhDaiDien}" alt=""></a>
+								<a href="/profile"><img src="images/${taiKhoan.anhDaiDien}"
+									alt=""></a>
 								<div>
-									<label for="">${taiKhoan.hoTen}</label> <br> <small>
-										Công khai <i class="fas fa-caret-down"></i>
-									</small>
+									<label for="">${taiKhoan.hoTen}</label>
 								</div>
 							</div>
 							<div class="post-upload-textarea">
@@ -101,14 +198,12 @@ transform: translate(-80%, 39px);
 						<hr>
 					</div>
 				</div>
-				<div>
-					<b class="nhan">BẢNG TIN</b>
-				</div>
+
 				<c:forEach items="${DanhSachBv}" var="BaiViet">
 					<div
 						class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
 						style="margin-bottom: 20px; border-radius: 0; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); padding: 0; padding-top: 10px; padding-bottom: 10px">
-						<div style=" margin: 0;">
+						<div style="margin: 0;">
 							<div
 								style="display: flex; align-items: center; justify-content: space-between; padding-left: 10px">
 								<div class="tooltip2">
@@ -117,26 +212,47 @@ transform: translate(-80%, 39px);
 											src="images/${BaiViet.nguoiDung.anhDaiDien}"
 											class="img-thumbnail" alt=""></a>
 										<div>
-											<label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br>
+											<label class="nhan"><c:if test="${BaiViet.cheDo.maCheDo == 1}">
+                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> 
+                                            <i class="fa-solid fa-earth-americas fa-xs"></i>
+                                            </c:if>
+                                            <c:if test="${BaiViet.cheDo.maCheDo == 2}">
+                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> 
+                                            <i class="fa-solid fa-user-group-simple fa-xs"></i>
+                                            </c:if>
+                                            <c:if test="${BaiViet.cheDo.maCheDo == 3}">
+                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> 
+                                            <i class="fa-solid fa-user-lock fa-xs"></i>
+                                            </c:if> </label> <br>
 											<small style="font-size: 12px; color: #65676b"> <script
 													type="text/javascript">
-                            var currentTime = new Date();
-                            var activityTime = new Date('${BaiViet.ngayDang}');
-                            var timeDiff = currentTime.getTime() - activityTime.getTime();
-                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-                            var monthsDiff = Math.floor(daysDiff / 30);
-                            var yearsDiff = Math.floor(monthsDiff / 12);
+                                            var currentTime = new Date();
+                                            var activityTime = new Date('${BaiViet.ngayDang}');
+                                            var timeDiff = currentTime.getTime() - activityTime.getTime();
+                                            var seconds = Math.floor((timeDiff / 1000)%60);
+                                            var minuteDiff = Math.floor((timeDiff / 1000)/60);
+                                            var hourDiff = Math.floor(timeDiff / (1000 * 3600));
+                                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                                            var monthsDiff = Math.floor(daysDiff / 30);
+                                            var yearsDiff = Math.floor(monthsDiff / 12);
+											
+                                            if (daysDiff === 0) {
+                                                if(minuteDiff === 0){
+                                                	document.write(seconds +  ' giây trước');
+                                                }else if(hourDiff === 0 && minuteDiff < 60){
+                                                	document.write(minuteDiff +  ' phút trước');
+                                                }
+                                                else if(minuteDiff > 60){
+                                                	document.write(hourDiff +  ' giờ trước');
+                                                }
+                                            } else if (daysDiff < 1) {
+                                                document.write('1 ngày trước');
+                                            } else if (monthsDiff < 1) {
+                                                document.write(daysDiff + ' ngày trước');
+                                            } else if (yearsDiff < 1) {
+                                                document.write(monthsDiff + ' tháng trước');
+                                            }
 
-                            if (daysDiff < 1) {
-                                document.write('1 ngày trước');
-                            } else if (monthsDiff < 1) {
-                                document.write(daysDiff + ' ngày trước');
-                            } else if (yearsDiff < 1) {
-                                document.write(monthsDiff + ' tháng trước');
-                            } else {
-                                document.write('<fmt:formatDate value="${BaiViet.ngayDang}"
-										pattern="dd-MM-yyyy HH:mm" />');
-                            }
                         </script>
 											</small>
 										</div>
@@ -157,7 +273,7 @@ transform: translate(-80%, 39px);
 																	<li><i class="fa-regular fa-heart"></i> <b>Mối
 																			quan hệ:</b> ${BaiViet.nguoiDung.moiQuanHe}</li>
 																	<li><b><i class="fa-light fa-user-group"></i>
-																		Email:</b> ${BaiViet.nguoiDung.email}</li>
+																			Email:</b> ${BaiViet.nguoiDung.email}</li>
 																</ul>
 														</small>
 													</small></small>
@@ -174,8 +290,9 @@ transform: translate(-80%, 39px);
 										<span class="btn dropdown-toggle" type="button" id="triggerId"
 											data-bs-toggle="dropdown" aria-haspopup="true"
 											aria-expanded="false"> </span>
-										<div class="dropdown-menu baoCao" aria-labelledby="triggerId" style=" transform: translate(-80%, 39px);">
-											<a class="dropdown-item" data-bs-toggle="modal"  st
+										<div class="dropdown-menu baoCao" aria-labelledby="triggerId"
+											style="transform: translate(-80%, 39px);">
+											<a class="dropdown-item" data-bs-toggle="modal" st
 												data-bs-target="#modalBaoCao"
 												onclick="toCao(${BaiViet.maBaiViet})">Báo cáo vi phạm</a>
 										</div>
@@ -184,20 +301,21 @@ transform: translate(-80%, 39px);
 							</div>
 							<div style="margin-top: 10px; color: #847577">
 								<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
-									&nbsp; ${BaiViet.moTa}
-									<center>
-									<div class="bg-image hover-zoom">
-									<img class="lazy " data-src="images/${BaiViet.hinhAnh}"
-											width="100%" alt=""
-											style="margin-top: 10px; margin-bottom: 10px;">
+									<div style="box-sizing: border-box; padding-left: 5px; padding-right: 5px">
+									${BaiViet.moTa}
 									</div>
-										
+									<center>
+										<div class="bg-image hover-zoom">
+											<img class="lazy " data-src="images/${BaiViet.hinhAnh}"
+												width="100%" alt=""
+												style="margin-top: 10px; margin-bottom: 10px;">
+										</div>
+
 									</center>
 								</div>
 
 								<div class="post-reaction" style="padding-left: 10px">
 									<div class="activity-icons">
-
 										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
 											class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
 											<i class="fa-duotone fa-heart"></i> &nbsp; <span
@@ -221,7 +339,7 @@ transform: translate(-80%, 39px);
 					<div class="row" style="margin-left: 2px">
 						<div class="col-md-6">
 							<div
-								style="background-color: #f2f2f2; border-radius: 5px; border: 1px solid grey; background: url(images/thoiThiet.webp); background-size: cover; color: #234662; padding: 0; width: 100%; max-height: 188px">
+								style="background-color: #f2f2f2; border: 1px solid grey; background: url(images/thoiThiet.webp); background-size: cover; color: #234662; padding: 0; width: 100%; max-height: 188px">
 								<div id="weather-info"
 									style="background-color: rgba(0, 0, 0, 0.4); margin: 0; padding: 10px; color: #F2E5C9;">
 									<h5 style="color: white">Dự báo thời tiết</h5>
@@ -241,8 +359,9 @@ transform: translate(-80%, 39px);
 								<c:forEach items="${topKetBan}" var="topKb">
 									<div>
 										<div class="user-profile">
-											<a href="/nguoiDung/${topKb.nguoiDung.sdt} }"><img src="images/${topKb.nguoiDung.anhDaiDien}"
-												class="img-thumbnail" alt=""></a> 
+											<a href="/nguoiDung/${topKb.nguoiDung.sdt}"><img
+												src="images/${topKb.nguoiDung.anhDaiDien}"
+												class="img-thumbnail" alt=""></a>
 											<div>
 												<label class="nhan"
 													style="font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 130px">${topKb.nguoiDung.hoTen}</label>
@@ -288,20 +407,20 @@ transform: translate(-80%, 39px);
 								<div
 									style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
 									<div class="user-profile">
-									<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
-									<a href="/nguoiDung/${banBe.nguoiDung.sdt}">
-									<img src="images/${banBe.nguoiDung.anhDaiDien}"
-											class="img-thumbnail" alt="" style="border-radius: 50%;">
-									</a>
-									</c:if>
-									<c:if test="${banBe.banBe.sdt != sessionScope.sdt}">
-									<a href="/nguoiDung/${banBe.banBe.sdt}">
-									<img src="images/${banBe.banBe.anhDaiDien}"
-											class="img-thumbnail" alt="" style="border-radius: 50%;">
-									</a>
-									
-									</c:if>
-										
+										<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
+											<a href="/nguoiDung/${banBe.nguoiDung.sdt}"> <img
+												src="images/${banBe.nguoiDung.anhDaiDien}"
+												class="img-thumbnail" alt="" style="border-radius: 50%;">
+											</a>
+										</c:if>
+										<c:if test="${banBe.banBe.sdt != sessionScope.sdt}">
+											<a href="/nguoiDung/${banBe.banBe.sdt}"> <img
+												src="images/${banBe.banBe.anhDaiDien}" class="img-thumbnail"
+												alt="" style="border-radius: 50%;">
+											</a>
+
+										</c:if>
+
 										<div>
 											<c:if test="${banBe.banBe.sdt == sessionScope.sdt}">
 												<label for="">${banBe.nguoiDung.hoTen}</label>
@@ -356,8 +475,8 @@ transform: translate(-80%, 39px);
 							</c:forEach>
 
 
-						
-							
+
+
 
 
 						</div>
@@ -507,6 +626,17 @@ transform: translate(-80%, 39px);
 	<script src="${pageContext.request.contextPath}/loadComments.js"></script>
 	<script src="${pageContext.request.contextPath}/lazy.js"></script>
 	<script src="${pageContext.request.contextPath}/thoiTiet.js"></script>
+	<script type="text/javascript">
+	  function danhDauDaDoc() {
+		    fetch('danhDauDaDoc', { method: 'POST' }) // Gửi yêu cầu POST đến đường dẫn "danhDauDaDoc"
+		      .then(response => {
+		        // Xử lý kết quả nếu cần
+		      })
+		      .catch(error => {
+		        // Xử lý lỗi nếu có
+		      });
+		  }
+	</script>
 
 </body>
 

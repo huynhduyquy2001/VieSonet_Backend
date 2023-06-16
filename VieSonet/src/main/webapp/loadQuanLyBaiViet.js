@@ -19,7 +19,7 @@ function chiTietBaiViet(maBaiViet) {
                         <div style=" display: flex; align-items: center; justify-content: space-between; ">
                             <div class="user-profile">
                                <a href="/nguoiDung/${baiViet[7]}" target="_blank">
-                                <img src="images/${baiViet[6]}" class="img-thumbnail" alt="">
+                                <img src="/images/${baiViet[6]}" class="img-thumbnail" alt="">
                                </a> 
                                 <div>
                                 <a href="/nguoiDung/${baiViet[7]}" target="_blank">
@@ -32,7 +32,7 @@ function chiTietBaiViet(maBaiViet) {
                         <div style="margin-top: 10px;">
                            ${baiViet[0]}
                             <center>
-                                <img src="images/${baiViet[1]}" class="img-thumbnail" width="100%" alt=""
+                                <img src="/images/${baiViet[1]}" class="img-thumbnail" width="100%" alt=""
                                     style="margin-top: 10px;margin-bottom: 10px; border-radius: 6px;">
                             </center>
                             <div class="post-reaction">
@@ -64,7 +64,15 @@ function danhDauViPham(maBaiViet) {
 			myDiv2.innerHTML = "";
 			var dsToCao = data.dsBiToCao;
 			var dsViPham = data.dsViPham;
+			var baiViet = data;
+			let dateString = baiViet[2];
+			let date = new Date(dateString);
 
+			let day = date.getUTCDate().toString().padStart(2, '0');
+			let month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+			let year = date.getUTCFullYear().toString();
+
+			let outputDate = `${year}-${month}-${day}`;
 			dsToCao.forEach(function(item) {
 				var table = "<tr>"
 					+ "<td class='anNoiDung text-center'>" + item.maBaiViet + "</td>"
@@ -91,7 +99,7 @@ function danhDauViPham(maBaiViet) {
 
 			dsViPham.forEach(function(item) {
 				var table2 = "<tr>"
-					+ " <td class='anNoiDung' style='max-width: 150px;'><small>" + item.ngayDang + "</small>"
+					+ " <td class='anNoiDung' style='max-width: 150px;'><small>" + outputDate + "</small>"
 					+ " </td>"
 					+ " <td class='anNoiDung' style=' max-width: 250px;'>"
 					+ "    <small>" + item.hoTen + "</small>"
@@ -141,7 +149,7 @@ function xemBaiViet(maBaiViet) {
                         <div style=" display: flex; align-items: center; justify-content: space-between; ">
                             <div class="user-profile">
                      			<a href="/nguoiDung/${baiViet[7]}" target="_blank">
-                                <img src="images/${baiViet[6]}" class="img-thumbnail" alt="">
+                                <img src="/images/${baiViet[6]}" class="img-thumbnail" alt="">
                         		</a> 
                                 <div>
                          			<a href="/nguoiDung/${baiViet[7]}" target="_blank">
@@ -154,7 +162,7 @@ function xemBaiViet(maBaiViet) {
                         <div style="margin-top: 10px;">
                             ${baiViet[0]}
                             <center>
-                                <img src="images/${baiViet[1]}" class="img-thumbnail" width="100%" alt=""
+                                <img src="/images/${baiViet[1]}" class="img-thumbnail" width="100%" alt=""
                                     style="margin-top: 10px;margin-bottom: 10px; border-radius: 6px;">
                             </center>
                             <div class="post-reaction">

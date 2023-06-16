@@ -12,6 +12,9 @@ public interface ThongBaoDAO extends JpaRepository<ThongBao, Integer> {
 @Query("select tb from ThongBao tb where tb.nguoiDung.sdt=?1")
 List<ThongBao> findByUser(String sdt, Sort sort);
 
+@Query("select tb from ThongBao tb where tb.nguoiDung.sdt=?1 and tb.trangThai=?2")
+List<ThongBao> timThongBaoChuaDoc(String sdt, boolean trangThai);
+
 @Query(value="select count(*) from ThongBao where sdt=?1 and trangThai=0", nativeQuery = true)
 int demThongBaoChuaXem(String sdt);
 

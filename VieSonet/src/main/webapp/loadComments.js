@@ -18,23 +18,80 @@
 				"<button class='btn01' type='submit' style='background: #3B998B; color: white;' onclick='themBinhLuan(" + baiViet[8] + ")'>Bình luận</button>" +
 				"</div>" +
 				"</form>";
-
-
+		
+	                    
 			$("#danhSachBinhLuan .modal-body .trai").append(binhLuanFormHtml);
 			// Hiển thị danh sách bình luận lên modal
 			danhSachBinhLuan.forEach(function(binhLuan) {
+				
+				var currentTime1 = new Date();
+		
+ 				var activityTime1 = new Date(binhLuan[3]);
+	                    var timeDiff1 = currentTime1.getTime() - activityTime1.getTime();
+	                    var seconds1 = Math.floor((timeDiff1 / 1000) % 60);
+	                    var minuteDiff1 = Math.floor(timeDiff1 / (1000 * 60));
+	                    var hourDiff1 = Math.floor(timeDiff1 / (1000 * 3600));
+	                    var daysDiff1 = Math.floor(timeDiff1 / (1000 * 3600 * 24));
+	                    var monthsDiff1 = Math.floor(daysDiff1 / 30);
+	                    var yearsDiff1 = Math.floor(monthsDiff1 / 12);
+
+	                    var timeString1 = "";
+	                    if (daysDiff1 === 0) {
+	                        if (minuteDiff1 === 0) {
+	                            timeString1 = seconds1 + " giây trước";
+	                        } else if (hourDiff1 === 0 && minuteDiff1 < 60) {
+	                            timeString1 = minuteDiff1 + " phút trước";
+	                        } else if (minuteDiff1 > 60) {
+	                            timeString1 = hourDiff1 + " giờ trước";
+	                        }
+	                    } else if (daysDiff1 < 1) {
+	                        timeString1 = "1 ngày trước";
+	                    } else if (monthsDiff1 < 1) {
+	                        timeString1 = daysDiff1 + " ngày trước";
+	                    } else if (yearsDiff1 < 1) {
+	                        timeString1 = monthsDiff1 + " tháng trước";
+	                    }
+	                    
 				var binhLuanHtml = "<div class='user-profile animate__animated animate__headShake' style='border: 1px solid #E1D4C4; box-sizing: border-box; padding: 4px; border-radius: 5px;background-color: white; margin-bottom:5px'>" +
 					"<img src='/images/" + binhLuan[1] + "' class='img-thumbnail' alt=''>" +
 					"<div>" +
 					"<div><p class='nhan' style='color: #A59565; font-size: 15px;'>" + binhLuan[0] + "</p></div>" +
 					"<small style='font-size: 12px;'><i class='fa-regular fa-comment'></i> " + binhLuan[2] + "</small><br>" +
-					"<small style='font-size: 10px;'>" + binhLuan[3] + "</small>" +
+					"<small style='font-size: 10px;'>" + timeString1 + "</small>" +
 					"</div>" +
 					"</div>";
 
 				$("#danhSachBinhLuan .modal-body .trai").append(binhLuanHtml);
 			});
 			// Hiển thị thông tin bài viết lên modal
+			var currentTime = new Date();
+			 
+	                    var activityTime = new Date(baiViet[2]);
+	                    var timeDiff = currentTime.getTime() - activityTime.getTime();
+	                    var seconds = Math.floor((timeDiff / 1000) % 60);
+	                    var minuteDiff = Math.floor(timeDiff / (1000 * 60));
+	                    var hourDiff = Math.floor(timeDiff / (1000 * 3600));
+	                    var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+	                    var monthsDiff = Math.floor(daysDiff / 30);
+	                    var yearsDiff = Math.floor(monthsDiff / 12);
+
+	                    var timeString = "";
+	                    if (daysDiff === 0) {
+	                        if (minuteDiff === 0) {
+	                            timeString = seconds + " giây trước";
+	                        } else if (hourDiff === 0 && minuteDiff < 60) {
+	                            timeString = minuteDiff + " phút trước";
+	                        } else if (minuteDiff > 60) {
+	                            timeString = hourDiff + " giờ trước";
+	                        }
+	                    } else if (daysDiff < 1) {
+	                        timeString = "1 ngày trước";
+	                    } else if (monthsDiff < 1) {
+	                        timeString = daysDiff + " ngày trước";
+	                    } else if (yearsDiff < 1) {
+	                        timeString = monthsDiff + " tháng trước";
+	                    }
+			
 			var baiVietHtml = `
     <div class="write-post-container nenTrangChu img-thumbnail" style="margin-bottom: 20px; border-radius: 0; box-shadow: 0 0 0;">
         <div style="padding: 10px; border: 1px solid rgba(210, 199, 188, 1); margin: 0;">
@@ -43,7 +100,7 @@
                     <img src="/images/${baiViet[6]}" class="img-thumbnail" alt="">
                     <div>
                         <label class="nhan">${baiViet[5]}</label><br>
-                        <small style="font-size: 12px; color: #65676b">${baiViet[2]}</small>
+                        <small style="font-size: 12px; color: #65676b">${timeString}</small>
                     </div>
                 </div>
                 <div>
@@ -104,10 +161,16 @@ $(document).ready(function() {
 			contentType: false,
 			processData: false,
 			success: function(response) {
-				alert(response); // Hiển thị thông báo thành công
-				// Xử lý dữ liệu trả về (nếu cần)
-				// Ví dụ: cập nhật giao diện hoặc hiển thị thông báo trên trang
+				if (response !== "") {
+					alert(response); // Hiển thị thông báo thành công
+					// Xử lý dữ liệu trả về (nếu cần)
+					// Ví dụ: cập nhật giao diện hoặc hiển thị thông báo trên trang
+				}
 			},
+			error: function(e) {
+				alert("Đã xảy ra lỗi: " + e.responseText);
+			}
+			,
 			error: function(e) {
 				alert("Đã xảy ra lỗi: " + e.responseText);
 			}
@@ -233,16 +296,17 @@ var soLuongThongBao= $("#soLuongThongBao").val();
 var dataLength = data.length;
 $("#soLuongThongBao").append('('+dataLength+')');
     data.forEach(function (item) {
-        var itemHtml = `<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
+		alert(item[0]);
+        var itemHtml = `<a onclick="loadBinhLuan(${item[1]})">
             <div class="user-profile" style="width: 250px; padding-left: 3%;">
-                <img src="images/${item.nguoiDung.anhDaiDien}" alt="">
+                <img src="images/${item[3]}" alt="">
                 <div>
-                    <p style="font-size: 13px">${item.noiDung}</p>
+                    <p style="font-size: 13px">${item[4]}</p>
                     <div style="justify-content: space-between; display: flex;">
                         <small style="font-size: 11px">
                             <script type="text/javascript">
                                 var currentTime = new Date();
-                                var activityTime = new Date('${item.ngayThongBao}');
+                                var activityTime = new Date('${item[5]}');
                                 var timeDiff = currentTime.getTime() - activityTime.getTime();
                                 var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
                                 var monthsDiff = Math.floor(daysDiff / 30);
@@ -255,16 +319,15 @@ $("#soLuongThongBao").append('('+dataLength+')');
                                 } else if (yearsDiff < 1) {
                                     document.write(monthsDiff + ' tháng trước');
                                 } else {
-                                    document.write('<fmt:formatDate value="${item.ngayThongBao}" pattern="dd-MM-yyyy HH:mm" />');
+                                    document.write('<fmt:formatDate value="${item[5]}" pattern="dd-MM-yyyy HH:mm" />');
                                 }
                             </script>
                         </small>
-                        <small style="font-size: 12px"><a style="cursor: pointer;" onclick="xoaThongBao(${item.maThongBao})">x</a></small>
+                        <small style="font-size: 12px"><a style="cursor: pointer;" onclick="xoaThongBao(${item[0]})">x</a></small>
                     </div>
                 </div>
             </div>
         </a>`;
-
         // Thêm itemHtml vào #danhSachThongBao
         $("#danhSachThongBao").append(itemHtml);
     });
@@ -274,8 +337,11 @@ $("#soLuongThongBao").append('('+dataLength+')');
         console.log(error); // Handle the error response here
     }
 });
-
 }
+
+
+
+
 
 
 

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +19,11 @@ import com.viesonet.dao.DanhSachBinhLuanDAO;
 import com.viesonet.dao.DanhSachKetBanDAO;
 import com.viesonet.dao.DanhSachYeuThichDAO;
 import com.viesonet.dao.NguoiDungDAO;
+import com.viesonet.dao.ThongBaoDAO;
 import com.viesonet.entity.BanBe;
 import com.viesonet.entity.DanhSachKetBan;
 import com.viesonet.entity.NguoiDung;
+import com.viesonet.entity.ThongBao;
 import com.viesonet.service.CookieService;
 import com.viesonet.service.ParamService;
 import com.viesonet.service.SessionService;
@@ -55,6 +59,9 @@ public class GoiYKetBanController {
 
 	@Autowired
 	ParamService paramService;
+	
+	@Autowired
+	ThongBaoDAO thongBaoDao;
 
 	@GetMapping("/GoiYKB")
 	public String GoiYKB(String sdt, Model model) {
@@ -71,7 +78,6 @@ public class GoiYKetBanController {
 		}
 		model.addAttribute("topKetBan", topKetBan);
 
-
 		// lấy danh sách bạn bè
 		List<BanBe> listBb = banBeDao.findFriends(sdtCN);
 
@@ -82,11 +88,11 @@ public class GoiYKetBanController {
 				return banBe.getBanBe().getSdt();
 			}
 		}).collect(Collectors.toList());
-		System.out.println("Danh sach ban be"+sdtBb);
+		System.out.println("Danh sach ban be" + sdtBb);
 		// lấy danh sách bạn của bạn
 
 		List<BanBe> danhSachBanCuaBan = banBeDao.timBanCuaBan(sdtBb);
-		
+
 		List<String> sdtBanCuaBan = danhSachBanCuaBan.stream().map(banBe -> {
 			if (sdtBb.contains(banBe.getBanBe().getSdt())) {
 				return banBe.getNguoiDung().getSdt();
@@ -94,15 +100,14 @@ public class GoiYKetBanController {
 				return banBe.getBanBe().getSdt();
 			}
 		}).collect(Collectors.toList());
-		
-		System.out.println("Danh sach ban cua ban:"+ sdtBanCuaBan);
-		//loại những người đã là bạn của mình
-		List<String> filteredList = sdtBanCuaBan.stream()
-		        .filter(item -> !sdtBb.contains(item))
-		        .collect(Collectors.toList());
-		
-		System.out.println("sau khi loai nhung nguoi la ban cua minh còn: "+filteredList.size());
-		
+
+		System.out.println("Danh sach ban cua ban:" + sdtBanCuaBan);
+		// loại những người đã là bạn của mình
+		List<String> filteredList = sdtBanCuaBan.stream().filter(item -> !sdtBb.contains(item))
+				.collect(Collectors.toList());
+
+		System.out.println("sau khi loai nhung nguoi la ban cua minh còn: " + filteredList.size());
+
 		// lấy danh sách lời mời kết bạn
 		List<DanhSachKetBan> dskb = dskbDao.findFriends(sdtCN);
 		List<String> danhSachLoiMoi = dskb.stream().map(loiMoi -> {
@@ -112,17 +117,18 @@ public class GoiYKetBanController {
 				return loiMoi.getNguoiLa().getSdt();
 			}
 		}).collect(Collectors.toList());
-		
-		System.out.println("danh sách loi moi ket ban "+danhSachLoiMoi.size());
-		//loại những người đã có trong danh sách kết bạn
-		List<String> filteredList2 = filteredList.stream()
-		        .filter(item -> !danhSachLoiMoi.contains(item))
-		        .collect(Collectors.toList());
-		
-		System.out.println("loai nhung nguoi trong danh sách loi moi ket ban"+filteredList2.size());
-		
+
+		System.out.println("danh sách loi moi ket ban " + danhSachLoiMoi.size());
+		// loại những người đã có trong danh sách kết bạn
+		List<String> filteredList2 = filteredList.stream().filter(item -> !danhSachLoiMoi.contains(item))
+				.collect(Collectors.toList());
+
+		System.out.println("loai nhung nguoi trong danh sách loi moi ket ban" + filteredList2.size());
 		model.addAttribute("list", nguoiDungDao.findNguoiDungBySdtIn(filteredList2));
-		
+		// lấy danh sách thông báo
+		List<ThongBao> thongBao = thongBaoDao.findByUser(sdt, Sort.by(Direction.DESC, "ngayThongBao"));
+		model.addAttribute("thongBao", thongBao);
+		model.addAttribute("thongBaoChuaXem", "(" + thongBaoDao.demThongBaoChuaXem(sdt) + ")");
 		return "GoiYKetBan";
 	}
 
@@ -132,7 +138,6 @@ public class GoiYKetBanController {
 		NguoiDung nguoiDung = nguoiDungDao.getById(sdtND);
 		NguoiDung nguoiLa = nguoiDungDAO.findBySdt(sdt);
 
-		
 		if (nguoiDung.equals(nguoiLa)) {
 			m.addAttribute("message", "Lỗi bạn k tự kết bạn với chính mình");
 			return "GoiYKetBan";

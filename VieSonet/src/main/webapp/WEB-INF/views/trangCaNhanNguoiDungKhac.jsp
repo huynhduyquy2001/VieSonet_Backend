@@ -95,16 +95,9 @@
 			<div class="container">
 				<a class="navbar-brand nhan" href="/"
 					style="color: #222; font-weight: bolder; font-family: 'robo';">
-					<img src="images/chimLac.png" height="30px" alt=""> VIE_SONET
+					<img src="/images/chimLac.png" height="30px" alt=""> VIE_SONET
 				</a>
-				<a class="nav-link active" href="/" aria-current="page"
-							style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Trang
-								chủ <span class="visually-hidden">(current)</span>
-						</a>
-				<c:if test="${sessionScope.vt == 3}">
-					<a class="nav-link" href="/quanly/quanLyNguoiDung"><small
-				style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Roboto', sans-serif; letter-spacing: 0.1em;">Quản lí</small></a>
-				</c:if>
+
 				<button class="navbar-toggler d-lg-none" type="button"
 					data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
 					aria-controls="collapsibleNavId" aria-expanded="false"
@@ -118,46 +111,50 @@
 									class="fa-solid fa-magnifying-glass"></i></small></a></li> &nbsp;&nbsp;
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
-							href="#" role="button" aria-haspopup="true" aria-expanded="false"><i
-								class="fa-regular fa-bell"></i> <span id="soLuongThongBao">(${thongBaoChuaXem})</span></a>
+							onclick="danhDauDaDoc(); return false;" role="button"
+							aria-haspopup="true" aria-expanded="false"> <i
+								class="fa-regular fa-bell"></i> <span id="soLuongThongBao">${thongBaoChuaXem}</span>
+						</a>
 							<div class="dropdown-menu" id="danhSachThongBao"
 								style="overflow: hidden; max-height: 60vh; overflow-y: scroll; left: -100px">
+								<c:if test="${empty thongBao}"> <small>Bạn chưa có thông báo nào!</small> </c:if>
+
 								<c:forEach items="${thongBao}" var="item">
 									<a onclick="loadBinhLuan(${item.baiViet.maBaiViet})">
 										<div class="user-profile"
-											style="width: 250px; padding-left: 3%;">
-											<img src="images/${item.nguoiDung.anhDaiDien}" alt="">
+											style="width: 250px; padding-left: 3%; padding-right: 5px;${!item.trangThai ? 'background-color: #EBE9E7;' : ''}">
+											<img src="images/${item.baiViet.nguoiDung.anhDaiDien}" alt="">
 											<div>
 												<p style="font-size: 13px">${item.noiDung}</p>
 												<div style="justify-content: space-between; display: flex;">
 													<small style="font-size: 11px"> <script
 															type="text/javascript">
-                            var currentTime = new Date();
-                            var activityTime = new Date('${item.ngayThongBao}');
-                            var timeDiff = currentTime.getTime() - activityTime.getTime();
-                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-                            var monthsDiff = Math.floor(daysDiff / 30);
-                            var yearsDiff = Math.floor(monthsDiff / 12);
+                                                        var currentTime = new Date();
+                                                        var activityTime = new Date('${item.ngayThongBao}');
+                                                        var timeDiff = currentTime.getTime() - activityTime.getTime();
+                                                        var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                                                        var monthsDiff = Math.floor(daysDiff / 30);
+                                                        var yearsDiff = Math.floor(monthsDiff / 12);
 
-                            if (daysDiff < 1) {
-                                document.write('1 ngày trước');
-                            } else if (monthsDiff < 1) {
-                                document.write(daysDiff + ' ngày trước');
-                            } else if (yearsDiff < 1) {
-                                document.write(monthsDiff + ' tháng trước');
-                            } else {
-                                document.write('<fmt:formatDate value="${item.ngayThongBao}"
-										pattern="dd-MM-yyyy HH:mm" />');
-                            }
-                        </script>
-													</small> <small style="font-size: 12px"><a
+                                                        if (daysDiff < 1) {
+                                                            document.write('1 ngày trước');
+                                                        } else if (monthsDiff < 1) {
+                                                            document.write(daysDiff + ' ngày trước');
+                                                        } else if (yearsDiff < 1) {
+                                                            document.write(monthsDiff + ' tháng trước');
+                                                        } else {
+                                                            document.write('<fmt:formatDate value="${item.ngayThongBao}" pattern="dd-MM-yyyy HH:mm" />');
+                                                        }
+                                                    </script>
+													</small> <small style="font-size: 12px"> <a
 														style="cursor: pointer;"
-														onclick="xoaThongBao(${item.maThongBao})">x</a></small>
+														onclick="xoaThongBao(${item.maThongBao})">x</a>
+													</small>
 												</div>
 											</div>
 										</div>
-
 									</a>
+									<hr style="opacity: 0.05; margin: 0">
 								</c:forEach>
 							</div></li>
 						<li class="nav-item dropdown"><a
@@ -165,26 +162,25 @@
 							class="nav-link dropdown-toggle" href="/profile" id="dropdownId"
 							data-bs-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"><small><img
-									src="images/${taiKhoan.anhDaiDien}" width="30px"
+									src="/images/${taiKhoan.anhDaiDien}" width="30px"
 									style="border-radius: 50%; border: 1px solid gray" alt=""></small></a>
 							<div class="dropdown-menu" aria-labelledby="dropdownId"
 								style="padding-left: 3px; left: -100px; line-height: 35px">
 								<a class="dropdown-item" href="/profile"> <small>Xem
 										trang cá nhân</small></a> <a class="dropdown-item" href="/DanhSachBanBe">
 									<small>Danh sách bạn bè</small>
-								</a> <a class="dropdown-item" href="/GoiYKB"> <small>Lời
-										mời kết bạn</small></a> 
-										<c:if test="${sessionScope.vt == 2 || sessionScope.vt == 3}">
-										  <!-- Nội dung chỉ hiển thị khi có vai trò 'admin' -->
-										  <a class="dropdown-item" href="/quanly/quanLyBaiViet"> <small>Quản lý</small></a>
-										</c:if>
-										
-										<a class="dropdown-item" href="/doimatkhau"> <small>Đổi
+								</a> <a class="dropdown-item" href="/GoiYKB"> <small>Gợi
+										ý kết bạn</small></a>
+								<c:if test="${sessionScope.vt == 2 || sessionScope.vt == 3}">
+									<!-- Nội dung chỉ hiển thị khi có vai trò 'admin' -->
+									<a class="dropdown-item" href="/quanly/quanLyBaiViet"> <small>Quản
+											lý</small></a>
+								</c:if>
+								<a class="dropdown-item" href="/doimatkhau"> <small>Đổi
 										mật khẩu</small></a> <a class="dropdown-item" href="/dieukhoan"> <small>Điều
 										khoản</small></a> <a class="dropdown-item" href="/dangxuat"> <small>Đăng
 										xuất</small></a>
 							</div></li>
-
 					</ul>
 				</div>
 			</div>
@@ -194,7 +190,7 @@
         <div class="video-overlay">
         </div>
         <img src="/images/${nguoiDung.anhBia}" alt="" class="img-thumbnail"
-            style="max-height: 300px; width: 100%; object-fit: cover; overflow: hidden; z-index: -10; ">
+            style="max-height: 300px; width: 100%; object-fit: cover; overflow: hidden; z-index: -10; padding: 0;">
         <div class="col-md-5 " style=" position: absolute; transform: translateY(-50%); top: 50%; left: 20px;">
             <div class="row">
             
@@ -379,7 +375,7 @@
     </script>
     <div class="container">
         	<!-- Chỉnh giao diện bài đăng -->
-            <div class="col-md-10 offset-md-1">
+            <div class="col-md-6 offset-md-3">
                 <div style=" box-sizing: border-box; margin: 1%; padding: 3%; margin-top: 10px;">
                     <center>
                         <div>
@@ -388,10 +384,24 @@
                         </div>
                     </center>
                     
-                    </div>
-                    <b>Bài viết</b>
-                    <hr>
-                    <c:forEach items="${BaiVietCaNhan}" var="BaiViet">
+		                    </div>
+		                     <ul class="nav nav-tabs" id="myTab" role="tablist">
+			            <li class="nav-item" role="presentation">
+			              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+			                role="tab" aria-controls="home" aria-selected="true">Bài viết</button>
+			            </li>
+			            <li class="nav-item" role="presentation">
+			              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+			                role="tab" aria-controls="profile" aria-selected="false">Ảnh</button>
+			            </li>
+			
+			          </ul>
+			
+			          <!-- Tab panes -->
+			          <div class="tab-content">
+			            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+			            
+			            <c:forEach items="${BaiVietCaNhan}" var="BaiViet">
                     <div class="write-post-container nenTrangChu img-thumbnail animate__animated animate__backInLeft"
                         style="margin-bottom: 20px;  border-radius: 0;">
                         <div style="padding: 10px; border: 1px solid rgba(210,199,188,1); margin: 0;">
@@ -400,8 +410,50 @@
                                     <div class="user-profile ">
                                         <img src="/images/${BaiViet.nguoiDung.anhDaiDien}" class="img-thumbnail" alt="">
                                         <div>
-                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> <br> 
-                                            <small>${BaiViet.ngayDang} </small> <br>
+
+                                            <c:if test="${BaiViet.cheDo.maCheDo == 1}">
+                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> 
+                                            <i class="fa-solid fa-earth-americas fa-xs"></i>
+                                            </c:if>
+                                            <c:if test="${BaiViet.cheDo.maCheDo == 2}">
+                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> 
+                                            <i class="fa-solid fa-user-group-simple fa-xs"></i>
+                                            </c:if>
+                                            <c:if test="${BaiViet.cheDo.maCheDo == 3}">
+                                            <label class="nhan">${BaiViet.nguoiDung.hoTen}</label> 
+                                            <i class="fa-solid fa-user-lock fa-xs"></i>
+                                            </c:if>  <br>
+                                            <small style="font-size: 12px; color: #65676b"> <script
+													type="text/javascript">
+                                            var currentTime = new Date();
+                                            var activityTime = new Date('${BaiViet.ngayDang}');
+                                            var timeDiff = currentTime.getTime() - activityTime.getTime();
+                                            var seconds = Math.floor((timeDiff / 1000)%60);
+                                            var minuteDiff = Math.floor((timeDiff / 1000)/60);
+                                            var hourDiff = Math.floor(timeDiff / (1000 * 3600));
+                                            var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+                                            var monthsDiff = Math.floor(daysDiff / 30);
+                                            var yearsDiff = Math.floor(monthsDiff / 12);
+											
+                                            if (daysDiff === 0) {
+                                                if(minuteDiff === 0){
+                                                	document.write(seconds +  ' giây trước');
+                                                }else if(hourDiff === 0 && minuteDiff < 60){
+                                                	document.write(minuteDiff +  ' phút trước');
+                                                }
+                                                else if(minuteDiff > 60){
+                                                	document.write(hourDiff +  ' giờ trước');
+                                                }
+                                            } else if (daysDiff < 1) {
+                                                document.write('1 ngày trước');
+                                            } else if (monthsDiff < 1) {
+                                                document.write(daysDiff + ' ngày trước');
+                                            } else if (yearsDiff < 1) {
+                                                document.write(monthsDiff + ' tháng trước');
+                                            }
+
+                        </script>
+											</small>
                                         </div>
                                     </div>
                                     
@@ -412,19 +464,17 @@
                                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                                         </span>
-                                        <div class="dropdown-menu btn-cap-nhat-bai-viet" aria-labelledby="triggerId">
-                                            <!-- href="#exampleModalToggle123" --> 
-                                            <button data-bs-toggle="modal" 
-                                           onclick="(${BaiViet.maBaiViet})"
-                                            	
-                style="border: 1px solid white; border-radius: 6px; margin-bottom: 5px; background:transparent"><small>
-                    Báo cáo vi phạm</small></button>
-                                        </div>
+                                        <div class="dropdown-menu baoCao" aria-labelledby="triggerId"
+											style="transform: translate(-80%, 39px);">
+											<a class="dropdown-item" data-bs-toggle="modal" st
+												data-bs-target="#modalBaoCao"
+												onclick="toCao(${BaiViet.maBaiViet})">Báo cáo vi phạm</a>
+										</div>
                                     </div>
                                 </div>
                             </div>
                            <div style="margin-top: 10px; color: #847577">
-								<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
+								<div onclick="loadBinhLuan(${BaiViet.maBaiViet}, ${maBaiVietDaThich1 })">
 									${BaiViet.moTa}
 									<center>
 										<img class="lazy" data-src="/images/${BaiViet.hinhAnh}"
@@ -436,11 +486,11 @@
 									<div class="activity-icons">
 
 										<div onclick="thichBaiViet(${BaiViet.maBaiViet},this)"
-											class="${maBaiVietDaThich.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
+											class="${maBaiVietDaThich1.contains(BaiViet.maBaiViet) ? 'red-heart' : 'gray-heart'}">
 											<i class="fa-duotone fa-heart"></i> &nbsp; <span
 												class="like-count">${BaiViet.luotThich}</span>
 										</div>
-										<div onclick="loadBinhLuan(${BaiViet.maBaiViet})">
+										<div  onclick="loadBinhLuan(${BaiViet.maBaiViet}, ${maBaiVietDaThich1 })">
 											<i class="fa-regular fa-comment"></i>&nbsp;
 											${BaiViet.luotBinhLuan}
 										</div>
@@ -450,13 +500,61 @@
                         </div>
                     </div>
                     </c:forEach>
+			             </div>
+			            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab"> 
+			            <div class="row">
+						<c:forEach items="${BaiVietCaNhan}" var="BaiViet">
+							<c:if test="${not empty BaiViet.hinhAnh}">
+								<div class="col-md-4">
+									<div onclick="loadBinhLuan(${BaiViet.maBaiViet}, ${maBaiVietDaThich1 })">
+										<center>
+											<img class="lazy" data-src="/images/${BaiViet.hinhAnh}"
+												width="100%" alt=""
+												style="margin-top: 10px; margin-bottom: 10px; border-radius: 6px;">
+										</center>
+									</div>
+								</div>
+							</c:if>
+						</c:forEach>
+
+					</div>
+			             </div>
+			
+			          </div>
+                    <hr>
+                    
                 </div>
                 
                
                                 
                 
             
-    
+    <!-- Modal báo cáo -->
+	<div class="modal fade" id="modalBaoCao" tabindex="-1" role="dialog"
+		aria-labelledby="modalTitleId" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalTitleId">Nội dung tố cáo</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<select name="loaiViPham" id="viPham" class="form-control">
+						<c:forEach var="viPham" items="${danhSachViPham}">
+							<option value="${viPham.maLoai}">${viPham.chiTiet}</option>
+						</c:forEach>
+					</select>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Đóng</button>
+					<button type="button" class="btn btn-primary">Báo cáo</button>
+				</div>
+			</div>
+		</div>
+	</div>
     <!-- Modal đăng bài --> 
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true"
 		aria-labelledby="exampleModalToggleLabel" tabindex="-1">
@@ -520,68 +618,7 @@
 		</div>
 	</div>
 	
-   <!-- Modal chỉnh sửa bài viết -->
-   <!--   <div class="modal fade" id="exampleModalToggle123" aria-hidden="true"
-		aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content"
-				style="background-color: rgba(246, 245, 244, 1);">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalToggleLabel">
-						<b style="margin-left: 170px;">Chỉnh sửa bài viết</b>
-					</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<form action="/baiviet/update" method="post"
-					 enctype="multipart/form-data">
-					<div class="modal-body">
-					
-						<div class="user-profile">
-							<img src="images/${nguoiDung.anhDaiDien}" alt="">
-							<div>
-								<label>${nguoiDung.hoTen}
-									</p> <small style="font-size: 12px">
-										<div>
-											<select name="cheDo"
-												style="border: none; background-color: transparent;">
-												<option selected value="1">Công khai</option>
-												<option value="2">Bạn bè</option>
-												<option value="3">Chỉ mình tôi</option>
-											</select>
-										</div>
-								</small>
-							</div>
-						</div>
-						
-						<br>
-						<textarea  name="moTaBaiDang" placeholder="Bạn muốn đăng gì?" id=""
-							cols="30" rows="3" 
-							style="width: 100%; border: 0px; outline: none; border-bottom: 1px solid #ccc; background: transparent; resize: none;">
-							</textarea>
-						<br>
-						<center>
-							<img id="img" src="" width="45%"
-								style="border-radius: 10px; border: 1px solid rgb(184, 182, 182)">
-						</center>
-					</div>
-					<div class="modal-footer">
-						<div class="input-group mb-3">
-							<label class="input-group-text" for="inputGroupFile01"> <i
-								class="fa-regular fa-image"></i>Photo/Video
-							</label> <input type="file" class="form-control" name="photo_file"
-								id="inputGroupFile01">
-						</div>
-
-						<button
-							style="width: 500px; background-color: #5A4F48; border: none;"
-							class="btn btn-primary" data-bs-target="#exampleModalToggle2"
-							data-bs-toggle="modal" data-bs-dismiss="modal">Đăng bài</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div> -->
+   
    
    <div class="modal fade" id="baiVietChiTiet" tabindex="-1"
 		role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">

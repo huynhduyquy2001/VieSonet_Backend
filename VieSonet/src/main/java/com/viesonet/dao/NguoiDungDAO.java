@@ -26,6 +26,7 @@ public interface NguoiDungDAO extends JpaRepository<NguoiDung, String> {
 	NguoiDung findBySdt(String sdt);
 	NguoiDung findByEmail(String email);
 	Boolean existsBySdt(String sdt);
+	Boolean existsByEmail(String email);
 
 
 	NguoiDung save(NguoiDung entity);
