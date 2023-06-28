@@ -363,7 +363,7 @@
 											<td class="anNoiDung" style="max-width: 250px;"><small>${ds.trangThai?'Hoạt động':'Không hoạt động'}</small>
 											</td>
 											<td><c:if test="${ds.luotViPham != 0}">
-													<a onclick="goViPham('${ds.sdt}')" data-bs-toggle="tooltip"
+													<a onclick="goViPham('${ds.sdt}')" data-bs-toggle="tooltip" href="#"
 														data-bs-placement="top" title="Gỡ bỏ vi phạm" class="me-3">
 														<i class="fa-solid fa-file-import"></i>
 													</a>

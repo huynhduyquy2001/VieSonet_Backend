@@ -4,20 +4,20 @@ function goViPham(sdt) {
 		url: "/quanly/goViPham/" + sdt,
 		type: "GET",
 		success: function(data) {
-			alert(sdt)
+			
 			let myDiv = document.getElementById("tableLoad");
 			myDiv.innerHTML = "";
 			var dsNguoiDung = JSON.parse(data);
-			console.log("OKOKOK")
+		
 			dsNguoiDung.forEach(function(item) {
 				var button
 					if (item.luotViPham == 0) {
 						button = "";
 					} else {
-						button =  "<a onclick='goViPham('" + item.sdt + "')' data-bs-toggle='tooltip' data-bs-placement='top'"
-							+ " title='Gỡ bỏ vi phạm' href='#'' class='me-3'>"
-							+ "<i class='fa-solid fa-file-import'></i>"
-							+ "</a>"
+						button =  `<a onclick="goViPham('${item.sdt}')" data-bs-toggle="tooltip" href="#"
+														data-bs-placement="top" title="Gỡ bỏ vi phạm" class="me-3">
+														<i class="fa-solid fa-file-import"></i>
+													</a>`
 					}
 				var table = "<tr>" +
 					"<td scope='row'><img class='img-thumbnail' style='border-radius: 16px;'"
